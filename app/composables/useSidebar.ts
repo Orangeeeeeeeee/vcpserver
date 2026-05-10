@@ -1,12 +1,14 @@
-const STORAGE_KEY = 'sidebar-collapsed';
+const COOKIE_KEY = 'sidebar-collapsed';
 
 export const useSidebar = () => {
-    const isCollapsed = useState('sidebar-collapsed', () => false);
+    const isCollapsed = useCookie<boolean>(COOKIE_KEY, {
+        default: () => false,
+        maxAge: 60 * 60 * 24 * 365
+    });
     const isMobileOpen = useState('sidebar-mobile-open', () => false);
 
     const toggleCollapse = () => {
         isCollapsed.value = !isCollapsed.value;
-        localStorage.setItem(STORAGE_KEY, String(isCollapsed.value));
     };
 
     const openMobile = () => {
@@ -16,13 +18,6 @@ export const useSidebar = () => {
     const closeMobile = () => {
         isMobileOpen.value = false;
     };
-
-    onMounted(() => {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored !== null) {
-            isCollapsed.value = stored === 'true';
-        }
-    });
 
     return {
         isCollapsed,

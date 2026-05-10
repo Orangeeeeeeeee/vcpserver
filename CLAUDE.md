@@ -60,32 +60,47 @@ VCPServer — веб-застосунок на Nuxt 4 з використанн�
 
 ## Форми
 
-- **Бібліотека:** `@primevue/forms` — компоненти `Form`, `FormField` для декларативної роботи з формами
-- **Валідація:** `zod` через `zodResolver` з `@primevue/forms/resolvers/zod`. Всі форми валідуються тільки на submit (налаштовано в `AppFormField`). Перевикористовувані схеми валідації зберігаються в `app/utils/validations.ts` (auto-imported Nuxt). Наявні: `emailSchema()`, `passwordSchema()`
-- **Поля форми:** для побудови полів форми використовувати компонент `<SharedAppFormField>` (`app/components/shared/AppFormField.vue`). Він обгортає `FormField` + label + повідомлення про помилку. Інпут передається через слот.
+- **Валідація:** `@regle/core` + `@regle/rules` — headless, model-based валідація через composable `useRegle`. Валідація виконується на submit через `r$.$validate()`. Перевикористовувані правила зберігаються в `app/utils/validations.ts` (auto-imported Nuxt). Наявні: `emailRules()`, `passwordRules()`
+- **Поля форми:** для побудови полів форми використовувати компонент `<SharedAppFormField>` (`app/components/shared/AppFormField.vue`). Він містить label + повідомлення про помилку (проп `error`). Інпут передається через слот.
 - **Приклад використання:**
-  ```vue
-  <script setup>
-  import { Form } from '@primevue/forms';
-  import { zodResolver } from '@primevue/forms/resolvers/zod';
-  import { z } from 'zod';
 
-  const resolver = zodResolver(
-      z.object({
-          email: z.string().email(),
-          password: z.string().min(6)
-      })
-  );
-  </script>
+    ```vue
+    <script setup>
+    import { useRegle } from '@regle/core';
 
-  <template>
-      <Form :resolver="resolver" @submit="onSubmit">
-          <SharedAppFormField name="email" :label="$t('login.email')" id="email">
-              <InputText id="email" type="email" fluid />
-          </SharedAppFormField>
-      </Form>
-  </template>
-  ```
+    const state = reactive({ email: '', password: '' });
+
+    const { r$ } = useRegle(state, {
+        email: emailRules(),
+        password: passwordRules()
+    });
+
+    const onSubmit = async () => {
+        const result = await r$.$validate();
+        if (result) {
+            console.log('Submit:', state);
+        }
+    };
+    </script>
+
+    <template>
+        <form novalidate @submit.prevent="onSubmit">
+            <SharedAppFormField
+                name="email"
+                :label="$t('login.email')"
+                id="email"
+                :error="r$.$fields.email.$errors[0]"
+            >
+                <InputText
+                    id="email"
+                    v-model="state.email"
+                    type="email"
+                    fluid
+                />
+            </SharedAppFormField>
+        </form>
+    </template>
+    ```
 
 ## Конвенції
 

@@ -1,22 +1,9 @@
-import { z } from 'zod';
+import { withMessage, email, minLength } from '@regle/rules';
 
-export const emailSchema = (message = 'validation.email') =>
-    z.string({ message }).nonempty(message).email(message);
+export const emailRules = (message = 'validation.email') => ({
+    email: withMessage(email, message)
+});
 
-export const passwordSchema = (message = 'validation.password', minLength = 6) =>
-    z.string({ message }).nonempty(message).min(minLength, message);
-
-export const passwordWithConfirmSchema = (
-    passwordField = 'password',
-    confirmField = 'confirmPassword',
-    message = 'validation.confirmPassword'
-) =>
-    z
-        .object({
-            [passwordField]: passwordSchema(),
-            [confirmField]: passwordSchema(),
-        })
-        .refine((data) => data[passwordField] === data[confirmField], {
-            message,
-            path: [confirmField],
-        });
+export const passwordRules = (message = 'validation.password', min = 6) => ({
+    minLength: withMessage(minLength(min), message)
+});

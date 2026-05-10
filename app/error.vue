@@ -4,7 +4,7 @@
             class="flex flex-1 flex-col lg:flex-row items-center justify-center px-4 md:px-8 gap-8 md:gap-16 lg:gap-20 lg:max-w-[1300px] lg:m-auto"
         >
             <div
-                class="flex flex-col items-center lg:items-start text-center lg:text-left order-2 md:order-1 md:max-w-[460px] lg:max-w-max lg:shrink-0"
+                class="flex flex-col items-center lg:items-start text-center lg:text-left order-2 md:order-1 md:max-w-[460px] lg:max-w-max"
             >
                 <p
                     class="text-xs md:text-sm lg:text-base mb-2 lg:mb-4 font-semibold text-[var(--p-primary-600)] mb-3"

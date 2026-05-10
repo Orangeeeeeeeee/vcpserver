@@ -27,7 +27,8 @@ export const Playground: Story = {
                 { label: 'Налаштування' }
             ]
         }),
-        template: '<TabMenu v-model:activeIndex="active" :model="items" v-bind="args" />'
+        template:
+            '<TabMenu v-model:activeIndex="active" :model="items" v-bind="args" />'
     })
 };
 

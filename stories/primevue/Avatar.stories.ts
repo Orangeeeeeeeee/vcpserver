@@ -35,7 +35,9 @@ export const Playground: Story = {
     },
     render: (args) => ({
         components: { Avatar },
-        setup() { return { args }; },
+        setup() {
+            return { args };
+        },
         template: '<Avatar v-bind="args" />'
     })
 };

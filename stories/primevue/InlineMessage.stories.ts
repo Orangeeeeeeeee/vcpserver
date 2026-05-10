@@ -18,14 +18,24 @@ export const Playground: Story = {
     argTypes: {
         severity: {
             control: 'select',
-            options: ['info', 'success', 'warn', 'error', 'secondary', 'contrast']
+            options: [
+                'info',
+                'success',
+                'warn',
+                'error',
+                'secondary',
+                'contrast'
+            ]
         },
         text: { control: 'text' }
     },
     render: (args) => ({
         components: { InlineMessage },
-        setup() { return { args }; },
-        template: '<InlineMessage :severity="args.severity">{{ args.text }}</InlineMessage>'
+        setup() {
+            return { args };
+        },
+        template:
+            '<InlineMessage :severity="args.severity">{{ args.text }}</InlineMessage>'
     })
 };
 

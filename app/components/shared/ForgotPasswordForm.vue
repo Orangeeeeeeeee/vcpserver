@@ -1,9 +1,14 @@
 <template>
-    <Form :resolver="resolver" class="flex flex-col gap-5" novalidate @submit="onSubmit">
-        <SharedAppFormField id="email" name="email" :label="$t('common.email')">
+    <form class="flex flex-col gap-5" novalidate @submit.prevent="onSubmit">
+        <SharedAppFormField
+            id="email"
+            name="email"
+            :label="$t('common.email')"
+            :error="r$.$fields.email.$errors[0]"
+        >
             <InputText
                 id="email"
-                v-model="email"
+                v-model="state.email"
                 type="email"
                 :placeholder="$t('common.emailPlaceholder')"
                 fluid
@@ -25,23 +30,29 @@
                 :disabled="isSubmitDisabled"
             />
         </div>
-    </Form>
+    </form>
 </template>
 
 <script setup lang="ts">
+import { useRegle } from '@regle/core';
+import { withMessage, required } from '@regle/rules';
 import { ROUTES } from '~/constants/routes';
-import { Form, type FormSubmitEvent } from '@primevue/forms';
-import { zodResolver } from '@primevue/forms/resolvers/zod';
-import { z } from 'zod';
 
-const email = ref('');
-const isSubmitDisabled = computed(() => !email.value);
+const state = reactive({
+    email: ''
+});
+const isSubmitDisabled = computed(() => !state.email);
 const router = useRouter();
 
-const resolver = zodResolver(
-    z.object({
-        email: emailSchema(),
-    })
+const { r$ } = useRegle(
+    state,
+    {
+        email: {
+            required: withMessage(required, 'validation.required'),
+            ...emailRules()
+        }
+    },
+    { lazy: true }
 );
 
 const navigateBack = () => {
@@ -52,9 +63,10 @@ const emit = defineEmits<{
     submitted: [email: string];
 }>();
 
-const onSubmit = (e: FormSubmitEvent) => {
-    if (e.valid) {
-        emit('submitted', e.values.email);
+const onSubmit = async () => {
+    const result = await r$.$validate();
+    if (result) {
+        emit('submitted', state.email);
     }
 };
 </script>

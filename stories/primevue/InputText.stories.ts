@@ -70,7 +70,14 @@ export const Sizes: Story = {
 export const States: Story = {
     render: () => ({
         components: { InputText, FloatLabel },
-        data: () => ({ v1: '', v2: 'Filled value', v3: '', v4: '', v5: '', v6: '' }),
+        data: () => ({
+            v1: '',
+            v2: 'Filled value',
+            v3: '',
+            v4: '',
+            v5: '',
+            v6: ''
+        }),
         template: `
       <div class="flex flex-col gap-4">
         <InputText v-model="v1" placeholder="Default" />

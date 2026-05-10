@@ -7,5 +7,5 @@ export default {
     avatar,
     button,
     checkbox,
-    inputtext,
+    inputtext
 };

@@ -32,7 +32,9 @@ export const Playground: Story = {
     },
     render: (args) => ({
         components: { Divider },
-        setup() { return { args }; },
+        setup() {
+            return { args };
+        },
         template: `
       <div :class="{ 'flex h-48': args.layout === 'vertical' }">
         <p>Контент зверху</p>

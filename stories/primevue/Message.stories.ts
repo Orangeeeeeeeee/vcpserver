@@ -20,15 +20,25 @@ export const Playground: Story = {
     argTypes: {
         severity: {
             control: 'select',
-            options: ['info', 'success', 'warn', 'error', 'secondary', 'contrast']
+            options: [
+                'info',
+                'success',
+                'warn',
+                'error',
+                'secondary',
+                'contrast'
+            ]
         },
         closable: { control: 'boolean' },
         text: { control: 'text' }
     },
     render: (args) => ({
         components: { Message },
-        setup() { return { args }; },
-        template: '<Message :severity="args.severity" :closable="args.closable">{{ args.text }}</Message>'
+        setup() {
+            return { args };
+        },
+        template:
+            '<Message :severity="args.severity" :closable="args.closable">{{ args.text }}</Message>'
     })
 };
 

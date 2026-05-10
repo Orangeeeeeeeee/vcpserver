@@ -27,7 +27,9 @@ export const Playground: Story = {
     },
     render: (args) => ({
         components: { ProgressBar },
-        setup() { return { args }; },
+        setup() {
+            return { args };
+        },
         template: '<ProgressBar v-bind="args" />'
     })
 };

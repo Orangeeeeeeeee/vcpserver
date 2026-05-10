@@ -26,7 +26,10 @@ export const Playground: Story = {
     },
     render: (args) => ({
         components: { Rating },
-        setup() { const value = ref(3); return { args, value }; },
+        setup() {
+            const value = ref(3);
+            return { args, value };
+        },
         template: '<Rating v-model="value" v-bind="args" />'
     })
 };

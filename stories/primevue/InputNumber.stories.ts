@@ -35,7 +35,10 @@ export const Playground: Story = {
     },
     render: (args) => ({
         components: { InputNumber },
-        setup() { const value = ref(null); return { args, value }; },
+        setup() {
+            const value = ref(null);
+            return { args, value };
+        },
         template: '<InputNumber v-model="value" v-bind="args" />'
     })
 };

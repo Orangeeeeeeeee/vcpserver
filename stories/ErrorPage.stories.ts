@@ -13,40 +13,47 @@ const errorImages: Record<string, string> = {
     '403': img403,
     '404': img404,
     '500': img500,
-    '503': img503,
+    '503': img503
 };
 
-const errors: Record<string, { label: string; title: string; description: string }> = {
+const errors: Record<
+    string,
+    { label: string; title: string; description: string }
+> = {
     '401': {
         label: 'Помилка 401',
         title: 'Необхідно авторизуватись',
-        description: 'Для перегляду цієї сторінки, будь ласка, авторизуйтесь у системі.',
+        description:
+            'Для перегляду цієї сторінки, будь ласка, авторизуйтесь у системі.'
     },
     '403': {
         label: 'Помилка 403',
         title: 'Дія заборонена',
-        description: 'У вас недостатньо прав для перегляду цієї сторінки.',
+        description: 'У вас недостатньо прав для перегляду цієї сторінки.'
     },
     '404': {
         label: 'Помилка 404',
         title: 'Сторінку не знайдено',
-        description: 'Схоже, адреса сторінки змінилася, або її ніколи не існувало.',
+        description:
+            'Схоже, адреса сторінки змінилася, або її ніколи не існувало.'
     },
     '500': {
         label: 'Помилка 500',
         title: 'Помилка сервера',
-        description: 'Щось пішло не так на нашому боці. Ми вже знаємо про проблему та працюємо над її вирішенням.',
+        description:
+            'Щось пішло не так на нашому боці. Ми вже знаємо про проблему та працюємо над її вирішенням.'
     },
     '503': {
         label: 'Помилка 503',
         title: 'Проводимо технічні роботи',
-        description: 'Ми оновлюємо систему, щоб зробити сервіс ще кращим. Це не займе багато часу, зачекайте, будь ласка.',
-    },
+        description:
+            'Ми оновлюємо систему, щоб зробити сервіс ще кращим. Це не займе багато часу, зачекайте, будь ласка.'
+    }
 };
 
 const ErrorPage = defineComponent({
     props: {
-        statusCode: { type: Number, default: 404 },
+        statusCode: { type: Number, default: 404 }
     },
     components: { Button, Icon },
     setup(props) {
@@ -85,28 +92,28 @@ const ErrorPage = defineComponent({
                 </div>
             </div>
         </div>
-    `,
+    `
 });
 
 const meta: Meta<typeof ErrorPage> = {
     title: 'Pages/Error',
     component: ErrorPage,
     parameters: {
-        layout: 'fullscreen',
+        layout: 'fullscreen'
     },
     argTypes: {
         statusCode: {
             control: 'select',
-            options: [401, 403, 404, 500, 503],
-        },
-    },
+            options: [401, 403, 404, 500, 503]
+        }
+    }
 };
 
 export default meta;
 type Story = StoryObj<typeof ErrorPage>;
 
 export const Playground: Story = {
-    args: { statusCode: 404 },
+    args: { statusCode: 404 }
 };
 
 export const Error401: Story = { args: { statusCode: 401 } };

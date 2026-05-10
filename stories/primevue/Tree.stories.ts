@@ -66,7 +66,8 @@ export const Playground: Story = {
             const selectedKeys = ref({});
             return { args, nodes, selectedKeys };
         },
-        template: '<Tree :value="nodes" v-model:selectionKeys="selectedKeys" v-bind="args" />'
+        template:
+            '<Tree :value="nodes" v-model:selectionKeys="selectedKeys" v-bind="args" />'
     })
 };
 

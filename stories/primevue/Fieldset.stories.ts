@@ -26,7 +26,8 @@ export const Playground: Story = {
         setup() {
             return { args };
         },
-        template: '<Fieldset v-bind="args">Вміст fieldset з контактною інформацією.</Fieldset>'
+        template:
+            '<Fieldset v-bind="args">Вміст fieldset з контактною інформацією.</Fieldset>'
     })
 };
 

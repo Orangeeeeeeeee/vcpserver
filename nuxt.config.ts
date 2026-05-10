@@ -9,12 +9,16 @@ export default defineNuxtConfig({
     compatibilityDate: '2025-07-15',
     devtools: { enabled: true },
     css: ['~/assets/css/main.css'],
-    modules: ['@nuxt/icon', '@primevue/nuxt-module', '@nuxt/eslint', '@nuxtjs/i18n', '@nuxt/fonts'],
+    modules: [
+        '@nuxt/icon',
+        '@primevue/nuxt-module',
+        '@nuxt/eslint',
+        '@nuxtjs/i18n',
+        '@nuxt/fonts'
+    ],
     icon: {
         mode: 'svg',
-        customCollections: [
-            { prefix: 'custom', dir: './app/assets/icons' }
-        ]
+        customCollections: [{ prefix: 'custom', dir: './app/assets/icons' }]
     },
     i18n: {
         locales: [{ code: 'ua', language: 'uk-UA', file: 'ua.json' }],

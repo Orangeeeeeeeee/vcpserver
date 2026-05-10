@@ -30,7 +30,10 @@ export const Playground: Story = {
     },
     render: (args) => ({
         components: { Textarea },
-        setup() { const value = ref(''); return { args, value }; },
+        setup() {
+            const value = ref('');
+            return { args, value };
+        },
         template: '<Textarea v-model="value" v-bind="args" />'
     })
 };

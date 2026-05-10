@@ -1,12 +1,12 @@
 <template>
     <NuxtLink
         :to="to"
-        class="flex items-center gap-3 px-4 rounded-md transition-colors duration-150"
+        class="flex items-center gap-3 py-3 px-4 rounded-md transition-colors duration-150"
         :class="[
             active
                 ? 'bg-[var(--p-primary-900)] text-[var(--p-surface-50)]'
                 : 'text-[var(--p-surface-500)] hover:bg-[var(--p-primary-900)] hover:text-[var(--p-surface-50)]',
-            collapsed ? 'justify-center py-3' : 'py-3.5'
+            collapsed ? 'justify-center' : ''
         ]"
     >
         <Icon :name="icon" class="size-6 shrink-0" />

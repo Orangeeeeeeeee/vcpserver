@@ -21,7 +21,15 @@ export const Playground: Story = {
     argTypes: {
         severity: {
             control: 'select',
-            options: ['primary', 'secondary', 'success', 'info', 'warn', 'danger', 'contrast']
+            options: [
+                'primary',
+                'secondary',
+                'success',
+                'info',
+                'warn',
+                'danger',
+                'contrast'
+            ]
         },
         rounded: { control: 'boolean' },
         icon: { control: 'text' },
@@ -29,7 +37,9 @@ export const Playground: Story = {
     },
     render: (args) => ({
         components: { Tag },
-        setup() { return { args }; },
+        setup() {
+            return { args };
+        },
         template: '<Tag v-bind="args" />'
     })
 };

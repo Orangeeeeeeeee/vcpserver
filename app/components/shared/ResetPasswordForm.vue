@@ -1,18 +1,14 @@
 <template>
-    <Form
-        :resolver="resolver"
-        class="flex flex-col gap-5"
-        novalidate
-        @submit="onSubmit"
-    >
+    <form class="flex flex-col gap-5" novalidate @submit.prevent="onSubmit">
         <SharedAppFormField
             id="password"
             name="password"
             :label="$t('resetPassword.newPassword')"
+            :error="r$.$fields.password.$errors[0]"
         >
             <Password
                 id="password"
-                v-model="password"
+                v-model="state.password"
                 :feedback="false"
                 toggle-mask
                 :placeholder="$t('resetPassword.newPasswordPlaceholder')"
@@ -24,10 +20,11 @@
             id="confirmPassword"
             name="confirmPassword"
             :label="$t('resetPassword.confirmPassword')"
+            :error="r$.$fields.confirmPassword.$errors[0]"
         >
             <Password
                 id="confirmPassword"
-                v-model="confirmPassword"
+                v-model="state.confirmPassword"
                 :feedback="false"
                 toggle-mask
                 :placeholder="$t('resetPassword.confirmPasswordPlaceholder')"
@@ -40,12 +37,12 @@
             :label="$t('resetPassword.submit')"
             :disabled="isSubmitDisabled"
         />
-    </Form>
+    </form>
 </template>
 
 <script setup lang="ts">
-import { Form, type FormSubmitEvent } from '@primevue/forms';
-import { zodResolver } from '@primevue/forms/resolvers/zod';
+import { useRegle } from '@regle/core';
+import { withMessage, required, sameAs } from '@regle/rules';
 import { useToast } from 'primevue/usetoast';
 import { ROUTES } from '~/constants/routes';
 
@@ -53,16 +50,36 @@ const { t } = useI18n();
 const toast = useToast();
 const router = useRouter();
 
-const password = ref('');
-const confirmPassword = ref('');
+const state = reactive({
+    password: '',
+    confirmPassword: ''
+});
 const isSubmitDisabled = computed(
-    () => !password.value || !confirmPassword.value
+    () => !state.password || !state.confirmPassword
 );
 
-const resolver = zodResolver(passwordWithConfirmSchema());
+const { r$ } = useRegle(
+    state,
+    {
+        password: {
+            required: withMessage(required, 'validation.required'),
+            ...passwordRules()
+        },
+        confirmPassword: {
+            required: withMessage(required, 'validation.required'),
+            ...passwordRules(),
+            sameAs: withMessage(
+                sameAs(() => state.password),
+                'validation.confirmPassword'
+            )
+        }
+    },
+    { lazy: true }
+);
 
-const onSubmit = (e: FormSubmitEvent) => {
-    if (e.valid) {
+const onSubmit = async () => {
+    const result = await r$.$validate();
+    if (result) {
         toast.add({
             severity: 'success',
             summary: t('resetPassword.successTitle'),

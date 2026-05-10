@@ -22,7 +22,10 @@ export const Playground: Story = {
     },
     render: (args) => ({
         components: { ToggleSwitch },
-        setup() { const value = ref(false); return { args, value }; },
+        setup() {
+            const value = ref(false);
+            return { args, value };
+        },
         template: '<ToggleSwitch v-model="value" v-bind="args" />'
     })
 };

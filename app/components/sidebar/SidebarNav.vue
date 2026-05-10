@@ -4,12 +4,21 @@
         class="hidden md:flex fixed inset-y-0 left-0 z-40 flex-col bg-[var(--p-surface-950)] transition-all duration-200 w-[var(--sidebar-width)]"
         :class="{ '!w-[var(--sidebar-collapsed-width)]': isCollapsed }"
     >
-        <SidebarToggleButton mode="toggle" :collapsed="isCollapsed" @click="toggleCollapse" />
+        <SidebarToggleButton
+            mode="toggle"
+            :collapsed="isCollapsed"
+            @click="toggleCollapse"
+        />
         <SidebarContent :collapsed="isCollapsed" />
     </aside>
 
     <!-- Mobile -->
-    <Drawer v-model:visible="isMobileOpen" class="md:!hidden !w-full" :modal="true" position="left">
+    <Drawer
+        v-model:visible="isMobileOpen"
+        class="md:!hidden !w-full"
+        :modal="true"
+        position="left"
+    >
         <template #container>
             <div class="flex flex-col h-full bg-[var(--p-surface-950)]">
                 <SidebarToggleButton mode="close" @click="closeMobile" />
@@ -23,7 +32,10 @@
 const route = useRoute();
 const { isCollapsed, isMobileOpen, toggleCollapse, closeMobile } = useSidebar();
 
-watch(() => route.path, () => {
-    closeMobile();
-});
+watch(
+    () => route.path,
+    () => {
+        closeMobile();
+    }
+);
 </script>

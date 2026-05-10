@@ -21,17 +21,11 @@ type Story = StoryObj<typeof meta>;
 const items = [
     {
         label: 'Файл',
-        items: [
-            { label: 'Новий' },
-            { label: 'Відкрити' }
-        ]
+        items: [{ label: 'Новий' }, { label: 'Відкрити' }]
     },
     {
         label: 'Редагування',
-        items: [
-            { label: 'Скасувати' },
-            { label: 'Повторити' }
-        ]
+        items: [{ label: 'Скасувати' }, { label: 'Повторити' }]
     }
 ];
 

@@ -7,5 +7,5 @@ export const ROUTES = {
     ROUTES_PAGE: '/routes',
     ZONES: '/zones',
     REPORTS: '/reports',
-    PASSENGER_FLOW: '/passenger-flow',
+    PASSENGER_FLOW: '/passenger-flow'
 } as const;

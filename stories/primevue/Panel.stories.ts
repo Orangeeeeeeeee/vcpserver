@@ -26,7 +26,8 @@ export const Playground: Story = {
         setup() {
             return { args };
         },
-        template: '<Panel v-bind="args">Вміст панелі з описом та інформацією.</Panel>'
+        template:
+            '<Panel v-bind="args">Вміст панелі з описом та інформацією.</Panel>'
     })
 };
 

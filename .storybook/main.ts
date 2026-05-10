@@ -17,11 +17,15 @@ const config: StorybookConfig = {
     framework: '@storybook/vue3-vite',
     viteFinal(config) {
         config.plugins = config.plugins || [];
-        config.plugins.push(vue(), tailwindcss(), AutoImport({ imports: ['vue'] }));
+        config.plugins.push(
+            vue(),
+            tailwindcss(),
+            AutoImport({ imports: ['vue'] })
+        );
         config.resolve = config.resolve || {};
         config.resolve.alias = {
             ...config.resolve.alias,
-            '~': path.resolve(__dirname, '../app'),
+            '~': path.resolve(__dirname, '../app')
         };
         return config;
     }

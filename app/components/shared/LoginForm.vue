@@ -1,9 +1,14 @@
 <template>
-    <Form :resolver="resolver" class="flex flex-col gap-5" novalidate @submit="onSubmit">
-        <SharedAppFormField id="email" name="email" :label="$t('common.email')">
+    <form class="flex flex-col gap-5" novalidate @submit.prevent="onSubmit">
+        <SharedAppFormField
+            id="email"
+            name="email"
+            :label="$t('common.email')"
+            :error="r$.$fields.email.$errors[0]"
+        >
             <InputText
                 id="email"
-                v-model="email"
+                v-model="state.email"
                 type="email"
                 :placeholder="$t('common.emailPlaceholder')"
                 fluid
@@ -14,10 +19,11 @@
             id="password"
             name="password"
             :label="$t('common.password')"
+            :error="r$.$fields.password.$errors[0]"
         >
             <Password
                 id="password"
-                v-model="password"
+                v-model="state.password"
                 :feedback="false"
                 toggle-mask
                 placeholder="•••••••"
@@ -43,31 +49,45 @@
             </NuxtLink>
         </div>
 
-        <Button type="submit" :label="$t('login.submit')" :disabled="isSubmitDisabled" />
-    </Form>
+        <Button
+            type="submit"
+            :label="$t('login.submit')"
+            :disabled="isSubmitDisabled"
+        />
+    </form>
 </template>
 
 <script setup lang="ts">
+import { useRegle } from '@regle/core';
+import { withMessage, required } from '@regle/rules';
 import { ROUTES } from '~/constants/routes';
-import { Form, type FormSubmitEvent } from '@primevue/forms';
-import { zodResolver } from '@primevue/forms/resolvers/zod';
-import { z } from 'zod';
 
-const email = ref('');
-const password = ref('');
+const state = reactive({
+    email: '',
+    password: ''
+});
 const rememberMe = ref(false);
-const isSubmitDisabled = computed(() => !email.value || !password.value);
+const isSubmitDisabled = computed(() => !state.email || !state.password);
 
-const resolver = zodResolver(
-    z.object({
-        email: emailSchema(),
-        password: passwordSchema()
-    })
+const { r$ } = useRegle(
+    state,
+    {
+        email: {
+            required: withMessage(required, 'validation.required'),
+            ...emailRules()
+        },
+        password: {
+            required: withMessage(required, 'validation.required'),
+            ...passwordRules()
+        }
+    },
+    { lazy: true }
 );
 
-const onSubmit = (e: FormSubmitEvent) => {
-    if (e.valid) {
-        console.log('Login:', e.values);
+const onSubmit = async () => {
+    const result = await r$.$validate();
+    if (result) {
+        console.log('Login:', state);
     }
 };
 </script>

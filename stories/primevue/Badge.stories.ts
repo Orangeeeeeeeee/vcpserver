@@ -21,7 +21,15 @@ export const Playground: Story = {
     argTypes: {
         severity: {
             control: 'select',
-            options: ['primary', 'secondary', 'success', 'info', 'warn', 'danger', 'contrast']
+            options: [
+                'primary',
+                'secondary',
+                'success',
+                'info',
+                'warn',
+                'danger',
+                'contrast'
+            ]
         },
         size: {
             control: 'select',

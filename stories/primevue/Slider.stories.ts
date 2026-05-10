@@ -31,7 +31,10 @@ export const Playground: Story = {
     },
     render: (args) => ({
         components: { Slider },
-        setup() { const value = ref(50); return { args, value }; },
+        setup() {
+            const value = ref(50);
+            return { args, value };
+        },
         template: '<Slider v-model="value" v-bind="args" class="w-56" />'
     })
 };
