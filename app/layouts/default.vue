@@ -1,18 +1,20 @@
 <template>
-    <div style="display: flex; min-height: 100vh">
-        <aside style="width: 250px; background: #f5f5f5; padding: 1rem">
-            <nav>
-                <ul style="list-style: none; padding: 0; margin: 0">
-                    <li><NuxtLink to="/">Головна</NuxtLink></li>
-                    <li><NuxtLink to="/dashboard">Dashboard</NuxtLink></li>
-                    <li><NuxtLink to="/settings">Settings</NuxtLink></li>
-                    <li><NuxtLink to="/objects">Objects</NuxtLink></li>
-                </ul>
-            </nav>
-        </aside>
-        <main style="flex: 1; padding: 1rem">
+    <div class="min-h-dvh">
+        <button
+            class="md:hidden fixed top-4 left-4 z-40 p-2 rounded-md bg-[var(--p-primary-950)] text-white cursor-pointer"
+            @click="openMobile">
+            <Icon name="tabler:menu-2" class="size-5" />
+        </button>
+
+        <SidebarNav />
+
+        <main class="min-h-dvh transition-[margin-left] duration-200 md:ml-[var(--sidebar-width)]"
+            :class="{ 'md:!ml-[var(--sidebar-collapsed-width)]': isCollapsed }">
             <slot />
         </main>
     </div>
 </template>
-<script setup lang="ts"></script>
+
+<script setup lang="ts">
+const { isCollapsed, openMobile } = useSidebar();
+</script>

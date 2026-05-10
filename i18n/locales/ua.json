@@ -59,6 +59,13 @@
         "successTitle": "Пароль змінено",
         "successDetail": "Ваш пароль успішно оновлено."
     },
+    "sidebar": {
+        "objects": "Об'єкти",
+        "routes": "Маршрути",
+        "zones": "Зони",
+        "reports": "Звіти",
+        "passengerFlow": "Пасажиропотік"
+    },
     "login": {
         "title": "Авторизація",
         "subtitle1": "Ласкаво просимо назад!",
