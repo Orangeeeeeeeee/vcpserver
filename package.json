@@ -1,18 +1,45 @@
 {
-  "name": "vcpserver",
-  "type": "module",
-  "private": true,
-  "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
-  },
-  "dependencies": {
-    "@nuxt/icon": "^2.2.1",
-    "nuxt": "^4.4.2",
-    "vue": "^3.5.32",
-    "vue-router": "^5.0.4"
-  }
+    "name": "vcpserver",
+    "type": "module",
+    "private": true,
+    "scripts": {
+        "build": "nuxt build",
+        "dev": "nuxt dev",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare",
+        "storybook": "storybook dev -p 6006",
+        "build-storybook": "storybook build",
+        "lint": "eslint .",
+        "format": "prettier --write ."
+    },
+    "dependencies": {
+        "@fontsource-variable/inter": "^5.2.8",
+        "@fontsource-variable/manrope": "^5.2.8",
+        "@nuxt/eslint": "^1.15.2",
+        "@nuxt/fonts": "^0.14.0",
+        "@nuxt/icon": "^2.2.1",
+        "@nuxtjs/i18n": "^10.3.0",
+        "@primeuix/themes": "^2.0.3",
+        "@primevue/forms": "^4.5.5",
+        "@tailwindcss/vite": "^4.2.4",
+        "eslint": "^10.3.0",
+        "nuxt": "^4.4.2",
+        "primevue": "^4.5.5",
+        "tailwindcss": "^4.2.4",
+        "tailwindcss-primeui": "^0.6.1",
+        "vue": "^3.5.32",
+        "vue-router": "^5.0.4",
+        "zod": "^4.4.3"
+    },
+    "devDependencies": {
+        "@primevue/nuxt-module": "^4.5.5",
+        "@storybook/addon-a11y": "^10.3.6",
+        "@storybook/addon-docs": "^10.3.6",
+        "@storybook/vue3-vite": "^10.3.6",
+        "eslint-config-prettier": "^10.1.8",
+        "prettier": "^3.8.3",
+        "storybook": "^10.3.6",
+        "unplugin-auto-import": "^21.0.0"
+    }
 }
