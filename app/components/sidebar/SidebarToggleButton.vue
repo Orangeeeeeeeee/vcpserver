@@ -13,21 +13,25 @@
 </template>
 
 <script setup lang="ts">
-const props = withDefaults(
-    defineProps<{
-        mode: 'toggle' | 'close';
-        collapsed?: boolean;
-    }>(),
-    {
-        collapsed: false
-    }
-);
+interface SidebarToggleButtonProps {
+    /** Button mode: 'toggle' for desktop collapse, 'close' for mobile drawer */
+    mode: 'toggle' | 'close';
+    /** Whether the sidebar is collapsed */
+    collapsed?: boolean;
+}
 
-defineEmits<{
-    click: [];
-}>();
+interface SidebarToggleButtonEmits {
+    (e: 'click'): void;
+}
 
-const iconName = computed(() => {
+const props = withDefaults(defineProps<SidebarToggleButtonProps>(), {
+    collapsed: false
+});
+
+defineEmits<SidebarToggleButtonEmits>();
+
+/** Resolved icon name based on mode and collapsed state */
+const iconName = computed((): string => {
     if (props.mode === 'close') return 'tabler:x';
     return props.collapsed ? 'tabler:chevron-right' : 'tabler:chevron-left';
 });

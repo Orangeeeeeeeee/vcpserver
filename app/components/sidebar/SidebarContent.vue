@@ -19,12 +19,20 @@
 <script setup lang="ts">
 import { navigationItems } from '~/constants/navigation';
 
-defineProps<{
+interface SidebarContentProps {
+    /** Whether the sidebar is collapsed */
     collapsed: boolean;
-}>();
+}
+
+defineProps<SidebarContentProps>();
 
 const route = useRoute();
 
-const isActive = (itemRoute: string) =>
+/**
+ * Checks whether a navigation item is currently active.
+ * @param {string} itemRoute - Route path to check
+ * @returns {boolean} True if the route matches or is a child of the given path
+ */
+const isActive = (itemRoute: string): boolean =>
     route.path === itemRoute || route.path.startsWith(itemRoute + '/');
 </script>

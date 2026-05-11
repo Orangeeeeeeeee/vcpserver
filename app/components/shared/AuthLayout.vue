@@ -21,12 +21,17 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
+interface AuthLayoutProps {
+    /** Page title */
     title: string;
+    /** Subtitle text — single string or array of lines */
     subtitle: string | string[];
-}>();
+}
 
-const subtitleLines = computed(() =>
+const props = defineProps<AuthLayoutProps>();
+
+/** Normalized subtitle as an array of lines */
+const subtitleLines = computed((): string[] =>
     Array.isArray(props.subtitle) ? props.subtitle : [props.subtitle]
 );
 </script>

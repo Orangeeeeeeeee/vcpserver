@@ -1,14 +1,11 @@
 <template>
-    <SharedAuthLayout
-        :title="$t('login.title')"
-        :subtitle="[$t('login.subtitle1'), $t('login.subtitle2')]"
-    >
-        <SharedLoginForm />
-    </SharedAuthLayout>
+    <div class="p-6">
+        <h1 class="text-2xl font-semibold">{{ $t('sidebar.objects') }}</h1>
+    </div>
 </template>
 
 <script setup lang="ts">
 definePageMeta({
-    layout: 'blank'
+    layout: 'default'
 });
 </script>

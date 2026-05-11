@@ -14,10 +14,16 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+interface AppFormFieldProps {
+    /** Field name attribute */
     name: string;
+    /** Label text */
     label: string;
+    /** HTML id for label association */
     id?: string;
+    /** Validation error i18n key */
     error?: string;
-}>();
+}
+
+defineProps<AppFormFieldProps>();
 </script>

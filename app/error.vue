@@ -101,6 +101,6 @@ const goBack = () => {
 };
 
 const handleError = () => {
-    clearError({ redirect: ROUTES.HOME });
+    clearError({ redirect: ROUTES.OBJECTS });
 };
 </script>

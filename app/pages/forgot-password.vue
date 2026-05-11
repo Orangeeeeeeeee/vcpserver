@@ -19,7 +19,8 @@
                 :label="$t('common.ok')"
                 severity="secondary"
                 class="w-full"
-                @click="navigateToLogin"
+                as="router-link"
+                to="/"
             />
             <p class="text-sm text-[var(--p-surface-700)]">
                 {{ $t('forgotPassword.noEmail') }}
@@ -35,26 +36,21 @@
 </template>
 
 <script setup lang="ts">
-import { ROUTES } from '~/constants/routes';
-
 definePageMeta({
     layout: 'blank'
 });
 
-const router = useRouter();
 const submitted = ref(false);
 const submittedEmail = ref('');
 
-const onSubmitted = (email: string) => {
+/** Handles successful form submission */
+const onSubmitted = (email: string): void => {
     submittedEmail.value = email;
     submitted.value = true;
 };
 
-const navigateToLogin = () => {
-    router.push(ROUTES.LOGIN);
-};
-
-const onResend = () => {
+/** Resends the password reset email */
+const onResend = (): void => {
     console.log('Resend to:', submittedEmail.value);
 };
 </script>

@@ -5,20 +5,24 @@
 </template>
 
 <script setup lang="ts">
+/** Available heading levels */
 type Variant = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
-const props = withDefaults(
-    defineProps<{
-        variant: Variant;
-        as?: string;
-    }>(),
-    {
-        as: undefined
-    }
-);
+interface TypographyProps {
+    /** Heading variant that defines styles */
+    variant: Variant;
+    /** Override the rendered HTML tag (defaults to variant) */
+    as?: string;
+}
 
-const tag = computed(() => props.as ?? props.variant);
+const props = withDefaults(defineProps<TypographyProps>(), {
+    as: undefined
+});
 
+/** Resolved HTML tag to render */
+const tag = computed((): string => props.as ?? props.variant);
+
+/** Tailwind classes mapped to each heading variant */
 const variantClasses: Record<Variant, string> = {
     h1: 'font-manrope text-[1.5rem] md:text-[2rem] lg:text-[2.5rem] font-semibold text-[var(--p-surface-900)]',
     h2: 'font-manrope text-[2rem] font-semibold text-[var(--p-surface-900)]',

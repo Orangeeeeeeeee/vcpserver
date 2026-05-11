@@ -38,10 +38,17 @@ import { useRegle } from '@regle/core';
 import { withMessage, required } from '@regle/rules';
 import { ROUTES } from '~/constants/routes';
 
-const state = reactive({
+interface ForgotPasswordFormState {
+    email: string;
+}
+
+interface ForgotPasswordFormEmits {
+    (e: 'submitted', email: string): void;
+}
+
+const state = reactive<ForgotPasswordFormState>({
     email: ''
 });
-const isSubmitDisabled = computed(() => !state.email);
 const router = useRouter();
 
 const { r$ } = useRegle(
@@ -55,15 +62,18 @@ const { r$ } = useRegle(
     { lazy: true }
 );
 
-const navigateBack = () => {
+/** Whether the submit button should be disabled */
+const isSubmitDisabled = computed((): boolean => r$.$invalid || r$.$pending);
+
+/** Navigates back to the login page */
+const navigateBack = (): void => {
     router.push(ROUTES.LOGIN);
 };
 
-const emit = defineEmits<{
-    submitted: [email: string];
-}>();
+const emit = defineEmits<ForgotPasswordFormEmits>();
 
-const onSubmit = async () => {
+/** Validates and emits the submitted email */
+const onSubmit = async (): Promise<void> => {
     const result = await r$.$validate();
     if (result) {
         emit('submitted', state.email);

@@ -46,18 +46,19 @@ import { withMessage, required, sameAs } from '@regle/rules';
 import { useToast } from 'primevue/usetoast';
 import { ROUTES } from '~/constants/routes';
 
+interface ResetPasswordFormState {
+    password: string;
+    confirmPassword: string;
+}
+
 const { t } = useI18n();
 const toast = useToast();
 const router = useRouter();
 
-const state = reactive({
+const state = reactive<ResetPasswordFormState>({
     password: '',
     confirmPassword: ''
 });
-const isSubmitDisabled = computed(
-    () => !state.password || !state.confirmPassword
-);
-
 const { r$ } = useRegle(
     state,
     {
@@ -77,7 +78,11 @@ const { r$ } = useRegle(
     { lazy: true }
 );
 
-const onSubmit = async () => {
+/** Whether the submit button should be disabled */
+const isSubmitDisabled = computed((): boolean => r$.$invalid || r$.$pending);
+
+/** Validates form, shows success toast, and redirects to home */
+const onSubmit = async (): Promise<void> => {
     const result = await r$.$validate();
     if (result) {
         toast.add({
@@ -86,7 +91,7 @@ const onSubmit = async () => {
             detail: t('resetPassword.successDetail'),
             life: 3000
         });
-        router.push(ROUTES.HOME);
+        router.push(ROUTES.OBJECTS);
     }
 };
 </script>

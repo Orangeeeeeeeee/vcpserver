@@ -1,12 +1,11 @@
 <template>
     <NuxtLink
         :to="to"
-        class="flex items-center gap-3 py-3 px-4 rounded-md transition-colors duration-150"
+        class="flex items-center gap-3 py-3 px-4 md:px-3 rounded-md transition-colors duration-150"
         :class="[
             active
                 ? 'bg-[var(--p-primary-900)] text-[var(--p-surface-50)]'
-                : 'text-[var(--p-surface-500)] hover:bg-[var(--p-primary-900)] hover:text-[var(--p-surface-50)]',
-            collapsed ? 'justify-center' : ''
+                : 'text-[var(--p-surface-500)] hover:bg-[var(--p-primary-900)] hover:text-[var(--p-surface-50)]'
         ]"
     >
         <Icon :name="icon" class="size-6 shrink-0" />
@@ -20,11 +19,18 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+interface SidebarNavItemProps {
+    /** Icon name (Iconify format) */
     icon: string;
+    /** Display label */
     label: string;
+    /** Route path */
     to: string;
+    /** Whether this item is currently active */
     active: boolean;
+    /** Whether the sidebar is collapsed */
     collapsed: boolean;
-}>();
+}
+
+defineProps<SidebarNavItemProps>();
 </script>

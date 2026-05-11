@@ -14,7 +14,10 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+interface SidebarHeaderProps {
+    /** Whether the sidebar is collapsed */
     collapsed: boolean;
-}>();
+}
+
+defineProps<SidebarHeaderProps>();
 </script>

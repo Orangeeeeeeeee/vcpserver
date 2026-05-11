@@ -46,9 +46,12 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+interface SidebarFooterProps {
+    /** Whether the sidebar is collapsed */
     collapsed: boolean;
-}>();
+}
+
+defineProps<SidebarFooterProps>();
 
 const { toggleTheme, themeIcon } = useTheme();
 </script>

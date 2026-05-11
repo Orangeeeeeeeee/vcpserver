@@ -62,13 +62,16 @@ import { useRegle } from '@regle/core';
 import { withMessage, required } from '@regle/rules';
 import { ROUTES } from '~/constants/routes';
 
-const state = reactive({
+interface LoginFormState {
+    email: string;
+    password: string;
+}
+
+const state = reactive<LoginFormState>({
     email: '',
     password: ''
 });
 const rememberMe = ref(false);
-const isSubmitDisabled = computed(() => !state.email || !state.password);
-
 const { r$ } = useRegle(
     state,
     {
@@ -84,7 +87,11 @@ const { r$ } = useRegle(
     { lazy: true }
 );
 
-const onSubmit = async () => {
+/** Whether the submit button should be disabled */
+const isSubmitDisabled = computed((): boolean => r$.$invalid || r$.$pending);
+
+/** Validates and submits the login form */
+const onSubmit = async (): Promise<void> => {
     const result = await r$.$validate();
     if (result) {
         console.log('Login:', state);

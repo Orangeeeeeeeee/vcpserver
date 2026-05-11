@@ -39,10 +39,12 @@ definePageMeta({
     layout: 'blank'
 });
 
-// TODO: отримувати з API/токена
+// TODO: fetch from API/token
 const userName = 'Olivia Rhye';
 const userEmail = 'olivia.rhye@untitledui.com';
-const userInitials = computed(() =>
+
+/** User initials derived from the full name */
+const userInitials = computed((): string =>
     userName
         .split(' ')
         .map((n) => n[0])
