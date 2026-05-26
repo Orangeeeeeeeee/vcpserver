@@ -1,23 +1,28 @@
 <template>
     <div class="min-h-dvh">
-        <button
-            class="md:hidden fixed top-4 left-4 z-40 p-2 rounded-md bg-[var(--p-primary-950)] text-white cursor-pointer"
-            @click="openMobile"
-        >
-            <Icon name="tabler:menu-2" class="size-5" />
-        </button>
-
         <SidebarNav />
 
         <main
-            class="min-h-dvh transition-[margin-left] duration-200 md:ml-[var(--sidebar-width)]"
-            :class="{ 'md:!ml-[var(--sidebar-collapsed-width)]': isCollapsed }"
+            class="min-h-dvh transition-[margin] duration-200"
+            :class="[
+                isRight
+                    ? 'md:mr-[var(--sidebar-width)]'
+                    : 'md:ml-[var(--sidebar-width)]',
+                {
+                    'md:!mr-[var(--sidebar-collapsed-width)]':
+                        isCollapsed && isRight,
+                    'md:!ml-[var(--sidebar-collapsed-width)]':
+                        isCollapsed && !isRight
+                }
+            ]"
         >
             <slot />
         </main>
+
+        <Toast />
     </div>
 </template>
 
 <script setup lang="ts">
-const { isCollapsed, openMobile } = useSidebar();
+const { isCollapsed, isRight } = useSidebar();
 </script>

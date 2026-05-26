@@ -20,7 +20,13 @@ const config: StorybookConfig = {
         config.plugins.push(
             vue(),
             tailwindcss(),
-            AutoImport({ imports: ['vue'] })
+            AutoImport({
+                imports: [
+                    'vue',
+                    'vue-router',
+                    { [path.resolve(__dirname, 'mocks')]: ['useSidebar'] }
+                ]
+            })
         );
         config.resolve = config.resolve || {};
         config.resolve.alias = {

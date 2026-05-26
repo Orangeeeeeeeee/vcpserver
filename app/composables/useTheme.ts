@@ -11,6 +11,8 @@ export interface UseThemeReturn {
     themeIcon: ComputedRef<string>;
     /** Toggles theme between `light` and `dark` */
     toggleTheme: () => void;
+    /** Sets the theme to the given value */
+    setTheme: (value: Theme) => void;
 }
 
 const COOKIE_KEY = 'theme';
@@ -44,6 +46,12 @@ export const useTheme = (): UseThemeReturn => {
         applyTheme(themeCookie.value);
     };
 
+    /** Sets the theme to the given value */
+    const setTheme = (value: Theme): void => {
+        themeCookie.value = value;
+        applyTheme(value);
+    };
+
     onMounted(() => {
         applyTheme(themeCookie.value);
     });
@@ -52,6 +60,7 @@ export const useTheme = (): UseThemeReturn => {
         theme: themeCookie,
         isDark,
         themeIcon,
-        toggleTheme
+        toggleTheme,
+        setTheme
     };
 };

@@ -1,12 +1,16 @@
 <template>
     <!-- Desktop / Tablet -->
     <aside
-        class="hidden md:flex fixed inset-y-0 left-0 z-40 flex-col bg-[var(--p-surface-950)] transition-all duration-200 w-[var(--sidebar-width)]"
-        :class="{ '!w-[var(--sidebar-collapsed-width)]': isCollapsed }"
+        class="hidden md:flex fixed inset-y-0 z-40 flex-col bg-[var(--p-surface-950)] transition-all duration-200 w-[var(--sidebar-width)]"
+        :class="[
+            isRight ? 'right-0' : 'left-0',
+            { '!w-[var(--sidebar-collapsed-width)]': isCollapsed }
+        ]"
     >
         <SidebarToggleButton
             mode="toggle"
             :collapsed="isCollapsed"
+            :is-right="isRight"
             @click="toggleCollapse"
         />
         <SidebarContent :collapsed="isCollapsed" />
@@ -17,11 +21,15 @@
         v-model:visible="isMobileOpen"
         class="md:!hidden !w-full"
         :modal="true"
-        position="left"
+        :position="isRight ? 'right' : 'left'"
     >
         <template #container>
             <div class="flex flex-col h-full bg-[var(--p-surface-950)]">
-                <SidebarToggleButton mode="close" @click="closeMobile" />
+                <SidebarToggleButton
+                    mode="close"
+                    :is-right="isRight"
+                    @click="closeMobile"
+                />
                 <SidebarContent :collapsed="false" />
             </div>
         </template>
@@ -30,7 +38,8 @@
 
 <script setup lang="ts">
 const route = useRoute();
-const { isCollapsed, isMobileOpen, toggleCollapse, closeMobile } = useSidebar();
+const { isCollapsed, isMobileOpen, isRight, toggleCollapse, closeMobile } =
+    useSidebar();
 
 watch(
     () => route.path,

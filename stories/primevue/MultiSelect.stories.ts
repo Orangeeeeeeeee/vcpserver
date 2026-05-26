@@ -25,7 +25,8 @@ export const Playground: Story = {
         disabled: false,
         invalid: false,
         filter: false,
-        display: 'comma'
+        display: 'comma',
+        size: undefined
     },
     argTypes: {
         placeholder: { control: 'text' },
@@ -35,6 +36,10 @@ export const Playground: Story = {
         display: {
             control: 'select',
             options: ['comma', 'chip']
+        },
+        size: {
+            control: 'select',
+            options: [undefined, 'small', 'large']
         }
     },
     render: (args) => ({
@@ -54,6 +59,20 @@ export const Basic: Story = {
         data: () => ({ selected: null, cities }),
         template:
             '<MultiSelect v-model="selected" :options="cities" optionLabel="name" placeholder="Оберіть міста" :maxSelectedLabels="3" class="w-full md:w-80" />'
+    })
+};
+
+export const Sizes: Story = {
+    render: () => ({
+        components: { MultiSelect },
+        data: () => ({ v1: null, v2: null, v3: null, cities }),
+        template: `
+      <div class="flex flex-col gap-4">
+        <MultiSelect v-model="v1" :options="cities" optionLabel="name" size="small" placeholder="Small" class="w-full md:w-80" />
+        <MultiSelect v-model="v2" :options="cities" optionLabel="name" placeholder="Normal" class="w-full md:w-80" />
+        <MultiSelect v-model="v3" :options="cities" optionLabel="name" size="large" placeholder="Large" class="w-full md:w-80" />
+      </div>
+    `
     })
 };
 

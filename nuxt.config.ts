@@ -1,5 +1,6 @@
 import tailwindcss from '@tailwindcss/vite';
 import VcpPreset from './app/theme/preset';
+import { ROUTES } from './app/constants/routes';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -7,6 +8,9 @@ export default defineNuxtConfig({
         plugins: [tailwindcss()]
     },
     compatibilityDate: '2025-07-15',
+    routeRules: {
+        [ROUTES.ACCOUNT]: { redirect: ROUTES.ACCOUNT_INFO }
+    },
     devtools: { enabled: true },
     css: ['~/assets/css/main.css'],
     modules: [

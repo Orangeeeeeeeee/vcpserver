@@ -37,6 +37,8 @@ VCPServer — веб-застосунок на Nuxt 4 з використанн�
     - `assets/css/main.css` — глобальні стилі з імпортом Tailwind та PrimeUI + `@theme inline` для semantic кольорів
     - `theme/colors.ts` — константи дизайнерської палітри кольорів
     - `theme/preset.ts` — кастомний PrimeVue пресет (`definePreset(Aura, overrides)`)
+    - `constants/` — константи застосунку: `routes.ts` (шляхи маршрутів — об'єкт `ROUTES`) та `navigation.ts` (пункти бічної навігації `navigationItems`)
+    - `utils/` — auto-imported утиліти Nuxt (напр. `validations.ts`)
 - `stories/` — Storybook сторіз (`primevue/`, `ColorPalette/`)
 - `i18n/locales/` — файли перекладів (JSON), за замовчуванням `ua.json`
 
@@ -101,6 +103,14 @@ VCPServer — веб-застосунок на Nuxt 4 з використанн�
         </form>
     </template>
     ```
+
+## Маршрути та навігація
+
+- **Усі шляхи маршрутів — константи** в `app/constants/routes.ts` (об'єкт `ROUTES`, ключі у `SCREAMING_SNAKE_CASE`, `as const`).
+- **При створенні нової сторінки** (`app/pages/...`) обов'язково додати відповідну константу до `ROUTES`.
+- **Будь-які посилання та переходи — лише через `ROUTES`**, без хардкоду рядків шляхів. Стосується `<NuxtLink :to>`, `<Button as="router-link" :to>`, `navigateTo()`, `router.push()`, `redirect`, `routeRules` у `nuxt.config.ts` та пунктів навігації.
+- Імпорт: `import { ROUTES } from '~/constants/routes';` (у `nuxt.config.ts` — відносним шляхом `import { ROUTES } from './app/constants/routes';`).
+- Пункти бічної навігації — у `app/constants/navigation.ts` (масив `navigationItems`, кожен `route` посилається на `ROUTES`).
 
 ## Конвенції
 

@@ -4,6 +4,8 @@ export interface UseSidebarReturn {
     isCollapsed: Ref<boolean>;
     /** Whether the mobile sidebar drawer is open */
     isMobileOpen: Ref<boolean>;
+    /** Whether the sidebar is positioned on the right side */
+    isRight: ComputedRef<boolean>;
     /** Toggles the sidebar collapsed state */
     toggleCollapse: () => void;
     /** Opens the mobile sidebar drawer */
@@ -26,6 +28,12 @@ export const useSidebar = (): UseSidebarReturn => {
         maxAge: 60 * 60 * 24 * 365
     });
     const isMobileOpen = useState('sidebar-mobile-open', () => false);
+    const { settings } = useAccountSettings();
+
+    /** Whether the sidebar is positioned on the right side */
+    const isRight = computed(
+        (): boolean => settings.value.menuPosition === 'right'
+    );
 
     /** Toggles the sidebar collapsed state */
     const toggleCollapse = (): void => {
@@ -45,6 +53,7 @@ export const useSidebar = (): UseSidebarReturn => {
     return {
         isCollapsed,
         isMobileOpen,
+        isRight,
         toggleCollapse,
         openMobile,
         closeMobile

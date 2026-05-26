@@ -7,5 +7,8 @@ export const ROUTES = {
     ROUTES_PAGE: '/routes',
     ZONES: '/zones',
     REPORTS: '/reports',
-    PASSENGER_FLOW: '/passenger-flow'
+    PASSENGER_FLOW: '/passenger-flow',
+    ACCOUNT: '/account',
+    ACCOUNT_INFO: '/account/info',
+    ACCOUNT_SETTINGS: '/account/settings'
 } as const;

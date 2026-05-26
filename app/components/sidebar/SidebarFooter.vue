@@ -3,28 +3,30 @@
         class="flex justify-between pt-6 pb-8 px-8 md:p-0 items-center md:items-stretch border-t border-t-[var(--p-surface-800)] md:border-none md:flex-col"
     >
         <div class="md:p-3">
-            <div
-                class="group flex items-center gap-3 md:w-full cursor-pointer"
+            <button
+                type="button"
+                class="group flex items-center gap-3 md:w-full cursor-pointer text-left"
                 :class="
                     collapsed
                         ? 'justify-center'
                         : 'md:px-4 md:py-2 hover:bg-[var(--p-primary-900)] rounded-md transition-colors'
                 "
+                @click="onProfileClick"
             >
-                <Avatar label="OR" shape="circle" class="shrink-0" />
+                <Avatar :label="initials" shape="circle" class="shrink-0" />
                 <div v-if="!collapsed" class="min-w-0 flex flex-col gap-1">
                     <p
                         class="text-sm font-semibold text-[var(--p-surface-300)] group-hover:text-[var(--p-surface-100)] truncate"
                     >
-                        Olivia Rhye
+                        {{ profile.firstName }} {{ profile.lastName }}
                     </p>
                     <p
                         class="text-xs text-[var(--p-surface-500)] group-hover:text-[var(--p-primary-100)] truncate"
                     >
-                        Logistics UA
+                        {{ subtitle }}
                     </p>
                 </div>
-            </div>
+            </button>
         </div>
         <div
             class="flex items-center md:-order-1 md:items-stretch md:p-3 md:border-b md:border-b-[var(--p-surface-800)] md:justify-center"
@@ -42,6 +44,8 @@
                 <Icon name="tabler:bell" class="size-6" />
             </button>
         </div>
+
+        <SidebarProfileMenu ref="profileMenu" />
     </div>
 </template>
 
@@ -54,4 +58,19 @@ interface SidebarFooterProps {
 defineProps<SidebarFooterProps>();
 
 const { toggleTheme, themeIcon } = useTheme();
+const { t } = useI18n();
+const { profile, initials } = useAccountProfile();
+
+const profileMenu = ref<{ open: (event: MouseEvent) => void } | null>(null);
+
+/** Subtitle — affiliation + role */
+const subtitle = computed((): string => {
+    const org = profile.value.affiliations[0] ?? '';
+    return org ? `${org} • ${t('account.role')}` : t('account.role');
+});
+
+/** Opens the profile menu (popover on desktop, drawer on mobile) */
+const onProfileClick = (event: MouseEvent): void => {
+    profileMenu.value?.open(event);
+};
 </script>

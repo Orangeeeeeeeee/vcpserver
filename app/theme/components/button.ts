@@ -50,6 +50,9 @@ const button: ButtonDesignTokens = {
               box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
               font-size: 0.875rem;
           }
+          .p-button-text {
+              box-shadow: none;
+          }
           .p-button svg {
               width: 1.25rem;
               height: 1.25rem;

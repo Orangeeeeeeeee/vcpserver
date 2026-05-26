@@ -20,7 +20,7 @@
                 severity="secondary"
                 class="w-full"
                 as="router-link"
-                to="/"
+                :to="ROUTES.OBJECTS"
             />
             <p class="text-sm text-[var(--p-surface-700)]">
                 {{ $t('forgotPassword.noEmail') }}
@@ -36,6 +36,8 @@
 </template>
 
 <script setup lang="ts">
+import { ROUTES } from '~/constants/routes';
+
 definePageMeta({
     layout: 'blank'
 });
