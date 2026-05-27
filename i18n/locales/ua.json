@@ -164,5 +164,74 @@
             "settings": "Налаштування",
             "signOut": "Вийти"
         }
+    },
+    "objects": {
+        "title": "Об'єкти",
+        "add": "Додати",
+        "tabs": {
+            "online": "Онлайн",
+            "trackers": "Трекери",
+            "drivers": "Водії",
+            "vehicles": "Транспортні засоби",
+            "groups": "Групи"
+        },
+        "drivers": {
+            "searchPlaceholder": "Пошук по імені",
+            "filterButton": "Фільтр",
+            "inDevelopment": "Функція в розробці",
+            "card": {
+                "statusActive": "Активний",
+                "statusBlocked": "Заблокований",
+                "statusVacation": "У відпустці",
+                "statusUnavailable": "Тимчасово недоступний",
+                "licenseSection": "Водійські права",
+                "startedAtLabel": "Почав працювати",
+                "employmentLabel": "Тип зайнятості",
+                "menuDetails": "Докладніше",
+                "menuEdit": "Редагувати",
+                "menuDelete": "Видалити"
+            }
+        },
+        "trackers": {
+            "searchPlaceholder": "Пошук по IMEI",
+            "allCompanies": "Усі компанії",
+            "columns": {
+                "company": "Компанія",
+                "imei": "IMEI",
+                "port": "Порт",
+                "transport": "Транспорт",
+                "params": "К-ть параметрів",
+                "actions": "Дії"
+            },
+            "actions": {
+                "edit": "Редагувати",
+                "delete": "Видалити",
+                "editing": "Редагування трекера",
+                "deleted": "Трекер видалено"
+            },
+            "modal": {
+                "title": "Додати трекер",
+                "subtitle": "Заповніть інформацію про новий GPS-трекер.",
+                "imei": "IMEI",
+                "imeiPlaceholder": "Введіть IMEI",
+                "company": "Компанія",
+                "companyPlaceholder": "Оберіть компанію",
+                "transport": "Транспорт",
+                "transportPlaceholder": "Оберіть транспорт",
+                "params": "Параметри",
+                "paramsPlaceholder": "Оберіть параметри",
+                "cancel": "Скасувати",
+                "submit": "Додати",
+                "added": "Трекер додано",
+                "editTitle": "Редагувати трекер",
+                "editSubtitle": "Оновіть дані трекера та параметри.",
+                "editSubmit": "Редагувати",
+                "updated": "Трекер оновлено",
+                "deleteTitle": "Видалити трекер?",
+                "deleteSubtitle": "Ви впевнені, що хочете видалити трекер",
+                "deleteWarning": "Цю дію неможливо буде скасувати.",
+                "deleteSubmit": "Видалити"
+            }
+        }
     }
 }

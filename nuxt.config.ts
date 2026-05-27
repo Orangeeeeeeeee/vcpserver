@@ -9,10 +9,19 @@ export default defineNuxtConfig({
     },
     compatibilityDate: '2025-07-15',
     routeRules: {
+        '/': { redirect: ROUTES.OBJECTS_ONLINE },
+        [ROUTES.OBJECTS]: { redirect: ROUTES.OBJECTS_ONLINE },
         [ROUTES.ACCOUNT]: { redirect: ROUTES.ACCOUNT_INFO }
     },
     devtools: { enabled: true },
     css: ['~/assets/css/main.css'],
+    components: [
+        {
+            path: '~/components',
+            pathPrefix: true,
+            ignore: ['**/index.ts']
+        }
+    ],
     modules: [
         '@nuxt/icon',
         '@primevue/nuxt-module',

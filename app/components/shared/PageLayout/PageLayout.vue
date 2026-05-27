@@ -29,42 +29,10 @@
                     </Button>
                 </div>
 
-                <Breadcrumb
-                    v-if="breadcrumbs?.length"
-                    :model="breadcrumbs"
+                <div
+                    id="page-breadcrumbs-target"
                     class="[grid-area:crumb] min-w-0"
-                >
-                    <template #item="{ item }">
-                        <NuxtLink
-                            v-if="item.to"
-                            :to="item.to"
-                            class="flex items-center gap-1.5 text-sm text-[var(--p-surface-700)] hover:text-[var(--p-primary-600)] transition-colors min-w-0"
-                        >
-                            <Icon
-                                v-if="item.icon"
-                                :name="item.icon"
-                                class="size-[1.125rem] shrink-0"
-                            />
-                            <span v-if="item.label" class="truncate">
-                                {{ item.label }}
-                            </span>
-                        </NuxtLink>
-                        <span
-                            v-else
-                            class="flex items-center gap-1.5 text-sm text-[var(--p-primary-600)] min-w-0"
-                        >
-                            <Icon
-                                v-if="item.icon"
-                                :name="item.icon"
-                                class="size-[1.125rem] shrink-0"
-                            />
-                            <span v-if="item.label" class="truncate">
-                                {{ item.label }}
-                            </span>
-                        </span>
-                    </template>
-                    <template #separator>/</template>
-                </Breadcrumb>
+                ></div>
 
                 <Tabs
                     v-if="tabs?.length"
@@ -86,11 +54,9 @@
                 </Tabs>
 
                 <div
-                    v-if="$slots.actions"
+                    id="page-actions-target"
                     class="[grid-area:actions] flex justify-end items-center gap-2 shrink-0"
-                >
-                    <slot name="actions"></slot>
-                </div>
+                ></div>
             </div>
         </div>
         <div class="p-4 lg:p-6">
@@ -106,15 +72,6 @@ export interface PageLayoutTab {
     /** Target route path */
     to: string;
 }
-
-export interface PageLayoutBreadcrumb {
-    /** Item label text */
-    label?: string;
-    /** Iconify icon name (e.g. 'tabler:bus') */
-    icon?: string;
-    /** Target route; omit for the current (non-clickable) item */
-    to?: string;
-}
 </script>
 
 <script setup lang="ts">
@@ -126,8 +83,6 @@ interface PageLayoutProps {
     title: string;
     /** Navigation tabs rendered under the title */
     tabs?: PageLayoutTab[];
-    /** Breadcrumb items rendered on the right of the title */
-    breadcrumbs?: PageLayoutBreadcrumb[];
 }
 
 defineProps<PageLayoutProps>();
@@ -149,16 +104,5 @@ defineProps<PageLayoutProps>();
             'title crumb'
             'tabs actions';
     }
-}
-
-/* Keep the breadcrumb on one line: only the current (last) crumb shrinks and
-   truncates with an ellipsis; preceding crumbs and separators stay intact. */
-.page-header :deep(.p-breadcrumb-item:last-child) {
-    min-width: 0;
-}
-
-.page-header :deep(.p-breadcrumb-item:not(:last-child)),
-.page-header :deep(.p-breadcrumb-separator) {
-    flex-shrink: 0;
 }
 </style>

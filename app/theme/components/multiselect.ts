@@ -17,7 +17,7 @@ const multiselect: MultiSelectDesignTokens = {
     chip: {
         borderRadius: '4px'
     },
-    css: `.p-multiselect-label { font-size: 0.875rem; }`
+    css: `.p-multiselect-label { font-size: 0.875rem; flex-wrap: wrap; }`
 };
 
 export default multiselect;

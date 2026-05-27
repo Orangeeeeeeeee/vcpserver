@@ -10,6 +10,11 @@ import Tabs from 'primevue/tabs';
 import TabList from 'primevue/tablist';
 import Tab from 'primevue/tab';
 import Breadcrumb from 'primevue/breadcrumb';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import Tag from 'primevue/tag';
+import Avatar from 'primevue/avatar';
+import PrimeVueButton from 'primevue/button';
 import VcpPreset from '../app/theme/preset';
 import { Typography as UiTypography } from '../app/components/ui/Typography';
 
@@ -37,7 +42,8 @@ const NuxtIcon = defineComponent({
         icon: { type: String, default: '' }
     },
     setup(props, { attrs }) {
-        return () => h(IconifyIcon, { icon: props.name || props.icon, ...attrs });
+        return () =>
+            h(IconifyIcon, { icon: props.name || props.icon, ...attrs });
     }
 });
 
@@ -68,6 +74,11 @@ setup((app) => {
     app.component('TabList', TabList);
     app.component('Tab', Tab);
     app.component('Breadcrumb', Breadcrumb);
+    app.component('DataTable', DataTable);
+    app.component('Column', Column);
+    app.component('Tag', Tag);
+    app.component('Avatar', Avatar);
+    app.component('Button', PrimeVueButton);
 });
 
 const preview: Preview = {

@@ -1,0 +1,229 @@
+<template>
+    <div class="flex flex-col gap-4">
+        <!-- Filters bar -->
+        <div class="flex flex-wrap items-center gap-3">
+            <IconField class="flex-1 min-w-0 md:flex-none md:w-72">
+                <InputIcon>
+                    <Icon name="tabler:search" class="size-5" />
+                </InputIcon>
+                <InputText
+                    v-model="searchQuery"
+                    :placeholder="$t('objects.trackers.searchPlaceholder')"
+                    fluid
+                />
+            </IconField>
+
+            <MultiSelect
+                v-model="selectedCompanies"
+                :options="companies"
+                :placeholder="$t('objects.trackers.allCompanies')"
+                class="w-40 md:w-56"
+                :pt="{ label: { class: 'p-placeholder' } }"
+            >
+                <template #value>
+                    {{ $t('objects.trackers.allCompanies') }}
+                </template>
+            </MultiSelect>
+
+            <div
+                v-if="selectedCompanies.length"
+                class="flex flex-wrap items-center gap-2 basis-full md:basis-auto md:ml-auto"
+            >
+                <Chip
+                    v-for="company in selectedCompanies"
+                    :key="company"
+                    :label="company"
+                    removable
+                    @remove="removeCompany(company)"
+                >
+                    <template #removeicon>
+                        <Icon
+                            name="tabler:x"
+                            class="cursor-pointer"
+                            @click="removeCompany(company)"
+                        />
+                    </template>
+                </Chip>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <SharedResponsiveTable
+            :value="filteredTrackers"
+            :columns="columns"
+            paginator
+            :rows="9"
+            row-key="id"
+        >
+            <template #cell-company="{ row }">
+                <div class="flex items-center gap-2">
+                    <Avatar
+                        :label="row.companyBadge"
+                        shape="circle"
+                        size="small"
+                    />
+                    <span
+                        class="font-semibold text-sm text-[var(--p-surface-950)]"
+                    >
+                        {{ row.company }}
+                    </span>
+                </div>
+            </template>
+            <template #cell-transport="{ row }">
+                <div class="flex flex-col">
+                    <span class="font-semibold">{{ row.transport }}</span>
+                    <span class="text-[var(--p-surface-600)]">
+                        ID: {{ row.transportId }}
+                    </span>
+                </div>
+            </template>
+            <template #cell-params="{ row }">
+                <Chip
+                    severity="primary"
+                    :label="String(row.params.length)"
+                ></Chip>
+            </template>
+            <template #cell-actions="{ row }">
+                <div class="flex items-center gap-2 justify-end">
+                    <Button
+                        type="button"
+                        severity="secondary"
+                        :aria-label="$t('objects.trackers.actions.edit')"
+                        @click="onEdit(row)"
+                    >
+                        <template #icon>
+                            <Icon name="tabler:pencil" class="size-5" />
+                        </template>
+                    </Button>
+                    <Button
+                        type="button"
+                        severity="secondary"
+                        :aria-label="$t('objects.trackers.actions.delete')"
+                        @click="onDelete(row)"
+                    >
+                        <template #icon>
+                            <Icon name="tabler:trash" class="size-5" />
+                        </template>
+                    </Button>
+                </div>
+            </template>
+        </SharedResponsiveTable>
+
+        <Teleport to="#page-actions-target">
+            <Button
+                :label="$t('objects.add')"
+                severity="secondary"
+                @click="modalVisible = true"
+            >
+                <template #icon>
+                    <Icon name="tabler:plus" class="size-5" />
+                </template>
+            </Button>
+        </Teleport>
+
+        <Teleport to="#page-breadcrumbs-target">
+            <SharedPageBreadcrumb
+                :items="[
+                    { icon: 'tabler:bus', to: ROUTES.OBJECTS_ONLINE },
+                    { label: $t('objects.tabs.trackers') }
+                ]"
+            />
+        </Teleport>
+
+        <ObjectsAddTrackerDialog v-model:visible="modalVisible" />
+
+        <ObjectsEditTrackerDialog
+            v-model:visible="editVisible"
+            :tracker="editTarget"
+        />
+
+        <ObjectsDeleteTrackerDialog
+            v-model:visible="deleteVisible"
+            :tracker="deleteTarget"
+        />
+    </div>
+</template>
+
+<script setup lang="ts">
+import type { TableColumn } from '~/components/shared/ResponsiveTable';
+import type { Tracker } from '~/composables/useTrackers';
+import { ROUTES } from '~/constants/routes';
+
+const { t } = useI18n();
+const { trackers, companies } = useTrackers();
+
+const searchQuery = ref('');
+const selectedCompanies = ref<string[]>([]);
+const modalVisible = ref(false);
+const editVisible = ref<boolean>(false);
+const editTarget = ref<Tracker | null>(null);
+const deleteVisible = ref<boolean>(false);
+const deleteTarget = ref<Tracker | null>(null);
+
+const columns = computed<TableColumn[]>(() => [
+    {
+        field: 'company',
+        header: t('objects.trackers.columns.company'),
+        sortable: true
+    },
+    {
+        field: 'imei',
+        header: t('objects.trackers.columns.imei'),
+        sortable: true
+    },
+    {
+        field: 'port',
+        header: t('objects.trackers.columns.port'),
+        sortable: true
+    },
+    {
+        field: 'transport',
+        header: t('objects.trackers.columns.transport'),
+        sortable: true
+    },
+    {
+        field: 'params',
+        header: t('objects.trackers.columns.params'),
+        sortable: true
+    },
+    {
+        field: 'actions',
+        header: t('objects.trackers.columns.actions'),
+        align: 'right'
+    }
+]);
+
+/** Trackers filtered by IMEI substring + company multi-select */
+const filteredTrackers = computed((): Tracker[] => {
+    let arr: Tracker[] = trackers.value;
+    if (searchQuery.value.trim()) {
+        const q = searchQuery.value.trim().toLowerCase();
+        arr = arr.filter((item) => item.imei.toLowerCase().includes(q));
+    }
+    if (selectedCompanies.value.length) {
+        arr = arr.filter((item) =>
+            selectedCompanies.value.includes(item.company)
+        );
+    }
+    return arr;
+});
+
+/** Removes a company from the multi-select filter */
+const removeCompany = (company: string): void => {
+    selectedCompanies.value = selectedCompanies.value.filter(
+        (c) => c !== company
+    );
+};
+
+/** Opens the edit dialog prefilled with the selected tracker */
+const onEdit = (row: Tracker): void => {
+    editTarget.value = row;
+    editVisible.value = true;
+};
+
+/** Opens the delete confirmation dialog for the selected tracker */
+const onDelete = (row: Tracker): void => {
+    deleteTarget.value = row;
+    deleteVisible.value = true;
+};
+</script>
