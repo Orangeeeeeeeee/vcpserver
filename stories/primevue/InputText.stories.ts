@@ -94,6 +94,33 @@ export const States: Story = {
     })
 };
 
+export const Invalid: Story = {
+    render: () => ({
+        components: { InputText, FloatLabel, IconField, InputIcon, Icon },
+        data: () => ({
+            empty: '',
+            filled: 'invalid@example',
+            floatValue: '',
+            iconValue: ''
+        }),
+        template: `
+      <div class="flex flex-col gap-4 max-w-sm">
+        <InputText v-model="empty" invalid placeholder="Введіть значення" />
+        <InputText v-model="filled" invalid />
+        <InputText v-model="empty" invalid disabled placeholder="Invalid + disabled" />
+        <FloatLabel>
+          <InputText id="invalid-floatlabel" v-model="floatValue" invalid />
+          <label for="invalid-floatlabel">Float Label Invalid</label>
+        </FloatLabel>
+        <IconField>
+          <InputIcon><Icon icon="tabler:alert-circle" /></InputIcon>
+          <InputText v-model="iconValue" invalid placeholder="Invalid with icon" />
+        </IconField>
+      </div>
+    `
+    })
+};
+
 export const WithFloatLabel: Story = {
     render: () => ({
         components: { InputText, FloatLabel },

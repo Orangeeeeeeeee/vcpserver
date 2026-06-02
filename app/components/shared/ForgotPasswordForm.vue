@@ -11,6 +11,7 @@
                 v-model="state.email"
                 type="email"
                 :placeholder="$t('common.emailPlaceholder')"
+                :invalid="r$.$fields.email.$invalid"
                 fluid
             />
         </SharedAppFormField>

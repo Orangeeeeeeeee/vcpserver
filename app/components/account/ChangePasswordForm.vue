@@ -12,6 +12,7 @@
                 :feedback="false"
                 toggle-mask
                 :placeholder="$t('account.info.oldPasswordPlaceholder')"
+                :invalid="r$.$fields.oldPassword.$invalid"
                 fluid
             />
         </SharedAppFormField>
@@ -28,6 +29,7 @@
                 :feedback="false"
                 toggle-mask
                 :placeholder="$t('account.info.newPasswordPlaceholder')"
+                :invalid="r$.$fields.newPassword.$invalid"
                 fluid
             />
         </SharedAppFormField>
@@ -44,6 +46,7 @@
                 :feedback="false"
                 toggle-mask
                 :placeholder="$t('account.info.confirmNewPasswordPlaceholder')"
+                :invalid="r$.$fields.confirmPassword.$invalid"
                 fluid
             />
         </SharedAppFormField>

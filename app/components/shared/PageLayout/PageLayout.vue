@@ -14,19 +14,22 @@
                     >
                         {{ title }}
                     </h1>
-                    <Button
-                        severity="secondary"
-                        text
-                        class="md:hidden"
-                        @click="openMobile"
-                    >
-                        <template #icon>
-                            <Icon
-                                name="tabler:menu-2"
-                                class="size-6 text-[var(--p-primary-950)]"
-                            />
-                        </template>
-                    </Button>
+                    <div class="flex justify-end items-center gap-2 shrink-0">
+                        <div id="page-actions-header"></div>
+                        <Button
+                            severity="secondary"
+                            text
+                            class="md:hidden"
+                            @click="openMobile"
+                        >
+                            <template #icon>
+                                <Icon
+                                    name="custom:burger"
+                                    class="size-6 text-[var(--p-primary-950)]"
+                                />
+                            </template>
+                        </Button>
+                    </div>
                 </div>
 
                 <div
@@ -39,16 +42,18 @@
                     :value="route.path"
                     class="[grid-area:tabs] min-w-0"
                 >
-                    <TabList :pt="{ tabList: { class: 'gap-4 md:gap-5' } }">
+                    <TabList>
                         <Tab
                             v-for="tab in tabs"
                             :key="tab.to"
                             :value="tab.to"
                             as="router-link"
                             :to="tab.to"
-                            :pt="{ root: { class: 'text-sm md:text-base' } }"
+                            class="px-1 pt-[0.6rem] pb-[0.4rem] md:px-4 md:py-[0.7rem]"
                         >
-                            {{ tab.label }}
+                            <span class="text-sm md:text-base">
+                                {{ tab.label }}
+                            </span>
                         </Tab>
                     </TabList>
                 </Tabs>

@@ -143,7 +143,7 @@ const datatable: DataTableDesignTokens = {
     },
     paginatorBottom: {
         borderColor: '{surface.300}',
-        borderWidth: '0 1px 1px 1px'
+        borderWidth: '1px 0 0 0'
     },
     colorScheme: {
         light: {
@@ -158,21 +158,8 @@ const datatable: DataTableDesignTokens = {
         }
     },
     css: `
-        .p-datatable-table-container {
-            border-radius: 4px;
-            border-style: solid;
-            border-color: var(--p-surface-300);
-            border-width: 1px;
-        }
-
         .p-datatable-tbody > tr > td {
             font-size: 0.875rem;
-        }
-
-        .p-datatable-paginator-bottom {
-            border-bottom-left-radius: 4px;
-            border-bottom-right-radius: 4px;
-            overflow: hidden;
         }
     `
 };

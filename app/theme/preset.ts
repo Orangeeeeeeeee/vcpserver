@@ -6,6 +6,7 @@ import components from './components';
 const VcpPreset = definePreset(Aura, {
     primitive: primitiveColors,
     semantic: {
+        iconSize: '1.5rem',
         formField: {
             paddingX: '0.65rem',
             paddingY: '0.54rem',
@@ -19,7 +20,7 @@ const VcpPreset = definePreset(Aura, {
                 paddingX: '0.9rem',
                 paddingY: '0.9rem'
             },
-            borderRadius: '8px'
+            borderRadius: '6px'
         },
         text: {
             color: '{surface.600}',

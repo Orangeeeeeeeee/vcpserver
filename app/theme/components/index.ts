@@ -9,6 +9,7 @@ import dialog from './dialog';
 import inputtext from './inputtext';
 import multiselect from './multiselect';
 import paginator from './paginator';
+import select from './select';
 import selectbutton from './selectbutton';
 import tabs from './tabs';
 import tag from './tag';
@@ -26,6 +27,7 @@ export default {
     inputtext,
     multiselect,
     paginator,
+    select,
     selectbutton,
     tabs,
     tag,

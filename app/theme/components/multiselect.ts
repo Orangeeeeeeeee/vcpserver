@@ -17,6 +17,11 @@ const multiselect: MultiSelectDesignTokens = {
     chip: {
         borderRadius: '4px'
     },
+    overlay: {
+        background: '{surface.100}',
+        borderColor: '{surface.300}',
+        shadow: '0px 4px 10px 0px rgba(0, 0, 0, 0.1)'
+    },
     css: `.p-multiselect-label { font-size: 0.875rem; flex-wrap: wrap; }`
 };
 

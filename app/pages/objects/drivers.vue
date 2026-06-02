@@ -4,7 +4,10 @@
         <div class="flex flex-wrap items-center gap-3">
             <IconField class="flex-1 min-w-0 md:flex-none md:w-72">
                 <InputIcon>
-                    <Icon name="tabler:search" class="size-5" />
+                    <Icon
+                        name="tabler:search"
+                        class="size-5 text-[var(--p-surface-700)]"
+                    />
                 </InputIcon>
                 <InputText
                     v-model="searchQuery"
@@ -24,24 +27,31 @@
             </Button>
         </div>
 
-        <!-- Drivers grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-            <ObjectsDriverCard
-                v-for="driver in paginatedDrivers"
-                :key="driver.id"
-                :driver="driver"
-                :labels="cardLabels"
-                @details="onDetails"
-                @edit="onEdit"
-                @delete="onDelete"
-            />
-        </div>
+        <!-- Drivers grid + paginator OR empty banner -->
+        <template v-if="filteredDrivers.length > 0">
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                <ObjectsDriverCard
+                    v-for="driver in paginatedDrivers"
+                    :key="driver.id"
+                    :driver="driver"
+                    :labels="cardLabels"
+                    @details="onDetails"
+                    @edit="onEdit"
+                    @delete="onDelete"
+                />
+            </div>
 
-        <!-- Paginator -->
-        <Paginator
-            v-model:first="paginatorFirst"
-            :rows="ROWS_PER_PAGE"
-            :total-records="filteredDrivers.length"
+            <Paginator
+                v-model:first="paginatorFirst"
+                :rows="ROWS_PER_PAGE"
+                :total-records="filteredDrivers.length"
+            />
+        </template>
+        <SharedTableEmpty
+            v-else
+            :message="$t('objects.drivers.emptyMessage')"
+            :reset-label="$t('objects.drivers.resetFilters')"
+            @reset="onResetFilters"
         />
 
         <!-- Teleports -->
@@ -122,6 +132,11 @@ const cardLabels = computed<DriverCardLabels>(() => ({
 /** Helper to show a placeholder toast for stubbed actions */
 const placeholderToast = (summary: string, detail: string): void => {
     toast.add({ severity: 'info', summary, detail, life: 2000 });
+};
+
+/** Resets the search filter (the filter button itself is still a placeholder) */
+const onResetFilters = (): void => {
+    searchQuery.value = '';
 };
 
 const onAdd = (): void =>

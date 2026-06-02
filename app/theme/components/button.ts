@@ -41,6 +41,17 @@ const button: ButtonDesignTokens = {
                     activeBorderColor: '{primary.900}',
                     hoverColor: '{surface.50}',
                     activeColor: '{surface.50}'
+                },
+                danger: {
+                    borderColor: '{red.600}',
+                    background: '{red.600}',
+                    color: '{surface.50}',
+                    hoverBackground: '{red.700}',
+                    hoverBorderColor: '{red.700}',
+                    activeBackground: '{red.700}',
+                    activeBorderColor: '{red.700}',
+                    hoverColor: '{surface.50}',
+                    activeColor: '{surface.50}'
                 }
             }
         }

@@ -12,6 +12,7 @@
                 :feedback="false"
                 toggle-mask
                 :placeholder="$t('resetPassword.newPasswordPlaceholder')"
+                :invalid="r$.$fields.password.$invalid"
                 fluid
             />
         </SharedAppFormField>
@@ -28,6 +29,7 @@
                 :feedback="false"
                 toggle-mask
                 :placeholder="$t('resetPassword.confirmPasswordPlaceholder')"
+                :invalid="r$.$fields.confirmPassword.$invalid"
                 fluid
             />
         </SharedAppFormField>

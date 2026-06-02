@@ -22,6 +22,9 @@
         class="md:!hidden !w-full"
         :modal="true"
         :position="isRight ? 'right' : 'left'"
+        :pt="{
+            root: { style: 'border: none' }
+        }"
     >
         <template #container>
             <div class="flex flex-col h-full bg-[var(--p-surface-950)]">

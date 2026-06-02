@@ -11,6 +11,7 @@
                 v-model="state.email"
                 type="email"
                 :placeholder="$t('common.emailPlaceholder')"
+                :invalid="r$.$fields.email.$invalid"
                 fluid
             />
         </SharedAppFormField>
@@ -27,6 +28,7 @@
                 :feedback="false"
                 toggle-mask
                 placeholder="•••••••"
+                :invalid="r$.$fields.password.$invalid"
                 fluid
             />
         </SharedAppFormField>

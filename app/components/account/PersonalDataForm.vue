@@ -40,6 +40,7 @@
                 id="firstName"
                 v-model="state.firstName"
                 :placeholder="$t('account.info.firstNamePlaceholder')"
+                :invalid="r$.$fields.firstName.$invalid"
                 fluid
             />
         </SharedAppFormField>
@@ -54,6 +55,7 @@
                 id="lastName"
                 v-model="state.lastName"
                 :placeholder="$t('account.info.lastNamePlaceholder')"
+                :invalid="r$.$fields.lastName.$invalid"
                 fluid
             />
         </SharedAppFormField>
@@ -70,6 +72,7 @@
                 :options="affiliationOptions"
                 display="chip"
                 :placeholder="$t('account.info.affiliationPlaceholder')"
+                :invalid="r$.$fields.affiliations.$invalid"
                 fluid
             >
                 <template #chipicon="{ removeCallback }">

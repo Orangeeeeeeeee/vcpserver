@@ -1,36 +1,40 @@
 <template>
-    <DataTable
-        :value="value"
-        :paginator="paginator"
-        :rows="rows"
-        :rows-per-page-options="rowsPerPageOptions"
-        :data-key="rowKey"
-        :loading="loading"
-        removable-sort
-        class="responsive-table"
+    <div
+        class="border border-[var(--p-surface-300)] rounded-2xl overflow-hidden"
     >
-        <Column
-            v-for="col in columns"
-            :key="col.field"
-            :field="col.field"
-            :header="col.header"
-            :sortable="col.sortable"
-            :style="col.width ? { width: col.width } : undefined"
-            :body-style="col.align ? { textAlign: col.align } : undefined"
-            :header-style="col.align ? { textAlign: col.align } : undefined"
-            :pt="{ bodyCell: { 'data-label': col.header } }"
+        <DataTable
+            :value="value"
+            :paginator="paginator"
+            :rows="rows"
+            :rows-per-page-options="rowsPerPageOptions"
+            :data-key="rowKey"
+            :loading="loading"
+            removable-sort
+            class="responsive-table"
         >
-            <template #body="{ data }">
-                <slot
-                    :name="`cell-${col.field}`"
-                    :row="data"
-                    :value="data[col.field]"
-                >
-                    {{ data[col.field] }}
-                </slot>
-            </template>
-        </Column>
-    </DataTable>
+            <Column
+                v-for="col in columns"
+                :key="col.field"
+                :field="col.field"
+                :header="col.header"
+                :sortable="col.sortable"
+                :style="col.width ? { width: col.width } : undefined"
+                :body-style="col.align ? { textAlign: col.align } : undefined"
+                :header-style="col.align ? { textAlign: col.align } : undefined"
+                :pt="{ bodyCell: { 'data-label': col.header } }"
+            >
+                <template #body="{ data }">
+                    <slot
+                        :name="`cell-${col.field}`"
+                        :row="data"
+                        :value="data[col.field]"
+                    >
+                        {{ data[col.field] }}
+                    </slot>
+                </template>
+            </Column>
+        </DataTable>
+    </div>
 </template>
 
 <script lang="ts">
@@ -101,10 +105,10 @@ withDefaults(defineProps<ResponsiveTableProps>(), {
         display: flex;
         align-items: center;
         gap: 1rem;
-        padding: 1rem 0;
+        padding: 0.75rem 0;
         border: none;
         text-align: left !important;
-        border-bottom: 1px solid var(--p-surface-300);
+        border-bottom: 1px solid var(--p-surface-200);
     }
 
     .responsive-table :deep(.p-datatable-tbody > tr > td:last-child) {

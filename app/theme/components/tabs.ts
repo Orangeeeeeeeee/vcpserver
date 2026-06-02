@@ -9,7 +9,7 @@ const tabs: TabsDesignTokens = {
         background: 'transparent',
         hoverBackground: 'transparent',
         activeBackground: 'transparent',
-        borderWidth: '0 0 4px 0',
+        borderWidth: '0 0 2px 0',
         borderColor: 'transparent',
         hoverBorderColor: '{primary.600}',
         activeBorderColor: '{primary.600}',
@@ -41,17 +41,45 @@ const tabs: TabsDesignTokens = {
         }
     },
     navButton: {
-        background: 'transparent',
+        background: '{surface.100}',
         color: '{surface.500}',
         hoverColor: '{surface.700}',
         width: '2.5rem',
-        shadow: '0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12)'
+        shadow: 'none'
     },
     activeBar: {
-        height: '4px',
+        height: '2px',
         bottom: '-1px',
         background: '{primary.600}'
-    }
+    },
+    css: `
+        .p-tablist-nav-button {
+            display: none;
+        }
+
+        .p-tablist-tab-list {
+            gap: 1.25rem;
+        }
+
+        .p-tablist-tab-list .p-tab {
+            position: relative;
+            line-height: 1;
+        }
+
+        .p-tablist-tab-list .p-tab:before {
+            position: absolute;
+            content: '';
+            width: 1px;
+            height: 19px;
+            background: var(--p-surface-300);
+            top: 0.7rem;
+            left: -10px;
+        }
+
+        .p-tablist-tab-list .p-tab:first-child:before {
+            display: none;
+        }
+    `
 };
 
 export default tabs;

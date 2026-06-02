@@ -4,7 +4,10 @@
         <div class="flex flex-wrap items-center gap-3">
             <IconField class="flex-1 min-w-0 md:flex-none md:w-72">
                 <InputIcon>
-                    <Icon name="tabler:search" class="size-5" />
+                    <Icon
+                        name="tabler:search"
+                        class="size-5 text-[var(--p-surface-700)]"
+                    />
                 </InputIcon>
                 <InputText
                     v-model="searchQuery"
@@ -49,6 +52,7 @@
 
         <!-- Table -->
         <SharedResponsiveTable
+            v-if="filteredTrackers.length > 0"
             :value="filteredTrackers"
             :columns="columns"
             paginator
@@ -76,6 +80,12 @@
                         ID: {{ row.transportId }}
                     </span>
                 </div>
+            </template>
+            <template #cell-imei="{ row }">
+                <span class="text-[var(--p-surface-900)]">{{ row.imei }}</span>
+            </template>
+            <template #cell-port="{ row }">
+                <span class="font-medium">{{ row.port }}</span>
             </template>
             <template #cell-params="{ row }">
                 <Chip
@@ -108,17 +118,19 @@
                 </div>
             </template>
         </SharedResponsiveTable>
+        <SharedTableEmpty
+            v-else
+            :message="$t('objects.trackers.emptyMessage')"
+            :reset-label="$t('objects.trackers.resetFilters')"
+            @reset="onResetFilters"
+        />
 
-        <Teleport to="#page-actions-target">
-            <Button
+        <Teleport :to="actionsTarget">
+            <UiActionButton
+                icon="tabler:plus"
                 :label="$t('objects.add')"
-                severity="secondary"
                 @click="modalVisible = true"
-            >
-                <template #icon>
-                    <Icon name="tabler:plus" class="size-5" />
-                </template>
-            </Button>
+            />
         </Teleport>
 
         <Teleport to="#page-breadcrumbs-target">
@@ -159,6 +171,12 @@ const editVisible = ref<boolean>(false);
 const editTarget = ref<Tracker | null>(null);
 const deleteVisible = ref<boolean>(false);
 const deleteTarget = ref<Tracker | null>(null);
+
+const isTablet = useMediaQuery('(min-width: 768px)');
+/** PageLayout slot to teleport the add button into — mobile sits next to title, desktop next to tabs */
+const actionsTarget = computed((): string =>
+    isTablet.value ? '#page-actions-target' : '#page-actions-header'
+);
 
 const columns = computed<TableColumn[]>(() => [
     {
@@ -213,6 +231,12 @@ const removeCompany = (company: string): void => {
     selectedCompanies.value = selectedCompanies.value.filter(
         (c) => c !== company
     );
+};
+
+/** Resets search and company filters back to default */
+const onResetFilters = (): void => {
+    searchQuery.value = '';
+    selectedCompanies.value = [];
 };
 
 /** Opens the edit dialog prefilled with the selected tracker */

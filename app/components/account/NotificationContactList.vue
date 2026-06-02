@@ -7,6 +7,7 @@
                 v-model="state.value"
                 :type="inputType ?? 'text'"
                 :placeholder="addPlaceholder"
+                :invalid="r$.$fields.value.$invalid"
                 fluid
                 @keydown.enter.prevent="onAdd"
             />

@@ -39,6 +39,7 @@
                     :placeholder="
                         $t('objects.trackers.modal.companyPlaceholder')
                     "
+                    :invalid="r$.$fields.company.$invalid"
                     fluid
                 />
             </SharedAppFormField>
@@ -56,6 +57,7 @@
                     :placeholder="
                         $t('objects.trackers.modal.transportPlaceholder')
                     "
+                    :invalid="r$.$fields.transport.$invalid"
                     fluid
                 />
             </SharedAppFormField>
@@ -74,6 +76,7 @@
                     :placeholder="
                         $t('objects.trackers.modal.paramsPlaceholder')
                     "
+                    :invalid="r$.$fields.params.$invalid"
                     fluid
                 />
             </SharedAppFormField>

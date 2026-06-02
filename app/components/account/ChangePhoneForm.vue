@@ -12,6 +12,7 @@
                 :feedback="false"
                 toggle-mask
                 :placeholder="$t('account.info.passwordPlaceholder')"
+                :invalid="r$.$fields.password.$invalid"
                 fluid
             />
         </SharedAppFormField>
@@ -26,6 +27,7 @@
                 id="changePhoneNew"
                 v-model="state.newPhone"
                 :placeholder="$t('account.info.newPhonePlaceholder')"
+                :invalid="r$.$fields.newPhone.$invalid"
                 fluid
             />
         </SharedAppFormField>
