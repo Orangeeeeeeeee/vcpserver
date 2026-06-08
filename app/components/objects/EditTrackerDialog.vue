@@ -10,7 +10,7 @@
                 <UiTypography variant="h3">
                     {{ $t('objects.trackers.modal.editTitle') }}
                 </UiTypography>
-                <p class="text-sm text-[var(--p-surface-800)]">
+                <p class="text-sm text-surface-800">
                     {{ $t('objects.trackers.modal.editSubtitle') }}
                 </p>
             </div>
@@ -18,10 +18,10 @@
 
         <form class="flex flex-col gap-5" novalidate @submit.prevent="onSubmit">
             <div class="flex flex-col gap-1.5">
-                <span class="text-sm font-normal text-[var(--p-surface-700)]">
+                <span class="text-sm font-normal text-surface-700">
                     {{ $t('objects.trackers.modal.imei') }}
                 </span>
-                <span class="text-base text-[var(--p-surface-950)]">
+                <span class="text-base text-surface-950">
                     {{ tracker?.imei }}
                 </span>
             </div>
@@ -170,8 +170,8 @@ const onCancel = (): void => {
 /** Validates, updates the tracker via composable, toasts, and closes */
 const onSubmit = async (): Promise<void> => {
     if (!props.tracker) return;
-    const result = await r$.$validate();
-    if (!result) return;
+    const { valid } = await r$.$validate();
+    if (!valid) return;
 
     updateTracker({
         id: props.tracker.id,

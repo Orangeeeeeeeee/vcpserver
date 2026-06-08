@@ -38,14 +38,14 @@
                 <Checkbox v-model="rememberMe" input-id="rememberMe" binary />
                 <label
                     for="rememberMe"
-                    class="cursor-pointer text-xs md:text-sm text-[var(--p-surface-700)]"
+                    class="cursor-pointer text-xs md:text-sm text-surface-700"
                 >
                     {{ $t('login.rememberMe') }}
                 </label>
             </div>
             <NuxtLink
                 :to="ROUTES.FORGOT_PASSWORD"
-                class="text-xs md:text-sm font-normal text-[var(--p-primary-600)]"
+                class="text-xs md:text-sm font-normal text-primary-600"
             >
                 {{ $t('login.forgotPassword') }}
             </NuxtLink>
@@ -53,6 +53,7 @@
 
         <Button
             type="submit"
+            size="small"
             :label="$t('login.submit')"
             :disabled="isSubmitDisabled"
         />
@@ -94,8 +95,8 @@ const isSubmitDisabled = computed((): boolean => r$.$invalid || r$.$pending);
 
 /** Validates and submits the login form */
 const onSubmit = async (): Promise<void> => {
-    const result = await r$.$validate();
-    if (result) {
+    const { valid } = await r$.$validate();
+    if (valid) {
         console.log('Login:', state);
     }
 };

@@ -4,7 +4,7 @@
             <NuxtLink
                 v-if="item.to"
                 :to="item.to"
-                class="flex items-center gap-1.5 text-sm text-[var(--p-surface-700)] hover:text-[var(--p-primary-600)] transition-colors min-w-0"
+                class="flex items-center gap-1.5 text-sm text-surface-700 hover:text-primary-600 transition-colors min-w-0"
             >
                 <Icon
                     v-if="item.icon"
@@ -17,7 +17,7 @@
             </NuxtLink>
             <span
                 v-else
-                class="flex items-center gap-1.5 text-sm text-[var(--p-primary-600)] min-w-0"
+                class="flex items-center gap-1.5 text-sm text-primary-600 min-w-0"
             >
                 <Icon
                     v-if="item.icon"

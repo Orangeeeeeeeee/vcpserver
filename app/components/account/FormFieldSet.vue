@@ -1,6 +1,6 @@
 <template>
     <section class="flex flex-col gap-5">
-        <h2 class="text-base font-semibold text-[var(--p-surface-900)]">
+        <h2 class="text-base font-semibold text-surface-900">
             {{ title }}
         </h2>
         <slot />

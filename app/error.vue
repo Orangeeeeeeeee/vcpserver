@@ -7,23 +7,24 @@
                 class="flex flex-col items-center lg:items-start text-center lg:text-left order-2 md:order-1 md:max-w-[460px] lg:max-w-max"
             >
                 <p
-                    class="text-xs md:text-sm lg:text-base mb-2 lg:mb-4 font-semibold text-[var(--p-primary-600)] mb-3"
+                    class="text-xs md:text-sm lg:text-base mb-2 lg:mb-4 font-semibold text-primary-600 mb-3"
                 >
                     {{ errorData.label }}
                 </p>
                 <UiTypography
                     variant="h1"
-                    class="mb-2 lg:mb-4 text-[var(--p-primary-950)]"
+                    class="mb-2 lg:mb-4 text-primary-950"
                 >
                     {{ errorData.title }}
                 </UiTypography>
                 <p
-                    class="text-xs md:text-sm lg:text-base text-[var(--p-surface-500)] mb-8 md:mb-11"
+                    class="text-xs md:text-sm lg:text-base text-surface-500 mb-8 md:mb-11"
                 >
                     {{ errorData.description }}
                 </p>
                 <div class="flex gap-3 w-full">
                     <Button
+                        size="small"
                         severity="secondary"
                         :label="$t('common.back')"
                         class="grow shrink-0 lg:grow-0"
@@ -36,11 +37,13 @@
                     <Button
                         v-if="error.statusCode === 401"
                         :label="$t('common.login')"
+                        size="small"
                         class="grow shrink-0 lg:grow-0"
                         @click="navigateTo(ROUTES.LOGIN)"
                     />
                     <Button
                         v-else
+                        size="small"
                         class="grow shrink-0 lg:grow-0"
                         :label="$t('common.home')"
                         @click="handleError"

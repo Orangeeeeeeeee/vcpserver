@@ -112,15 +112,15 @@ export const WithSubtitleHeader: Story = {
         >
           <template #header>
             <div class="flex flex-col gap-1">
-              <h2 class="text-lg font-semibold text-[var(--p-surface-950)]">
+              <h2 class="text-lg font-semibold text-surface-950">
                 Додати трекер
               </h2>
-              <p class="text-sm text-[var(--p-surface-600)]">
+              <p class="text-sm text-surface-600">
                 Заповніть інформацію про новий GPS-трекер.
               </p>
             </div>
           </template>
-          <p class="text-sm text-[var(--p-surface-700)]">
+          <p class="text-sm text-surface-700">
             Слот #header дозволяє рендерити title + subtitle замість стандартного header-пропа.
           </p>
           <template #footer>
@@ -181,29 +181,29 @@ export const WithForm: Story = {
         >
           <template #header>
             <div class="flex flex-col gap-1">
-              <h2 class="text-lg font-semibold text-[var(--p-surface-950)]">
+              <h2 class="text-lg font-semibold text-surface-950">
                 Додати трекер
               </h2>
-              <p class="text-sm text-[var(--p-surface-600)]">
+              <p class="text-sm text-surface-600">
                 Заповніть інформацію про новий GPS-трекер.
               </p>
             </div>
           </template>
           <form class="flex flex-col gap-5" @submit.prevent>
             <div class="flex flex-col gap-1.5">
-              <label for="story-imei" class="text-sm text-[var(--p-surface-700)]">IMEI</label>
+              <label for="story-imei" class="text-sm text-surface-700">IMEI</label>
               <InputText id="story-imei" v-model="imei" placeholder="Введіть IMEI" fluid />
             </div>
             <div class="flex flex-col gap-1.5">
-              <label for="story-company" class="text-sm text-[var(--p-surface-700)]">Компанія</label>
+              <label for="story-company" class="text-sm text-surface-700">Компанія</label>
               <Select id="story-company" v-model="company" :options="companies" placeholder="Оберіть компанію" fluid />
             </div>
             <div class="flex flex-col gap-1.5">
-              <label for="story-transport" class="text-sm text-[var(--p-surface-700)]">Транспорт</label>
+              <label for="story-transport" class="text-sm text-surface-700">Транспорт</label>
               <Select id="story-transport" v-model="transport" :options="transports" placeholder="Оберіть транспорт" fluid />
             </div>
             <div class="flex flex-col gap-1.5">
-              <label for="story-params" class="text-sm text-[var(--p-surface-700)]">Параметри</label>
+              <label for="story-params" class="text-sm text-surface-700">Параметри</label>
               <MultiSelect id="story-params" v-model="params" :options="paramsList" display="chip" placeholder="Оберіть параметри" fluid />
             </div>
           </form>

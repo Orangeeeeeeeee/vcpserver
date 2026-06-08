@@ -36,6 +36,7 @@
 
         <Button
             type="submit"
+            size="small"
             :label="$t('resetPassword.submit')"
             :disabled="isSubmitDisabled"
         />
@@ -85,8 +86,8 @@ const isSubmitDisabled = computed((): boolean => r$.$invalid || r$.$pending);
 
 /** Validates form, shows success toast, and redirects to home */
 const onSubmit = async (): Promise<void> => {
-    const result = await r$.$validate();
-    if (result) {
+    const { valid } = await r$.$validate();
+    if (valid) {
         toast.add({
             severity: 'success',
             summary: t('resetPassword.successTitle'),

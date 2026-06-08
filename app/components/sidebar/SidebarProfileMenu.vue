@@ -9,7 +9,7 @@
     <!-- Mobile fullscreen drawer -->
     <Drawer v-model:visible="isMobileOpen" position="full" class="md:!hidden">
         <template #header>
-            <span class="text-base font-semibold text-[var(--p-surface-900)]">
+            <span class="text-base font-semibold text-surface-900">
                 {{ $t('account.title') }}
             </span>
         </template>

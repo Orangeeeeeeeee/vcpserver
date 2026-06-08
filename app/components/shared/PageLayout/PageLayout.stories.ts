@@ -24,7 +24,7 @@ export const Default: Story = {
         template: `
             <PageLayout v-bind="args">
                 <template #content>
-                    <p class="text-[var(--p-surface-700)]">Вміст сторінки</p>
+                    <p class="text-surface-700">Вміст сторінки</p>
                 </template>
             </PageLayout>
         `
@@ -45,7 +45,7 @@ export const WithTabs: Story = {
         template: `
             <PageLayout v-bind="args">
                 <template #content>
-                    <p class="text-[var(--p-surface-700)]">Вміст активного табу</p>
+                    <p class="text-surface-700">Вміст активного табу</p>
                 </template>
             </PageLayout>
         `
@@ -67,7 +67,7 @@ export const WithBreadcrumbs: Story = {
         template: `
             <PageLayout v-bind="args">
                 <template #content>
-                    <p class="text-[var(--p-surface-700)]">Деталі об'єкта</p>
+                    <p class="text-surface-700">Деталі об'єкта</p>
                 </template>
             </PageLayout>
         `
@@ -92,7 +92,7 @@ export const Full: Story = {
         template: `
             <PageLayout v-bind="args">
                 <template #content>
-                    <p class="text-[var(--p-surface-700)]">Вміст</p>
+                    <p class="text-surface-700">Вміст</p>
                 </template>
             </PageLayout>
         `
@@ -133,7 +133,7 @@ export const WithActions: Story = {
 
                 </template>
                 <template #content>
-                    <p class="text-[var(--p-surface-700)]">Деталі об'єкта</p>
+                    <p class="text-surface-700">Деталі об'єкта</p>
                 </template>
             </PageLayout>
         `

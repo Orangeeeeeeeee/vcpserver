@@ -3,20 +3,24 @@
         v-model:visible="visible"
         modal
         :draggable="false"
-        :style="{ width: '28rem' }"
+        :style="{ width: '28.4rem' }"
     >
         <template #header>
-            <div class="flex flex-col gap-2 text-center">
+            <div class="flex flex-col gap-0.5 text-center">
                 <UiTypography variant="h3">
                     {{ $t('objects.trackers.modal.title') }}
                 </UiTypography>
-                <p class="text-sm text-[var(--p-surface-800)]">
+                <p class="text-sm text-surface-800">
                     {{ $t('objects.trackers.modal.subtitle') }}
                 </p>
             </div>
         </template>
 
-        <form class="flex flex-col gap-5" novalidate @submit.prevent="onSubmit">
+        <form
+            class="flex flex-col gap-3.5"
+            novalidate
+            @submit.prevent="onSubmit"
+        >
             <SharedAppFormField
                 id="addTrackerImei"
                 name="imei"
@@ -167,8 +171,8 @@ const onCancel = (): void => {
 
 /** Validates, adds the tracker to the shared list, toasts, and closes */
 const onSubmit = async (): Promise<void> => {
-    const result = await r$.$validate();
-    if (!result) return;
+    const { valid } = await r$.$validate();
+    if (!valid) return;
 
     addTracker({
         imei: state.imei.trim(),

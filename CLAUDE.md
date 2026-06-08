@@ -78,8 +78,10 @@ VCPServer — веб-застосунок на Nuxt 4 з використанн�
     });
 
     const onSubmit = async () => {
-        const result = await r$.$validate();
-        if (result) {
+        // regle's $validate() returns a RegleResult object ({ valid, data, ... }),
+        // NOT a boolean — destructure `valid`, never `if (result)`.
+        const { valid } = await r$.$validate();
+        if (valid) {
             console.log('Submit:', state);
         }
     };

@@ -2,8 +2,9 @@ import type { TabsDesignTokens } from '@primeuix/themes/types/tabs';
 
 const tabs: TabsDesignTokens = {
     tablist: {
-        borderWidth: '0',
-        background: 'transparent'
+        borderWidth: '0 0 1px 0',
+        background: 'transparent',
+        borderColor: '{surface.300}'
     },
     tab: {
         background: 'transparent',
@@ -16,9 +17,9 @@ const tabs: TabsDesignTokens = {
         color: '{surface.800}',
         hoverColor: '{primary.600}',
         activeColor: '{primary.600}',
-        padding: '0.7rem 1rem',
+        padding: '0.6rem 0.5rem',
         fontWeight: '400',
-        margin: '0 0 -1px 0',
+        margin: '0',
         gap: '5rem',
         focusRing: {
             width: '{focus.ring.width}',
@@ -49,7 +50,7 @@ const tabs: TabsDesignTokens = {
     },
     activeBar: {
         height: '2px',
-        bottom: '-1px',
+        bottom: '0',
         background: '{primary.600}'
     },
     css: `
@@ -58,7 +59,7 @@ const tabs: TabsDesignTokens = {
         }
 
         .p-tablist-tab-list {
-            gap: 1.25rem;
+            gap: 1rem;
         }
 
         .p-tablist-tab-list .p-tab {
@@ -73,11 +74,15 @@ const tabs: TabsDesignTokens = {
             height: 19px;
             background: var(--p-surface-300);
             top: 0.7rem;
-            left: -10px;
+            left: -0.5rem;
         }
 
         .p-tablist-tab-list .p-tab:first-child:before {
             display: none;
+        }
+
+        .p-tab-active {
+            font-weight: 500;
         }
     `
 };

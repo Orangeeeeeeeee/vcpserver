@@ -129,12 +129,14 @@
         <div class="flex gap-3">
             <Button
                 type="button"
+                size="small"
                 severity="secondary"
                 class="w-full md:w-auto"
                 :label="$t('account.settings.cancel')"
                 @click="onCancel"
             />
             <Button
+                size="small"
                 type="submit"
                 class="w-full md:w-auto"
                 :label="$t('account.settings.save')"

@@ -210,14 +210,14 @@ export const WithCustomCells: Story = {
                 <template #cell-transport="{ row }">
                     <div class="flex flex-col">
                         <span class="font-medium">{{ row.transport }}</span>
-                        <span class="text-xs text-[var(--p-surface-500)]">ID: {{ row.transportId }}</span>
+                        <span class="text-xs text-surface-500">ID: {{ row.transportId }}</span>
                     </div>
                 </template>
                 <template #cell-actions="{ row }">
                     <div class="flex items-center gap-2 justify-end">
                         <button
                             type="button"
-                            class="cursor-pointer text-[var(--p-primary-600)] hover:text-[var(--p-primary-800)]"
+                            class="cursor-pointer text-primary-600 hover:text-primary-800"
                             :title="'Edit ' + row.id"
                             @click="() => alert('Edit ' + row.id)"
                         >
@@ -225,7 +225,7 @@ export const WithCustomCells: Story = {
                         </button>
                         <button
                             type="button"
-                            class="cursor-pointer text-[var(--p-red-600)] hover:text-[var(--p-red-800)]"
+                            class="cursor-pointer text-red-600 hover:text-red-800"
                             :title="'Delete ' + row.id"
                             @click="() => alert('Delete ' + row.id)"
                         >

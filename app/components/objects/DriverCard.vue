@@ -1,22 +1,17 @@
 <template>
-    <div class="border border-[var(--p-surface-300)] rounded-md w-full">
+    <div class="border border-surface-300 rounded-md w-full">
         <!-- Header: status + overflow menu -->
-        <div class="border-b border-[var(--p-surface-300)] p-3">
-            <div class="flex items-start justify-between gap-2 relative">
+        <div class="border-b border-surface-300 px-3 pt-4 pb-3">
+            <div class="flex items-start justify-between gap-2 relative mb-2">
                 <Tag :severity="statusSeverity" :value="statusLabel" />
-                <Button
-                    text
-                    severity="secondary"
-                    :aria-label="labels.menuDetails"
+                <button
+                    type="button"
+                    class="inline-flex cursor-pointer p-0 text-surface-800"
+                    aria-haspopup="true"
                     @click="toggleMenu"
                 >
-                    <template #icon>
-                        <Icon
-                            name="tabler:dots-vertical"
-                            class="size-5 text-[var(--p-surface-800)]"
-                        />
-                    </template>
-                </Button>
+                    <Icon name="tabler:dots-vertical" class="size-5" />
+                </button>
                 <Menu ref="menuRef" :model="menuItems" popup>
                     <template #item="{ item, props: itemProps }">
                         <a
@@ -24,7 +19,7 @@
                             :class="[
                                 'flex items-center justify-between gap-6 cursor-pointer',
                                 (item as DriverMenuItem).danger &&
-                                    'text-[var(--p-red-600)]'
+                                    'text-red-600'
                             ]"
                         >
                             <span>{{ item.label }}</span>
@@ -38,7 +33,7 @@
             </div>
 
             <!-- Identity -->
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-1">
                 <Avatar
                     :label="driver.initials"
                     shape="circle"
@@ -46,11 +41,11 @@
                 />
                 <div class="flex flex-col">
                     <span
-                        class="font-semibold text-[var(--p-surface-900)] truncate"
+                        class="font-semibold text-surface-900 truncate text-sm"
                     >
                         {{ driver.name }}
                     </span>
-                    <span class="text-sm text-[var(--p-surface-700)] truncate">
+                    <span class="text-xs text-surface-700 truncate">
                         {{ driver.company }}
                     </span>
                 </div>
@@ -58,14 +53,12 @@
         </div>
 
         <!-- Contacts -->
-        <div class="p-3 flex flex-col gap-2">
-            <div
-                class="flex flex-col gap-2 text-sm text-[var(--p-surface-800)]"
-            >
-                <div class="flex items-center gap-2">
+        <div class="p-3 flex flex-col gap-1">
+            <div class="flex flex-col gap-0.5 text-sm text-surface-800">
+                <div class="flex items-center gap-1">
                     <Icon
                         name="tabler:truck"
-                        class="size-5 text-[var(--p-surface-600)] shrink-0"
+                        class="size-4 text-surface-600 shrink-0"
                     />
                     <span class="truncate">
                         {{ driver.transport }} (ID: {{ driver.transportId }})
@@ -74,14 +67,14 @@
                 <div class="flex items-center gap-2">
                     <Icon
                         name="tabler:phone"
-                        class="size-5 text-[var(--p-surface-600)] shrink-0"
+                        class="size-4 text-surface-600 shrink-0"
                     />
                     <span>{{ driver.phone }}</span>
                 </div>
                 <div class="flex items-center gap-2">
                     <Icon
                         name="tabler:mail"
-                        class="size-5 text-[var(--p-surface-600)] shrink-0"
+                        class="size-4 text-surface-600 shrink-0"
                     />
                     <span class="truncate">{{ driver.email }}</span>
                 </div>
@@ -89,53 +82,53 @@
 
             <!-- License -->
             <div
-                class="flex flex-col gap-2 border-t border-b border-[var(--p-surface-200)] py-2 text-sm text-[var(--p-surface-900)]"
+                class="border-t border-b border-surface-200 py-2 text-sm text-surface-900"
             >
-                <span class="font-semibold text-[var(--p-surface-950)]">
+                <span class="font-semibold text-surface-950">
                     {{ labels.licenseSection }}
                 </span>
-                <div class="flex items-center gap-2">
-                    <Icon
-                        name="tabler:id"
-                        class="size-5 text-[var(--p-surface-600)] shrink-0"
-                    />
-                    <span>{{ driver.license.id }}</span>
-                </div>
-                <div class="flex items-center gap-4 flex-wrap">
+                <div class="gap-1 flex flex-col">
                     <div class="flex items-center gap-2">
                         <Icon
-                            name="tabler:calendar"
-                            class="size-5 text-[var(--p-surface-600)] shrink-0"
+                            name="tabler:id"
+                            class="size-4 text-surface-600 shrink-0"
                         />
-                        <span>{{ driver.license.expiresAt }}</span>
+                        <span>{{ driver.license.id }}</span>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <Icon
-                            name="tabler:license"
-                            class="size-5 text-[var(--p-surface-600)] shrink-0"
-                        />
-                        <span>{{ driver.license.categories }}</span>
+                    <div class="flex items-center gap-4 flex-wrap">
+                        <div class="flex items-center gap-2">
+                            <Icon
+                                name="tabler:calendar"
+                                class="size-4 text-surface-600 shrink-0"
+                            />
+                            <span>{{ driver.license.expiresAt }}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <Icon
+                                name="tabler:license"
+                                class="size-4 text-surface-600 shrink-0"
+                            />
+                            <span>{{ driver.license.categories }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Footer meta -->
-            <div
-                class="flex flex-col gap-1 text-sm text-[var(--p-surface-700)]"
-            >
+            <div class="flex flex-col gap-1 text-sm text-surface-700">
                 <p>
-                    <span class="text-[var(--p-surface-600)]">
+                    <span class="text-surface-600">
                         {{ labels.startedAtLabel }}:
                     </span>
-                    <span class="font-medium text-[var(--p-surface-950)]">
+                    <span class="font-medium text-surface-950">
                         {{ driver.startedAt }}
                     </span>
                 </p>
                 <p>
-                    <span class="text-[var(--p-surface-600)]">
+                    <span class="text-surface-600">
                         {{ labels.employmentLabel }}:
                     </span>
-                    <span class="font-medium text-[var(--p-surface-950)]">
+                    <span class="font-medium text-surface-950">
                         {{ driver.employment }}
                     </span>
                 </p>
@@ -159,6 +152,14 @@ export interface DriverLicense {
     categories: string;
 }
 
+export interface DriverDocument {
+    id: string;
+    /** Display name, e.g. "Водійське посвідчення (скан)" */
+    name: string;
+    /** Captured file name (UI-only; no real file is stored) */
+    fileName?: string;
+}
+
 export interface Driver {
     id: string;
     /** Full name, e.g. "Василь Прийма" */
@@ -180,6 +181,10 @@ export interface Driver {
     startedAt: string;
     /** Display-ready employment type, e.g. "Повна зайнятість" */
     employment: string;
+    /** Optional free-text comment about the driver */
+    comment?: string;
+    /** Optional list of attached documents */
+    documents?: DriverDocument[];
 }
 
 export interface DriverCardLabels {

@@ -1,5 +1,5 @@
 <template>
-    <Button :severity="severity" class="size-10 lg:size-auto">
+    <Button :severity="severity" class="size-10 lg:size-auto" size="small">
         <Icon :name="icon" class="size-5 shrink-0" />
         <span class="hidden lg:block">{{ label }}</span>
     </Button>

@@ -1,7 +1,7 @@
 <template>
     <!-- Desktop / Tablet -->
     <aside
-        class="hidden md:flex fixed inset-y-0 z-40 flex-col bg-[var(--p-surface-950)] transition-all duration-200 w-[var(--sidebar-width)]"
+        class="hidden md:flex fixed inset-y-0 z-40 flex-col bg-surface-950 transition-all duration-200 w-[var(--sidebar-width)]"
         :class="[
             isRight ? 'right-0' : 'left-0',
             { '!w-[var(--sidebar-collapsed-width)]': isCollapsed }
@@ -27,7 +27,7 @@
         }"
     >
         <template #container>
-            <div class="flex flex-col h-full bg-[var(--p-surface-950)]">
+            <div class="flex flex-col h-full bg-surface-950">
                 <SidebarToggleButton
                     mode="close"
                     :is-right="isRight"

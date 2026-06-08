@@ -10,7 +10,7 @@
                 <p
                     v-for="(line, i) in subtitleLines"
                     :key="i"
-                    class="text-xs md:text-sm lg:text-base text-[var(--p-surface-700)] max-w-[80%] lg:max-w-[95%] m-auto"
+                    class="text-xs md:text-sm lg:text-base text-surface-700 max-w-[80%] lg:max-w-[95%] m-auto"
                 >
                     {{ line }}
                 </p>

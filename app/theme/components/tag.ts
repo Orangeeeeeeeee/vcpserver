@@ -4,7 +4,7 @@ const tag: TagDesignTokens = {
     root: {
         fontSize: '0.75rem',
         fontWeight: '400',
-        padding: '0.3rem 0.5rem',
+        padding: '0.1rem 0.5rem',
         gap: '0.375rem',
         borderRadius: '4px'
     },

@@ -9,19 +9,23 @@
                 :class="
                     collapsed
                         ? 'justify-center'
-                        : 'md:px-4 md:py-2 hover:bg-[var(--p-primary-900)] rounded-md transition-colors'
+                        : 'md:px-4 md:py-2 hover:bg-primary-900 rounded-md transition-colors'
                 "
                 @click="onProfileClick"
             >
-                <Avatar :label="initials" shape="circle" class="shrink-0" />
+                <Avatar
+                    :label="initials"
+                    shape="circle"
+                    class="shrink-0 bg-primary-300"
+                />
                 <div v-if="!collapsed" class="min-w-0 flex flex-col gap-1">
                     <p
-                        class="text-sm font-semibold text-[var(--p-surface-300)] group-hover:text-[var(--p-surface-100)] truncate"
+                        class="text-sm font-semibold text-surface-300 group-hover:text-surface-100 truncate"
                     >
                         {{ profile.firstName }} {{ profile.lastName }}
                     </p>
                     <p
-                        class="text-xs text-[var(--p-surface-500)] group-hover:text-[var(--p-primary-100)] truncate"
+                        class="text-xs text-surface-500 group-hover:text-primary-100 truncate"
                     >
                         {{ subtitle }}
                     </p>
@@ -33,13 +37,13 @@
             :class="collapsed ? 'flex-col gap-3' : 'gap-4'"
         >
             <button
-                class="flex items-center justify-center text-[var(--p-surface-500)] hover:text-[var(--p-surface-50)] hover:bg-[var(--p-primary-900)] rounded-md transition-colors cursor-pointer shrink-0 size-12"
+                class="flex items-center justify-center text-surface-500 hover:text-surface-50 hover:bg-primary-900 rounded-md transition-colors cursor-pointer shrink-0 size-12"
                 @click="toggleTheme"
             >
                 <Icon :name="themeIcon" class="size-6" />
             </button>
             <button
-                class="flex items-center justify-center text-[var(--p-surface-500)] hover:text-[var(--p-surface-50)] hover:bg-[var(--p-primary-900)] transition-colors cursor-pointer shrink-0 size-12 rounded-md"
+                class="flex items-center justify-center text-surface-500 hover:text-surface-50 hover:bg-primary-900 transition-colors cursor-pointer shrink-0 size-12 rounded-md"
             >
                 <Icon name="tabler:bell" class="size-6" />
             </button>

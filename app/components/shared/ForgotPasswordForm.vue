@@ -21,11 +21,13 @@
                 type="button"
                 :label="$t('common.back')"
                 severity="secondary"
+                size="small"
                 class="flex-1"
                 @click="navigateBack"
             />
             <Button
                 type="submit"
+                size="small"
                 :label="$t('forgotPassword.submit')"
                 class="flex-1"
                 :disabled="isSubmitDisabled"
@@ -75,8 +77,8 @@ const emit = defineEmits<ForgotPasswordFormEmits>();
 
 /** Validates and emits the submitted email */
 const onSubmit = async (): Promise<void> => {
-    const result = await r$.$validate();
-    if (result) {
+    const { valid } = await r$.$validate();
+    if (valid) {
         emit('submitted', state.email);
     }
 };

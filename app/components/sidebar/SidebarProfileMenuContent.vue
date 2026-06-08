@@ -1,26 +1,24 @@
 <template>
-    <div class="flex flex-col md:p-2">
+    <div class="flex flex-col">
         <!-- User header -->
-        <div class="flex items-center gap-3 py-4">
+        <div class="flex items-center gap-3 pb-3">
             <Avatar :label="initials" shape="circle" />
             <div class="min-w-0 flex flex-col gap-0.5">
-                <p
-                    class="text-sm font-semibold text-[var(--p-surface-900)] truncate"
-                >
+                <p class="text-sm text-surface-900 truncate">
                     {{ profile.firstName }} {{ profile.lastName }}
                 </p>
-                <p class="text-xs text-[var(--p-surface-600)] truncate">
+                <p class="text-xs text-surface-600 truncate">
                     {{ subtitle }}
                 </p>
             </div>
         </div>
 
         <div
-            class="flex flex-col gap-1 pb-3 pt-3 mb-3 border-t border-[var(--p-surface-200)] border-b"
+            class="flex flex-col gap-1 pb-3 pt-2 mb-2 border-t border-surface-200 border-b"
         >
             <button
                 type="button"
-                class="flex items-center gap-3 p-3 text-sm text-[var(--p-surface-800)] hover:bg-[var(--p-surface-200)] cursor-pointer text-left rounded-[4px]"
+                class="flex items-center gap-3 p-3 text-sm text-surface-800 hover:bg-surface-200 cursor-pointer text-left rounded-[4px]"
                 @click="emit('action', ROUTES.ACCOUNT_INFO)"
             >
                 <Icon name="tabler:user" class="size-5" />
@@ -29,7 +27,7 @@
 
             <button
                 type="button"
-                class="flex items-center gap-3 p-3 text-sm text-[var(--p-surface-800)] hover:bg-[var(--p-surface-200)] cursor-pointer text-left rounded-[4px]"
+                class="flex items-center gap-3 p-3 text-sm text-surface-800 hover:bg-surface-200 cursor-pointer text-left rounded-[4px]"
                 @click="emit('action', ROUTES.ACCOUNT_SETTINGS)"
             >
                 <Icon name="tabler:settings" class="size-5" />
@@ -39,7 +37,7 @@
 
         <button
             type="button"
-            class="flex items-center gap-3 px-4 py-3 text-sm text-[var(--p-red-600)] hover:bg-[var(--p-surface-200)] cursor-pointer text-left rounded-[4px]"
+            class="flex items-center gap-3 px-4 py-3 text-sm text-red-500 hover:bg-surface-200 cursor-pointer text-left rounded-[4px]"
             @click="emit('action', ROUTES.LOGIN)"
         >
             <Icon name="tabler:logout" class="size-5" />

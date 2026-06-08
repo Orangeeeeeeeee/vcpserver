@@ -5,29 +5,34 @@ const avatar: AvatarDesignTokens = {
         width: '2.5rem',
         height: '2.5rem',
         fontSize: '1rem',
-        background: '{content.border.color}',
-        color: '{content.color}',
+        background: '{primary.100}',
+        color: '{primary.900}',
         borderRadius: '{content.border.radius}'
     },
     icon: {
         size: '1.5rem'
     },
     lg: {
-        width: '3.5rem',
-        height: '3.5rem',
-        fontSize: '1.2rem',
-        icon: {
-            size: '2rem'
-        }
-    },
-    xl: {
         width: '5.125rem',
         height: '5.125rem',
         fontSize: '1.5rem',
         icon: {
             size: '3rem'
         }
-    }
+    },
+    xl: {
+        width: '6.25rem',
+        height: '6.25rem',
+        fontSize: '2rem',
+        icon: {
+            size: '4rem'
+        }
+    },
+    css: `
+        .p-avatar {
+            border: 1px solid color-mix(in srgb, var(--p-primary-900) 8%, transparent);
+        }
+    `
 };
 
 export default avatar;

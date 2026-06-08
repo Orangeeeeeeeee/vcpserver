@@ -1,7 +1,5 @@
 <template>
-    <div
-        class="border border-[var(--p-surface-300)] rounded-2xl overflow-hidden"
-    >
+    <div class="border border-surface-300 rounded-2xl overflow-hidden">
         <DataTable
             :value="value"
             :paginator="paginator"
@@ -33,6 +31,16 @@
                     </slot>
                 </template>
             </Column>
+
+            <template
+                #paginatorcontainer="{ page, pageCount, changePageCallback }"
+            >
+                <UiPagination
+                    :page="page"
+                    :page-count="pageCount"
+                    @update:page="changePageCallback"
+                />
+            </template>
         </DataTable>
     </div>
 </template>
@@ -104,7 +112,7 @@ withDefaults(defineProps<ResponsiveTableProps>(), {
     .responsive-table :deep(.p-datatable-tbody > tr > td) {
         display: flex;
         align-items: center;
-        gap: 1rem;
+        gap: 0.75rem;
         padding: 0.75rem 0;
         border: none;
         text-align: left !important;
@@ -122,7 +130,7 @@ withDefaults(defineProps<ResponsiveTableProps>(), {
 
     .responsive-table :deep(.p-datatable-tbody > tr > td)::before {
         content: attr(data-label);
-        width: 33.333%;
+        width: 31%;
         flex-shrink: 0;
         font-size: 0.75rem;
         font-weight: 600;

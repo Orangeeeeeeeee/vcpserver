@@ -4,17 +4,19 @@ const button: ButtonDesignTokens = {
     root: {
         borderRadius: '6px',
         paddingX: '1rem',
-        paddingY: '0.532rem',
+        paddingY: '0.813rem',
         label: {
             fontWeight: '500'
         },
         sm: {
-            fontSize: '0.75rem',
-            paddingY: '0.4rem'
+            fontSize: '0.875rem',
+            paddingX: '1rem',
+            paddingY: '0.75rem'
         },
         lg: {
             fontSize: '1.25rem',
-            paddingY: '0.732rem'
+            paddingX: '1.25rem',
+            paddingY: '0.832rem'
         }
     },
     colorScheme: {
@@ -59,19 +61,32 @@ const button: ButtonDesignTokens = {
     css: `
           .p-button {
               box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
-              font-size: 0.875rem;
+              line-height: 1;
+              max-height: 2.75rem;
           }
+
+          .p-button-sm {
+              max-height: 2.5rem;
+          }
+
+          .p-button-lg {
+              max-height: 3rem;
+          }
+
           .p-button-text {
               box-shadow: none;
           }
+
           .p-button svg {
               width: 1.25rem;
               height: 1.25rem;
           }
+
           .p-button-sm svg {
               width: 0.875rem;
               height: 0.875rem;
           }
+
           .p-button-lg svg {
               width: 1.5rem;
               height: 1.5rem;

@@ -1,13 +1,13 @@
 <template>
     <div
-        class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-[var(--p-surface-200)] rounded-md p-3"
+        class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-surface-200 rounded-md p-3"
     >
         <div class="flex items-center gap-2 min-w-0">
             <Icon
                 :name="icon ?? 'tabler:zoom-question'"
-                class="size-6 text-[var(--p-surface-700)] shrink-0"
+                class="size-6 text-surface-700 shrink-0"
             />
-            <span class="text-sm text-[var(--p-surface-900)]">
+            <span class="text-sm text-surface-900">
                 {{ message }}
             </span>
         </div>

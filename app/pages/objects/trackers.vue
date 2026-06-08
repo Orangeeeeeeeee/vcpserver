@@ -6,7 +6,7 @@
                 <InputIcon>
                     <Icon
                         name="tabler:search"
-                        class="size-5 text-[var(--p-surface-700)]"
+                        class="size-5 text-surface-700 mt-[-0.17rem]"
                     />
                 </InputIcon>
                 <InputText
@@ -60,29 +60,30 @@
             row-key="id"
         >
             <template #cell-company="{ row }">
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-1">
                     <Avatar
                         :label="row.companyBadge"
                         shape="circle"
                         size="small"
+                        class="size-[26px] text-[0.625rem] font-medium"
                     />
-                    <span
-                        class="font-semibold text-sm text-[var(--p-surface-950)]"
-                    >
+                    <span class="font-semibold text-sm text-surface-950">
                         {{ row.company }}
                     </span>
                 </div>
             </template>
             <template #cell-transport="{ row }">
-                <div class="flex flex-col">
-                    <span class="font-semibold">{{ row.transport }}</span>
-                    <span class="text-[var(--p-surface-600)]">
+                <div class="flex flex-col gap-[0.125rem] leading-none">
+                    <span class="font-semibold">
+                        {{ row.transport }}
+                    </span>
+                    <span class="text-surface-600">
                         ID: {{ row.transportId }}
                     </span>
                 </div>
             </template>
             <template #cell-imei="{ row }">
-                <span class="text-[var(--p-surface-900)]">{{ row.imei }}</span>
+                <span class="text-surface-900">{{ row.imei }}</span>
             </template>
             <template #cell-port="{ row }">
                 <span class="font-medium">{{ row.port }}</span>
@@ -90,31 +91,41 @@
             <template #cell-params="{ row }">
                 <Chip
                     severity="primary"
+                    class="text-xs font-medium"
                     :label="String(row.params.length)"
                 ></Chip>
             </template>
             <template #cell-actions="{ row }">
                 <div class="flex items-center gap-2 justify-end">
-                    <Button
-                        type="button"
-                        severity="secondary"
-                        :aria-label="$t('objects.trackers.actions.edit')"
-                        @click="onEdit(row)"
-                    >
+                    <UiActionCommonButton @click="onEdit(row)">
                         <template #icon>
-                            <Icon name="tabler:pencil" class="size-5" />
+                            <Icon
+                                name="tabler:pencil"
+                                class="size-5 text-surface-800"
+                            />
                         </template>
-                    </Button>
-                    <Button
-                        type="button"
-                        severity="secondary"
-                        :aria-label="$t('objects.trackers.actions.delete')"
+                        <template #label>
+                            <span class="text-surface-900">
+                                {{ $t('objects.trackers.actions.edit') }}
+                            </span>
+                        </template>
+                    </UiActionCommonButton>
+                    <UiActionCommonButton
+                        severity="danger"
                         @click="onDelete(row)"
                     >
                         <template #icon>
-                            <Icon name="tabler:trash" class="size-5" />
+                            <Icon
+                                name="tabler:trash"
+                                class="size-5 text-red-500"
+                            />
                         </template>
-                    </Button>
+                        <template #label>
+                            <span class="text-red-600">
+                                {{ $t('objects.trackers.actions.delete') }}
+                            </span>
+                        </template>
+                    </UiActionCommonButton>
                 </div>
             </template>
         </SharedResponsiveTable>
@@ -149,20 +160,26 @@
             :tracker="editTarget"
         />
 
-        <ObjectsDeleteTrackerDialog
+        <SharedConfirmDeleteDialog
             v-model:visible="deleteVisible"
-            :tracker="deleteTarget"
+            :title="$t('objects.trackers.modal.deleteTitle')"
+            :message="$t('objects.trackers.modal.deleteSubtitle')"
+            :item-name="deleteTarget?.transport"
+            :warning="$t('objects.trackers.modal.deleteWarning')"
+            @confirm="onConfirmDelete"
         />
     </div>
 </template>
 
 <script setup lang="ts">
+import { useToast } from 'primevue/usetoast';
 import type { TableColumn } from '~/components/shared/ResponsiveTable';
 import type { Tracker } from '~/composables/useTrackers';
 import { ROUTES } from '~/constants/routes';
 
 const { t } = useI18n();
-const { trackers, companies } = useTrackers();
+const toast = useToast();
+const { trackers, companies, deleteTracker } = useTrackers();
 
 const searchQuery = ref('');
 const selectedCompanies = ref<string[]>([]);
@@ -249,5 +266,18 @@ const onEdit = (row: Tracker): void => {
 const onDelete = (row: Tracker): void => {
     deleteTarget.value = row;
     deleteVisible.value = true;
+};
+
+/** Deletes the selected tracker once the deletion is confirmed */
+const onConfirmDelete = (): void => {
+    const target = deleteTarget.value;
+    if (!target) return;
+    deleteTracker(target.id);
+    toast.add({
+        severity: 'success',
+        summary: t('objects.trackers.actions.deleted'),
+        detail: target.imei,
+        life: 2000
+    });
 };
 </script>

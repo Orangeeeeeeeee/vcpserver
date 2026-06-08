@@ -4,7 +4,7 @@
         :class="positionClass"
         @click="$emit('click')"
     >
-        <Icon :name="iconName" class="size-6 text-[var(--p-surface-300)]" />
+        <Icon :name="iconName" class="size-6 text-surface-300" />
     </button>
 </template>
 
@@ -41,10 +41,10 @@ const iconName = computed((): string => {
 /** Position classes — toggle (desktop) flips with `isRight`; close (mobile) stays right */
 const positionClass = computed((): string => {
     if (props.mode === 'close') {
-        return 'top-5 right-4 text-[var(--p-surface-500)]';
+        return 'top-5 right-4 text-surface-500';
     }
     return props.isRight
-        ? 'top-2/4 left-0 -translate-x-1/2 -translate-y-1/2 h-15.5 w-4 rounded-lg bg-[var(--p-surface-950)] text-[var(--p-surface-300)]'
-        : 'top-2/4 right-0 translate-x-1/2 -translate-y-1/2 h-15.5 w-4 rounded-lg bg-[var(--p-surface-950)] text-[var(--p-surface-300)]';
+        ? 'top-2/4 left-0 -translate-x-1/2 -translate-y-1/2 h-15.5 w-4 rounded-lg bg-surface-950 text-surface-300'
+        : 'top-2/4 right-0 translate-x-1/2 -translate-y-1/2 h-15.5 w-4 rounded-lg bg-surface-950 text-surface-300';
 });
 </script>

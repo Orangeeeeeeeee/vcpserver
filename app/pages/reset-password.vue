@@ -8,23 +8,23 @@
             >
                 <Avatar
                     :label="userInitials"
-                    size="xlarge"
+                    size="large"
                     shape="circle"
                     class="mb-5"
                 />
                 <UiTypography
                     variant="h4"
-                    class="mb-1 lg:mb-2 text-[var(--p-surface-950)]"
+                    class="mb-1 lg:mb-2 text-surface-950"
                 >
                     {{ userName }}
                 </UiTypography>
                 <p
-                    class="text-xs md:text-sm lg:text-base text-[var(--p-surface-800)] mb-4"
+                    class="text-xs md:text-sm lg:text-base text-surface-800 mb-4"
                 >
                     {{ userEmail }}
                 </p>
                 <p
-                    class="text-xs md:text-sm lg:text-base text-[var(--p-surface-800)] max-w-[80%] md:max-w-[95%]"
+                    class="text-xs md:text-sm lg:text-base text-surface-800 max-w-[80%] md:max-w-[95%]"
                 >
                     {{ $t('resetPassword.subtitle') }}
                 </p>

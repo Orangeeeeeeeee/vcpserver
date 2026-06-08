@@ -24,44 +24,49 @@ const dialog: DialogDesignTokens = {
         gap: '0.5rem'
     },
     css: `
-         .p-dialog-mask {
-             backdrop-filter: blur(4px);
-             -webkit-backdrop-filter: blur(4px);
-         }
+        .p-dialog-mask {
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
 
-         .p-dialog {
+        .p-dialog {
             margin: 0 1rem;
             position: relative;
-         }
+        }
 
-         .p-dialog-header-actions {
+        .p-dialog-header-actions {
             position: absolute;
             top: 1.125rem;
             right: 1.125rem;
-         }
+        }
 
-         .p-dialog-header-actions .p-button {
+        .p-dialog-header-actions .p-button {
             color: var(--p-surface-800);
             padding: 0.375rem;
-         }
+        }
 
-         .p-dialog-header-actions .p-button {
+        .p-dialog-header-actions .p-button {
             background: transparent !important;
             border: none !important;
-         }
+        }
 
-         .p-dialog-header-actions .p-button:focus-visible {
+        .p-dialog-header-actions .p-dialog-close-button {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        .p-dialog-header-actions .p-dialog-close-button:focus-visible {
             outline: none !important;
-         }
+        }
 
-         .p-dialog-header-actions .p-button:hover {
+        .p-dialog-header-actions .p-dialog-close-button:hover {
             background: transparent !important;
             color: var(--p-surface-800) !important;
-         }
+        }
 
-         .p-dialog-header {
+        .p-dialog-header {
             display: block;
-         }
+        }
      `
 };
 

@@ -14,12 +14,10 @@
             </Button>
         </div>
         <div class="flex min-w-0 flex-col gap-2">
-            <p
-                class="truncate text-sm font-semibold text-[var(--p-surface-950)]"
-            >
+            <p class="truncate text-sm font-semibold text-surface-950">
                 {{ profile.email }}
             </p>
-            <p class="truncate text-sm text-[var(--p-surface-800)]">
+            <p class="truncate text-sm text-surface-800">
                 {{ profile.phone }}
             </p>
         </div>
@@ -78,7 +76,7 @@
                 <template #chipicon="{ removeCallback }">
                     <Icon
                         name="tabler:x"
-                        class="size-4 cursor-pointer text-[var(--p-surface-700)] transition-colors hover:text-[var(--p-surface-900)]"
+                        class="size-4 cursor-pointer text-surface-700 transition-colors hover:text-surface-900"
                         @click="removeCallback"
                     />
                 </template>
@@ -88,12 +86,14 @@
         <div class="flex items-end gap-3">
             <Button
                 type="button"
+                size="small"
                 severity="secondary"
                 class="w-full md:w-auto"
                 :label="$t('account.info.cancel')"
                 @click="onCancel"
             />
             <Button
+                size="small"
                 type="submit"
                 :label="$t('account.info.save')"
                 :disabled="isSubmitDisabled"
@@ -146,8 +146,8 @@ const onCancel = (): void => {
 
 /** Validates and saves personal data to the shared profile */
 const onSubmit = async (): Promise<void> => {
-    const result = await r$.$validate();
-    if (result) {
+    const { valid } = await r$.$validate();
+    if (valid) {
         profile.value = {
             ...profile.value,
             firstName: state.firstName,

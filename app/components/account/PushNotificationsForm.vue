@@ -1,9 +1,7 @@
 <template>
     <form class="flex flex-col gap-5" @submit.prevent="onSubmit">
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <div
-                class="border-b border-[var(--p-surface-300)] pb-6 md:border-none"
-            >
+            <div class="border-b border-surface-300 pb-6 md:border-none">
                 <AccountNotificationContactList
                     v-model="state.emails"
                     :label="$t('common.email')"
@@ -26,12 +24,14 @@
         <div class="flex gap-3">
             <Button
                 type="button"
+                size="small"
                 severity="secondary"
                 class="w-full md:w-auto"
                 :label="$t('account.settings.cancel')"
                 @click="onCancel"
             />
             <Button
+                size="small"
                 type="submit"
                 class="w-full md:w-auto"
                 :label="$t('account.settings.save')"

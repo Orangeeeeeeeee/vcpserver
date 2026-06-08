@@ -39,7 +39,7 @@ const datatable: DataTableDesignTokens = {
     },
     bodyCell: {
         borderColor: '{surface.200}',
-        padding: '1.375rem 1rem',
+        padding: '0.8rem 1rem',
         sm: { padding: '1rem' },
         lg: { padding: '1.25rem' }
     },
@@ -160,6 +160,10 @@ const datatable: DataTableDesignTokens = {
     css: `
         .p-datatable-tbody > tr > td {
             font-size: 0.875rem;
+        }
+
+        .p-datatable-header-cell {
+            font-size: 0.75rem;
         }
     `
 };

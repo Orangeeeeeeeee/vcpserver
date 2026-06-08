@@ -1,9 +1,6 @@
 <template>
-    <div class="flex flex-col gap-1.5">
-        <label
-            :for="id"
-            class="text-sm font-normal text-[var(--p-surface-700)]"
-        >
+    <div class="flex flex-col gap-1">
+        <label :for="id" class="text-sm font-normal text-surface-700">
             {{ label }}
         </label>
         <slot />

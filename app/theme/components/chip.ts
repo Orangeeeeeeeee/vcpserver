@@ -28,7 +28,12 @@ const chip: ChipDesignTokens = {
             icon: { color: '{surface.100}' },
             removeIcon: { color: '{surface.100}' }
         }
-    }
+    },
+    css: `
+        .p-chip-label {
+            font-size: 0.875rem;
+        }
+    `
 };
 
 export default chip;

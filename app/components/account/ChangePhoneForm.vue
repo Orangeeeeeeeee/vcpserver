@@ -34,6 +34,7 @@
 
         <div>
             <Button
+                size="small"
                 type="submit"
                 class="w-full md:w-auto"
                 :label="$t('account.info.changePhone')"
@@ -76,8 +77,8 @@ const isSubmitDisabled = computed((): boolean => r$.$invalid || r$.$pending);
 
 /** Validates, updates the stored phone, and shows a success toast */
 const onSubmit = async (): Promise<void> => {
-    const result = await r$.$validate();
-    if (result) {
+    const { valid } = await r$.$validate();
+    if (valid) {
         profile.value = { ...profile.value, phone: state.newPhone };
         toast.add({
             severity: 'success',

@@ -6,7 +6,7 @@
                 <InputIcon>
                     <Icon
                         name="tabler:search"
-                        class="size-5 text-[var(--p-surface-700)]"
+                        class="size-5 text-surface-700"
                     />
                 </InputIcon>
                 <InputText
@@ -29,7 +29,7 @@
 
         <!-- Drivers grid + paginator OR empty banner -->
         <template v-if="filteredDrivers.length > 0">
-            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
                 <ObjectsDriverCard
                     v-for="driver in paginatedDrivers"
                     :key="driver.id"
@@ -41,11 +41,7 @@
                 />
             </div>
 
-            <Paginator
-                v-model:first="paginatorFirst"
-                :rows="ROWS_PER_PAGE"
-                :total-records="filteredDrivers.length"
-            />
+            <UiPagination v-model:page="currentPage" :page-count="pageCount" />
         </template>
         <SharedTableEmpty
             v-else
@@ -54,17 +50,27 @@
             @reset="onResetFilters"
         />
 
+        <ObjectsDriverFormDialog
+            v-model:visible="formVisible"
+            :driver="formTarget"
+        />
+
+        <SharedConfirmDeleteDialog
+            v-model:visible="deleteVisible"
+            :title="$t('objects.drivers.modal.deleteTitle')"
+            :message="$t('objects.drivers.modal.deleteSubtitle')"
+            :item-name="deleteTarget?.name"
+            :warning="$t('objects.drivers.modal.deleteWarning')"
+            @confirm="onConfirmDelete"
+        />
+
         <!-- Teleports -->
         <Teleport to="#page-actions-target">
-            <Button
+            <UiActionButton
+                icon="tabler:plus"
                 :label="$t('objects.add')"
-                severity="secondary"
                 @click="onAdd"
-            >
-                <template #icon>
-                    <Icon name="tabler:plus" class="size-5" />
-                </template>
-            </Button>
+            />
         </Teleport>
 
         <Teleport to="#page-breadcrumbs-target">
@@ -90,10 +96,14 @@ const ROWS_PER_PAGE = 8;
 
 const { t } = useI18n();
 const toast = useToast();
-const { drivers } = useDrivers();
+const { drivers, deleteDriver } = useDrivers();
 
 const searchQuery = ref('');
-const paginatorFirst = ref<number>(0);
+const currentPage = ref<number>(0);
+const formVisible = ref<boolean>(false);
+const formTarget = ref<Driver | null>(null);
+const deleteVisible = ref<boolean>(false);
+const deleteTarget = ref<Driver | null>(null);
 
 /** Drivers filtered by name (case-insensitive substring) */
 const filteredDrivers = computed<Driver[]>(() => {
@@ -102,17 +112,22 @@ const filteredDrivers = computed<Driver[]>(() => {
     return drivers.value.filter((d) => d.name.toLowerCase().includes(q));
 });
 
-/** Slice of filteredDrivers for the current paginator page */
+/** Total number of pages for the current filtered list */
+const pageCount = computed<number>(() =>
+    Math.ceil(filteredDrivers.value.length / ROWS_PER_PAGE)
+);
+
+/** Slice of filteredDrivers for the current page */
 const paginatedDrivers = computed<Driver[]>(() =>
     filteredDrivers.value.slice(
-        paginatorFirst.value,
-        paginatorFirst.value + ROWS_PER_PAGE
+        currentPage.value * ROWS_PER_PAGE,
+        currentPage.value * ROWS_PER_PAGE + ROWS_PER_PAGE
     )
 );
 
 /** Reset paginator to first page whenever the search filter changes */
 watch(searchQuery, () => {
-    paginatorFirst.value = 0;
+    currentPage.value = 0;
 });
 
 /** i18n labels passed into each DriverCard */
@@ -139,8 +154,11 @@ const onResetFilters = (): void => {
     searchQuery.value = '';
 };
 
-const onAdd = (): void =>
-    placeholderToast(t('objects.add'), t('objects.drivers.inDevelopment'));
+/** Opens the form dialog in add mode (empty fields) */
+const onAdd = (): void => {
+    formTarget.value = null;
+    formVisible.value = true;
+};
 
 const onFilterClick = (): void =>
     placeholderToast(
@@ -151,9 +169,28 @@ const onFilterClick = (): void =>
 const onDetails = (driver: Driver): void =>
     placeholderToast(t('objects.drivers.card.menuDetails'), driver.name);
 
-const onEdit = (driver: Driver): void =>
-    placeholderToast(t('objects.drivers.card.menuEdit'), driver.name);
+/** Opens the form dialog in edit mode (pre-filled from the driver) */
+const onEdit = (driver: Driver): void => {
+    formTarget.value = driver;
+    formVisible.value = true;
+};
 
-const onDelete = (driver: Driver): void =>
-    placeholderToast(t('objects.drivers.card.menuDelete'), driver.name);
+/** Opens the delete confirmation dialog for the selected driver */
+const onDelete = (driver: Driver): void => {
+    deleteTarget.value = driver;
+    deleteVisible.value = true;
+};
+
+/** Deletes the selected driver once the deletion is confirmed */
+const onConfirmDelete = (): void => {
+    const target = deleteTarget.value;
+    if (!target) return;
+    deleteDriver(target.id);
+    toast.add({
+        severity: 'success',
+        summary: t('objects.drivers.modal.deleted'),
+        detail: target.name,
+        life: 2000
+    });
+};
 </script>

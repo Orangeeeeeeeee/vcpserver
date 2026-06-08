@@ -22,10 +22,10 @@
                 as="router-link"
                 :to="ROUTES.OBJECTS"
             />
-            <p class="text-sm text-[var(--p-surface-700)]">
+            <p class="text-sm text-surface-700">
                 {{ $t('forgotPassword.noEmail') }}
                 <button
-                    class="text-[var(--p-primary-600)] font-medium cursor-pointer"
+                    class="text-primary-600 font-medium cursor-pointer"
                     @click="onResend"
                 >
                     {{ $t('forgotPassword.resend') }}

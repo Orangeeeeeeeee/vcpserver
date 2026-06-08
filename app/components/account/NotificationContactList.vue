@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col gap-3">
-        <label class="text-sm text-[var(--p-surface-700)]">{{ label }}</label>
+        <label class="text-sm text-surface-700">{{ label }}</label>
 
         <div class="flex gap-2">
             <InputText
@@ -13,9 +13,9 @@
             />
             <Button
                 type="button"
+                size="small"
                 severity="secondary"
                 class="shrink-0"
-                
                 @click="onAdd"
             >
                 <template #icon>
@@ -38,16 +38,12 @@
                 v-for="item in model"
                 :key="item.id"
                 class="flex items-center gap-2 text-sm py-4 border-b border-b-[var(--p-surface-200)] last:border-none"
-                :class="
-                    item.verified
-                        ? 'text-[var(--p-surface-900)]'
-                        : 'text-[var(--p-surface-500)]'
-                "
+                :class="item.verified ? 'text-surface-900' : 'text-surface-500'"
             >
                 <span class="truncate">{{ item.value }}</span>
                 <button
                     type="button"
-                    class="cursor-pointer text-[var(--p-surface-500)] transition-colors hover:text-[var(--p-surface-900)]"
+                    class="cursor-pointer text-surface-500 transition-colors hover:text-surface-900"
                     :aria-label="$t('account.settings.remove')"
                     @click="onRemove(item.id)"
                 >
@@ -57,6 +53,7 @@
                 <Button
                     v-if="!item.verified"
                     type="button"
+                    size="small"
                     severity="secondary"
                     class="shrink-0 ml-auto"
                     @click="onSendLink(item)"
@@ -111,8 +108,8 @@ const { r$ } = useRegle(state, rules, { lazy: true });
 
 /** Validates the input and appends a new pending contact to the list */
 const onAdd = async (): Promise<void> => {
-    const result = await r$.$validate();
-    if (result) {
+    const { valid } = await r$.$validate();
+    if (valid) {
         model.value = [
             ...model.value,
             {

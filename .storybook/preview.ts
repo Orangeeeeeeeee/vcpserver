@@ -17,6 +17,8 @@ import Avatar from 'primevue/avatar';
 import PrimeVueButton from 'primevue/button';
 import VcpPreset from '../app/theme/preset';
 import { Typography as UiTypography } from '../app/components/ui/Typography';
+import { Pagination as UiPagination } from '../app/components/ui/Pagination';
+import { TabNav as UiTabNav } from '../app/components/ui/TabNav';
 
 import '@fontsource-variable/inter';
 import '@fontsource-variable/manrope';
@@ -67,6 +69,8 @@ setup((app) => {
     // Nuxt component equivalents used inside app components
     app.component('NuxtLink', RouterLink);
     app.component('UiTypography', UiTypography);
+    app.component('UiPagination', UiPagination);
+    app.component('UiTabNav', UiTabNav);
     app.component('Icon', NuxtIcon);
 
     // PrimeVue components are auto-imported in Nuxt; register the used ones here

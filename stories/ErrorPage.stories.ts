@@ -70,13 +70,13 @@ const ErrorPage = defineComponent({
         <div class="flex flex-col min-h-dvh">
             <div class="flex flex-1 flex-col lg:flex-row items-center justify-center px-4 md:px-8 gap-8 md:gap-16 lg:gap-20 lg:max-w-[1300px] lg:m-auto">
                 <div class="flex flex-col items-center lg:items-start text-center lg:text-left order-2 md:order-1 md:max-w-[460px] lg:max-w-max lg:shrink-0">
-                    <p class="text-xs md:text-sm lg:text-base mb-2 lg:mb-4 font-semibold text-[var(--p-primary-600)]">
+                    <p class="text-xs md:text-sm lg:text-base mb-2 lg:mb-4 font-semibold text-primary-600">
                         {{ errorData.label }}
                     </p>
-                    <h1 class="font-manrope text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] font-semibold text-[var(--p-primary-950)] mb-2 lg:mb-4">
+                    <h1 class="font-manrope text-[1.5rem] sm:text-[2rem] md:text-[2.5rem] font-semibold text-primary-950 mb-2 lg:mb-4">
                         {{ errorData.title }}
                     </h1>
-                    <p class="text-xs md:text-sm lg:text-base text-[var(--p-surface-500)] mb-8 md:mb-11">
+                    <p class="text-xs md:text-sm lg:text-base text-surface-500 mb-8 md:mb-11">
                         {{ errorData.description }}
                     </p>
                     <div class="flex gap-3 w-full">
