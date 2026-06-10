@@ -1,5 +1,7 @@
 <template>
-    <div class="border border-surface-300 rounded-md w-full">
+    <div
+        class="border border-surface-300 cursor-pointer rounded-md w-full lg:hover:bg-surface-200 lg:transition-colors duration-300"
+    >
         <!-- Header: status + overflow menu -->
         <div class="border-b border-surface-300 px-3 pt-4 pb-3">
             <div class="flex items-start justify-between gap-2 relative mb-2">
@@ -8,7 +10,7 @@
                     type="button"
                     class="inline-flex cursor-pointer p-0 text-surface-800"
                     aria-haspopup="true"
-                    @click="toggleMenu"
+                    @click.stop.prevent="toggleMenu"
                 >
                     <Icon name="tabler:dots-vertical" class="size-5" />
                 </button>
@@ -17,15 +19,21 @@
                         <a
                             v-bind="itemProps.action"
                             :class="[
-                                'flex items-center justify-between gap-6 cursor-pointer',
-                                (item as DriverMenuItem).danger &&
-                                    'text-red-600'
+                                'flex items-center gap-1.5 cursor-pointer font-medium',
+                                (item as DriverMenuItem).danger
+                                    ? 'text-red-600'
+                                    : 'text-surface-900'
                             ]"
                         >
                             <span>{{ item.label }}</span>
                             <Icon
                                 :name="(item as DriverMenuItem).icon"
-                                class="size-5"
+                                :class="[
+                                    'size-5',
+                                    (item as DriverMenuItem).danger
+                                        ? 'text-red-500'
+                                        : 'text-surface-700'
+                                ]"
                             />
                         </a>
                     </template>
@@ -140,52 +148,7 @@
 <script lang="ts">
 import Menu from 'primevue/menu';
 import type { MenuItem } from 'primevue/menuitem';
-
-export type DriverStatus = 'active' | 'blocked' | 'vacation' | 'unavailable';
-
-export interface DriverLicense {
-    /** License identifier, e.g. "DL-UA-78451239" */
-    id: string;
-    /** Display-ready expiration date, e.g. "18.09.2027" */
-    expiresAt: string;
-    /** Display-ready categories, e.g. "B, C" */
-    categories: string;
-}
-
-export interface DriverDocument {
-    id: string;
-    /** Display name, e.g. "Водійське посвідчення (скан)" */
-    name: string;
-    /** Captured file name (UI-only; no real file is stored) */
-    fileName?: string;
-}
-
-export interface Driver {
-    id: string;
-    /** Full name, e.g. "Василь Прийма" */
-    name: string;
-    /** Two-letter initials for the avatar, e.g. "ВП" */
-    initials: string;
-    /** Owning company, e.g. "Logistics UA" */
-    company: string;
-    status: DriverStatus;
-    /** Transport model, e.g. "MAN TGX 18.480" */
-    transport: string;
-    /** Transport identifier, e.g. "TRK-112" */
-    transportId: string;
-    /** Display-ready phone, e.g. "+380 67 458 29 14" */
-    phone: string;
-    email: string;
-    license: DriverLicense;
-    /** Display-ready start date, e.g. "12.04.2022" */
-    startedAt: string;
-    /** Display-ready employment type, e.g. "Повна зайнятість" */
-    employment: string;
-    /** Optional free-text comment about the driver */
-    comment?: string;
-    /** Optional list of attached documents */
-    documents?: DriverDocument[];
-}
+import type { Driver, DriverStatus } from '~/types/driver';
 
 export interface DriverCardLabels {
     statusActive: string;

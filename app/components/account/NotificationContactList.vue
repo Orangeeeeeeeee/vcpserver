@@ -44,7 +44,7 @@
                 <button
                     type="button"
                     class="cursor-pointer text-surface-500 transition-colors hover:text-surface-900"
-                    :aria-label="$t('account.settings.remove')"
+                    :aria-label="$t('common.delete')"
                     @click="onRemove(item.id)"
                 >
                     <Icon name="tabler:x" class="size-5" />

@@ -6,6 +6,13 @@
         "ok": "Добре",
         "cancel": "Скасувати",
         "delete": "Видалити",
+        "edit": "Редагувати",
+        "saveChanges": "Зберегти зміни",
+        "saved": "Зміни збережено",
+        "deleteWarning": "Цю дію неможливо буде скасувати.",
+        "emptyMessage": "За вказаними параметрами результатів немає. Спробуйте змінити налаштування фільтрів або період.",
+        "resetFilters": "Скинути фільтри",
+        "chooseFile": "Обрати файл",
         "email": "Email",
         "emailPlaceholder": "Введіть електронну адресу",
         "password": "Пароль"
@@ -92,9 +99,6 @@
             "lastNamePlaceholder": "Введіть прізвище",
             "affiliation": "Приналежність",
             "affiliationPlaceholder": "Оберіть приналежність",
-            "cancel": "Скасувати",
-            "save": "Зберегти зміни",
-            "saved": "Зміни збережено",
             "passwordPlaceholder": "Введіть пароль",
             "changeEmail": "Змінити email",
             "newEmail": "Новий email",
@@ -148,17 +152,13 @@
             "unitsMetric": "Метрична (SI)",
             "unitsImperialUk": "Імперська (UK)",
             "unitsImperialUs": "Імперська (US)",
-            "cancel": "Скасувати",
-            "save": "Зберегти зміни",
-            "saved": "Зміни збережено",
             "pushNotifications": "Налаштування push-сповіщень",
             "phoneLabel": "Номер телефону",
             "emailAddPlaceholder": "Введіть електронну адресу",
             "phoneAddPlaceholder": "Введіть номер телефону",
             "add": "Додати",
             "sendLink": "Відправити посилання",
-            "linkSent": "Посилання надіслано",
-            "remove": "Видалити"
+            "linkSent": "Посилання надіслано"
         },
         "role": "Логіст",
         "menu": {
@@ -181,8 +181,21 @@
             "searchPlaceholder": "Пошук по імені",
             "filterButton": "Фільтр",
             "inDevelopment": "Функція в розробці",
-            "emptyMessage": "За вказаними параметрами результатів немає. Спробуйте змінити налаштування фільтрів або період.",
-            "resetFilters": "Скинути фільтри",
+            "filters": {
+                "company": "Компанія",
+                "companyPlaceholder": "Оберіть компанію",
+                "status": "Статус",
+                "statusPlaceholder": "Оберіть статус",
+                "employment": "Тип зайнятості",
+                "employmentPlaceholder": "Оберіть тип зайнятості",
+                "categories": "Категорія прав",
+                "categoriesPlaceholder": "Оберіть категорію",
+                "vehicle": "Транспортний засіб",
+                "vehiclePlaceholder": "Оберіть транспортний засіб",
+                "search": "Пошук",
+                "group1": "Група 1",
+                "group2": "Група 2"
+            },
             "card": {
                 "statusActive": "Активний",
                 "statusBlocked": "Заблокований",
@@ -191,9 +204,7 @@
                 "licenseSection": "Водійські права",
                 "startedAtLabel": "Почав працювати",
                 "employmentLabel": "Тип зайнятості",
-                "menuDetails": "Докладніше",
-                "menuEdit": "Редагувати",
-                "menuDelete": "Видалити"
+                "menuDetails": "Докладніше"
             },
             "modal": {
                 "title": "Додати водія",
@@ -239,15 +250,33 @@
                 "addDocument": "Додати документ",
                 "viewDocument": "Переглянути документ",
                 "removeDocument": "Видалити документ",
-                "cancel": "Скасувати",
                 "submit": "Додати",
                 "editSubmit": "Редагувати",
                 "added": "Водія додано",
                 "updated": "Водія оновлено",
                 "deleteTitle": "Видалити водія?",
                 "deleteSubtitle": "Ви впевнені, що хочете видалити водія",
-                "deleteWarning": "Цю дію неможливо буде скасувати.",
                 "deleted": "Водія видалено"
+            },
+            "detail": {
+                "tabs": {
+                    "info": "Дані про водія",
+                    "activeTrips": "Активні рейси",
+                    "archiveTrips": "Архивні рейси"
+                },
+                "sections": {
+                    "comment": "Коментар про водія",
+                    "vehicle": "Транспортний засіб",
+                    "license": "Водійські права",
+                    "work": "Робоча інформація",
+                    "documents": "Документи водія"
+                },
+                "fields": {
+                    "vehicleIdPrefix": "ID:",
+                    "startedAt": "Почав працювати",
+                    "employment": "Тип зайнятості"
+                },
+                "notFound": "Водія не знайдено"
             }
         },
         "trackers": {
@@ -262,9 +291,6 @@
                 "actions": "Дії"
             },
             "actions": {
-                "edit": "Редагувати",
-                "delete": "Видалити",
-                "editing": "Редагування трекера",
                 "deleted": "Трекер видалено"
             },
             "modal": {
@@ -278,7 +304,6 @@
                 "transportPlaceholder": "Оберіть транспорт",
                 "params": "Параметри",
                 "paramsPlaceholder": "Оберіть параметри",
-                "cancel": "Скасувати",
                 "submit": "Додати",
                 "added": "Трекер додано",
                 "editTitle": "Редагувати трекер",
@@ -286,12 +311,8 @@
                 "editSubmit": "Редагувати",
                 "updated": "Трекер оновлено",
                 "deleteTitle": "Видалити трекер?",
-                "deleteSubtitle": "Ви впевнені, що хочете видалити трекер",
-                "deleteWarning": "Цю дію неможливо буде скасувати.",
-                "deleteSubmit": "Видалити"
-            },
-            "emptyMessage": "За вказаними параметрами результатів немає. Спробуйте змінити налаштування фільтрів або період.",
-            "resetFilters": "Скинути фільтри"
+                "deleteSubtitle": "Ви впевнені, що хочете видалити трекер"
+            }
         }
     }
 }

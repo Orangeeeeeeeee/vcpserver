@@ -89,13 +89,13 @@
                 size="small"
                 severity="secondary"
                 class="w-full md:w-auto"
-                :label="$t('account.info.cancel')"
+                :label="$t('common.cancel')"
                 @click="onCancel"
             />
             <Button
                 size="small"
                 type="submit"
-                :label="$t('account.info.save')"
+                :label="$t('common.saveChanges')"
                 :disabled="isSubmitDisabled"
                 class="w-full md:w-auto"
             />
@@ -156,7 +156,7 @@ const onSubmit = async (): Promise<void> => {
         };
         toast.add({
             severity: 'success',
-            summary: t('account.info.saved'),
+            summary: t('common.saved'),
             life: 3000
         });
     }

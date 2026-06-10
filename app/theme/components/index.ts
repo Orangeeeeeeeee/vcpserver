@@ -5,8 +5,10 @@ import checkbox from './checkbox';
 import chip from './chip';
 import confirmdialog from './confirmdialog';
 import datatable from './datatable';
+import datepicker from './datepicker';
 import dialog from './dialog';
 import inputtext from './inputtext';
+import menu from './menu';
 import multiselect from './multiselect';
 import paginator from './paginator';
 import popover from './popover';
@@ -14,6 +16,7 @@ import select from './select';
 import selectbutton from './selectbutton';
 import tabs from './tabs';
 import tag from './tag';
+import textarea from './textarea';
 import togglebutton from './togglebutton';
 
 export default {
@@ -24,8 +27,10 @@ export default {
     chip,
     confirmdialog,
     datatable,
+    datepicker,
     dialog,
     inputtext,
+    menu,
     multiselect,
     paginator,
     popover,
@@ -33,5 +38,6 @@ export default {
     selectbutton,
     tabs,
     tag,
+    textarea,
     togglebutton
 };

@@ -15,38 +15,33 @@
                     fluid
                 />
             </IconField>
-            <Button
-                :label="$t('objects.drivers.filterButton')"
-                severity="secondary"
-                outlined
-                @click="onFilterClick"
-            >
-                <template #icon>
-                    <Icon name="tabler:filter" class="size-5" />
-                </template>
-            </Button>
+            <ObjectsDriverFilters />
         </div>
 
         <!-- Drivers grid + paginator OR empty banner -->
         <template v-if="filteredDrivers.length > 0">
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-                <ObjectsDriverCard
+                <NuxtLink
                     v-for="driver in paginatedDrivers"
                     :key="driver.id"
-                    :driver="driver"
-                    :labels="cardLabels"
-                    @details="onDetails"
-                    @edit="onEdit"
-                    @delete="onDelete"
-                />
+                    :to="ROUTES.DRIVER_DETAIL(driver.id)"
+                >
+                    <ObjectsDriverCard
+                        :driver="driver"
+                        :labels="cardLabels"
+                        @details="onDetails"
+                        @edit="onEdit"
+                        @delete="onDelete"
+                    />
+                </NuxtLink>
             </div>
 
             <UiPagination v-model:page="currentPage" :page-count="pageCount" />
         </template>
         <SharedTableEmpty
             v-else
-            :message="$t('objects.drivers.emptyMessage')"
-            :reset-label="$t('objects.drivers.resetFilters')"
+            :message="$t('common.emptyMessage')"
+            :reset-label="$t('common.resetFilters')"
             @reset="onResetFilters"
         />
 
@@ -60,7 +55,7 @@
             :title="$t('objects.drivers.modal.deleteTitle')"
             :message="$t('objects.drivers.modal.deleteSubtitle')"
             :item-name="deleteTarget?.name"
-            :warning="$t('objects.drivers.modal.deleteWarning')"
+            :warning="$t('common.deleteWarning')"
             @confirm="onConfirmDelete"
         />
 
@@ -86,17 +81,24 @@
 
 <script setup lang="ts">
 import { useToast } from 'primevue/usetoast';
-import type {
-    Driver,
-    DriverCardLabels
-} from '~/components/objects/DriverCard.vue';
+import type { Driver } from '~/types/driver';
+import type { DriverCardLabels } from '~/components/objects/DriverCard.vue';
 import { ROUTES } from '~/constants/routes';
+import {
+    useDriverFilters,
+    DRIVER_FILTERS_KEY
+} from '~/composables/useDriverFilters';
 
 const ROWS_PER_PAGE = 8;
 
 const { t } = useI18n();
 const toast = useToast();
+const router = useRouter();
 const { drivers, deleteDriver } = useDrivers();
+
+/** Shared filter state/options, provided to the DriverFilters popover */
+const filters = useDriverFilters();
+provide(DRIVER_FILTERS_KEY, filters);
 
 const searchQuery = ref('');
 const currentPage = ref<number>(0);
@@ -105,11 +107,13 @@ const formTarget = ref<Driver | null>(null);
 const deleteVisible = ref<boolean>(false);
 const deleteTarget = ref<Driver | null>(null);
 
-/** Drivers filtered by name (case-insensitive substring) */
+/** Drivers filtered by name (substring) AND the filter-popover predicate */
 const filteredDrivers = computed<Driver[]>(() => {
     const q = searchQuery.value.trim().toLowerCase();
-    if (!q) return drivers.value;
-    return drivers.value.filter((d) => d.name.toLowerCase().includes(q));
+    return drivers.value.filter((d) => {
+        const matchesName = !q || d.name.toLowerCase().includes(q);
+        return matchesName && filters.matches(d);
+    });
 });
 
 /** Total number of pages for the current filtered list */
@@ -125,9 +129,20 @@ const paginatedDrivers = computed<Driver[]>(() =>
     )
 );
 
-/** Reset paginator to first page whenever the search filter changes */
-watch(searchQuery, () => {
-    currentPage.value = 0;
+/** Reset paginator to first page whenever the search OR filters change */
+watch(
+    [searchQuery, () => filters.state],
+    () => {
+        currentPage.value = 0;
+    },
+    { deep: true }
+);
+
+/** Clamp the current page when the page count shrinks below it */
+watch(pageCount, (count): void => {
+    if (currentPage.value > Math.max(0, count - 1)) {
+        currentPage.value = Math.max(0, count - 1);
+    }
 });
 
 /** i18n labels passed into each DriverCard */
@@ -140,18 +155,14 @@ const cardLabels = computed<DriverCardLabels>(() => ({
     startedAtLabel: t('objects.drivers.card.startedAtLabel'),
     employmentLabel: t('objects.drivers.card.employmentLabel'),
     menuDetails: t('objects.drivers.card.menuDetails'),
-    menuEdit: t('objects.drivers.card.menuEdit'),
-    menuDelete: t('objects.drivers.card.menuDelete')
+    menuEdit: t('common.edit'),
+    menuDelete: t('common.delete')
 }));
 
-/** Helper to show a placeholder toast for stubbed actions */
-const placeholderToast = (summary: string, detail: string): void => {
-    toast.add({ severity: 'info', summary, detail, life: 2000 });
-};
-
-/** Resets the search filter (the filter button itself is still a placeholder) */
+/** Resets the search query and all popover filters */
 const onResetFilters = (): void => {
     searchQuery.value = '';
+    filters.reset();
 };
 
 /** Opens the form dialog in add mode (empty fields) */
@@ -160,14 +171,10 @@ const onAdd = (): void => {
     formVisible.value = true;
 };
 
-const onFilterClick = (): void =>
-    placeholderToast(
-        t('objects.drivers.filterButton'),
-        t('objects.drivers.inDevelopment')
-    );
-
-const onDetails = (driver: Driver): void =>
-    placeholderToast(t('objects.drivers.card.menuDetails'), driver.name);
+/** Navigates to the driver detail page */
+const onDetails = (driver: Driver): void => {
+    router.push(ROUTES.DRIVER_DETAIL(driver.id));
+};
 
 /** Opens the form dialog in edit mode (pre-filled from the driver) */
 const onEdit = (driver: Driver): void => {

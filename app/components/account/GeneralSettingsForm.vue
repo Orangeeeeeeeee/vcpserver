@@ -132,14 +132,14 @@
                 size="small"
                 severity="secondary"
                 class="w-full md:w-auto"
-                :label="$t('account.settings.cancel')"
+                :label="$t('common.cancel')"
                 @click="onCancel"
             />
             <Button
                 size="small"
                 type="submit"
                 class="w-full md:w-auto"
-                :label="$t('account.settings.save')"
+                :label="$t('common.saveChanges')"
             />
         </div>
     </form>
@@ -218,7 +218,7 @@ const onSubmit = (): void => {
     }
     toast.add({
         severity: 'success',
-        summary: t('account.settings.saved'),
+        summary: t('common.saved'),
         life: 3000
     });
 };

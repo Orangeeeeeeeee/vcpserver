@@ -33,6 +33,19 @@ const router = createRouter({
 router.push('/account/info').catch(() => {});
 
 /**
+ * Idempotency guard for setup(): prevents re-installing vue-router (and other
+ * plugins) on the same Vue app instance during HMR. Without this, editing
+ * preview.ts or any module it re-evaluates creates a fresh router plugin
+ * object; when Storybook re-applies setup() to the existing app, vue-router's
+ * install() tries to Object.defineProperty('$route', …) a second time on
+ * globalProperties and throws "Cannot redefine property: $route".
+ *
+ * Symbol.for(...) is required so the key survives HMR re-evaluations of this
+ * file (a local Symbol() would be a new key each time and defeat the guard).
+ */
+const INSTALLED = Symbol.for('vcp.storybook.installed');
+
+/**
  * Stub for the Nuxt `<Icon>` component, backed by @iconify/vue.
  * Accepts both `name` (@nuxt/icon API, used in app code) and `icon`
  * (@iconify/vue API, used in stories) so either renders in Storybook.
@@ -50,6 +63,9 @@ const NuxtIcon = defineComponent({
 });
 
 setup((app) => {
+    if ((app as unknown as Record<symbol, boolean>)[INSTALLED]) return;
+    (app as unknown as Record<symbol, boolean>)[INSTALLED] = true;
+
     app.use(PrimeVue, {
         theme: {
             preset: VcpPreset,

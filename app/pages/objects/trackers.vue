@@ -106,7 +106,7 @@
                         </template>
                         <template #label>
                             <span class="text-surface-900">
-                                {{ $t('objects.trackers.actions.edit') }}
+                                {{ $t('common.edit') }}
                             </span>
                         </template>
                     </UiActionCommonButton>
@@ -122,7 +122,7 @@
                         </template>
                         <template #label>
                             <span class="text-red-600">
-                                {{ $t('objects.trackers.actions.delete') }}
+                                {{ $t('common.delete') }}
                             </span>
                         </template>
                     </UiActionCommonButton>
@@ -131,8 +131,8 @@
         </SharedResponsiveTable>
         <SharedTableEmpty
             v-else
-            :message="$t('objects.trackers.emptyMessage')"
-            :reset-label="$t('objects.trackers.resetFilters')"
+            :message="$t('common.emptyMessage')"
+            :reset-label="$t('common.resetFilters')"
             @reset="onResetFilters"
         />
 
@@ -140,7 +140,7 @@
             <UiActionButton
                 icon="tabler:plus"
                 :label="$t('objects.add')"
-                @click="modalVisible = true"
+                @click="onAdd"
             />
         </Teleport>
 
@@ -153,11 +153,9 @@
             />
         </Teleport>
 
-        <ObjectsAddTrackerDialog v-model:visible="modalVisible" />
-
-        <ObjectsEditTrackerDialog
-            v-model:visible="editVisible"
-            :tracker="editTarget"
+        <ObjectsTrackerFormDialog
+            v-model:visible="formVisible"
+            :tracker="formTarget"
         />
 
         <SharedConfirmDeleteDialog
@@ -165,7 +163,7 @@
             :title="$t('objects.trackers.modal.deleteTitle')"
             :message="$t('objects.trackers.modal.deleteSubtitle')"
             :item-name="deleteTarget?.transport"
-            :warning="$t('objects.trackers.modal.deleteWarning')"
+            :warning="$t('common.deleteWarning')"
             @confirm="onConfirmDelete"
         />
     </div>
@@ -174,7 +172,7 @@
 <script setup lang="ts">
 import { useToast } from 'primevue/usetoast';
 import type { TableColumn } from '~/components/shared/ResponsiveTable';
-import type { Tracker } from '~/composables/useTrackers';
+import type { Tracker } from '~/types/tracker';
 import { ROUTES } from '~/constants/routes';
 
 const { t } = useI18n();
@@ -183,9 +181,8 @@ const { trackers, companies, deleteTracker } = useTrackers();
 
 const searchQuery = ref('');
 const selectedCompanies = ref<string[]>([]);
-const modalVisible = ref(false);
-const editVisible = ref<boolean>(false);
-const editTarget = ref<Tracker | null>(null);
+const formVisible = ref<boolean>(false);
+const formTarget = ref<Tracker | null>(null);
 const deleteVisible = ref<boolean>(false);
 const deleteTarget = ref<Tracker | null>(null);
 
@@ -256,10 +253,16 @@ const onResetFilters = (): void => {
     selectedCompanies.value = [];
 };
 
-/** Opens the edit dialog prefilled with the selected tracker */
+/** Opens the form dialog in add mode (empty fields) */
+const onAdd = (): void => {
+    formTarget.value = null;
+    formVisible.value = true;
+};
+
+/** Opens the form dialog in edit mode prefilled with the selected tracker */
 const onEdit = (row: Tracker): void => {
-    editTarget.value = row;
-    editVisible.value = true;
+    formTarget.value = row;
+    formVisible.value = true;
 };
 
 /** Opens the delete confirmation dialog for the selected tracker */

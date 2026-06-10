@@ -12,7 +12,17 @@
                 :to="item.to"
                 class="first:pl-0"
             >
-                <span :class="sizeClasses[props.size]">{{ item.label }}</span>
+                <span
+                    :class="sizeClasses[props.size]"
+                    class="inline-flex items-center gap-1"
+                >
+                    {{ item.label }}
+                    <Icon
+                        v-if="item.trailingIcon"
+                        :name="item.trailingIcon"
+                        class="size-5"
+                    />
+                </span>
             </Tab>
         </TabList>
     </Tabs>
@@ -26,6 +36,8 @@ export interface TabItem {
     value?: string;
     /** Target route — renders the tab as a router-link */
     to?: string;
+    /** Optional Iconify icon rendered after the label (e.g. 'tabler:arrow-up-right') */
+    trailingIcon?: string;
 }
 </script>
 

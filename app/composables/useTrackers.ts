@@ -1,21 +1,11 @@
-export interface Tracker {
-    /** Unique tracker id */
-    id: string;
-    /** Owning company name */
-    company: string;
-    /** 2-letter company badge (for avatar) */
-    companyBadge: string;
-    /** IMEI of the tracker device */
-    imei: string;
-    /** Port number */
-    port: number;
-    /** Transport model name */
-    transport: string;
-    /** Transport identifier (e.g. TRK-112) */
-    transportId: string;
-    /** Monitored parameter names */
-    params: string[];
-}
+import type { Tracker } from '~/types/tracker';
+import {
+    COMPANIES,
+    COMPANY_BADGES,
+    TRANSPORT_MODELS,
+    TRACKER_PARAMS,
+    generateTrackers
+} from '~/mocks/trackers';
 
 /** Minimal input for creating a new tracker; composable fills the rest */
 export interface AddTrackerInput {
@@ -50,56 +40,6 @@ export interface UseTrackersReturn {
     /** Removes a tracker from the list by id */
     deleteTracker: (id: string) => void;
 }
-
-const COMPANIES = ['Logistics UA', 'CityBus Group', '1 UA', 'Logistics'];
-
-const COMPANY_BADGES: Record<string, string> = {
-    'Logistics UA': 'LG',
-    'CityBus Group': 'CB',
-    '1 UA': '1U',
-    Logistics: 'LO'
-};
-
-const TRANSPORT_MODELS = [
-    'MAN TGX 18.480',
-    'Volvo FH 460',
-    'Scania R 500',
-    'Mercedes Actros',
-    'DAF XF 480',
-    'Iveco Stralis'
-];
-
-const TRACKER_PARAMS = [
-    'Швидкість',
-    'Температура двигуна',
-    'Рівень палива',
-    'Пробіг',
-    'Координати GPS',
-    'Стан запалювання',
-    'Напруга акумулятора'
-];
-
-/** Generates roughly 80 mock trackers for the table (pagination demo). */
-const generateTrackers = (): Tracker[] => {
-    return Array.from({ length: 80 }, (_, i) => {
-        const company = COMPANIES[i % COMPANIES.length] as string;
-        const transport = TRANSPORT_MODELS[
-            i % TRANSPORT_MODELS.length
-        ] as string;
-        const paramsCount = 1 + (i % TRACKER_PARAMS.length);
-        return {
-            id: String(i + 1),
-            company,
-            companyBadge:
-                COMPANY_BADGES[company] ?? company.slice(0, 2).toUpperCase(),
-            imei: String(352094083412587 + i),
-            port: 5023 + (i % 12),
-            transport,
-            transportId: `TRK-${112 + i}`,
-            params: TRACKER_PARAMS.slice(0, paramsCount)
-        };
-    });
-};
 
 /**
  * Provides the (mock) list of trackers, shared across the app via useState.

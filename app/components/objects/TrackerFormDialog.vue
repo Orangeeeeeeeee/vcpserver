@@ -3,37 +3,52 @@
         v-model:visible="visible"
         modal
         :draggable="false"
-        :style="{ width: '28rem' }"
+        :style="{ maxWidth: '28.4rem', width: '100%' }"
     >
         <template #header>
-            <div class="flex flex-col gap-2 text-center">
-                <UiTypography variant="h3">
-                    {{ $t('objects.trackers.modal.editTitle') }}
-                </UiTypography>
-                <p class="text-sm text-surface-800">
-                    {{ $t('objects.trackers.modal.editSubtitle') }}
-                </p>
+            <div class="flex flex-col gap-0.5 text-center">
+                <UiTypography variant="h3">{{ title }}</UiTypography>
+                <p class="text-sm text-surface-800">{{ subtitle }}</p>
             </div>
         </template>
 
-        <form class="flex flex-col gap-5" novalidate @submit.prevent="onSubmit">
-            <div class="flex flex-col gap-1.5">
+        <form
+            class="flex flex-col gap-3.5"
+            novalidate
+            @submit.prevent="onSubmit"
+        >
+            <SharedAppFormField
+                v-if="!isEdit"
+                id="trackerImei"
+                name="imei"
+                :label="$t('objects.trackers.modal.imei')"
+                :error="r$.$fields.imei.$errors[0]"
+            >
+                <InputText
+                    id="trackerImei"
+                    v-model="state.imei"
+                    :placeholder="$t('objects.trackers.modal.imeiPlaceholder')"
+                    :invalid="r$.$fields.imei.$invalid"
+                    fluid
+                />
+            </SharedAppFormField>
+            <div v-else class="flex flex-col gap-1.5">
                 <span class="text-sm font-normal text-surface-700">
                     {{ $t('objects.trackers.modal.imei') }}
                 </span>
                 <span class="text-base text-surface-950">
-                    {{ tracker?.imei }}
+                    {{ state.imei }}
                 </span>
             </div>
 
             <SharedAppFormField
-                id="editTrackerCompany"
+                id="trackerCompany"
                 name="company"
                 :label="$t('objects.trackers.modal.company')"
                 :error="r$.$fields.company.$errors[0]"
             >
                 <Select
-                    id="editTrackerCompany"
+                    id="trackerCompany"
                     v-model="state.company"
                     :options="companies"
                     :placeholder="
@@ -45,13 +60,13 @@
             </SharedAppFormField>
 
             <SharedAppFormField
-                id="editTrackerTransport"
+                id="trackerTransport"
                 name="transport"
                 :label="$t('objects.trackers.modal.transport')"
                 :error="r$.$fields.transport.$errors[0]"
             >
                 <Select
-                    id="editTrackerTransport"
+                    id="trackerTransport"
                     v-model="state.transport"
                     :options="transportModels"
                     :placeholder="
@@ -63,13 +78,13 @@
             </SharedAppFormField>
 
             <SharedAppFormField
-                id="editTrackerParams"
+                id="trackerParams"
                 name="params"
                 :label="$t('objects.trackers.modal.params')"
                 :error="r$.$fields.params.$errors[0]"
             >
                 <MultiSelect
-                    id="editTrackerParams"
+                    id="trackerParams"
                     v-model="state.params"
                     :options="paramsList"
                     display="chip"
@@ -85,13 +100,13 @@
         <template #footer>
             <div class="grid grid-cols-2 w-full gap-3">
                 <Button
-                    :label="$t('objects.trackers.modal.cancel')"
+                    :label="$t('common.cancel')"
                     severity="secondary"
                     fluid
                     @click="onCancel"
                 />
                 <Button
-                    :label="$t('objects.trackers.modal.editSubmit')"
+                    :label="submitLabel"
                     :disabled="isSubmitDisabled"
                     fluid
                     @click="onSubmit"
@@ -105,21 +120,22 @@
 import { useRegle } from '@regle/core';
 import { withMessage, required } from '@regle/rules';
 import { useToast } from 'primevue/usetoast';
-import type { Tracker } from '~/composables/useTrackers';
+import type { Tracker } from '~/types/tracker';
 
-interface EditTrackerFormState {
+interface TrackerFormState {
+    imei: string;
     company: string | null;
     transport: string | null;
     params: string[];
 }
 
-interface EditTrackerDialogProps {
-    /** Tracker being edited; null when no row is selected */
+interface TrackerFormDialogProps {
+    /** Tracker to edit; null = add mode */
     tracker: Tracker | null;
 }
 
 const visible = defineModel<boolean>('visible', { required: true });
-const props = defineProps<EditTrackerDialogProps>();
+const props = defineProps<TrackerFormDialogProps>();
 
 const { t } = useI18n();
 const toast = useToast();
@@ -127,18 +143,24 @@ const {
     companies,
     transportModels,
     params: paramsList,
+    addTracker,
     updateTracker
 } = useTrackers();
 
-const state = reactive<EditTrackerFormState>({
+/** Builds the empty (add-mode) form state */
+const emptyState = (): TrackerFormState => ({
+    imei: '',
     company: null,
     transport: null,
     params: []
 });
 
+const state = reactive<TrackerFormState>(emptyState());
+
 const { r$ } = useRegle(
     state,
     {
+        imei: { required: withMessage(required, 'validation.required') },
         company: { required: withMessage(required, 'validation.required') },
         transport: { required: withMessage(required, 'validation.required') },
         params: { required: withMessage(required, 'validation.required') }
@@ -146,44 +168,83 @@ const { r$ } = useRegle(
     { lazy: true }
 );
 
+const isEdit = computed((): boolean => props.tracker !== null);
+const title = computed((): string =>
+    t(
+        isEdit.value
+            ? 'objects.trackers.modal.editTitle'
+            : 'objects.trackers.modal.title'
+    )
+);
+const subtitle = computed((): string =>
+    t(
+        isEdit.value
+            ? 'objects.trackers.modal.editSubtitle'
+            : 'objects.trackers.modal.subtitle'
+    )
+);
+const submitLabel = computed((): string =>
+    t(
+        isEdit.value
+            ? 'objects.trackers.modal.editSubmit'
+            : 'objects.trackers.modal.submit'
+    )
+);
+
 /** Whether the submit button should be disabled */
 const isSubmitDisabled = computed((): boolean => r$.$invalid || r$.$pending);
 
-/** Hydrates form state from the incoming tracker prop */
+/** Resets to empty (add) or hydrates from the tracker (edit) */
+const hydrate = (tracker: Tracker | null): void => {
+    Object.assign(state, emptyState());
+    if (tracker) {
+        state.imei = tracker.imei;
+        state.company = tracker.company;
+        state.transport = tracker.transport;
+        state.params = [...tracker.params];
+    }
+    r$.$reset();
+};
+
+/** Re-hydrate whenever the dialog opens */
 watch(
-    () => props.tracker,
-    (next): void => {
-        if (!next) return;
-        state.company = next.company;
-        state.transport = next.transport;
-        state.params = [...next.params];
-        r$.$reset();
+    [visible, () => props.tracker],
+    ([isOpen]): void => {
+        if (!isOpen) return;
+        hydrate(props.tracker);
     },
     { immediate: true }
 );
 
-/** Closes the dialog without applying changes */
 const onCancel = (): void => {
     visible.value = false;
 };
 
-/** Validates, updates the tracker via composable, toasts, and closes */
+/** Validates, creates/updates the tracker via composable, toasts, and closes */
 const onSubmit = async (): Promise<void> => {
-    if (!props.tracker) return;
     const { valid } = await r$.$validate();
     if (!valid) return;
 
-    updateTracker({
-        id: props.tracker.id,
+    const payload = {
         company: state.company as string,
         transport: state.transport as string,
         params: state.params
-    });
+    };
+
+    if (props.tracker) {
+        updateTracker({ id: props.tracker.id, ...payload });
+    } else {
+        addTracker({ imei: state.imei.trim(), ...payload });
+    }
 
     toast.add({
         severity: 'success',
-        summary: t('objects.trackers.modal.updated'),
-        detail: props.tracker.imei,
+        summary: t(
+            props.tracker
+                ? 'objects.trackers.modal.updated'
+                : 'objects.trackers.modal.added'
+        ),
+        detail: state.imei,
         life: 2000
     });
 

@@ -38,7 +38,9 @@ VCPServer — веб-застосунок на Nuxt 4 з використанн�
     - `theme/colors.ts` — константи дизайнерської палітри кольорів
     - `theme/preset.ts` — кастомний PrimeVue пресет (`definePreset(Aura, overrides)`)
     - `constants/` — константи застосунку: `routes.ts` (шляхи маршрутів — об'єкт `ROUTES`) та `navigation.ts` (пункти бічної навігації `navigationItems`)
-    - `utils/` — auto-imported утиліти Nuxt (напр. `validations.ts`)
+    - `types/` — доменні TS-типи (`driver.ts`, `tracker.ts`); НЕ auto-imported, імпортувати явно (`import type { Driver } from '~/types/driver'`)
+    - `mocks/` — мок-дані та генератори (`drivers.ts`, `trackers.ts`); імпортуються явно у composables, видаляються при підключенні реального API
+    - `utils/` — auto-imported утиліти Nuxt (напр. `validations.ts`, `date.ts`, `string.ts`)
 - `stories/` — Storybook сторіз (`primevue/`, `ColorPalette/`)
 - `i18n/locales/` — файли перекладів (JSON), за замовчуванням `ua.json`
 

@@ -2,7 +2,6 @@ import type { MultiSelectDesignTokens } from '@primeuix/themes/types/multiselect
 
 const multiselect: MultiSelectDesignTokens = {
     root: {
-        transitionDuration: '{form.field.transition.duration}',
         sm: {
             fontSize: '0.75rem',
             paddingX: '0.45rem',
@@ -14,6 +13,24 @@ const multiselect: MultiSelectDesignTokens = {
             paddingY: '0.9rem'
         }
     },
+    list: {
+        gap: '0',
+        padding: '0',
+        header: {
+            padding: '0.75rem 0.75rem 0.5rem 0.75rem'
+        }
+    },
+    option: {
+        padding: '0.75rem',
+        color: '{surface.800}',
+        focusColor: '{primary.600}',
+        selectedColor: '{primary.600}',
+        gap: '0.5rem'
+    },
+    optionGroup: {
+        fontWeight: '400',
+        padding: '0.75rem 0.75rem 0.5rem'
+    },
     chip: {
         borderRadius: '4px'
     },
@@ -22,7 +39,20 @@ const multiselect: MultiSelectDesignTokens = {
         borderColor: '{surface.300}',
         shadow: '0px 4px 10px 0px rgba(0, 0, 0, 0.1)'
     },
-    css: `.p-multiselect-label { font-size: 0.875rem; flex-wrap: wrap; }`
+    css: `
+        .p-multiselect-label {
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+
+        .p-multiselect-option {
+            font-size: 0.875rem;
+        }
+
+        .p-multiselect-empty-message {
+            font-size: 0.875rem;
+        }
+    `
 };
 
 export default multiselect;

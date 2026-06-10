@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import DriverCard from './DriverCard.vue';
-import type { Driver, DriverCardLabels } from './DriverCard.vue';
+import type { DriverCardLabels } from './DriverCard.vue';
+import type { Driver } from '~/types/driver';
 
 const meta: Meta<typeof DriverCard> = {
     title: 'Objects/DriverCard',

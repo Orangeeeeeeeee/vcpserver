@@ -63,6 +63,8 @@ export interface PageLayoutTab {
     label: string;
     /** Target route path */
     to: string;
+    /** Optional Iconify icon rendered after the label (e.g. 'tabler:arrow-up-right') */
+    trailingIcon?: string;
 }
 </script>
 

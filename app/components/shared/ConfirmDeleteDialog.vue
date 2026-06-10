@@ -2,7 +2,7 @@
     <ConfirmDialog
         :group="group"
         :draggable="false"
-        :style="{ width: '28.25rem' }"
+        :style="{ maxWidth: '28.25rem', width: '100%' }"
         :pt="{ header: { style: { padding: '0' } } }"
     >
         <template #message>
