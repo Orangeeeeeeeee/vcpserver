@@ -361,6 +361,7 @@
             "searchPlaceholder": "Пошук за назвою або ID",
             "columns": {
                 "vehicle": "Транспортний засіб",
+                "vehicleShort": "Транспорт",
                 "company": "Компанія",
                 "type": "Тип",
                 "driver": "Водій",

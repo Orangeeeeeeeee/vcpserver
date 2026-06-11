@@ -1,5 +1,7 @@
 <template>
-    <div class="border border-surface-300 rounded-2xl overflow-hidden">
+    <div
+        class="border border-surface-300 rounded-lg md:rounded-xl overflow-hidden"
+    >
         <DataTable
             :value="value"
             :paginator="paginator"
@@ -14,13 +16,17 @@
                 v-for="col in columns"
                 :key="col.field"
                 :field="col.field"
-                :header="col.header"
                 :sortable="col.sortable"
                 :style="col.width ? { width: col.width } : undefined"
                 :body-style="col.align ? { textAlign: col.align } : undefined"
                 :header-style="col.align ? { textAlign: col.align } : undefined"
                 :pt="{ bodyCell: { 'data-label': col.header } }"
             >
+                <template #header>
+                    <slot :name="`header-${col.field}`">
+                        {{ col.header }}
+                    </slot>
+                </template>
                 <template #body="{ data }">
                     <slot
                         :name="`cell-${col.field}`"

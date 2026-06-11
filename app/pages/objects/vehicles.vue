@@ -48,23 +48,35 @@
             :rows="9"
             row-key="id"
         >
+            <template #header-vehicle>
+                <span class="hidden md:inline">
+                    {{ $t('objects.vehicles.columns.vehicle') }}
+                </span>
+                <span class="md:hidden">
+                    {{ $t('objects.vehicles.columns.vehicleShort') }}
+                </span>
+            </template>
             <template #cell-vehicle="{ row }">
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-1">
                     <Icon
                         :name="VEHICLE_MOTION_META[row.motionStatus].icon"
                         :class="VEHICLE_MOTION_META[row.motionStatus].class"
                         class="size-5 shrink-0"
                     />
                     <div class="flex flex-col gap-[0.125rem] leading-none">
-                        <span class="font-semibold">{{ row.vehicle }}</span>
-                        <span class="text-surface-600">
+                        <span
+                            class="font-semibold uppercase text-sm text-surface-950"
+                        >
+                            {{ row.vehicle }}
+                        </span>
+                        <span class="text-surface-700 uppercase text-sm">
                             ID: {{ row.name }}
                         </span>
                     </div>
                 </div>
             </template>
             <template #cell-company="{ row }">
-                <div class="flex items-center gap-1">
+                <div class="flex items-center gap-1.5">
                     <Avatar
                         :label="row.companyBadge"
                         shape="circle"
@@ -77,23 +89,31 @@
                 </div>
             </template>
             <template #cell-type="{ row }">
-                <span v-tooltip.top="typeTooltipOf(row)" class="inline-flex">
+                <span
+                    v-tooltip.top="typeTooltipOf(row)"
+                    class="inline-flex items-center gap-2"
+                >
                     <Icon
                         :name="VEHICLE_TYPE_ICONS[row.type]"
                         :class="conditionClassOf(row)"
                         class="size-5"
                     />
+                    <span class="text-sm text-surface-700 md:hidden">
+                        {{ typeLabelOf(row) }}
+                    </span>
                 </span>
             </template>
             <template #cell-driver="{ row }">
-                <div class="flex items-center gap-1">
+                <div class="flex items-center gap-1.5">
                     <Avatar
                         :label="row.driverInitials"
                         shape="circle"
                         size="small"
                         class="size-[26px] text-[0.625rem] font-medium"
                     />
-                    <span class="truncate max-w-36">{{ row.driver }}</span>
+                    <span class="text-sm truncate max-w-36 text-surface-900">
+                        {{ row.driver }}
+                    </span>
                 </div>
             </template>
             <template #cell-carrier="{ row }">
@@ -104,7 +124,7 @@
                 />
             </template>
             <template #cell-address="{ row }">
-                <span class="text-surface-800">{{ row.address }}</span>
+                <span class="text-surface-800 text-sm">{{ row.address }}</span>
             </template>
             <template #cell-updatedAgo="{ row }">
                 <span
@@ -228,9 +248,7 @@ const actionsTarget = computed((): string =>
 );
 
 /** Driver lookup for resolving the table's driver column */
-const driverById = computed(
-    () => new Map(drivers.value.map((d) => [d.id, d]))
-);
+const driverById = computed(() => new Map(drivers.value.map((d) => [d.id, d])));
 
 /** Rows enriched with display fields (needed for column sorting) */
 const rows = computed<VehicleRow[]>(() =>
@@ -244,8 +262,7 @@ const rows = computed<VehicleRow[]>(() =>
             driver: driver?.name ?? '—',
             driverInitials: driver?.initials ?? '—',
             companyBadge:
-                COMPANY_BADGES[v.company] ??
-                v.company.slice(0, 2).toUpperCase()
+                COMPANY_BADGES[v.company] ?? v.company.slice(0, 2).toUpperCase()
         };
     })
 );
@@ -265,7 +282,9 @@ const filteredRows = computed<VehicleRow[]>(() => {
 const columns = computed<TableColumn[]>(() => [
     {
         field: 'vehicle',
-        header: t('objects.vehicles.columns.vehicle'),
+        // the thead label is overridden by the responsive #header-vehicle
+        // slot; this string feeds the mobile stacked-row data-label
+        header: t('objects.vehicles.columns.vehicleShort'),
         sortable: true
     },
     {
@@ -311,9 +330,13 @@ const conditionClassOf = (row: VehicleRow): string =>
         ? VEHICLE_CONDITION_CLASSES[row.condition]
         : 'text-surface-500';
 
+/** Localized type label for the given row */
+const typeLabelOf = (row: VehicleRow): string =>
+    t(`objects.vehicles.types.${row.type}`);
+
 /** Tooltip for the type column: type label + optional condition */
 const typeTooltipOf = (row: VehicleRow): string => {
-    const typeLabel = t(`objects.vehicles.types.${row.type}`);
+    const typeLabel = typeLabelOf(row);
     if (!row.condition) return typeLabel;
     const conditionLabel = t(
         conditions.find((c) => c.value === row.condition)?.labelKey ?? ''
