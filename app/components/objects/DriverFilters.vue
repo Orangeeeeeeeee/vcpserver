@@ -1,19 +1,17 @@
 <template>
     <div>
-        <Button
-            severity="secondary"
-            size="small"
-            badgeSeverity="contrast"
-            :label="$t('objects.drivers.filterButton')"
-            :badge="activeCount > 0 ? activeCount : ''"
+        <UiFilterButton
+            :label="$t('common.filter')"
+            :badge="activeCount"
+            :expanded="isOpen"
             @click="toggle"
-        >
-            <template #icon>
-                <Icon name="tabler:filter-2" class="size-5" />
-            </template>
-        </Button>
+        />
 
-        <Popover ref="popoverRef">
+        <Popover
+            ref="popoverRef"
+            @show="isOpen = true"
+            @hide="isOpen = false"
+        >
             <div class="flex w-80 flex-col gap-4">
                 <!-- Company -->
                 <div class="flex flex-col gap-1.5">
@@ -172,6 +170,9 @@ const {
 } = useDriverFiltersContext();
 
 const popoverRef = ref<InstanceType<typeof Popover> | null>(null);
+
+/** Whether the filter popover is currently open (drives the active button styles) */
+const isOpen = ref<boolean>(false);
 
 const toggle = (event: MouseEvent): void => {
     popoverRef.value?.toggle(event);

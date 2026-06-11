@@ -1,4 +1,5 @@
 import avatar from './avatar';
+import badge from './badge';
 import breadcrumb from './breadcrumb';
 import button from './button';
 import checkbox from './checkbox';
@@ -21,6 +22,7 @@ import togglebutton from './togglebutton';
 
 export default {
     avatar,
+    badge,
     breadcrumb,
     button,
     checkbox,

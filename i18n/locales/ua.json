@@ -12,6 +12,7 @@
         "deleteWarning": "Цю дію неможливо буде скасувати.",
         "emptyMessage": "За вказаними параметрами результатів немає. Спробуйте змінити налаштування фільтрів або період.",
         "resetFilters": "Скинути фільтри",
+        "filter": "Фільтр",
         "chooseFile": "Обрати файл",
         "email": "Email",
         "emailPlaceholder": "Введіть електронну адресу",
@@ -179,7 +180,6 @@
         },
         "drivers": {
             "searchPlaceholder": "Пошук по імені",
-            "filterButton": "Фільтр",
             "inDevelopment": "Функція в розробці",
             "filters": {
                 "company": "Компанія",
@@ -312,6 +312,49 @@
                 "updated": "Трекер оновлено",
                 "deleteTitle": "Видалити трекер?",
                 "deleteSubtitle": "Ви впевнені, що хочете видалити трекер"
+            }
+        },
+        "groups": {
+            "searchPlaceholder": "Пошук за назвою",
+            "card": {
+                "statusActive": "Активна",
+                "statusInactive": "Не активна",
+                "expand": "Розгорнути",
+                "collapse": "Згорнути"
+            },
+            "filters": {
+                "company": "Компанія",
+                "companyPlaceholder": "Оберіть компанію",
+                "status": "Статус",
+                "statusPlaceholder": "Оберіть статус"
+            },
+            "modal": {
+                "title": "Додати групу",
+                "editTitle": "Редагувати групу",
+                "tabs": {
+                    "general": "Основне",
+                    "vehicles": "Транспортні засоби"
+                },
+                "name": "Назва",
+                "namePlaceholder": "Введіть назву групи",
+                "company": "Компанія",
+                "companyPlaceholder": "Оберіть компанію",
+                "status": "Статус",
+                "statusPlaceholder": "Оберіть статус",
+                "order": "Номер за порядком",
+                "orderPlaceholder": "Введіть номер",
+                "comment": "Коментар",
+                "commentPlaceholder": "Додаткові примітки про групу",
+                "color": "Колір",
+                "vehicles": "Транспортні засоби",
+                "vehiclesPlaceholder": "Оберіть транспортні засоби",
+                "submit": "Додати",
+                "editSubmit": "Редагувати",
+                "added": "Групу додано",
+                "updated": "Групу оновлено",
+                "deleted": "Групу видалено",
+                "deleteTitle": "Видалити групу?",
+                "deleteSubtitle": "Ви впевнені, що хочете видалити групу"
             }
         }
     }

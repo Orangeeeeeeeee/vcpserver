@@ -128,6 +128,11 @@ export const useDriverFilters = () => {
         return count;
     });
 
+    /** Clears all filters back to the empty state */
+    const reset = (): void => {
+        Object.assign(state, emptyState());
+    };
+
     return {
         state,
         companies,
@@ -136,7 +141,8 @@ export const useDriverFilters = () => {
         licenseCategoryOptions,
         vehicleGroups,
         matches,
-        activeCount
+        activeCount,
+        reset
     };
 };
 
