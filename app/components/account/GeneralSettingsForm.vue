@@ -7,34 +7,11 @@
                     name="language"
                     :label="$t('account.settings.language')"
                 >
-                    <Select
-                        id="language"
+                    <UiFlagSelect
                         v-model="state.language"
-                        :options="LANGUAGES"
-                        option-value="value"
-                        :option-label="(o) => t(o.labelKey)"
-                        fluid
-                    >
-                        <template #value="{ value }">
-                            <span
-                                v-if="selectedLanguage"
-                                class="flex items-center gap-2"
-                            >
-                                <Icon
-                                    :name="selectedLanguage.flag"
-                                    class="size-5"
-                                />
-                                <span>{{ t(selectedLanguage.labelKey) }}</span>
-                            </span>
-                            <span v-else>{{ value }}</span>
-                        </template>
-                        <template #option="{ option }">
-                            <span class="flex items-center gap-2">
-                                <Icon :name="option.flag" class="size-5" />
-                                <span>{{ t(option.labelKey) }}</span>
-                            </span>
-                        </template>
-                    </Select>
+                        input-id="language"
+                        :options="languageOptions"
+                    />
                 </SharedAppFormField>
 
                 <SharedAppFormField
@@ -147,6 +124,7 @@
 
 <script setup lang="ts">
 import { useToast } from 'primevue/usetoast';
+import type { FlagSelectOption } from '~/components/ui/FlagSelect';
 import {
     LANGUAGES,
     TIMEZONES,
@@ -186,9 +164,13 @@ const state = reactive<GeneralSettingsState>({
     units: settings.value.units
 });
 
-/** Currently selected language option (for the value-slot in Select) */
-const selectedLanguage = computed(() =>
-    LANGUAGES.find((l) => l.value === state.language)
+/** Language options with resolved labels for the flag select */
+const languageOptions = computed<FlagSelectOption[]>(() =>
+    LANGUAGES.map((o) => ({
+        value: o.value,
+        label: t(o.labelKey),
+        flag: o.flag
+    }))
 );
 
 /** Resets the form back to the currently stored settings */

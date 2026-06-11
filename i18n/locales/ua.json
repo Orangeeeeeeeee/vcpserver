@@ -356,6 +356,127 @@
                 "deleteTitle": "Видалити групу?",
                 "deleteSubtitle": "Ви впевнені, що хочете видалити групу"
             }
+        },
+        "vehicles": {
+            "searchPlaceholder": "Пошук за назвою або ID",
+            "columns": {
+                "vehicle": "Транспортний засіб",
+                "company": "Компанія",
+                "type": "Тип",
+                "driver": "Водій",
+                "carrier": "Перевіз.",
+                "address": "Адреса",
+                "updated": "Оновлено",
+                "actions": "Дії"
+            },
+            "filters": {
+                "company": "Компанія",
+                "companyPlaceholder": "Оберіть компанію",
+                "type": "Тип",
+                "typePlaceholder": "Оберіть тип"
+            },
+            "types": {
+                "car": "Легкове авто",
+                "minibus": "Мікроавтобус / мінівен",
+                "truck": "Вантажне авто",
+                "motorcycle": "Мотоцикл",
+                "bus": "Автобус",
+                "trailer": "Причеп"
+            },
+            "fuels": {
+                "petrol": "Бензин",
+                "diesel": "Дизель",
+                "gas": "Газ",
+                "electric": "Електро"
+            },
+            "conditions": {
+                "active": "Активний",
+                "repair": "На ремонті",
+                "inactive": "Неактивний"
+            },
+            "countries": {
+                "UA": "Україна",
+                "PL": "Польща",
+                "DE": "Німеччина",
+                "CZ": "Чехія",
+                "MD": "Молдова"
+            },
+            "modal": {
+                "title": "Додати транспортний засіб",
+                "editTitle": "Редагувати транспортний засіб",
+                "tabs": {
+                    "general": "Основне",
+                    "exploitation": "Експлуатація",
+                    "settings": "Налаштування",
+                    "fuel": "Паливо"
+                },
+                "company": "Компанія",
+                "companyPlaceholder": "Оберіть компанію",
+                "year": "Рік авто",
+                "yearPlaceholder": "Введіть рік авто",
+                "name": "Назва (ID)",
+                "namePlaceholder": "Введіть назву",
+                "vin": "VIN-код",
+                "vinPlaceholder": "Введіть VIN-код",
+                "type": "Тип транспортного засобу",
+                "typePlaceholder": "Оберіть тип",
+                "fuel": "Пальне",
+                "fuelPlaceholder": "Оберіть пальне",
+                "brand": "Бренд",
+                "brandPlaceholder": "Введіть бренд",
+                "condition": "Стан",
+                "conditionPlaceholder": "Оберіть стан",
+                "model": "Модель",
+                "modelPlaceholder": "Введіть модель",
+                "country": "Країна",
+                "countryPlaceholder": "Оберіть країну",
+                "countrySearch": "Пошук",
+                "driver": "Водій",
+                "driverPlaceholder": "Оберіть водія",
+                "regAddress": "Адреса реєстрації",
+                "regAddressPlaceholder": "Введіть адресу реєстрації",
+                "routes": "Маршрути",
+                "routesPlaceholder": "Оберіть маршрути",
+                "tracker": "GPS-трекер",
+                "trackerPlaceholder": "Оберіть IMEI трекера",
+                "groups": "Групи транспорту",
+                "groupsPlaceholder": "Оберіть групи",
+                "carrier": "Перевізник",
+                "seats": "Кількість місць",
+                "seatsPlaceholder": "Введіть кількість місць",
+                "comment": "Коментар",
+                "commentPlaceholder": "Додаткові примітки про транспортний засіб",
+                "sections": {
+                    "initialData": "Початкові дані",
+                    "consumption": "Споживання палива",
+                    "tanks": "Паливні баки",
+                    "speedLimits": "Ліміти швидкості"
+                },
+                "odometer": "Показник одометра",
+                "odometerPlaceholder": "Введіть показник одометра",
+                "engineHours": "Мотогодини двигуна",
+                "engineHoursPlaceholder": "Введіть мотогодини двигуна",
+                "date": "Дата",
+                "datePlaceholder": "Оберіть дату",
+                "consumptionAverage": "Середнє спожив.",
+                "consumptionSlow": "Повільна їзда",
+                "consumptionNormal": "Звичайна їзда",
+                "consumptionFast": "Швидка їзда",
+                "consumptionUnit": "л / 100 км",
+                "tankMain": "Основний бак",
+                "tankExtra": "Додатковий бак",
+                "tankUnit": "л",
+                "speedNormal": "Звичайний",
+                "speedMax": "Максимальний",
+                "speedUnit": "км/год",
+                "submit": "Додати",
+                "editSubmit": "Редагувати",
+                "added": "Транспортний засіб додано",
+                "updated": "Транспортний засіб оновлено",
+                "deleted": "Транспортний засіб видалено",
+                "deleteTitle": "Видалити транспортний засіб?",
+                "deleteSubtitle": "Ви впевнені, що хочете видалити транспортний засіб"
+            }
         }
     }
 }
