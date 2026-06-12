@@ -11,6 +11,7 @@
             :loading="loading"
             removable-sort
             class="responsive-table"
+            @row-click="onRowClick"
         >
             <Column
                 v-for="col in columns"
@@ -93,6 +94,18 @@ withDefaults(defineProps<ResponsiveTableProps>(), {
     rowKey: undefined,
     loading: false
 });
+
+const emit = defineEmits<{
+    /** Emitted when a row is clicked */
+    'row-click': [row: TableRow]
+}>();
+
+/**
+ * Handle row click event and emit custom event
+ */
+const onRowClick = (event: { data: TableRow }): void => {
+    emit('row-click', event.data);
+};
 </script>
 
 <style scoped>
@@ -148,5 +161,15 @@ withDefaults(defineProps<ResponsiveTableProps>(), {
         font-weight: 600;
         color: var(--p-surface-700);
     }
+}
+
+/* Hover effect for table rows (desktop & mobile stacked view) */
+.hover-table :deep(.p-datatable-tbody > tr:hover) {
+    background-color: var(--p-surface-200);
+    cursor: pointer;
+}
+
+.hover-table :deep(.p-datatable-tbody > tr) {
+    transition: background-color 0.12s ease-in-out;
 }
 </style>
