@@ -17,6 +17,11 @@
 </template>
 
 <script setup lang="ts">
+/** regle's `$errors` shape for collection fields (arrays in the form state) */
+interface CollectionErrors {
+    $self?: string[];
+}
+
 interface AppFormFieldProps {
     /** Field name attribute */
     name: string;
@@ -24,15 +29,21 @@ interface AppFormFieldProps {
     label: string;
     /** HTML id for label association */
     id?: string;
-    /** Validation error i18n key(s); arrays render one message per entry */
-    error?: string | string[];
+    /**
+     * Validation error i18n key(s): a single key, the `$errors` array, or
+     * regle's collection-field `$errors` object ({ $self, $each }).
+     * Renders one message per entry.
+     */
+    error?: string | string[] | CollectionErrors;
 }
 
 const props = defineProps<AppFormFieldProps>();
 
-/** Error keys normalized to an array (empty when there is no error) */
+/** Error keys normalized to a flat array (empty when there is no error) */
 const errorList = computed<string[]>(() => {
     if (!props.error) return [];
-    return Array.isArray(props.error) ? props.error : [props.error];
+    if (typeof props.error === 'string') return [props.error];
+    if (Array.isArray(props.error)) return props.error;
+    return props.error.$self ?? [];
 });
 </script>
