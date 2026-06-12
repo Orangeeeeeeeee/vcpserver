@@ -35,6 +35,19 @@ const select: SelectDesignTokens = {
         shadow: '0px 4px 10px 0px rgba(0, 0, 0, 0.1)'
     },
     css: `
+    .p-select {
+        min-height: 2.5rem;
+        height: 100%;
+    }
+
+    .p-select-lg {
+        min-height: 3.75rem;
+    }
+
+    .p-select-sm {
+        min-height: 2rem;
+    }
+
     .p-select-label {
         font-size: 0.875rem;
     }

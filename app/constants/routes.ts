@@ -12,6 +12,7 @@ export const ROUTES = {
     ROUTES_PAGE: '/routes',
     ZONES: '/zones',
     REPORTS: '/reports',
+    REPORTS_IDLE: '/reports/idle',
     PASSENGER_FLOW: '/passenger-flow',
     ACCOUNT: '/account',
     ACCOUNT_INFO: '/account/info',

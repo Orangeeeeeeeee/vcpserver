@@ -89,11 +89,13 @@
                 <span class="font-medium">{{ row.port }}</span>
             </template>
             <template #cell-params="{ row }">
-                <Chip
-                    severity="primary"
-                    class="text-xs font-medium"
-                    :label="String(row.params.length)"
-                ></Chip>
+                <div>
+                    <Chip
+                        severity="primary"
+                        class="text-xs font-medium"
+                        :label="String(row.params.length)"
+                    ></Chip>
+                </div>
             </template>
             <template #cell-actions="{ row }">
                 <div class="flex items-center gap-2 justify-end">

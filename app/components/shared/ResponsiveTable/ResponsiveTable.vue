@@ -103,22 +103,30 @@ withDefaults(defineProps<ResponsiveTableProps>(), {
         display: none;
     }
     .responsive-table :deep(.p-datatable-table),
-    .responsive-table :deep(.p-datatable-tbody),
-    .responsive-table :deep(.p-datatable-tbody > tr) {
+    .responsive-table :deep(.p-datatable-tbody) {
         display: block;
         width: 100%;
     }
+    /* Row = 2-column grid: shared max-content label track + value track,
+       so every data-label is as wide as the longest one. */
     .responsive-table :deep(.p-datatable-tbody > tr) {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        width: 100%;
         border-bottom: 1px solid var(--p-surface-300);
         padding: 0.75rem 0.875rem;
     }
     .responsive-table :deep(.p-datatable-tbody > tr:last-child) {
         border-bottom: none;
     }
+    /* Cells inherit the row tracks via subgrid: ::before lands in the
+       label column, the cell content in the value column. */
     .responsive-table :deep(.p-datatable-tbody > tr > td) {
-        display: flex;
+        display: grid;
+        grid-template-columns: subgrid;
+        grid-column: span 2;
         align-items: center;
-        gap: 0.75rem;
+        column-gap: 0.75rem;
         padding: 0.75rem 0;
         border: none;
         text-align: left !important;
@@ -126,18 +134,16 @@ withDefaults(defineProps<ResponsiveTableProps>(), {
     }
 
     .responsive-table :deep(.p-datatable-tbody > tr > td:last-child) {
-        padding: 1rem 0 0.5rem 0;
+        padding: 1rem 0 0 0;
         border: none;
     }
 
     .responsive-table :deep(.p-datatable-tbody > tr > td:first-child) {
-        padding: 0.5rem 0 1rem 0;
+        padding: 0 0 1rem 0;
     }
 
     .responsive-table :deep(.p-datatable-tbody > tr > td)::before {
         content: attr(data-label);
-        width: 31%;
-        flex-shrink: 0;
         font-size: 0.75rem;
         font-weight: 600;
         color: var(--p-surface-700);

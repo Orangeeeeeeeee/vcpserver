@@ -1,11 +1,7 @@
 <template>
-    <div class="p-6">
-        <h1 class="text-2xl font-semibold">{{ $t('sidebar.reports') }}</h1>
-    </div>
+    <SharedPageLayout :title="$t('reports.title')">
+        <template #content>
+            <NuxtPage />
+        </template>
+    </SharedPageLayout>
 </template>
-
-<script setup lang="ts">
-definePageMeta({
-    layout: 'default'
-});
-</script>

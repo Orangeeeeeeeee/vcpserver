@@ -26,6 +26,7 @@ VCPServer — веб-застосунок на Nuxt 4 з використанн�
 - **Іконки:** `@nuxt/icon` (Iconify, SVG mode), колекція **Tabler Icons** (`tabler:icon-name`). Кастомні SVG — в `app/assets/icons/` з префіксом `custom:` (`<Icon name="custom:logo" />`). В Storybook — `import { Icon } from '@iconify/vue'` з `<Icon icon="tabler:arrow-left" />`
 - **Лінтер:** ESLint через `@nuxt/eslint` (конфіг генерується автоматично у `.nuxt/eslint.config.mjs`) + Prettier для форматування
 - **Інтернаціоналізація:** `@nuxtjs/i18n` (vue-i18n, Composition API mode)
+- **Карти:** `leaflet` (+ `@types/leaflet`) у client-only компоненті (`*.client.vue`) з тайлами Mapbox Static Tiles API; access token — env `NUXT_PUBLIC_MAPBOX_TOKEN` → `runtimeConfig.public.mapboxToken`
 - **Storybook:** Storybook 10 (`@storybook/vue3-vite`)
 
 ## Архітектура

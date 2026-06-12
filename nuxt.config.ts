@@ -14,6 +14,12 @@ export default defineNuxtConfig({
         [ROUTES.ACCOUNT]: { redirect: ROUTES.ACCOUNT_INFO }
     },
     devtools: { enabled: true },
+    runtimeConfig: {
+        public: {
+            /** Mapbox access token; override via NUXT_PUBLIC_MAPBOX_TOKEN */
+            mapboxToken: ''
+        }
+    },
     css: ['~/assets/css/main.css'],
     components: [
         {

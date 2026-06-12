@@ -130,7 +130,7 @@
                 <span
                     class="inline-flex items-center gap-1.5 rounded bg-surface-200 px-2 py-1 text-sm text-surface-800"
                 >
-                    <Icon name="tabler:refresh" class="size-4" />
+                    <Icon name="tabler:refresh" class="size-4 shrink-0" />
                     {{ row.updatedAgo }}
                 </span>
             </template>

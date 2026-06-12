@@ -40,6 +40,19 @@ const multiselect: MultiSelectDesignTokens = {
         shadow: '0px 4px 10px 0px rgba(0, 0, 0, 0.1)'
     },
     css: `
+        .p-multiselect {
+            min-height: 2.5rem;
+            height: 100%;
+        }
+
+        .p-multiselect-lg {
+            min-height: 3.75rem;
+        }
+
+        .p-multiselect-sm {
+            min-height: 2rem;
+        }
+
         .p-multiselect-label {
             font-size: 0.875rem;
             flex-wrap: wrap;
