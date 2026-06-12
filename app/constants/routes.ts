@@ -14,6 +14,11 @@ export const ROUTES = {
     REPORTS: '/reports',
     REPORTS_IDLE: '/reports/idle',
     PASSENGER_FLOW: '/passenger-flow',
+    PASSENGER_FLOW_MAIN: '/passenger-flow/main-charts',
+    PASSENGER_FLOW_ADDITIONAL: '/passenger-flow/additional-charts',
+    PASSENGER_FLOW_TOTAL: '/passenger-flow/total-info',
+    /** Passenger flow transport detail page */
+    PASSENGER_FLOW_TRANSPORT_DETAIL: (id: string): string => `/transport/${id}`,
     ACCOUNT: '/account',
     ACCOUNT_INFO: '/account/info',
     ACCOUNT_SETTINGS: '/account/settings',

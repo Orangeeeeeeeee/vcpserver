@@ -1,0 +1,192 @@
+<template>
+    <div class="flex flex-col gap-4">
+        <!-- Filters bar -->
+        <div class="flex flex-wrap items-center gap-3">
+            <IconField class="flex-1 min-w-0 md:flex-none md:w-72">
+                <InputIcon>
+                    <Icon
+                        name="tabler:search"
+                        class="size-5 text-surface-700 mt-[-0.17rem]"
+                    />
+                </InputIcon>
+                <InputText
+                    v-model="searchQuery"
+                    :placeholder="$t('common.search')"
+                    fluid
+                />
+            </IconField>
+
+            <Button
+                :label="$t('common.filter')"
+                severity="secondary"
+                outlined
+                @click="onFilterClick"
+            >
+                <template #icon>
+                    <Icon name="tabler:filter" class="size-5" />
+                </template>
+            </Button>
+        </div>
+
+        <!-- Table -->
+        <SharedResponsiveTable
+            v-if="filteredRecords.length > 0"
+            :value="filteredRecords"
+            :columns="columns"
+            paginator
+            class="hover-table"
+            :rows="9"
+            row-key="id"
+            @row-click="onRowClick"
+        >
+            <template #cell-transport="{ row }">
+                <div class="flex flex-col gap-[0.125rem] leading-none">
+                    <span class="font-semibold">
+                        {{ row.transport }}
+                    </span>
+                    <span class="text-surface-600">
+                        ID: {{ row.transportId }}
+                    </span>
+                </div>
+            </template>
+            <template #cell-group="{ row }">
+                <span
+                    class="inline-flex items-center rounded-md bg-violet-100 px-2 py-1 text-xs font-medium text-violet-600"
+                >
+                    {{ row.group }}
+                </span>
+            </template>
+            <template #cell-driver="{ row }">
+                <div class="flex items-center gap-1.5">
+                    <Icon name="tabler:user" class="size-5 text-surface-600" />
+                    <span class="text-surface-900">{{ row.driver }}</span>
+                </div>
+            </template>
+            <template #cell-trips="{ row }">
+                <Chip class="text-xs font-medium" :label="String(row.trips)" />
+            </template>
+            <template #cell-distance="{ row }">
+                <span class="font-semibold">
+                    {{
+                        $t('passengerFlow.table.distanceValue', {
+                            value: row.distance
+                        })
+                    }}
+                </span>
+            </template>
+            <template #cell-profit="{ row }">
+                <span class="font-semibold">
+                    {{
+                        $t('passengerFlow.table.profitValue', {
+                            value: row.profit
+                        })
+                    }}
+                </span>
+            </template>
+            <template #cell-actions>
+                <div
+                    class="flex items-center gap-1 justify-end text-surface-950"
+                >
+                    <span>{{ $t('passengerFlow.table.columns.goto') }}</span>
+                    <Icon name="tabler:arrow-up-right" class="size-5" />
+                </div>
+            </template>
+        </SharedResponsiveTable>
+        <SharedTableEmpty
+            v-else
+            :message="$t('passengerFlow.table.emptyMessage')"
+            :reset-label="$t('passengerFlow.table.resetFilters')"
+            @reset="onResetFilters"
+        />
+    </div>
+</template>
+
+<script setup lang="ts">
+import { useToast } from 'primevue/usetoast';
+import type { TableColumn } from '~/components/shared/ResponsiveTable';
+import type { PassengerFlowRecord } from '~/types/passenger-flow';
+import { ROUTES } from '~/constants/routes';
+
+const { t } = useI18n();
+const toast = useToast();
+const { records } = usePassengerFlow();
+const router = useRouter();
+
+const searchQuery = ref('');
+
+const columns = computed<TableColumn[]>(() => [
+    {
+        field: 'transport',
+        header: t('passengerFlow.table.columns.transport'),
+        sortable: true
+    },
+    {
+        field: 'group',
+        header: t('passengerFlow.table.columns.group')
+    },
+    {
+        field: 'driver',
+        header: t('passengerFlow.table.columns.driver')
+    },
+    {
+        field: 'trips',
+        header: t('passengerFlow.table.columns.trips'),
+        sortable: true
+    },
+    {
+        field: 'distance',
+        header: t('passengerFlow.table.columns.distance'),
+        sortable: true
+    },
+    {
+        field: 'passengers',
+        header: t('passengerFlow.table.columns.passengers'),
+        sortable: true
+    },
+    {
+        field: 'profit',
+        header: t('passengerFlow.table.columns.profit'),
+        sortable: true
+    },
+    {
+        field: 'actions',
+        header: '',
+        align: 'right'
+    }
+]);
+
+/** Records filtered by transport / transport id / driver substring */
+const filteredRecords = computed((): PassengerFlowRecord[] => {
+    const q = searchQuery.value.trim().toLowerCase();
+    if (!q) return records.value;
+    return records.value.filter(
+        (item) =>
+            item.transport.toLowerCase().includes(q) ||
+            item.transportId.toLowerCase().includes(q) ||
+            item.driver.toLowerCase().includes(q)
+    );
+});
+
+/** Shows a short informational toast for not-yet-implemented actions */
+const placeholderToast = (summary: string, detail: string): void => {
+    toast.add({ severity: 'info', summary, detail, life: 2000 });
+};
+
+const onFilterClick = (): void =>
+    placeholderToast(
+        t('objects.drivers.filterButton'),
+        t('objects.drivers.inDevelopment')
+    );
+
+/** Resets the search filter back to default */
+const onResetFilters = (): void => {
+    searchQuery.value = '';
+};
+
+/**
+ * Navigate to transport details page on row click
+ */
+const onRowClick = (row: PassengerFlowRecord): void => {
+    navigateTo(ROUTES.PASSENGER_FLOW_TRANSPORT_DETAIL(row.transportId));
+};
+</script>
