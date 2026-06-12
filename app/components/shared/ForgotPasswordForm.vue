@@ -4,7 +4,7 @@
             id="email"
             name="email"
             :label="$t('common.email')"
-            :error="r$.$fields.email.$errors[0]"
+            :error="r$.$fields.email.$errors"
         >
             <InputText
                 id="email"

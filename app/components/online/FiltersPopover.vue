@@ -46,10 +46,12 @@
                         <label
                             v-for="n in 6"
                             :key="n"
+                            :for="`onlineFilterCheck${n}`"
                             class="flex cursor-pointer items-center gap-2 text-sm text-surface-800"
                         >
                             <Checkbox
                                 v-model="checkboxChoices"
+                                :input-id="`onlineFilterCheck${n}`"
                                 :value="String(n)"
                                 size="small"
                             />
@@ -69,10 +71,12 @@
                         <label
                             v-for="n in 4"
                             :key="n"
+                            :for="`onlineFilterRadio${n}`"
                             class="flex cursor-pointer items-center gap-2 text-sm text-surface-800"
                         >
                             <RadioButton
                                 v-model="radioChoice"
+                                :input-id="`onlineFilterRadio${n}`"
                                 :value="String(n)"
                                 size="small"
                             />

@@ -4,7 +4,7 @@
             id="grpName"
             name="name"
             :label="$t('objects.groups.modal.name')"
-            :error="r$.$fields.name.$errors[0]"
+            :error="r$.$fields.name.$errors"
         >
             <InputText
                 id="grpName"
@@ -19,7 +19,7 @@
             id="grpCompany"
             name="company"
             :label="$t('objects.groups.modal.company')"
-            :error="r$.$fields.company.$errors[0]"
+            :error="r$.$fields.company.$errors"
         >
             <Select
                 id="grpCompany"
@@ -49,7 +49,7 @@
             id="grpStatus"
             name="status"
             :label="$t('objects.groups.modal.status')"
-            :error="r$.$fields.status.$errors[0]"
+            :error="r$.$fields.status.$errors"
         >
             <Select
                 id="grpStatus"
@@ -85,7 +85,7 @@
             id="grpOrder"
             name="order"
             :label="$t('objects.groups.modal.order')"
-            :error="r$.$fields.order.$errors[0]"
+            :error="r$.$fields.order.$errors"
         >
             <InputNumber
                 id="grpOrder"

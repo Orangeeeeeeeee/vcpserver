@@ -4,7 +4,7 @@
             id="vehCompany"
             name="company"
             :label="$t('objects.vehicles.modal.company')"
-            :error="r$.$fields.company.$errors[0]"
+            :error="r$.$fields.company.$errors"
         >
             <Select
                 id="vehCompany"
@@ -36,7 +36,7 @@
             id="vehName"
             name="name"
             :label="$t('objects.vehicles.modal.name')"
-            :error="r$.$fields.name.$errors[0]"
+            :error="r$.$fields.name.$errors"
         >
             <InputText
                 id="vehName"
@@ -64,7 +64,7 @@
             id="vehType"
             name="type"
             :label="$t('objects.vehicles.modal.type')"
-            :error="r$.$fields.type.$errors[0]"
+            :error="r$.$fields.type.$errors"
         >
             <Select
                 id="vehType"

@@ -15,7 +15,7 @@
                 id="drvFirstName"
                 name="firstName"
                 :label="$t('objects.drivers.modal.firstName')"
-                :error="r$.$fields.firstName.$errors[0]"
+                :error="r$.$fields.firstName.$errors"
             >
                 <InputText
                     id="drvFirstName"
@@ -32,7 +32,7 @@
                 id="drvLastName"
                 name="lastName"
                 :label="$t('objects.drivers.modal.lastName')"
-                :error="r$.$fields.lastName.$errors[0]"
+                :error="r$.$fields.lastName.$errors"
             >
                 <InputText
                     id="drvLastName"
@@ -50,7 +50,7 @@
             id="drvStatus"
             name="status"
             :label="$t('objects.drivers.modal.status')"
-            :error="r$.$fields.status.$errors[0]"
+            :error="r$.$fields.status.$errors"
         >
             <Select
                 id="drvStatus"
@@ -68,7 +68,7 @@
             id="drvVehicle"
             name="vehicle"
             :label="$t('objects.drivers.modal.vehicle')"
-            :error="r$.$fields.transportId.$errors[0]"
+            :error="r$.$fields.transportId.$errors"
         >
             <Select
                 id="drvVehicle"
@@ -88,7 +88,7 @@
                 id="drvStartedAt"
                 name="startedAt"
                 :label="$t('objects.drivers.modal.startedAt')"
-                :error="r$.$fields.startedAt.$errors[0]"
+                :error="r$.$fields.startedAt.$errors"
             >
                 <DatePicker
                     id="drvStartedAt"
@@ -108,7 +108,7 @@
                 id="drvEmployment"
                 name="employment"
                 :label="$t('objects.drivers.modal.employment')"
-                :error="r$.$fields.employment.$errors[0]"
+                :error="r$.$fields.employment.$errors"
             >
                 <Select
                     id="drvEmployment"

@@ -66,7 +66,7 @@ VCPServer — веб-застосунок на Nuxt 4 з використанн�
 ## Форми
 
 - **Валідація:** `@regle/core` + `@regle/rules` — headless, model-based валідація через composable `useRegle`. Валідація виконується на submit через `r$.$validate()`. Перевикористовувані правила зберігаються в `app/utils/validations.ts` (auto-imported Nuxt). Наявні: `emailRules()`, `passwordRules()`
-- **Поля форми:** для побудови полів форми використовувати компонент `<SharedAppFormField>` (`app/components/shared/AppFormField.vue`). Він містить label + повідомлення про помилку (проп `error`). Інпут передається через слот.
+- **Поля форми:** для побудови полів форми використовувати компонент `<SharedAppFormField>` (`app/components/shared/AppFormField.vue`). Він містить label + повідомлення про помилки (проп `error` приймає i18n-ключ або масив ключів — передавати весь `$errors`, рендериться по одному `Message` на помилку). Інпут передається через слот.
 - **Приклад використання:**
 
     ```vue
@@ -96,7 +96,7 @@ VCPServer — веб-застосунок на Nuxt 4 з використанн�
                 name="email"
                 :label="$t('login.email')"
                 id="email"
-                :error="r$.$fields.email.$errors[0]"
+                :error="r$.$fields.email.$errors"
             >
                 <InputText
                     id="email"

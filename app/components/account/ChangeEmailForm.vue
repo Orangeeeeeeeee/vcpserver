@@ -4,7 +4,7 @@
             id="changeEmailPassword"
             name="password"
             :label="$t('common.password')"
-            :error="r$.$fields.password.$errors[0]"
+            :error="r$.$fields.password.$errors"
         >
             <Password
                 id="changeEmailPassword"
@@ -21,7 +21,7 @@
             id="changeEmailNew"
             name="newEmail"
             :label="$t('account.info.newEmail')"
-            :error="r$.$fields.newEmail.$errors[0]"
+            :error="r$.$fields.newEmail.$errors"
         >
             <InputText
                 id="changeEmailNew"

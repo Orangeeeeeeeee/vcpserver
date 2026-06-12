@@ -4,7 +4,7 @@
             id="oldPassword"
             name="oldPassword"
             :label="$t('account.info.oldPassword')"
-            :error="r$.$fields.oldPassword.$errors[0]"
+            :error="r$.$fields.oldPassword.$errors"
         >
             <Password
                 id="oldPassword"
@@ -21,7 +21,7 @@
             id="newPassword"
             name="newPassword"
             :label="$t('account.info.newPassword')"
-            :error="r$.$fields.newPassword.$errors[0]"
+            :error="r$.$fields.newPassword.$errors"
         >
             <Password
                 id="newPassword"
@@ -38,7 +38,7 @@
             id="confirmNewPassword"
             name="confirmPassword"
             :label="$t('account.info.confirmNewPassword')"
-            :error="r$.$fields.confirmPassword.$errors[0]"
+            :error="r$.$fields.confirmPassword.$errors"
         >
             <Password
                 id="confirmNewPassword"

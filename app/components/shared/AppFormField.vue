@@ -4,8 +4,14 @@
             {{ label }}
         </label>
         <slot />
-        <Message v-if="error" severity="error" size="small" variant="simple">
-            {{ $t(error) }}
+        <Message
+            v-for="message in errorList"
+            :key="message"
+            severity="error"
+            size="small"
+            variant="simple"
+        >
+            {{ $t(message) }}
         </Message>
     </div>
 </template>
@@ -18,9 +24,15 @@ interface AppFormFieldProps {
     label: string;
     /** HTML id for label association */
     id?: string;
-    /** Validation error i18n key */
-    error?: string;
+    /** Validation error i18n key(s); arrays render one message per entry */
+    error?: string | string[];
 }
 
-defineProps<AppFormFieldProps>();
+const props = defineProps<AppFormFieldProps>();
+
+/** Error keys normalized to an array (empty when there is no error) */
+const errorList = computed<string[]>(() => {
+    if (!props.error) return [];
+    return Array.isArray(props.error) ? props.error : [props.error];
+});
 </script>

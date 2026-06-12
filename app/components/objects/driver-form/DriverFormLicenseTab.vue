@@ -4,7 +4,7 @@
             id="drvLicenseId"
             name="licenseId"
             :label="$t('objects.drivers.modal.licenseId')"
-            :error="r$.$fields.licenseId.$errors[0]"
+            :error="r$.$fields.licenseId.$errors"
         >
             <InputText
                 id="drvLicenseId"
@@ -19,7 +19,7 @@
             id="drvLicenseExp"
             name="licenseExpiresAt"
             :label="$t('objects.drivers.modal.licenseExpiresAt')"
-            :error="r$.$fields.licenseExpiresAt.$errors[0]"
+            :error="r$.$fields.licenseExpiresAt.$errors"
         >
             <DatePicker
                 id="drvLicenseExp"
@@ -39,7 +39,7 @@
             id="drvLicenseCat"
             name="licenseCategories"
             :label="$t('objects.drivers.modal.licenseCategories')"
-            :error="r$.$fields.licenseCategories.$errors[0]"
+            :error="r$.$fields.licenseCategories.$errors"
         >
             <MultiSelect
                 id="drvLicenseCat"

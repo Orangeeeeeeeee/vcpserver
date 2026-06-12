@@ -4,7 +4,7 @@
             id="changePhonePassword"
             name="password"
             :label="$t('common.password')"
-            :error="r$.$fields.password.$errors[0]"
+            :error="r$.$fields.password.$errors"
         >
             <Password
                 id="changePhonePassword"
@@ -21,7 +21,7 @@
             id="changePhoneNew"
             name="newPhone"
             :label="$t('account.info.newPhone')"
-            :error="r$.$fields.newPhone.$errors[0]"
+            :error="r$.$fields.newPhone.$errors"
         >
             <InputText
                 id="changePhoneNew"

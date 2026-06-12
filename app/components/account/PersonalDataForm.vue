@@ -32,7 +32,7 @@
             id="firstName"
             name="firstName"
             :label="$t('account.info.firstName')"
-            :error="r$.$fields.firstName.$errors[0]"
+            :error="r$.$fields.firstName.$errors"
         >
             <InputText
                 id="firstName"
@@ -47,7 +47,7 @@
             id="lastName"
             name="lastName"
             :label="$t('account.info.lastName')"
-            :error="r$.$fields.lastName.$errors[0]"
+            :error="r$.$fields.lastName.$errors"
         >
             <InputText
                 id="lastName"
@@ -62,7 +62,7 @@
             id="affiliations"
             name="affiliations"
             :label="$t('account.info.affiliation')"
-            :error="r$.$fields.affiliations.$errors[0]"
+            :error="r$.$fields.affiliations.$errors"
         >
             <MultiSelect
                 id="affiliations"

@@ -72,20 +72,24 @@
                     </span>
                     <div class="flex items-center gap-4">
                         <label
+                            for="mapLayerStreets"
                             class="flex cursor-pointer items-center gap-2 text-sm text-surface-800"
                         >
                             <RadioButton
                                 v-model="mapLayer"
+                                input-id="mapLayerStreets"
                                 value="streets"
                                 size="small"
                             />
                             {{ $t('objects.online.map.street') }}
                         </label>
                         <label
+                            for="mapLayerSatellite"
                             class="flex cursor-pointer items-center gap-2 text-sm text-surface-800"
                         >
                             <RadioButton
                                 v-model="mapLayer"
+                                input-id="mapLayerSatellite"
                                 value="satellite"
                                 size="small"
                             />

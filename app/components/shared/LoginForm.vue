@@ -4,7 +4,7 @@
             id="email"
             name="email"
             :label="$t('common.email')"
-            :error="r$.$fields.email.$errors[0]"
+            :error="r$.$fields.email.$errors"
         >
             <InputText
                 id="email"
@@ -20,7 +20,7 @@
             id="password"
             name="password"
             :label="$t('common.password')"
-            :error="r$.$fields.password.$errors[0]"
+            :error="r$.$fields.password.$errors"
         >
             <Password
                 id="password"

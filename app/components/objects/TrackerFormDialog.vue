@@ -22,7 +22,7 @@
                 id="trackerImei"
                 name="imei"
                 :label="$t('objects.trackers.modal.imei')"
-                :error="r$.$fields.imei.$errors[0]"
+                :error="r$.$fields.imei.$errors"
             >
                 <InputText
                     id="trackerImei"
@@ -45,7 +45,7 @@
                 id="trackerCompany"
                 name="company"
                 :label="$t('objects.trackers.modal.company')"
-                :error="r$.$fields.company.$errors[0]"
+                :error="r$.$fields.company.$errors"
             >
                 <Select
                     id="trackerCompany"
@@ -63,7 +63,7 @@
                 id="trackerTransport"
                 name="transport"
                 :label="$t('objects.trackers.modal.transport')"
-                :error="r$.$fields.transport.$errors[0]"
+                :error="r$.$fields.transport.$errors"
             >
                 <Select
                     id="trackerTransport"
@@ -81,7 +81,7 @@
                 id="trackerParams"
                 name="params"
                 :label="$t('objects.trackers.modal.params')"
-                :error="r$.$fields.params.$errors[0]"
+                :error="r$.$fields.params.$errors"
             >
                 <MultiSelect
                     id="trackerParams"

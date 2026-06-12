@@ -4,7 +4,7 @@
             id="password"
             name="password"
             :label="$t('resetPassword.newPassword')"
-            :error="r$.$fields.password.$errors[0]"
+            :error="r$.$fields.password.$errors"
         >
             <Password
                 id="password"
@@ -21,7 +21,7 @@
             id="confirmPassword"
             name="confirmPassword"
             :label="$t('resetPassword.confirmPassword')"
-            :error="r$.$fields.confirmPassword.$errors[0]"
+            :error="r$.$fields.confirmPassword.$errors"
         >
             <Password
                 id="confirmPassword"

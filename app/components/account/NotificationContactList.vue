@@ -1,9 +1,12 @@
 <template>
     <div class="flex flex-col gap-3">
-        <label class="text-sm text-surface-700">{{ label }}</label>
+        <label :for="inputId" class="text-sm text-surface-700">
+            {{ label }}
+        </label>
 
         <div class="flex gap-2">
             <InputText
+                :id="inputId"
                 v-model="state.value"
                 :type="inputType ?? 'text'"
                 :placeholder="addPlaceholder"
@@ -89,6 +92,9 @@ const model = defineModel<NotificationContact[]>({ required: true });
 
 const { t } = useI18n();
 const toast = useToast();
+
+/** SSR-safe unique id linking the label to the input */
+const inputId = useId();
 
 const state = reactive({ value: '' });
 

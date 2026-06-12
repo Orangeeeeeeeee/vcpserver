@@ -4,7 +4,7 @@
             id="drvPhone"
             name="phone"
             :label="$t('objects.drivers.modal.phone')"
-            :error="r$.$fields.phone.$errors[0]"
+            :error="r$.$fields.phone.$errors"
         >
             <InputText
                 id="drvPhone"
@@ -19,7 +19,7 @@
             id="drvEmail"
             name="email"
             :label="$t('objects.drivers.modal.email')"
-            :error="r$.$fields.email.$errors[0]"
+            :error="r$.$fields.email.$errors"
         >
             <InputText
                 id="drvEmail"
