@@ -22,3 +22,14 @@ export const formatUaDate = (date?: Date | null): string => {
     const pad = (n: number): string => String(n).padStart(2, '0');
     return `${pad(date.getDate())}.${pad(date.getMonth() + 1)}.${date.getFullYear()}`;
 };
+
+/**
+ * Converts an ISO "yyyy-mm-dd" date string into a "dd.mm.yyyy" display string.
+ * @param value - ISO date string, e.g. "2026-06-01".
+ * @returns {string} Formatted string, or the original value when malformed.
+ */
+export const formatIsoDateToUa = (value: string): string => {
+    const [yyyy, mm, dd] = value.split('-');
+    if (!yyyy || !mm || !dd) return value;
+    return `${dd}.${mm}.${yyyy}`;
+};
