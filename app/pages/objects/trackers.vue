@@ -208,7 +208,8 @@ const columns = computed<TableColumn[]>(() => [
     {
         field: 'port',
         header: t('objects.trackers.columns.port'),
-        sortable: true
+        sortable: true,
+        width: '150px'
     },
     {
         field: 'transport',
@@ -218,12 +219,14 @@ const columns = computed<TableColumn[]>(() => [
     {
         field: 'params',
         header: t('objects.trackers.columns.params'),
-        sortable: true
+        sortable: true,
+        width: '200px'
     },
     {
         field: 'actions',
         header: t('objects.trackers.columns.actions'),
-        align: 'right'
+        align: 'right',
+        width: '100px'
     }
 ]);
 

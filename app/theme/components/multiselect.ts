@@ -53,6 +53,12 @@ const multiselect: MultiSelectDesignTokens = {
             min-height: 2rem;
         }
 
+        .p-multiselect.p-multiselect-open .p-multiselect-dropdown .p-multiselect-dropdown-icon {
+            transition: transform .3s, color .3s;
+            transform: scale(-1, -1);
+            color: var(--p-primary-600);
+        }
+
         .p-multiselect-label {
             font-size: 0.875rem;
             flex-wrap: wrap;

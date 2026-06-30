@@ -1,17 +1,30 @@
 <template>
-    <div class="flex items-center gap-4">
-        <div class="relative shrink-0 mb-5 md:mb-6">
-            <Avatar :label="initials" size="xlarge" shape="circle" />
-            <Button
-                rounded
+    <div class="flex items-center gap-4 mb-5 md:mb-6">
+        <div class="relative shrink-0">
+            <Avatar
+                :image="profile.avatarUrl"
+                :label="profile.avatarUrl ? undefined : initials"
+                size="xlarge"
+                shape="circle"
+            />
+            <FileUpload
+                mode="basic"
+                accept="image/*"
                 class="absolute bottom-0 right-0"
-                size="small"
-                :aria-label="$t('account.info.changePhoto')"
+                :auto="true"
+                :custom-upload="true"
+                :choose-button-props="{
+                    rounded: true,
+                    size: 'small',
+                    label: '',
+                    'aria-label': $t('account.info.changePhoto')
+                }"
+                @uploader="onAvatarUploader"
             >
-                <template #icon>
-                    <Icon name="tabler:camera" class="size-6" />
+                <template #chooseicon>
+                    <Icon name="tabler:camera" class="size-4 shrink-0" />
                 </template>
-            </Button>
+            </FileUpload>
         </div>
         <div class="flex min-w-0 flex-col gap-2">
             <p class="truncate text-sm font-semibold text-surface-950">
@@ -116,7 +129,15 @@ interface PersonalDataFormState {
 
 const { t } = useI18n();
 const toast = useToast();
-const { profile, affiliationOptions, initials } = useAccountProfile();
+const { profile, affiliationOptions, initials, setAvatarFromFile } =
+    useAccountProfile();
+console.log(profile.value);
+/** Stores the chosen avatar image in the profile */
+const onAvatarUploader = ({ files }: { files: File[] }): void => {
+    const [file] = files;
+    if (!file) return;
+    setAvatarFromFile(file);
+};
 
 const state = reactive<PersonalDataFormState>({
     firstName: profile.value.firstName,

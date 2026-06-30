@@ -9,6 +9,8 @@ export interface AccountProfile {
     phone: string;
     /** Affiliated organizations */
     affiliations: string[];
+    /** Avatar image source (blob: object URL or remote URL) */
+    avatarUrl?: string;
 }
 
 /** Return type of the {@link useAccountProfile} composable */
@@ -19,6 +21,8 @@ export interface UseAccountProfileReturn {
     affiliationOptions: string[];
     /** Avatar initials derived from the first and last name */
     initials: ComputedRef<string>;
+    /** Stores the chosen File as the profile avatar via an object URL */
+    setAvatarFromFile: (file: File) => void;
 }
 
 /** Mock affiliation options (placeholder until a backend exists) */
@@ -42,5 +46,18 @@ export const useAccountProfile = (): UseAccountProfileReturn => {
         `${profile.value.firstName[0] ?? ''}${profile.value.lastName[0] ?? ''}`.toUpperCase()
     );
 
-    return { profile, affiliationOptions: AFFILIATION_OPTIONS, initials };
+    const setAvatarFromFile = (file: File): void => {
+        if (!file.type.startsWith('image/')) return;
+        const previous = profile.value.avatarUrl;
+        const objectUrl = URL.createObjectURL(file);
+        profile.value = { ...profile.value, avatarUrl: objectUrl };
+        if (previous?.startsWith('blob:')) URL.revokeObjectURL(previous);
+    };
+
+    return {
+        profile,
+        affiliationOptions: AFFILIATION_OPTIONS,
+        initials,
+        setAvatarFromFile
+    };
 };

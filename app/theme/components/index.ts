@@ -18,6 +18,7 @@ import selectbutton from './selectbutton';
 import tabs from './tabs';
 import tag from './tag';
 import textarea from './textarea';
+import toast from './toast';
 import togglebutton from './togglebutton';
 
 export default {
@@ -41,5 +42,6 @@ export default {
     tabs,
     tag,
     textarea,
+    toast,
     togglebutton
 };
