@@ -19,6 +19,8 @@ export const ROUTES = {
     PASSENGER_FLOW_TOTAL: '/passenger-flow/total-info',
     /** Passenger flow transport detail page */
     PASSENGER_FLOW_TRANSPORT_DETAIL: (id: string): string => `/transport/${id}`,
+    /** Passenger flow trip detail page */
+    PASSENGER_FLOW_TRIP_DETAIL: (transportId: string, tripId: string): string => `/transport/${transportId}/${tripId}`,
     ACCOUNT: '/account',
     ACCOUNT_INFO: '/account/info',
     ACCOUNT_SETTINGS: '/account/settings',

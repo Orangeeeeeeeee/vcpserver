@@ -1,51 +1,16 @@
 <template>
-    <div class="p-4 mb-4 border border-surface-300 rounded-md">
-        <button
-            type="button"
-            class="flex items-center justify-between w-full cursor-pointer"
-            :aria-expanded="open"
-            @click="open = !open"
-        >
-            <h2 class="text-lg text-surface-900">
-                {{ $t('passengerFlow.additionalCharts.caption') }}
-            </h2>
-            <Icon :name="open ? 'tabler:chevron-up' : 'tabler:chevron-down'" class="size-5 text-surface-700" />
-        </button>
-
-        <div v-show="open" class="grid grid-cols-6 gap-4 mt-4">
-            <div
-                v-for="(chart, index) in charts"
-                :key="chart.id"
-                :class="[
-                    'p-4 pb-1 border border-surface-300 rounded-md',
-                    index === 0 || index === 1 ? 'col-span-6 md:col-span-3 xl:col-span-3' : 'col-span-6 md:col-span-3 xl:col-span-2',
-                    index === 4 ? 'col-span-6 md:col-span-6 xl:col-span-2' : 'col-span-6 md:col-span-3 xl:col-span-2'
-                ]"
-            >
-                <div class="flex justify-between items-basearea mb-4">
-                    <h2 v-if="chart.title" class="text-lg text-surface-900">
-                        {{ chart.title }}
-                    </h2>
-                </div>
-                <PassengerFlowChart
-                    :data="chart.data"
-                    :type="chart.type"
-                    :color="chart.color"
-                    :title="chart.title"
-                />
-            </div>
-        </div>
-    </div>
+    <AdditionalCharts :charts="charts" :openDefault="true" />
 </template>
 
 <script setup lang="ts">
-import PassengerFlowChart from '~/components/passenger-flow/PassengerFlowChart.vue';
+import AdditionalCharts from '~/components/passenger-flow/AdditionalCharts.vue';
 import { primitiveColors } from '~/theme/colors';
+import { generatePassengerFlowSeries } from '~/mocks/passenger-flow';
+import { getPassengerFlowPeriodFactor } from '~/composables/usePassengerFlow';
 import type {
     PassengerFlowChartType,
     PassengerFlowDataPoint
 } from '~/components/passenger-flow/PassengerFlowChart.vue';
-
 
 interface ChartConfig {
     id: string;
@@ -56,93 +21,72 @@ interface ChartConfig {
 }
 
 const { t } = useI18n();
+const { records } = usePassengerFlow();
+const { selectedGroups } = usePassengerFlowGroupFilter();
+const { selectedPeriod, customRange } = usePassengerFlowPeriodFilter();
 
-import { ref } from 'vue';
+/** Records filtered by the selected groups */
+const filteredRecords = computed(() => {
+    if (selectedGroups.value.length === 0) return records.value;
+    return records.value.filter((item) => selectedGroups.value.includes(item.group));
+});
 
-const open = ref<boolean>(true);
+/** Per-trip averages scaled to the selected time period */
+const totals = computed(() => {
+    const factor = getPassengerFlowPeriodFactor(selectedPeriod.value, customRange.value);
+    const count = filteredRecords.value.length || 1;
+    const trips = filteredRecords.value.reduce((sum, item) => sum + item.trips, 0);
+    const distance = filteredRecords.value.reduce((sum, item) => sum + item.distance, 0);
+    const passengers = filteredRecords.value.reduce((sum, item) => sum + item.passengers, 0);
+    const profit = filteredRecords.value.reduce((sum, item) => sum + item.profit, 0);
 
-const charts: ChartConfig[] = [
+    return {
+        avgDistance: Math.round((distance / count) * factor),
+        avgTripsDuration: Math.round(((trips * 10) / count) * factor),
+        avgPassengers: Math.round((passengers / count) * factor),
+        avgProfit: Math.round((profit / count) * factor),
+        avgPassengerRevenue: passengers > 0 ? Math.round((profit / passengers) * 10) / 10 : 0
+    };
+});
+
+/** Seed used to vary chart series depending on the active group/period filters */
+const seed = computed(() => `${selectedGroups.value.join('-') || 'all'}-${selectedPeriod.value}`);
+
+const charts = computed<ChartConfig[]>(() => [
     {
         id: 'routes',
         type: 'area',
         color: primitiveColors.teal['500'],
         title: t('passengerFlow.additionalCharts.title1'),
-        data: [
-            { date: '01.03', count: 8 },
-            { date: '08.03', count: 18 },
-            { date: '16.03', count: 40 },
-            { date: '16.03', count: 40 },
-            { date: '24.03', count: 28 },
-            { date: '28.03', count: 19 },
-            { date: '31.03', count: 12 },
-            { date: '01.04', count: 14 },
-        ]
+        data: generatePassengerFlowSeries(totals.value.avgDistance, `${seed.value}-routes`)
     },
     {
         id: 'distance',
         type: 'area',
         color: primitiveColors.violet['500'],
         title: t('passengerFlow.additionalCharts.title2'),
-        data: [
-            { date: '01.03', count: 0 },
-            { date: '08.03', count: 800 },
-            { date: '16.03', count: 200 },
-            { date: '24.03', count: 600 },
-            { date: '28.03', count: 900 },
-            { date: '31.03', count: 400 },
-            { date: '01.04', count: 50 },
-        ]
+        data: generatePassengerFlowSeries(totals.value.avgTripsDuration, `${seed.value}-distance`)
     },
     {
         id: 'average_passengers',
         type: 'area',
         color: primitiveColors.rose['500'],
         title: t('passengerFlow.additionalCharts.title3'),
-        data: [
-            { date: '01.03', count: 8 },
-            { date: '08.03', count: 18 },
-            { date: '16.03', count: 30 },
-            { date: '16.03', count: 20 },
-            { date: '16.03', count: 40 },
-            { date: '24.03', count: 28 },
-            { date: '28.03', count: 19 },
-            { date: '31.03', count: 12 },
-            { date: '01.04', count: 14 },
-        ]
+        data: generatePassengerFlowSeries(totals.value.avgPassengers, `${seed.value}-average_passengers`)
     },
     {
         id: 'average_profit',
         type: 'area',
         color: primitiveColors.indigo['500'],
         title: t('passengerFlow.additionalCharts.title4'),
-        data: [
-            { date: '01.03', count: 850 },
-            { date: '08.03', count: 800 },
-            { date: '16.03', count: 600 },
-            { date: '16.03', count: 859 },
-            { date: '16.03', count: 900 },
-            { date: '24.03', count: 829 },
-            { date: '28.03', count: 700 },
-            { date: '31.03', count: 890 },
-            { date: '01.04', count: 870 },
-        ]
+        data: generatePassengerFlowSeries(totals.value.avgProfit, `${seed.value}-average_profit`)
     },
     {
         id: 'average_passenger_revenue',
         type: 'area',
         color: primitiveColors.amber['500'],
         title: t('passengerFlow.additionalCharts.title5'),
-        data: [
-            { date: '01.03', count: 850 },
-            { date: '08.03', count: 800 },
-            { date: '16.03', count: 600 },
-            { date: '16.03', count: 859 },
-            { date: '16.03', count: 900 },
-            { date: '24.03', count: 829 },
-            { date: '28.03', count: 700 },
-            { date: '31.03', count: 890 },
-            { date: '01.04', count: 870 },
-        ]
+        data: generatePassengerFlowSeries(totals.value.avgPassengerRevenue, `${seed.value}-average_passenger_revenue`)
     }
-];
+]);
 </script>

@@ -627,11 +627,27 @@
             }
         }
     },
-
+    "calendar": {
+        "hour1": "За 1 годину",
+        "hours8": "Останні 8 годин",
+        "hours24": "Останні 24 години",
+        "days3": "Останні 3 дні",
+        "week": "Цей тиждень",
+        "all": "За увесь час",
+        "hour1Short": "1 год",
+        "hours8Short": "8 год",
+        "hours24Short": "24 год",
+        "days3Short": "3 дні",
+        "weekShort": "7 днів",
+        "allShort": "Усі дні",
+        "from": "Від",
+        "to": "До"
+    },
     "passengerFlow": {
         "title": "Пасажиропотік",
+        "label": "Пасажирські перевезення",
         "totalInfo": {
-            "title1": "Загальна кількість пасажирів",
+            "title1": "Загальна кількість рейсів",
             "title2": "Загальна дистанція",
             "title3": "Кількість пасажирів",
             "title4": "Прибуток"
@@ -645,12 +661,13 @@
         "additionalCharts": {
             "caption": "Додаткові данні",
             "title1": "Середня дистанція рейсу",
-            "title2": "КСередній час одного рейсу",
+            "title2": "Середній час одного рейсу",
             "title3": "Середня кількість пасажирів на рейс",
             "title4": "Середній прибуток на рейс",
             "title5": "Середній прибуток на пасажира"
         },
         "table": {
+            "title": "Транспортні засоби",
             "searchPlaceholder": "Пошук по маршруту або транспортному засобу",
             "columns": {
                 "transport": "Транспорт",
@@ -666,6 +683,48 @@
             "profitValue": "{value} ₴",
             "emptyMessage": "За вказаними параметрами результатів немає. Спробуйте змінити налаштування фільтрів або період.",
             "resetFilters": "Скинути фільтри"
+        },
+        "total": "Всього",
+        "transport": {
+            "notFound": "Транспортний засіб не знайдено",
+            "tripsTable": {
+                "title": "Рейси транспорту",
+                "columns": {
+                    "trip": "Рейс",
+                    "departureAt": "Дата виїзду",
+                    "arrivalAt": "Дата заїзду",
+                    "distance": "Пройдена дистанція",
+                    "passengers": "Пасажири",
+                    "profit": "Прибуток"
+                },
+                "distanceValue": "{value} км",
+                "profitValue": "{value} ₴"
+            }
+        },
+        "trip": {
+            "notFound": "Рейс не знайдено",
+            "hourOne": "година",
+            "hourFew": "години",
+            "hourMany": "годин",
+            "distance": "км",
+            "pointOne": "точка",
+            "pointFew": "точки",
+            "pointMany": "точок",
+            "table": {
+                "title": "Точки маршруту",
+                "columns": {
+                    "departureTime": "Час виїзду",
+                    "zone": "Зона",
+                    "distance": "Дистанція",
+                    "passengers": "Пасажири",
+                    "boarded": "Увійшли",
+                    "alighted": "Вийшли",
+                    "amount": "Сума",
+                    "photo": "Фото"
+                },
+                "distanceValue": "{value} км",
+                "amountValue": "{value} ₴"
+            }
         }
     }
 }

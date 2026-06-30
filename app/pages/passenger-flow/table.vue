@@ -1,5 +1,9 @@
 <template>
     <div class="flex flex-col gap-4">
+        <h2 class="text-lg text-surface-900">
+                {{ $t('passengerFlow.table.title') }}
+        </h2>
+
         <!-- Filters bar -->
         <div class="flex flex-wrap items-center gap-3">
             <IconField class="flex-1 min-w-0 md:flex-none md:w-72">
@@ -15,17 +19,6 @@
                     fluid
                 />
             </IconField>
-
-            <Button
-                :label="$t('common.filter')"
-                severity="secondary"
-                outlined
-                @click="onFilterClick"
-            >
-                <template #icon>
-                    <Icon name="tabler:filter" class="size-5" />
-                </template>
-            </Button>
         </div>
 
         <!-- Table -->
@@ -102,15 +95,13 @@
 </template>
 
 <script setup lang="ts">
-import { useToast } from 'primevue/usetoast';
 import type { TableColumn } from '~/components/shared/ResponsiveTable';
 import type { PassengerFlowRecord } from '~/types/passenger-flow';
 import { ROUTES } from '~/constants/routes';
 
 const { t } = useI18n();
-const toast = useToast();
 const { records } = usePassengerFlow();
-const router = useRouter();
+const { selectedGroups } = usePassengerFlowGroupFilter();
 
 const searchQuery = ref('');
 
@@ -155,32 +146,28 @@ const columns = computed<TableColumn[]>(() => [
     }
 ]);
 
-/** Records filtered by transport / transport id / driver substring */
+/** Records filtered by transport / transport id / driver substring and selected groups */
 const filteredRecords = computed((): PassengerFlowRecord[] => {
     const q = searchQuery.value.trim().toLowerCase();
-    if (!q) return records.value;
-    return records.value.filter(
-        (item) =>
+
+    return records.value.filter((item) => {
+        const matchesQuery =
+            !q ||
             item.transport.toLowerCase().includes(q) ||
             item.transportId.toLowerCase().includes(q) ||
-            item.driver.toLowerCase().includes(q)
-    );
+            item.driver.toLowerCase().includes(q);
+
+        const matchesGroup =
+            selectedGroups.value.length === 0 || selectedGroups.value.includes(item.group);
+
+        return matchesQuery && matchesGroup;
+    });
 });
 
-/** Shows a short informational toast for not-yet-implemented actions */
-const placeholderToast = (summary: string, detail: string): void => {
-    toast.add({ severity: 'info', summary, detail, life: 2000 });
-};
-
-const onFilterClick = (): void =>
-    placeholderToast(
-        t('objects.drivers.filterButton'),
-        t('objects.drivers.inDevelopment')
-    );
-
-/** Resets the search filter back to default */
+/** Resets the search and group filters back to default */
 const onResetFilters = (): void => {
     searchQuery.value = '';
+    selectedGroups.value = [];
 };
 
 /**
