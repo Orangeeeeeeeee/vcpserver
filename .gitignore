@@ -28,3 +28,4 @@ logs
 storybook-static
 auto-imports.d.ts
 .vscode
+worktree
