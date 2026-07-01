@@ -1,6 +1,8 @@
 <template>
-    <div>
-        <div class="flex h-[calc(100dvh-230px)] min-h-[28rem] gap-4 md:h-[calc(100dvh-210px)]">
+    <div class="h-full grow flex flex-col">
+        <div
+            class="flex h-[calc(100dvh-230px)] min-h-[28rem] gap-4 md:h-[calc(100dvh-210px)] h-full grow"
+        >
             <!-- Fleet panel -->
             <div
                 class="w-full min-w-0 md:block md:w-[21rem] md:shrink-0 lg:w-[24rem]"
@@ -22,7 +24,7 @@
 
             <!-- Map -->
             <div
-                class="relative min-w-0 flex-1 overflow-hidden rounded-lg border border-surface-300 md:block"
+                class="relative min-w-0 flex-1 overflow-hidden md:block -m-4 md:ml-0"
                 :class="mobileView === 'map' ? 'block' : 'hidden'"
             >
                 <ObjectsOnlineMap v-if="hasToken" />
@@ -58,10 +60,7 @@
 
 <script setup lang="ts">
 import { ROUTES } from '~/constants/routes';
-import {
-    useOnlineFleet,
-    ONLINE_FLEET_KEY
-} from '~/composables/useOnlineFleet';
+import { useOnlineFleet, ONLINE_FLEET_KEY } from '~/composables/useOnlineFleet';
 
 /** Shared fleet state, provided to the panel and the map */
 const fleet = useOnlineFleet();

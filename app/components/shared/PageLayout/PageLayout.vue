@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col">
+    <div class="flex min-h-dvh w-full flex-col">
         <div
             class="pt-6 pb-2 pr-4 pl-4 md:p-4 lg:pl-10 lg:pr-10 lg:pt-6 lg:pb-4 border-b border-b-[var(--p-surface-300)]"
         >
@@ -51,7 +51,7 @@
                 ></div>
             </div>
         </div>
-        <div class="p-4 lg:px-6 lg:py-5">
+        <div class="flex min-h-0 flex-1 flex-col p-4 lg:px-6 lg:py-5">
             <slot name="content"></slot>
         </div>
     </div>

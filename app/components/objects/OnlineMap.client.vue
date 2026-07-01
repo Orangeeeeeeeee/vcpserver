@@ -13,7 +13,7 @@
         </button>
 
         <!-- Control stack (top-right) -->
-        <div class="absolute right-3 top-3 flex flex-col items-end gap-2">
+        <div class="absolute right-3 top-3 z-[1000] flex flex-col items-end gap-2">
             <button
                 type="button"
                 class="online-map-btn"

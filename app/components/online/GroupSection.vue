@@ -1,5 +1,5 @@
 <template>
-    <div class="overflow-hidden rounded-lg border border-surface-300">
+    <div class="shrink-0 overflow-hidden rounded-lg border border-surface-300">
         <!-- Header (tinted by the group color) -->
         <div
             class="flex flex-col gap-1 px-3 py-2.5"
