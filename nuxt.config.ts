@@ -13,7 +13,7 @@ export default defineNuxtConfig({
         [ROUTES.OBJECTS]: { redirect: ROUTES.OBJECTS_ONLINE },
         [ROUTES.ACCOUNT]: { redirect: ROUTES.ACCOUNT_INFO }
     },
-    devtools: { enabled: true },
+    devtools: { enabled: false },
     runtimeConfig: {
         public: {
             /** Mapbox access token; override via NUXT_PUBLIC_MAPBOX_TOKEN */
