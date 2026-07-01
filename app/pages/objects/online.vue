@@ -1,49 +1,38 @@
 <template>
     <div class="h-full grow flex flex-col">
         <div
-            class="flex h-[calc(100dvh-230px)] min-h-[28rem] gap-4 md:h-[calc(100dvh-210px)] h-full grow"
+            class="relative flex h-[calc(100dvh-230px)] min-h-[28rem] gap-4 md:h-[calc(100dvh-210px)] h-full grow"
         >
-            <!-- Fleet panel -->
+            <!-- Fleet panel: overlay over the map on mobile/tablet, column on lg+ -->
             <div
-                class="w-full min-w-0 md:block md:w-[21rem] md:shrink-0 lg:w-[24rem]"
-                :class="mobileView === 'list' ? 'block' : 'hidden'"
+                class="absolute inset-0 -m-4 z-[1100] overflow-hidden bg-surface-100 shadow-xl md:right-auto md:w-[21rem] lg:static lg:inset-auto lg:m-0 lg:w-[21rem] lg:shrink-0 lg:overflow-visible lg:bg-transparent lg:p-0 lg:shadow-none xl:w-[24rem]"
+                :class="mobileView === 'list' ? 'block' : 'hidden lg:block'"
             >
                 <OnlinePanel>
                     <template #actions>
-                        <button
-                            type="button"
-                            class="online-map-btn md:hidden"
+                        <UiMapAction
+                            class="lg:hidden"
+                            icon="tabler:map"
                             :aria-label="$t('objects.online.mapView')"
                             @click="mobileView = 'map'"
-                        >
-                            <Icon name="tabler:map" class="size-5" />
-                        </button>
+                        />
                     </template>
                 </OnlinePanel>
             </div>
 
-            <!-- Map -->
+            <!-- Map: always full width below lg, a column on lg+ -->
             <div
-                class="relative min-w-0 flex-1 overflow-hidden md:block -m-4 md:ml-0"
-                :class="mobileView === 'map' ? 'block' : 'hidden'"
+                class="relative min-w-0 flex-1 overflow-hidden -m-4 lg:ml-0"
             >
-                <ObjectsOnlineMap v-if="hasToken" />
+                <ObjectsOnlineMap
+                    v-if="hasToken"
+                    @show-list="mobileView = 'list'"
+                />
                 <SharedTableEmpty
                     v-else
                     icon="tabler:map-pin"
                     :message="$t('objects.online.noToken')"
                 />
-
-                <!-- Mobile: back to the list -->
-                <button
-                    v-if="hasToken"
-                    type="button"
-                    class="online-map-btn absolute left-14 top-3 md:hidden"
-                    :aria-label="$t('objects.online.listView')"
-                    @click="mobileView = 'list'"
-                >
-                    <Icon name="tabler:list" class="size-5" />
-                </button>
             </div>
         </div>
 
@@ -66,8 +55,12 @@ import { useOnlineFleet, ONLINE_FLEET_KEY } from '~/composables/useOnlineFleet';
 const fleet = useOnlineFleet();
 provide(ONLINE_FLEET_KEY, fleet);
 
-/** Mobile-only view switch; md+ shows the panel and the map side by side */
-const mobileView = ref<'list' | 'map'>('list');
+/**
+ * Panel visibility switch below lg; the map shows by default and the panel
+ * opens as an overlay over it. On lg+ the panel and the map are shown side by
+ * side as columns and this switch has no effect.
+ */
+const mobileView = ref<'list' | 'map'>('map');
 
 /** Map renders only when the Mapbox token is configured */
 const hasToken = computed<boolean>(() =>

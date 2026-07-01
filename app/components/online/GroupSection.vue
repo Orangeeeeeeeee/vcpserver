@@ -2,7 +2,7 @@
     <div class="shrink-0 overflow-hidden rounded-lg border border-surface-300">
         <!-- Header (tinted by the group color) -->
         <div
-            class="flex flex-col gap-1 px-3 py-2.5"
+            class="flex flex-col gap-2 p-3"
             :style="{ backgroundColor: headerBg }"
         >
             <div class="flex items-center justify-between gap-2">
@@ -18,29 +18,31 @@
                                 ? 'tabler:chevron-up'
                                 : 'tabler:chevron-down'
                         "
-                        class="size-4 shrink-0 text-surface-700"
+                        class="size-4 shrink-0 text-surface-800"
                     />
-                    <span class="truncate">{{ group.name }}</span>
+                    <span class="truncate text-sm text-surface-950">
+                        {{ group.name }}
+                    </span>
                 </button>
                 <span
-                    class="shrink-0 rounded px-1.5 py-0.5 text-xs font-medium"
+                    class="shrink-0 rounded px-1.5 h-[1.375rem] text-xs font-medium flex items-center justify-center"
                     :style="{ backgroundColor: badgeBg, color: badgeColor }"
                 >
                     {{ count }}
                 </span>
             </div>
-            <div class="flex items-center justify-between gap-2">
-                <span class="text-sm text-surface-800">
+            <div class="flex items-center gap-1">
+                <span class="text-xs text-surface-800">
                     {{ $t('objects.online.group.showOnMap') }}
                 </span>
                 <ToggleSwitch v-model="state.visible" />
             </div>
-            <p
-                v-if="state.expanded && group.description"
-                class="text-xs/tight text-surface-700"
-            >
-                {{ group.description }}
-            </p>
+<!--            <p-->
+<!--                v-if="state.expanded && group.description"-->
+<!--                class="text-xs/tight text-surface-700"-->
+<!--            >-->
+<!--                {{ group.description }}-->
+<!--            </p>-->
         </div>
 
         <!-- Vehicles -->

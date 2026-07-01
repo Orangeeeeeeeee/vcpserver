@@ -220,6 +220,8 @@
             },
             "map": {
                 "search": "Пошук на карті",
+                "searchPlaceholder": "Назва, ID або водій",
+                "searchEmpty": "Нічого не знайдено",
                 "layers": "Шари карти",
                 "zoomIn": "Наблизити",
                 "zoomOut": "Віддалити",

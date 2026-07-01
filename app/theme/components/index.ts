@@ -20,6 +20,7 @@ import tag from './tag';
 import textarea from './textarea';
 import toast from './toast';
 import togglebutton from './togglebutton';
+import toggleswitch from './toggleswitch';
 
 export default {
     avatar,
@@ -43,5 +44,6 @@ export default {
     tag,
     textarea,
     toast,
-    togglebutton
+    togglebutton,
+    toggleswitch
 };

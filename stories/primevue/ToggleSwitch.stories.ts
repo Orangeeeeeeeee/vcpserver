@@ -17,6 +17,7 @@ export const Playground: Story = {
         invalid: false
     },
     argTypes: {
+        size: { control: 'select', options: [undefined, 'small', 'large'] },
         disabled: { control: 'boolean' },
         invalid: { control: 'boolean' }
     },
@@ -35,6 +36,20 @@ export const Basic: Story = {
         components: { ToggleSwitch },
         data: () => ({ checked: false }),
         template: '<ToggleSwitch v-model="checked" />'
+    })
+};
+
+export const Sizes: Story = {
+    render: () => ({
+        components: { ToggleSwitch },
+        data: () => ({ small: true, normal: true, large: true }),
+        template: `
+      <div class="flex items-center gap-4">
+        <ToggleSwitch v-model="small" size="small" />
+        <ToggleSwitch v-model="normal" />
+        <ToggleSwitch v-model="large" size="large" />
+      </div>
+    `
     })
 };
 

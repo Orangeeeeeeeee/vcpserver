@@ -2,69 +2,107 @@
     <div ref="wrapperRef" class="relative size-full bg-surface-100">
         <div :id="MAP_CONTAINER_ID" class="size-full" />
 
-        <!-- Search stub (top-left) -->
-        <button
-            type="button"
-            class="online-map-btn absolute left-3 top-3"
-            :aria-label="$t('objects.online.map.search')"
-            @click="onSearchStub"
+        <!-- Search + mobile list toggle (top-left) -->
+        <div
+            class="absolute left-3 top-3 z-[1000] flex flex-col items-start gap-2"
         >
-            <Icon name="tabler:search" class="size-5" />
-        </button>
+            <div class="flex items-center gap-2">
+                <UiMapAction
+                    :icon="searchOpen ? 'tabler:x' : 'tabler:search'"
+                    :aria-label="$t('objects.online.map.search')"
+                    :aria-expanded="searchOpen"
+                    @click="toggleSearch"
+                />
+
+                <!-- Mobile: back to the list -->
+                <UiMapAction
+                    class="lg:hidden"
+                    icon="tabler:list"
+                    :aria-label="$t('objects.online.listView')"
+                    @click="emit('showList')"
+                />
+            </div>
+
+            <AutoComplete
+                v-if="searchOpen"
+                v-model="searchModel"
+                :suggestions="suggestions"
+                option-label="name"
+                :placeholder="$t('objects.online.map.searchPlaceholder')"
+                :empty-search-message="$t('objects.online.map.searchEmpty')"
+                complete-on-focus
+                autofocus
+                fluid
+                class="w-52 sm:w-72"
+                @complete="onSearchComplete"
+                @option-select="onOptionSelect"
+            >
+                <template #option="{ option }">
+                    <div class="flex min-w-0 items-center gap-2.5">
+                        <span
+                            class="size-2.5 shrink-0 rounded-full"
+                            :style="{
+                                background:
+                                    ONLINE_STATUS_META[option.status].markerBg
+                            }"
+                        />
+                        <div class="flex min-w-0 flex-col">
+                            <span class="truncate text-sm text-surface-900">
+                                {{ option.name }}
+                            </span>
+                            <span class="truncate text-xs text-surface-500">
+                                ID: {{ option.vehicleId }} · {{ option.driver }}
+                            </span>
+                        </div>
+                    </div>
+                </template>
+            </AutoComplete>
+        </div>
 
         <!-- Control stack (top-right) -->
-        <div class="absolute right-3 top-3 z-[1000] flex flex-col items-end gap-2">
-            <button
-                type="button"
-                class="online-map-btn"
+        <div
+            class="absolute right-3.5 top-3.5 z-[1000] flex flex-col items-end gap-2"
+        >
+            <UiMapAction
+                icon="tabler:copy"
                 :aria-expanded="layersOpen"
                 :aria-label="$t('objects.online.map.layers')"
                 @click="toggleLayers"
-            >
-                <Icon name="tabler:copy" class="size-5" />
-            </button>
+            />
 
-            <div class="flex flex-col overflow-hidden rounded-lg border border-surface-300 bg-surface-50 shadow-sm">
-                <button
-                    type="button"
-                    class="flex size-9 cursor-pointer items-center justify-center text-surface-800 transition-colors hover:bg-surface-200"
+            <UiMapActionGroup>
+                <UiMapAction
+                    icon="tabler:plus"
                     :aria-label="$t('objects.online.map.zoomIn')"
                     @click="map?.zoomIn()"
-                >
-                    <Icon name="tabler:plus" class="size-5" />
-                </button>
-                <button
-                    type="button"
-                    class="flex size-9 cursor-pointer items-center justify-center border-t border-surface-300 text-surface-800 transition-colors hover:bg-surface-200"
+                />
+                <UiMapAction
+                    icon="tabler:minus"
                     :aria-label="$t('objects.online.map.zoomOut')"
                     @click="map?.zoomOut()"
-                >
-                    <Icon name="tabler:minus" class="size-5" />
-                </button>
-            </div>
+                />
+            </UiMapActionGroup>
 
-            <button
-                type="button"
-                class="online-map-btn"
+            <UiMapAction
+                icon="tabler:info-circle"
                 :aria-expanded="legendOpen"
                 :aria-label="$t('objects.online.map.legend')"
                 @click="toggleLegend"
-            >
-                <Icon name="tabler:info-circle" class="size-5" />
-            </button>
+            />
 
-            <button
-                type="button"
-                class="online-map-btn"
+            <UiMapAction
+                icon="tabler:maximize"
                 :aria-label="$t('objects.online.map.fullscreen')"
                 @click="toggleFullscreen"
-            >
-                <Icon name="tabler:maximize" class="size-5" />
-            </button>
+            />
         </div>
 
         <!-- Layers popover -->
-        <Popover ref="layersRef" @show="layersOpen = true" @hide="layersOpen = false">
+        <Popover
+            ref="layersRef"
+            @show="layersOpen = true"
+            @hide="layersOpen = false"
+        >
             <div class="flex w-72 flex-col gap-3">
                 <div class="flex flex-col gap-2">
                     <span class="text-sm font-medium text-surface-900">
@@ -111,7 +149,11 @@
         </Popover>
 
         <!-- Legend popover -->
-        <Popover ref="legendRef" @show="legendOpen = true" @hide="legendOpen = false">
+        <Popover
+            ref="legendRef"
+            @show="legendOpen = true"
+            @hide="legendOpen = false"
+        >
             <div class="flex w-80 flex-col gap-2.5">
                 <span class="font-semibold text-surface-950">
                     {{ $t('objects.online.map.legendTitle') }}
@@ -137,7 +179,6 @@
 import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import Popover from 'primevue/popover';
-import { useToast } from 'primevue/usetoast';
 import { ONLINE_MARKER_SVG, ONLINE_STATUS_META } from '~/constants/online';
 import { useOnlineFleetContext } from '~/composables/useOnlineFleet';
 import type { OnlineMapOverlays } from '~/composables/useOnlineFleet';
@@ -159,11 +200,13 @@ const OVERLAY_KEYS: (keyof OnlineMapOverlays)[] = [
     'wind'
 ];
 
-const { t } = useI18n();
-const toast = useToast();
+const emit = defineEmits<{
+    /** Mobile «back to the list» toggle */
+    showList: [];
+}>();
+
 const { mapboxToken } = useRuntimeConfig().public;
-const { visibleVehicles, groups, mapLayer, overlays } =
-    useOnlineFleetContext();
+const { visibleVehicles, groups, mapLayer, overlays } = useOnlineFleetContext();
 
 const wrapperRef = useTemplateRef<HTMLDivElement>('wrapperRef');
 const layersRef = ref<InstanceType<typeof Popover> | null>(null);
@@ -171,10 +214,24 @@ const legendRef = ref<InstanceType<typeof Popover> | null>(null);
 const layersOpen = ref<boolean>(false);
 const legendOpen = ref<boolean>(false);
 
+/** Map search box state; model holds the typed string or the picked vehicle */
+const searchOpen = ref<boolean>(false);
+const searchModel = ref<string | OnlineVehicle>('');
+const suggestions = ref<OnlineVehicle[]>([]);
+
+/** Max results shown in the map search dropdown */
+const SEARCH_LIMIT = 8;
+
+/** Zoom level the map flies to when a search result is picked */
+const SEARCH_FOCUS_ZOOM = 15;
+
 /** Leaflet instance; created on mount, destroyed on unmount */
 let map: L.Map | null = null;
 let tileLayer: L.TileLayer | null = null;
 let markersLayer: L.LayerGroup | null = null;
+
+/** Rendered markers by vehicle id, so search can locate and highlight them */
+const markerById = new Map<string, L.Marker>();
 
 /** Mapbox Static Tiles URL for the given style id */
 const tilesUrl = (styleId: string): string =>
@@ -209,6 +266,7 @@ const markerLabel = (vehicle: OnlineVehicle): string => {
 const renderMarkers = (): void => {
     if (!map || !markersLayer) return;
     markersLayer.clearLayers();
+    markerById.clear();
     for (const vehicle of visibleVehicles.value) {
         const marker = L.marker([vehicle.lat, vehicle.lng], {
             icon: markerIcon(vehicle)
@@ -220,7 +278,26 @@ const renderMarkers = (): void => {
             opacity: 1
         });
         markersLayer.addLayer(marker);
+        markerById.set(vehicle.id, marker);
     }
+};
+
+/**
+ * AutoComplete `complete` handler: fills suggestions from the visible fleet,
+ * matching name, vehicle id or driver. An empty query lists the first vehicles.
+ * @param {{ query: string }} event AutoComplete query event.
+ */
+const onSearchComplete = (event: { query: string }): void => {
+    const q = event.query.trim().toLowerCase();
+    const source = q
+        ? visibleVehicles.value.filter(
+              (v) =>
+                  v.name.toLowerCase().includes(q) ||
+                  v.vehicleId.toLowerCase().includes(q) ||
+                  v.driver.toLowerCase().includes(q)
+          )
+        : visibleVehicles.value;
+    suggestions.value = source.slice(0, SEARCH_LIMIT);
 };
 
 onMounted(async (): Promise<void> => {
@@ -236,7 +313,9 @@ onMounted(async (): Promise<void> => {
 
     // Mapbox Static Tiles API (512px tiles need zoomOffset -1 in Leaflet)
     tileLayer = L.tileLayer(
-        tilesUrl(mapLayer.value === 'satellite' ? 'satellite-v9' : 'streets-v12'),
+        tilesUrl(
+            mapLayer.value === 'satellite' ? 'satellite-v9' : 'streets-v12'
+        ),
         {
             tileSize: 512,
             zoomOffset: -1,
@@ -248,6 +327,9 @@ onMounted(async (): Promise<void> => {
 
     markersLayer = L.layerGroup().addTo(map);
     renderMarkers();
+
+    // tapping the map dismisses the search box
+    map.on('click', closeSearch);
 
     // re-measure once the container has its final layout size
     requestAnimationFrame(() => map?.invalidateSize());
@@ -285,38 +367,48 @@ const toggleFullscreen = (): void => {
     void wrapperRef.value?.requestFullscreen();
 };
 
-/** Map search is not designed yet */
-const onSearchStub = (): void => {
-    toast.add({
-        severity: 'info',
-        summary: t('common.inDevelopment'),
-        life: 2000
+/** Closes the search box and clears its model and suggestions */
+const closeSearch = (): void => {
+    searchOpen.value = false;
+    searchModel.value = '';
+    suggestions.value = [];
+};
+
+/** Toggles the search box open/closed */
+const toggleSearch = (): void => {
+    if (searchOpen.value) closeSearch();
+    else searchOpen.value = true;
+};
+
+/**
+ * Flies the map to a vehicle, pulses its marker and closes the search box.
+ * @param {OnlineVehicle} vehicle Selected search result.
+ */
+const focusVehicle = (vehicle: OnlineVehicle): void => {
+    map?.flyTo([vehicle.lat, vehicle.lng], SEARCH_FOCUS_ZOOM, {
+        duration: 0.75
     });
+    const element = markerById.get(vehicle.id)?.getElement();
+    if (element) {
+        element.classList.remove('online-marker-active');
+        // force reflow so the pulse animation restarts on repeat picks
+        void element.offsetWidth;
+        element.classList.add('online-marker-active');
+    }
+    closeSearch();
+};
+
+/**
+ * AutoComplete `option-select` handler: focuses the chosen vehicle on the map.
+ * @param {{ value: OnlineVehicle }} event AutoComplete selection event.
+ */
+const onOptionSelect = (event: { value: OnlineVehicle }): void => {
+    focusVehicle(event.value);
 };
 </script>
 
 <style>
 /* Unscoped: Leaflet injects marker/tooltip HTML outside Vue's scope attrs. */
-.online-map-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
-    border-radius: 0.5rem;
-    border: 1px solid var(--p-surface-300);
-    background: var(--p-surface-50);
-    color: var(--p-surface-800);
-    cursor: pointer;
-    box-shadow: 0 1px 2px rgb(0 0 0 / 0.06);
-    transition: background-color 0.2s;
-    z-index: 1000;
-}
-
-.online-map-btn:hover {
-    background: var(--p-surface-200);
-}
-
 .online-marker-wrap {
     background: transparent;
     border: none;
@@ -333,15 +425,38 @@ const onSearchStub = (): void => {
     box-shadow: 0 2px 6px rgb(0 0 0 / 0.25);
 }
 
+/* Pulse ring when a search result focuses the marker */
+.online-marker-active .online-marker {
+    animation: online-marker-pulse 1.2s ease-out;
+}
+
+@keyframes online-marker-pulse {
+    0% {
+        box-shadow:
+            0 0 0 0 rgb(59 130 246 / 0.5),
+            0 2px 6px rgb(0 0 0 / 0.25);
+    }
+    70% {
+        box-shadow:
+            0 0 0 16px rgb(59 130 246 / 0),
+            0 2px 6px rgb(0 0 0 / 0.25);
+    }
+    100% {
+        box-shadow:
+            0 0 0 0 rgb(59 130 246 / 0),
+            0 2px 6px rgb(0 0 0 / 0.25);
+    }
+}
+
 .online-label {
-    background: #fff;
+    background: var(--p-surface-100);
     border: none;
     border-radius: 0.375rem;
     box-shadow: 0 2px 8px rgb(0 0 0 / 0.15);
-    padding: 0.375rem 0.625rem;
+    padding: 0.375rem;
     color: var(--p-surface-900);
     font-size: 0.75rem;
-    line-height: 1.35;
+    line-height: 1.4;
     white-space: nowrap;
 }
 
@@ -360,11 +475,11 @@ const onSearchStub = (): void => {
     width: 4px;
     height: 4px;
     border-radius: 9999px;
-    background: var(--p-surface-400);
+    background: var(--p-surface-300);
     flex-shrink: 0;
 }
 
 .online-label-dim {
-    color: var(--p-surface-600);
+    color: var(--p-surface-800);
 }
 </style>

@@ -1,55 +1,58 @@
 <template>
-    <div class="flex flex-col gap-2 px-3 py-3">
+    <div class="px-3 py-4">
         <!-- Identity -->
-        <div class="flex items-start gap-2">
+        <div
+            class="flex items-start gap-2 border-b border-surface-200 pb-3 mb-2.5"
+        >
             <span
                 v-tooltip.top="$t(meta.labelKey)"
-                class="mt-0.5 inline-flex shrink-0"
+                class="inline-flex shrink-0"
             >
                 <Icon
                     :name="meta.icon"
                     :class="meta.textClass"
-                    class="size-5"
+                    class="size-4"
                 />
             </span>
             <div class="flex min-w-0 flex-col">
-                <span class="font-semibold text-sm text-surface-950 truncate">
+                <span class="font-semibold text-sm text-surface-900 truncate">
                     {{ vehicle.name }}
                 </span>
-                <span class="text-xs text-surface-700">
+                <span class="text-xs text-surface-800">
                     ID: {{ vehicle.vehicleId }}
                 </span>
             </div>
         </div>
 
         <!-- Telemetry -->
-        <div class="flex flex-col gap-1 text-sm text-surface-800">
+        <div class="flex flex-col gap-2 text-xs text-surface-800 mb-2.5">
             <div class="flex items-center justify-between gap-2">
-                <span class="flex items-center gap-1.5">
+                <span class="flex items-center gap-1">
                     <Icon
                         name="tabler:gauge"
-                        class="size-4 shrink-0 text-surface-600"
+                        class="size-[1.125rem] shrink-0 text-surface-600"
                     />
-                    {{ vehicle.speed }} {{ $t('objects.online.card.speedUnit') }}
+                    {{ vehicle.speed }}
+                    {{ $t('objects.online.card.speedUnit') }}
                 </span>
                 <span
                     class="inline-flex items-center gap-1 rounded bg-surface-200 px-2 py-0.5 text-xs text-surface-800"
                 >
-                    <Icon name="tabler:refresh" class="size-3.5" />
+                    <Icon name="tabler:refresh" class="size-3" />
                     {{ vehicle.updatedAgo }}
                 </span>
             </div>
-            <span class="flex items-center gap-1.5">
+            <span class="flex items-center gap-1">
                 <Icon
                     name="tabler:id"
-                    class="size-4 shrink-0 text-surface-600"
+                    class="size-[1.125rem] shrink-0 text-surface-600"
                 />
                 IMEI: {{ vehicle.imei }}
             </span>
-            <span class="flex items-start gap-1.5">
+            <span class="flex items-center gap-1">
                 <Icon
                     name="tabler:map-pin"
-                    class="mt-0.5 size-4 shrink-0 text-surface-600"
+                    class="size-[1.125rem] shrink-0 text-surface-600"
                 />
                 {{ vehicle.address }}
             </span>
@@ -120,10 +123,7 @@
 <script setup lang="ts">
 import { useToast } from 'primevue/usetoast';
 import type { OnlineVehicle } from '~/types/online';
-import {
-    ONLINE_STATUS_META,
-    type OnlineStatusMeta
-} from '~/constants/online';
+import { ONLINE_STATUS_META, type OnlineStatusMeta } from '~/constants/online';
 
 interface VehicleCardProps {
     vehicle: OnlineVehicle;
