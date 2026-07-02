@@ -1,0 +1,66 @@
+<template>
+    <section class="flex flex-col gap-4">
+        <div class="flex items-center justify-between gap-2">
+            <h3 class="text-base font-semibold text-surface-900">
+                {{ title }}
+            </h3>
+            <Button
+                type="button"
+                text
+                severity="secondary"
+                size="small"
+                :label="addMoreLabel"
+                @click="emit('add')"
+            >
+                <template #icon>
+                    <Icon name="tabler:plus" class="size-4" />
+                </template>
+            </Button>
+        </div>
+
+        <template v-for="(row, index) in rows" :key="index">
+            <h4 v-if="index > 0" class="text-base font-medium text-surface-900">
+                {{ addRowLabel }}
+            </h4>
+            <ZonesZoneBindingItem
+                v-model:ids="row.ids"
+                v-model:trigger="row.trigger"
+                v-model:notification-types="row.notificationTypes"
+                v-model:channels="row.channels"
+                :options="options"
+                :placeholder="placeholder"
+                :removable="rows.length > 1"
+                @remove="emit('remove', index)"
+            />
+        </template>
+    </section>
+</template>
+
+<script setup lang="ts">
+import type { ZoneBindingFormRow } from '~/composables/useZoneForm';
+import type { ZoneBindingOption } from '~/components/zones/ZoneBindingItem.vue';
+
+interface ZoneBindingSectionProps {
+    /** Localized section title, e.g. «Групи транспортів» */
+    title: string;
+    /** Localized label of the «+ Додати ще» header button */
+    addMoreLabel: string;
+    /** Localized subheading shown before each additional row */
+    addRowLabel: string;
+    /** Options of the entity multiselect (groups or vehicles) */
+    options: ZoneBindingOption[];
+    /** Localized placeholder of the entity multiselect */
+    placeholder: string;
+    /** Binding rows of the section */
+    rows: ZoneBindingFormRow[];
+}
+
+defineProps<ZoneBindingSectionProps>();
+
+const emit = defineEmits<{
+    /** Requests appending a new empty row */
+    add: [];
+    /** Requests removal of the row at the given index */
+    remove: [index: number];
+}>();
+</script>

@@ -74,12 +74,12 @@
                 <UiMapAction
                     icon="tabler:plus"
                     :aria-label="$t('objects.online.map.zoomIn')"
-                    @click="map?.zoomIn()"
+                    @click="zoomIn()"
                 />
                 <UiMapAction
                     icon="tabler:minus"
                     :aria-label="$t('objects.online.map.zoomOut')"
-                    @click="map?.zoomOut()"
+                    @click="zoomOut()"
                 />
             </UiMapActionGroup>
 
@@ -93,7 +93,7 @@
             <UiMapAction
                 icon="tabler:maximize"
                 :aria-label="$t('objects.online.map.fullscreen')"
-                @click="toggleFullscreen"
+                @click="toggleFullscreen(wrapperRef)"
             />
         </div>
 
@@ -180,6 +180,7 @@ import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import Popover from 'primevue/popover';
 import { ONLINE_MARKER_SVG, ONLINE_STATUS_META } from '~/constants/online';
+import { useLeafletMap } from '~/composables/useLeafletMap';
 import { useOnlineFleetContext } from '~/composables/useOnlineFleet';
 import type { OnlineMapOverlays } from '~/composables/useOnlineFleet';
 import type { OnlineVehicle } from '~/types/online';
@@ -205,8 +206,13 @@ const emit = defineEmits<{
     showList: [];
 }>();
 
-const { mapboxToken } = useRuntimeConfig().public;
 const { visibleVehicles, groups, mapLayer, overlays } = useOnlineFleetContext();
+
+/** Shared Leaflet + Mapbox tiles plumbing (creation, layer switch, cleanup) */
+const { init, getMap, zoomIn, zoomOut, toggleFullscreen } = useLeafletMap({
+    containerId: MAP_CONTAINER_ID,
+    mapLayer
+});
 
 const wrapperRef = useTemplateRef<HTMLDivElement>('wrapperRef');
 const layersRef = ref<InstanceType<typeof Popover> | null>(null);
@@ -225,17 +231,11 @@ const SEARCH_LIMIT = 8;
 /** Zoom level the map flies to when a search result is picked */
 const SEARCH_FOCUS_ZOOM = 15;
 
-/** Leaflet instance; created on mount, destroyed on unmount */
-let map: L.Map | null = null;
-let tileLayer: L.TileLayer | null = null;
+/** Marker layer; created on mount on top of the shared map */
 let markersLayer: L.LayerGroup | null = null;
 
 /** Rendered markers by vehicle id, so search can locate and highlight them */
 const markerById = new Map<string, L.Marker>();
-
-/** Mapbox Static Tiles URL for the given style id */
-const tilesUrl = (styleId: string): string =>
-    `https://api.mapbox.com/styles/v1/mapbox/${styleId}/tiles/512/{z}/{x}/{y}@2x?access_token=${mapboxToken}`;
 
 /** Group name lookup for the marker labels */
 const groupNameById = new Map(groups.map((g) => [g.id, g.name]));
@@ -264,7 +264,7 @@ const markerLabel = (vehicle: OnlineVehicle): string => {
 
 /** Re-renders all markers from the currently visible vehicles */
 const renderMarkers = (): void => {
-    if (!map || !markersLayer) return;
+    if (!markersLayer) return;
     markersLayer.clearLayers();
     markerById.clear();
     for (const vehicle of visibleVehicles.value) {
@@ -301,54 +301,18 @@ const onSearchComplete = (event: { query: string }): void => {
 };
 
 onMounted(async (): Promise<void> => {
-    await nextTick();
-    const container = document.getElementById(MAP_CONTAINER_ID);
-    if (!container || !mapboxToken) {
-        console.warn('OnlineMap: missing map container or Mapbox token');
-        return;
-    }
-
-    // lat, lng — Ukraine fits the viewport at this zoom (per the mockup)
-    map = L.map(container, { zoomControl: false }).setView([49.3, 31.5], 6);
-
-    // Mapbox Static Tiles API (512px tiles need zoomOffset -1 in Leaflet)
-    tileLayer = L.tileLayer(
-        tilesUrl(
-            mapLayer.value === 'satellite' ? 'satellite-v9' : 'streets-v12'
-        ),
-        {
-            tileSize: 512,
-            zoomOffset: -1,
-            maxZoom: 19,
-            attribution:
-                '&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }
-    ).addTo(map);
+    const map = await init();
+    if (!map) return;
 
     markersLayer = L.layerGroup().addTo(map);
     renderMarkers();
 
     // tapping the map dismisses the search box
     map.on('click', closeSearch);
-
-    // re-measure once the container has its final layout size
-    requestAnimationFrame(() => map?.invalidateSize());
 });
 
 /** Markers follow panel filters and group visibility */
 watch(visibleVehicles, renderMarkers);
-
-/** Street ↔ satellite switch swaps the Static Tiles style */
-watch(mapLayer, (layer): void => {
-    tileLayer?.setUrl(
-        tilesUrl(layer === 'satellite' ? 'satellite-v9' : 'streets-v12')
-    );
-});
-
-onUnmounted((): void => {
-    map?.remove();
-    map = null;
-});
 
 const toggleLayers = (event: MouseEvent): void => {
     layersRef.value?.toggle(event);
@@ -356,15 +320,6 @@ const toggleLayers = (event: MouseEvent): void => {
 
 const toggleLegend = (event: MouseEvent): void => {
     legendRef.value?.toggle(event);
-};
-
-/** Browser Fullscreen API on the map wrapper */
-const toggleFullscreen = (): void => {
-    if (document.fullscreenElement) {
-        void document.exitFullscreen();
-        return;
-    }
-    void wrapperRef.value?.requestFullscreen();
 };
 
 /** Closes the search box and clears its model and suggestions */
@@ -385,7 +340,7 @@ const toggleSearch = (): void => {
  * @param {OnlineVehicle} vehicle Selected search result.
  */
 const focusVehicle = (vehicle: OnlineVehicle): void => {
-    map?.flyTo([vehicle.lat, vehicle.lng], SEARCH_FOCUS_ZOOM, {
+    getMap()?.flyTo([vehicle.lat, vehicle.lng], SEARCH_FOCUS_ZOOM, {
         duration: 0.75
     });
     const element = markerById.get(vehicle.id)?.getElement();

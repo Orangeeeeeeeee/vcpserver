@@ -52,8 +52,8 @@
 
         <!-- Groups -->
         <div class="min-h-0 flex-1 p-4">
-            <ScrollPanel class="online-scroll h-full">
-                <div class="flex flex-col gap-3 pr-2">
+            <UiScrollPanel class="h-full">
+                <div class="flex flex-col gap-3">
                     <OnlineGroupSection
                         v-for="group in groups"
                         :key="group.id"
@@ -62,7 +62,7 @@
                         :count="groupCounts[group.id] ?? 0"
                     />
                 </div>
-            </ScrollPanel>
+            </UiScrollPanel>
         </div>
     </div>
 </template>
@@ -100,19 +100,3 @@ const hiddenCount = computed<number>(() =>
     Math.max(0, filterChips.value.length - VISIBLE_CHIPS)
 );
 </script>
-
-<style scoped>
-/* Keep the ScrollPanel thumb always visible (PrimeVue hides it until hover) */
-.online-scroll :deep(.p-scrollpanel-bar-y) {
-    width: 0.375rem;
-    background: var(--p-surface-300);
-    border-radius: 9999px;
-    opacity: 1;
-    transition: background-color 0.2s;
-}
-
-.online-scroll:hover :deep(.p-scrollpanel-bar-y),
-.online-scroll :deep(.p-scrollpanel-bar-y:hover) {
-    background: var(--p-surface-400);
-}
-</style>

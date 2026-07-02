@@ -18,7 +18,6 @@
         "email": "Email",
         "emailPlaceholder": "Введіть електронну адресу",
         "search": "Пошук",
-        "filter": "Фільтр",
         "password": "Пароль"
     },
     "errors": {
@@ -539,6 +538,136 @@
                 "deleted": "Транспортний засіб видалено",
                 "deleteTitle": "Видалити транспортний засіб?",
                 "deleteSubtitle": "Ви впевнені, що хочете видалити транспортний засіб"
+            }
+        }
+    },
+    "zones": {
+        "title": "Зони",
+        "listPlaceholder": "Список зон зʼявиться тут незабаром",
+        "create": {
+            "title": "Додати зону",
+            "breadcrumb": "Додати зону",
+            "fields": {
+                "company": "Компанія",
+                "companyPlaceholder": "Оберіть компанію",
+                "type": "Тип зони",
+                "typePlaceholder": "Оберіть тип",
+                "name": "Назва зони",
+                "namePlaceholder": "Введіть назву",
+                "description": "Опис",
+                "descriptionPlaceholder": "Введіть опис зони"
+            },
+            "groups": {
+                "title": "Групи транспортів",
+                "addMore": "Додати ще",
+                "addRow": "Додати групу",
+                "placeholder": "Оберіть групу"
+            },
+            "vehicles": {
+                "title": "Транспорт",
+                "addMore": "Додати ще",
+                "addRow": "Додати транспорт",
+                "placeholder": "Оберіть транспорт"
+            },
+            "triggers": {
+                "enter": "Вхід в зону",
+                "exit": "Вихід з зони",
+                "both": "Вхід та вихід"
+            },
+            "notificationType": "Тип повідомлення",
+            "notificationTypePlaceholder": "Оберіть тип",
+            "notificationTypes": {
+                "info": "Інформаційне",
+                "important": "Важливо",
+                "urgent": "Терміново"
+            },
+            "channels": "Повідомляти через",
+            "channelOptions": {
+                "site": "Сайт",
+                "email": "Email",
+                "sms": "SMS"
+            },
+            "zoneTypes": {
+                "parking": "Стоянка",
+                "loading": "Завантаження/Розвантаження",
+                "restricted": "Заборонена зона",
+                "work": "Робоча зона",
+                "other": "Інше"
+            },
+            "cancel": "Скасувати",
+            "submit": "Додати зону",
+            "created": "Зону створено",
+            "map": {
+                "undo": "Скасувати крок",
+                "delete": "Видалити фігуру",
+                "polygon": "Малювати полігон",
+                "rectangle": "Малювати прямокутник",
+                "circle": "Малювати коло",
+                "showForm": "Показати форму",
+                "showMap": "Показати карту",
+                "closePanel": "Закрити панель"
+            }
+        },
+        "edit": {
+            "title": "Редагувати зону",
+            "breadcrumb": "Редагувати зону",
+            "submit": "Редагувати",
+            "updated": "Зону оновлено"
+        },
+        "list": {
+            "searchPlaceholder": "Пошук",
+            "add": "Додати",
+            "mapView": "Показати карту",
+            "listView": "Показати список",
+            "empty": "Зон не знайдено",
+            "area": "{n} км²",
+            "groups": "Групи",
+            "singleVehicles": "Окремі транспорти",
+            "expand": "Розгорнути",
+            "collapse": "Згорнути",
+            "details": "Переглянути деталі",
+            "shapes": {
+                "polygon": "Полігон",
+                "rectangle": "Прямокутник",
+                "circle": "Коло"
+            },
+            "map": {
+                "searchPlaceholder": "Назва або компанія"
+            },
+            "filters": {
+                "company": "Компанія",
+                "companyPlaceholder": "Оберіть компанію",
+                "shape": "Форма зони",
+                "shapePlaceholder": "Оберіть форму",
+                "type": "Тип зони",
+                "typePlaceholder": "Оберіть тип",
+                "groups": "Групи транспортів",
+                "groupsPlaceholder": "Оберіть групу",
+                "vehicle": "Транспортний засіб",
+                "vehiclePlaceholder": "Оберіть транспортний засіб"
+            }
+        },
+        "detail": {
+            "edit": "Редагувати",
+            "stats": {
+                "title": "Статистика",
+                "inZoneNow": "У зоні зараз",
+                "vehiclesCount": "{n} транспортних засобів",
+                "entries": "Вʼїзди в зону",
+                "exits": "Виїзди з зони",
+                "totalTime": "Загальний час у зоні",
+                "averageTime": "Середній час у зоні",
+                "today": "Сьогодні, {date}",
+                "duration": "{h} год {m} хв"
+            },
+            "map": {
+                "search": "Пошук транспорту",
+                "searchPlaceholder": "Назва або ID",
+                "statuses": {
+                    "moving": "Рухається",
+                    "paused": "Пауза",
+                    "alert": "Тривога"
+                }
             }
         }
     },

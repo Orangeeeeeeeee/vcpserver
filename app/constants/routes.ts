@@ -11,6 +11,11 @@ export const ROUTES = {
     OBJECTS_GROUPS: '/objects/groups',
     ROUTES_PAGE: '/routes',
     ZONES: '/zones',
+    ZONES_NEW: '/zones/new',
+    /** Zone detail page (e.g. /zones/3) */
+    ZONE_DETAIL: (id: string): string => `/zones/${id}`,
+    /** Zone edit page (e.g. /zones/3/edit) */
+    ZONE_EDIT: (id: string): string => `/zones/${id}/edit`,
     REPORTS: '/reports',
     REPORTS_IDLE: '/reports/idle',
     PASSENGER_FLOW: '/passenger-flow',
@@ -20,7 +25,8 @@ export const ROUTES = {
     /** Passenger flow transport detail page */
     PASSENGER_FLOW_TRANSPORT_DETAIL: (id: string): string => `/transport/${id}`,
     /** Passenger flow trip detail page */
-    PASSENGER_FLOW_TRIP_DETAIL: (transportId: string, tripId: string): string => `/transport/${transportId}/${tripId}`,
+    PASSENGER_FLOW_TRIP_DETAIL: (transportId: string, tripId: string): string =>
+        `/transport/${transportId}/${tripId}`,
     ACCOUNT: '/account',
     ACCOUNT_INFO: '/account/info',
     ACCOUNT_SETTINGS: '/account/settings',

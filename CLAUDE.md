@@ -26,7 +26,8 @@ VCPServer — веб-застосунок на Nuxt 4 з використанн�
 - **Іконки:** `@nuxt/icon` (Iconify, SVG mode), колекція **Tabler Icons** (`tabler:icon-name`). Кастомні SVG — в `app/assets/icons/` з префіксом `custom:` (`<Icon name="custom:logo" />`). В Storybook — `import { Icon } from '@iconify/vue'` з `<Icon icon="tabler:arrow-left" />`
 - **Лінтер:** ESLint через `@nuxt/eslint` (конфіг генерується автоматично у `.nuxt/eslint.config.mjs`) + Prettier для форматування
 - **Інтернаціоналізація:** `@nuxtjs/i18n` (vue-i18n, Composition API mode)
-- **Карти:** `leaflet` (+ `@types/leaflet`) у client-only компоненті (`*.client.vue`) з тайлами Mapbox Static Tiles API; access token — env `NUXT_PUBLIC_MAPBOX_TOKEN` → `runtimeConfig.public.mapboxToken`
+- **Карти:** `leaflet` (+ `@types/leaflet`) у client-only компоненті (`*.client.vue`) з тайлами Mapbox Static Tiles API; access token — env `NUXT_PUBLIC_MAPBOX_TOKEN` → `runtimeConfig.public.mapboxToken`. Спільна обв'язка (ініціалізація, тайли street/satellite, zoom, fullscreen) — composable `useLeafletMap`; контейнер карти шукати за унікальним `id`, НЕ через template ref (у `.client.vue` вони ненадійні). Малювання геозон — `@geoman-io/leaflet-geoman-free` (без вбудованого тулбару, режими вмикаються з кастомних кнопок `UiMapAction`)
+- **Сторінки «панель + карта»** (online, список/створення/редагування зон): спільний компонент `<SharedPanelMapLayout>` (`app/components/shared/PanelMapLayout/`) — слоти `#panel`/`#map`, `v-model:view` (`'panel' | 'map'`) перемикає панель-overlay нижче `lg`; карта завжди відрендерена (ховається перекриттям, не `v-if`). Стан сторінки шериться між панеллю та картою через composable + `provide`/`inject` з `InjectionKey` (патерн `useOnlineFleet`/`useZoneForm`)
 - **Storybook:** Storybook 10 (`@storybook/vue3-vite`)
 
 ## Архітектура
@@ -39,8 +40,8 @@ VCPServer — веб-застосунок на Nuxt 4 з використанн�
     - `theme/colors.ts` — константи дизайнерської палітри кольорів
     - `theme/preset.ts` — кастомний PrimeVue пресет (`definePreset(Aura, overrides)`)
     - `constants/` — константи застосунку: `routes.ts` (шляхи маршрутів — об'єкт `ROUTES`) та `navigation.ts` (пункти бічної навігації `navigationItems`)
-    - `types/` — доменні TS-типи (`driver.ts`, `tracker.ts`); НЕ auto-imported, імпортувати явно (`import type { Driver } from '~/types/driver'`)
-    - `mocks/` — мок-дані та генератори (`drivers.ts`, `trackers.ts`); імпортуються явно у composables, видаляються при підключенні реального API
+    - `types/` — доменні TS-типи (`driver.ts`, `tracker.ts`, `zone.ts`); НЕ auto-imported, імпортувати явно (`import type { Driver } from '~/types/driver'`)
+    - `mocks/` — мок-дані та генератори (`drivers.ts`, `trackers.ts`, `zones.ts`, `companies.ts`); імпортуються явно у composables, видаляються при підключенні реального API
     - `utils/` — auto-imported утиліти Nuxt (напр. `validations.ts`, `date.ts`, `string.ts`)
 - `stories/` — Storybook сторіз (`primevue/`, `ColorPalette/`)
 - `i18n/locales/` — файли перекладів (JSON), за замовчуванням `ua.json`
