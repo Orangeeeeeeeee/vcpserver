@@ -93,28 +93,28 @@
         <div class="flex items-center justify-between gap-2">
             <button
                 type="button"
-                class="flex cursor-pointer items-center gap-1 text-sm font-medium text-surface-800 transition-colors hover:text-surface-950"
+                class="flex cursor-pointer items-center gap-2 text-sm font-medium text-surface-800 transition-colors hover:text-surface-950"
                 @click="expanded = !expanded"
             >
                 {{
                     expanded
-                        ? $t('objects.online.card.collapse')
+                        ? $t('objects.online.card.collapse')s
                         : $t('objects.online.card.expand')
                 }}
                 <Icon
                     :name="
                         expanded ? 'tabler:chevron-up' : 'tabler:chevron-down'
                     "
-                    class="size-4"
+                    class="size-5"
                 />
             </button>
             <button
                 type="button"
-                class="flex cursor-pointer items-center gap-1 text-sm font-semibold text-primary-700 underline-offset-2 transition-colors hover:text-primary-900"
+                class="flex cursor-pointer items-center gap-1 text-sm font-medium text-primary-900 underline-offset-2 transition-colors hover:text-primary-950"
                 @click="onDetails"
             >
                 {{ $t('objects.online.card.details') }}
-                <Icon name="tabler:arrow-up-right" class="size-4" />
+                <Icon name="tabler:arrow-up-right" class="size-5" />
             </button>
         </div>
     </div>

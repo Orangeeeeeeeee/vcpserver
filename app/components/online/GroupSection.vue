@@ -37,12 +37,12 @@
                 </span>
                 <ToggleSwitch v-model="state.visible" />
             </div>
-<!--            <p-->
-<!--                v-if="state.expanded && group.description"-->
-<!--                class="text-xs/tight text-surface-700"-->
-<!--            >-->
-<!--                {{ group.description }}-->
-<!--            </p>-->
+            <!--            <p-->
+            <!--                v-if="state.expanded && group.description"-->
+            <!--                class="text-xs/tight text-surface-700"-->
+            <!--            >-->
+            <!--                {{ group.description }}-->
+            <!--            </p>-->
         </div>
 
         <!-- Vehicles -->
