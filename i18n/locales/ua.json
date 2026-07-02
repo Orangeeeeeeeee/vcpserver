@@ -185,6 +185,7 @@
             "noToken": "Щоб відобразити карту, додайте Mapbox-токен у змінну середовища NUXT_PUBLIC_MAPBOX_TOKEN.",
             "searchPlaceholder": "Пошук",
             "moreChips": "Ще {n}",
+            "lessChips": "Згорнути",
             "mapView": "Показати карту",
             "listView": "Показати список",
             "statuses": {

@@ -1,11 +1,11 @@
 <template>
     <div class="h-full grow flex flex-col">
         <div
-            class="relative flex h-[calc(100dvh-230px)] min-h-[28rem] gap-4 md:h-[calc(100dvh-210px)] h-full grow"
+            class="relative flex h-[calc(100dvh-230px)] min-h-[28rem] gap-6 md:h-[calc(100dvh-210px)] h-full grow"
         >
             <!-- Fleet panel: overlay over the map on mobile/tablet, column on lg+ -->
             <div
-                class="absolute inset-0 -m-4 z-[1100] overflow-hidden bg-surface-100 shadow-xl md:right-auto md:w-[21rem] lg:static lg:inset-auto lg:m-0 lg:w-[21rem] lg:shrink-0 lg:overflow-visible lg:bg-transparent lg:p-0 lg:shadow-none xl:w-[24rem]"
+                class="absolute inset-0 -m-4 z-[1100] overflow-hidden bg-surface-100 shadow-xl md:right-auto md:w-[23.375rem] lg:static lg:inset-auto lg:m-0 lg:w-[26.125rem] lg:shrink-0 lg:overflow-visible lg:bg-transparent lg:p-0 lg:shadow-none"
                 :class="mobileView === 'list' ? 'block' : 'hidden lg:block'"
             >
                 <OnlinePanel>
@@ -22,7 +22,7 @@
 
             <!-- Map: always full width below lg, a column on lg+ -->
             <div
-                class="relative min-w-0 flex-1 overflow-hidden -m-4 lg:ml-0"
+                class="relative min-w-0 flex-1 overflow-hidden -m-4 lg:ml-0 lg:-mt-5 lg:-mr-6 lg:-mb-5"
             >
                 <ObjectsOnlineMap
                     v-if="hasToken"

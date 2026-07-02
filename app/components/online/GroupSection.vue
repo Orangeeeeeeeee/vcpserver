@@ -2,7 +2,7 @@
     <div class="shrink-0 overflow-hidden rounded-lg border border-surface-300">
         <!-- Header (tinted by the group color) -->
         <div
-            class="flex flex-col gap-2 p-3"
+            class="flex flex-col gap-2 p-3 md:px-3.5 md:py-3 md:gap-1.5"
             :style="{ backgroundColor: headerBg }"
         >
             <div class="flex items-center justify-between gap-2">
@@ -18,9 +18,11 @@
                                 ? 'tabler:chevron-up'
                                 : 'tabler:chevron-down'
                         "
-                        class="size-4 shrink-0 text-surface-800"
+                        class="size-4 md:size-5 shrink-0 text-surface-800"
                     />
-                    <span class="truncate text-sm text-surface-950">
+                    <span
+                        class="truncate text-sm text-surface-950 md:text-base"
+                    >
                         {{ group.name }}
                     </span>
                 </button>
@@ -32,7 +34,7 @@
                 </span>
             </div>
             <div class="flex items-center gap-1">
-                <span class="text-xs text-surface-800">
+                <span class="text-xs md:text-sm text-surface-800">
                     {{ $t('objects.online.group.showOnMap') }}
                 </span>
                 <ToggleSwitch v-model="state.visible" />

@@ -1,5 +1,7 @@
 <template>
-    <div class="flex flex-col h-full">
+    <div
+        class="flex flex-col h-full lg:border lg:border-surface-300 lg:rounded-[10px]"
+    >
         <div class="p-4 flex flex-col gap-5 border-b border-surface-300">
             <div class="flex items-center gap-2">
                 <IconField class="min-w-0 flex-1">
@@ -24,38 +26,27 @@
                 v-if="filterChips.length"
                 class="flex flex-wrap items-center gap-1.5"
             >
-                <span
+                <Chip
                     v-for="chip in shownChips"
                     :key="chip.key"
-                    class="inline-flex items-center gap-1 rounded bg-surface-200 px-2 py-0.5 text-sm text-surface-800"
+                    :label="chip.label"
+                    removable
+                    @remove="removeChip(chip.key)"
                 >
-                    {{ chip.label }}
-                    <button
-                        type="button"
-                        class="inline-flex cursor-pointer"
-                        :aria-label="$t('common.delete')"
-                        @click="removeChip(chip.key)"
-                    >
+                    <template #removeicon>
                         <Icon
                             name="tabler:x"
-                            class="size-3.5 text-surface-600 transition-colors hover:text-surface-900"
+                            class="size-3.5 cursor-pointer text-surface-600 transition-colors hover:text-surface-900"
+                            :aria-label="$t('common.delete')"
+                            @click="removeChip(chip.key)"
                         />
-                    </button>
-                </span>
-                <button
+                    </template>
+                </Chip>
+                <OnlineChipToggle
                     v-if="hiddenCount > 0"
-                    type="button"
-                    class="inline-flex cursor-pointer items-center gap-0.5 rounded bg-surface-300 px-2 py-0.5 text-sm text-surface-900"
-                    @click="showAllChips = !showAllChips"
-                >
-                    <template v-if="!showAllChips">
-                        <Icon name="tabler:plus" class="size-3.5" />
-                        {{ $t('objects.online.moreChips', { n: hiddenCount }) }}
-                    </template>
-                    <template v-else>
-                        <Icon name="tabler:chevron-up" class="size-3.5" />
-                    </template>
-                </button>
+                    v-model="showAllChips"
+                    :count="hiddenCount"
+                />
             </div>
         </div>
 

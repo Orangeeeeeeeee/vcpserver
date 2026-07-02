@@ -1,8 +1,8 @@
 <template>
-    <div class="px-3 py-4">
+    <div class="px-3 py-4 md:px-3.5">
         <!-- Identity -->
         <div
-            class="flex items-start gap-2 border-b border-surface-200 pb-3 mb-2.5"
+            class="flex items-start gap-2 border-b border-surface-200 pb-3 mb-2.5 md:gap-2.5"
         >
             <span
                 v-tooltip.top="$t(meta.labelKey)"
@@ -15,78 +15,84 @@
                 />
             </span>
             <div class="flex min-w-0 flex-col">
-                <span class="font-semibold text-sm text-surface-900 truncate">
+                <span
+                    class="font-semibold text-sm md:text-base text-surface-900 truncate"
+                >
                     {{ vehicle.name }}
                 </span>
-                <span class="text-xs text-surface-800">
+                <span class="text-xs md:text-sm text-surface-800">
                     ID: {{ vehicle.vehicleId }}
                 </span>
             </div>
         </div>
 
         <!-- Telemetry -->
-        <div class="flex flex-col gap-2 text-xs text-surface-800 mb-2.5">
-            <div class="flex items-center justify-between gap-2">
+        <div class="mb-2 md:mb-1">
+            <div
+                class="flex flex-col gap-2 text-xs md:text-sm text-surface-800 mb-2 md:gap-1"
+            >
+                <div class="flex items-center justify-between gap-2">
+                    <span class="flex items-center gap-1">
+                        <Icon
+                            name="tabler:gauge"
+                            class="size-[1.125rem] shrink-0 text-surface-600"
+                        />
+                        {{ vehicle.speed }}
+                        {{ $t('objects.online.card.speedUnit') }}
+                    </span>
+                    <span
+                        class="inline-flex items-center gap-1 rounded bg-surface-200 px-2 py-0.5 text-surface-800"
+                    >
+                        <Icon name="tabler:refresh" class="size-3" />
+                        {{ vehicle.updatedAgo }}
+                    </span>
+                </div>
                 <span class="flex items-center gap-1">
                     <Icon
-                        name="tabler:gauge"
+                        name="tabler:id"
                         class="size-[1.125rem] shrink-0 text-surface-600"
                     />
-                    {{ vehicle.speed }}
-                    {{ $t('objects.online.card.speedUnit') }}
+                    IMEI: {{ vehicle.imei }}
                 </span>
-                <span
-                    class="inline-flex items-center gap-1 rounded bg-surface-200 px-2 py-0.5 text-xs text-surface-800"
-                >
-                    <Icon name="tabler:refresh" class="size-3" />
-                    {{ vehicle.updatedAgo }}
+                <span class="flex items-center gap-1">
+                    <Icon
+                        name="tabler:map-pin"
+                        class="size-[1.125rem] shrink-0 text-surface-600"
+                    />
+                    {{ vehicle.address }}
                 </span>
             </div>
-            <span class="flex items-center gap-1">
-                <Icon
-                    name="tabler:id"
-                    class="size-[1.125rem] shrink-0 text-surface-600"
-                />
-                IMEI: {{ vehicle.imei }}
-            </span>
-            <span class="flex items-center gap-1">
-                <Icon
-                    name="tabler:map-pin"
-                    class="size-[1.125rem] shrink-0 text-surface-600"
-                />
-                {{ vehicle.address }}
-            </span>
-        </div>
 
-        <!-- Expanded details -->
-        <div
-            v-if="expanded"
-            class="flex flex-col gap-1.5 text-sm text-surface-800"
-        >
-            <span class="flex items-center gap-1.5">
-                <Icon
-                    name="tabler:truck"
-                    class="size-4 shrink-0 text-surface-600"
-                />
-                {{ $t(vehicle.typeKey) }}
-            </span>
-            <span class="flex items-center gap-1.5">
-                <Icon
-                    name="tabler:user"
-                    class="size-4 shrink-0 text-surface-600"
-                />
-                {{ vehicle.driver }}
-            </span>
-            <span
-                v-if="vehicle.passenger"
-                class="inline-flex w-fit items-center gap-1 rounded bg-sky-100 px-2 py-0.5 text-xs text-sky-700"
+            <!-- Expanded details -->
+            <div
+                v-if="expanded"
+                class="flex flex-col gap-2 text-xs md:text-sm text-surface-800 md:gap-1"
             >
-                <Icon name="tabler:users" class="size-3.5" />
-                {{ $t('objects.online.card.passengerBadge') }}
-            </span>
-            <p v-if="vehicle.comment" class="text-sm/tight text-surface-700">
-                {{ vehicle.comment }}
-            </p>
+                <span class="flex items-center gap-1">
+                    <Icon
+                        name="tabler:truck"
+                        class="size-[1.125rem] shrink-0 text-surface-600"
+                    />
+                    {{ $t(vehicle.typeKey) }}
+                </span>
+                <span class="flex items-center gap-1">
+                    <Icon
+                        name="tabler:user"
+                        class="size-[1.125rem] shrink-0 text-surface-600"
+                    />
+                    {{ vehicle.driver }}
+                </span>
+                <Tag v-if="vehicle.passenger" class="w-fit self-start text-xs">
+                    <Icon name="tabler:users" class="size-3.5" />
+                    {{ $t('objects.online.card.passengerBadge') }}
+                </Tag>
+                <p
+                    v-if="vehicle.comment"
+                    class="text-sm/tight text-surface-700"
+                >
+                    {{ vehicle.comment }}
+                </p>
+            </div>
         </div>
 
         <!-- Actions -->
@@ -98,7 +104,7 @@
             >
                 {{
                     expanded
-                        ? $t('objects.online.card.collapse')s
+                        ? $t('objects.online.card.collapse')
                         : $t('objects.online.card.expand')
                 }}
                 <Icon

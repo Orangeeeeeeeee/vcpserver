@@ -8,6 +8,7 @@
 
         <Popover
             ref="popoverRef"
+            :base-z-index="1100"
             @show="isOpen = true"
             @hide="isOpen = false"
         >
