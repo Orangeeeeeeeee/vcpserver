@@ -1,15 +1,15 @@
 <template>
     <div v-if="hasBindings" class="flex flex-col gap-3">
         <!-- Group binding chips -->
-        <div v-if="groupChips.length" class="flex flex-col gap-2">
+        <div v-if="groupChips.length" class="flex flex-col gap-2 p-4 pb-0">
             <span class="text-sm font-medium text-surface-900">
                 {{ $t('zones.list.groups') }}
             </span>
-            <div class="flex flex-wrap gap-1.5">
+            <div class="flex flex-wrap gap-1">
                 <span
                     v-for="chip in visibleGroupChips"
                     :key="chip.key"
-                    class="inline-flex items-center gap-1.5 rounded px-2 py-1 text-sm"
+                    class="inline-flex items-center gap-1 rounded px-2 py-1 text-xs"
                     :style="{
                         backgroundColor: chip.background,
                         color: chip.color
@@ -21,70 +21,74 @@
             </div>
         </div>
 
-        <!-- Individual vehicle bindings -->
         <div
             v-if="vehicleRows.length"
-            class="flex flex-col gap-3"
-            :class="{
-                'border-t border-surface-200 pt-3': groupChips.length > 0
-            }"
+            class="p-4 pb-0 border-t border-surface-300"
         >
-            <span class="text-sm font-medium text-surface-900">
-                {{ $t('zones.list.singleVehicles') }}
-            </span>
-            <div
-                v-for="row in visibleVehicleRows"
-                :key="row.key"
-                class="flex items-start gap-2"
-            >
-                <span
-                    class="flex size-7 shrink-0 items-center justify-center rounded"
-                    :style="{
-                        backgroundColor: badgeBackground,
-                        color: badgeColor
-                    }"
-                >
-                    <Icon :name="row.icon" class="size-4" />
+            <!-- Individual vehicle bindings -->
+            <div class="flex flex-col gap-2">
+                <span class="text-sm font-medium text-surface-900">
+                    {{ $t('zones.list.singleVehicles') }}
                 </span>
-                <div class="flex min-w-0 flex-col gap-1">
+                <div
+                    v-for="row in visibleVehicleRows"
+                    :key="row.key"
+                    class="flex items-start gap-3 border-b border-surface-200 pb-2"
+                >
                     <span
-                        class="flex items-center gap-1.5 text-sm text-surface-950"
+                        class="flex h-6 px-1.5 shrink-0 items-center justify-center rounded"
+                        :style="{
+                            backgroundColor: badgeBackground,
+                            color: badgeColor
+                        }"
                     >
-                        <Icon
-                            name="tabler:truck"
-                            class="size-4.5 shrink-0 text-surface-700"
-                        />
-                        {{ row.label }}
+                        <Icon :name="row.icon" class="size-4" />
                     </span>
-                    <span
-                        class="flex items-center gap-1.5 text-sm text-surface-700"
-                    >
-                        <Icon name="tabler:user" class="size-4.5 shrink-0" />
-                        {{ row.driverName ?? '—' }}
-                    </span>
+                    <div class="flex min-w-0 flex-col gap-1">
+                        <span
+                            class="flex items-center gap-1 text-sm text-surface-900"
+                        >
+                            <Icon
+                                name="tabler:truck"
+                                class="size-4.5 shrink-0 text-surface-600"
+                            />
+                            {{ row.label }}
+                        </span>
+                        <span
+                            class="flex items-center gap-1 text-sm text-surface-900"
+                        >
+                            <Icon
+                                name="tabler:user"
+                                class="size-4.5 shrink-0 text-surface-600"
+                            />
+                            {{ row.driverName ?? '—' }}
+                        </span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Expand / collapse the truncated lists -->
-        <button
-            v-if="hasHiddenItems"
-            type="button"
-            class="flex cursor-pointer items-center justify-center gap-1 self-center text-sm text-surface-800 transition-colors hover:text-surface-950"
-            @click="listExpanded = !listExpanded"
-        >
-            {{
-                listExpanded
-                    ? $t('zones.list.collapse')
-                    : $t('zones.list.expand')
-            }}
-            <Icon
-                :name="
-                    listExpanded ? 'tabler:chevron-up' : 'tabler:chevron-down'
-                "
-                class="size-4"
-            />
-        </button>
+            <!-- Expand / collapse the truncated lists -->
+            <button
+                v-if="hasHiddenItems"
+                type="button"
+                class="w-full p-4 pb-0 flex cursor-pointer items-center justify-center gap-2 self-center text-sm text-surface-700 transition-colors hover:text-surface-900"
+                @click="listExpanded = !listExpanded"
+            >
+                {{
+                    listExpanded
+                        ? $t('zones.list.collapse')
+                        : $t('zones.list.expand')
+                }}
+                <Icon
+                    :name="
+                        listExpanded
+                            ? 'tabler:chevron-up'
+                            : 'tabler:chevron-down'
+                    "
+                    class="size-5"
+                />
+            </button>
+        </div>
     </div>
 </template>
 

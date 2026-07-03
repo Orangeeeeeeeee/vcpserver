@@ -1,51 +1,59 @@
 <template>
     <div
-        class="flex h-full flex-col bg-surface-0 lg:rounded-[10px] lg:border lg:border-surface-300"
+        class="flex h-full flex-col lg:rounded-[10px] lg:border lg:border-surface-300"
     >
-        <!-- Header: company avatar + names -->
-        <div class="flex items-center gap-3 border-b border-surface-200 p-4">
-            <Avatar
-                :label="companyInitials"
-                shape="circle"
-                class="shrink-0 bg-surface-200 text-surface-800"
-            />
-            <span class="min-w-0 flex-1 truncate font-medium text-surface-950">
-                {{ zone.companies.join(', ') }}
-            </span>
-            <UiMapAction
-                class="shrink-0 lg:hidden"
-                icon="tabler:map"
-                :aria-label="$t('zones.create.map.showMap')"
-                @click="emit('showMap')"
-            />
-        </div>
-
-        <!-- Zone name, area badge and types -->
-        <div class="flex flex-col gap-1 border-b border-surface-200 p-4">
-            <div class="flex items-center gap-2">
-                <Icon
-                    :name="shapeIcon"
-                    class="size-5 shrink-0"
-                    :style="{ color: shapeIconColor }"
+        <div class="p-4">
+            <!-- Header: company avatar + names -->
+            <div class="flex w-full justify-between items-center gap-3">
+                <div
+                    class="flex items-center gap-2 border-b border-surface-200 growp pb-2"
+                >
+                    <Avatar
+                        :label="companyInitials"
+                        shape="circle"
+                        class="shrink-0 bg-surface-200 text-surface-800 size-8"
+                    />
+                    <span
+                        class="min-w-0 flex-1 truncate text-sm font-medium text-surface-950"
+                    >
+                        {{ zone.companies.join(', ') }}
+                    </span>
+                </div>
+                <UiMapAction
+                    class="shrink-0 lg:hidden"
+                    icon="tabler:map"
+                    :aria-label="$t('zones.create.map.showMap')"
+                    @click="emit('showMap')"
                 />
-                <span
-                    class="min-w-0 flex-1 truncate font-medium text-surface-950"
-                >
-                    {{ zone.name }}
-                </span>
-                <span
-                    class="shrink-0 rounded px-2 py-0.5 text-xs font-medium"
-                    :style="{
-                        backgroundColor: areaBadgeBackground,
-                        color: areaBadgeColor
-                    }"
-                >
-                    {{ $t('zones.list.area', { n: areaLabel }) }}
+            </div>
+
+            <!-- Zone name, area badge and types -->
+            <div class="flex flex-col pt-1.5">
+                <div class="flex items-center gap-2">
+                    <Icon
+                        :name="shapeIcon"
+                        class="size-5 shrink-0"
+                        :style="{ color: shapeIconColor }"
+                    />
+                    <span
+                        class="min-w-0 flex-1 truncate font-medium text-surface-900"
+                    >
+                        {{ zone.name }}
+                    </span>
+                    <span
+                        class="shrink-0 rounded px-2 py-0.5 text-sm font-medium text-surface-800"
+                        :style="{
+                            backgroundColor: areaBadgeBackground,
+                            color: areaBadgeColor
+                        }"
+                    >
+                        {{ $t('zones.list.area', { n: areaLabel }) }}
+                    </span>
+                </div>
+                <span v-if="typesLabel" class="pl-7 text-sm text-surface-700">
+                    {{ typesLabel }}
                 </span>
             </div>
-            <span v-if="typesLabel" class="pl-7 text-sm text-surface-700">
-                {{ typesLabel }}
-            </span>
         </div>
 
         <!-- Scrollable body -->

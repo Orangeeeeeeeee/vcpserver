@@ -1,9 +1,9 @@
 <template>
-    <div class="overflow-hidden rounded-lg border border-surface-200">
+    <div class="overflow-hidden rounded-lg border border-surface-300">
         <!-- Header (always visible; whole collapsed card) -->
         <button
             type="button"
-            class="flex w-full cursor-pointer flex-col gap-1 p-4 text-left"
+            class="flex w-full cursor-pointer flex-col gap-1 px-4 py-3 text-left"
             :style="{ backgroundColor: headerBackground }"
             :aria-expanded="expanded"
             @click="onHeaderClick"
@@ -15,11 +15,11 @@
                     "
                     class="size-5 shrink-0 text-surface-800"
                 />
-                <span class="min-w-0 flex-1 truncate text-sm text-surface-800">
+                <span class="min-w-0 flex-1 truncate text-sm text-surface-900">
                     {{ zone.companies.join(', ') }}
                 </span>
                 <span
-                    class="shrink-0 rounded px-2 py-0.5 text-xs font-medium"
+                    class="shrink-0 rounded px-2 py-1 text-xs font-medium"
                     :style="{
                         backgroundColor: badgeBackground,
                         color: badgeColor
@@ -28,32 +28,36 @@
                     {{ $t('zones.list.area', { n: areaLabel }) }}
                 </span>
             </div>
-            <div class="flex w-full items-center gap-2">
-                <Icon
-                    :name="shapeIcon"
-                    class="size-5 shrink-0"
-                    :style="{ color: shapeIconColor }"
-                />
-                <span class="min-w-0 truncate font-medium text-surface-950">
-                    {{ zone.name }}
+            <div class="flex flex-col w-full gap-0.5">
+                <div class="flex w-full items-center gap-2">
+                    <Icon
+                        :name="shapeIcon"
+                        class="size-5 shrink-0"
+                        :style="{ color: shapeIconColor }"
+                    />
+                    <span class="min-w-0 truncate font-medium text-surface-900">
+                        {{ zone.name }}
+                    </span>
+                </div>
+                <span v-if="typesLabel" class="pl-7 text-xs text-surface-800">
+                    {{ typesLabel }}
                 </span>
             </div>
-            <span v-if="typesLabel" class="pl-7 text-sm text-surface-700">
-                {{ typesLabel }}
-            </span>
         </button>
 
         <!-- Expanded body -->
-        <div v-if="expanded" class="flex flex-col gap-3 bg-surface-50 p-4">
+        <div v-if="expanded" class="flex flex-col gap-3">
             <ZonesZoneBindingsSummary :zone="zone" />
 
-            <Button
-                :label="$t('zones.list.details')"
-                severity="secondary"
-                outlined
-                fluid
-                @click="emit('details')"
-            />
+            <div class="pt-0 p-4">
+                <Button
+                    :label="$t('zones.list.details')"
+                    severity="secondary"
+                    fluid
+                    size="small"
+                    @click="emit('details')"
+                />
+            </div>
         </div>
     </div>
 </template>
