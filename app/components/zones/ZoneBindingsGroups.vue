@@ -1,6 +1,6 @@
 <template>
     <div v-if="chips.length" class="flex flex-col gap-2 p-4 pb-0">
-        <span class="text-sm font-medium text-surface-900">
+        <span class="text-base font-medium text-surface-900">
             {{ $t('zones.list.groups') }}
         </span>
         <div class="flex flex-wrap gap-1">

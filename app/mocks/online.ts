@@ -1,7 +1,10 @@
 import type {
+    OnlineDetailEntry,
     OnlineGroup,
     OnlineStatus,
-    OnlineVehicle
+    OnlineVehicle,
+    OnlineVehicleDetail,
+    VehicleCamera
 } from '~/types/online';
 
 /** Mock online groups (panel sections; counts: 20 / 4 / 7) */
@@ -86,6 +89,94 @@ const GROUP_SIZES: Record<string, number> = { g1: 20, g2: 4, g3: 7 };
  * Ukraine with a deterministic jitter so markers don't overlap.
  * @returns Mock online fleet
  */
+/** Formats minutes as "HH:MM" */
+const asTime = (minutes: number): string =>
+    `${String(Math.floor(minutes / 60)).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}`;
+
+/**
+ * Generates the deterministic detail sections (day stats, telemetry,
+ * additional data, cameras) for one online vehicle. Telemetry/additional
+ * labels are intentionally raw parameter names, the way a device API
+ * reports them, and are not translated.
+ * @param {OnlineVehicle} vehicle Base online record the detail belongs to.
+ * @returns {OnlineVehicleDetail} Mock detail sections for the vehicle page.
+ */
+export const generateOnlineVehicleDetail = (
+    vehicle: OnlineVehicle
+): OnlineVehicleDetail => {
+    /** Numeric seed derived from the "on-N" id */
+    const seed = Number(vehicle.id.replace(/\D/g, '')) || 1;
+    const moving = vehicle.speed > 0;
+
+    const telemetry: OnlineDetailEntry[] = [
+        { label: 'ICCID1', value: String(8937202012345678901n + BigInt(seed)) },
+        { label: 'Satellites', value: String(8 + (seed % 7)) },
+        { label: 'Network Type', value: seed % 3 === 0 ? 'LTE' : '3G' },
+        { label: 'Active GSM Operator', value: String(25501 + (seed % 3)) },
+        {
+            label: 'GNSS Status',
+            value: seed % 5 === 0 ? 'GNSS OFF' : 'GNSS ON'
+        },
+        { label: 'Speed', value: `${vehicle.speed} km/h` },
+        { label: 'Movement', value: moving ? 'On' : 'Off' },
+        { label: 'Instant Movement', value: moving ? 'On' : 'Off' },
+        {
+            label: 'Ignition',
+            value: vehicle.status === 'stopped' ? 'Off' : 'On'
+        },
+        { label: 'External Voltage', value: `${12 + (seed % 3) * 0.4} V` },
+        { label: 'Engine Temperature', value: `${82 + (seed % 12)} °C` },
+        { label: 'Fuel Level', value: `${40 + ((seed * 7) % 45)} l` },
+        { label: 'LLS 1 Fuel Level', value: `${20 + ((seed * 11) % 40)} l` },
+        { label: 'Dallas Temperature 1', value: `${70 + (seed % 15)} °C` },
+        {
+            label: 'Dallas Temperature ID 1',
+            value: `28FF641D62150${String(37 + seed).padStart(2, '0')}A`
+        }
+    ];
+
+    const additional: OnlineDetailEntry[] = [
+        {
+            label: 'VIN-код',
+            value: `1HGCM82633A00${String(4000 + seed * 87).slice(0, 4)}`
+        },
+        { label: 'Тип пального', value: seed % 6 === 5 ? 'Бензин' : 'Дизель' },
+        { label: 'Стан', value: 'Активний' },
+        ...Array.from({ length: 4 }, (_, k) => ({
+            label: `Параметр ${k + 1}`,
+            value: 'Значення'
+        }))
+    ];
+
+    /** Every vehicle carries 2–3 onboard cameras in the mock fleet */
+    const cameras: VehicleCamera[] = Array.from(
+        { length: 2 + (seed % 2) },
+        (_, k) => ({
+            id: `${vehicle.id}-cam-${k + 1}`,
+            number: k + 1
+        })
+    );
+
+    const departure = 7 * 60 + ((seed * 13) % 120);
+
+    return {
+        stats: {
+            ignitionTime: asTime(3 * 60 + ((seed * 17) % 180)),
+            idleTime: asTime(30 + ((seed * 23) % 90)),
+            departureTime: asTime(departure),
+            // vehicles still on route (moving) have no arrival time yet
+            arrivalTime: moving
+                ? undefined
+                : asTime(departure + 8 * 60 + ((seed * 29) % 120)),
+            mileageKm: 60 + ((seed * 31) % 340),
+            maxSpeed: 72 + ((seed * 19) % 40)
+        },
+        telemetry,
+        additional,
+        cameras
+    };
+};
+
 export const generateOnlineVehicles = (): OnlineVehicle[] => {
     const result: OnlineVehicle[] = [];
     let index = 0;

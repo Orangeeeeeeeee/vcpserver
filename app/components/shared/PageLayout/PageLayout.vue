@@ -4,7 +4,7 @@
             class="pt-6 pb-2 pr-4 pl-4 md:p-4 lg:pl-10 lg:pr-10 lg:pt-6 lg:pb-4 border-b border-b-[var(--p-surface-300)]"
         >
             <div
-                class="page-header grid grid-cols-[1fr_auto] items-center gap-2 md:gap-[0.25rem]"
+                class="page-header grid grid-cols-[1fr_auto] items-center gap-2"
             >
                 <div
                     class="[grid-area:title] flex items-center gap-3 justify-between"

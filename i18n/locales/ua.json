@@ -538,6 +538,65 @@
                 "deleted": "Транспортний засіб видалено",
                 "deleteTitle": "Видалити транспортний засіб?",
                 "deleteSubtitle": "Ви впевнені, що хочете видалити транспортний засіб"
+            },
+            "detail": {
+                "tabs": {
+                    "online": "Онлайн",
+                    "history": "Історія",
+                    "activeTrips": "Активні рейси",
+                    "archiveTrips": "Архівні рейси"
+                },
+                "sections": {
+                    "stats": "Статистика за сьогодні",
+                    "telemetry": "Телеметрія",
+                    "additional": "Додаткові дані"
+                },
+                "stats": {
+                    "ignitionTime": "Час із запалюванням",
+                    "idleTime": "Час простою",
+                    "departureTime": "Час виїзду",
+                    "arrivalTime": "Час заїзду",
+                    "mileage": "Пробіг",
+                    "mileageUnit": "км",
+                    "maxSpeed": "Макс. швидкість"
+                },
+                "expand": "Розгорнути",
+                "collapse": "Згорнути",
+                "follow": "Слідкувати",
+                "video": "Відео",
+                "camera": "Камера {n}",
+                "closeVideo": "Закрити відео",
+                "share": "Поділитися",
+                "linkCopied": "Посилання скопійовано",
+                "notFound": "Транспортний засіб не знайдено",
+                "history": {
+                    "period": {
+                        "placeholder": "Оберіть дату",
+                        "today": "Сьогодні",
+                        "yesterday": "Вчора",
+                        "dayBefore": "Позавчора",
+                        "last7days": "Останні 7 днів",
+                        "custom": "Обрати вручну"
+                    },
+                    "events": {
+                        "engineOn": "Двигун заведено",
+                        "move": "Рух",
+                        "stop": "Зупинка",
+                        "engineOff": "Двигун вимкнено"
+                    },
+                    "summary": {
+                        "move": "Рух",
+                        "stops": "Зупинки",
+                        "stopsCount": "{n} зупинок"
+                    },
+                    "dateTime": "Дата/Час",
+                    "location": "Локація",
+                    "speed": "Швидкість",
+                    "play": "Відтворити",
+                    "pause": "Пауза",
+                    "moreParams": "Більше параметрів",
+                    "closeTelemetry": "Закрити телеметрію"
+                }
             }
         }
     },

@@ -30,6 +30,16 @@ export const ROUTES = {
     ACCOUNT: '/account',
     ACCOUNT_INFO: '/account/info',
     ACCOUNT_SETTINGS: '/account/settings',
+    /** Vehicle detail page, «Онлайн» tab (e.g. /vehicles/on-3) */
+    VEHICLE_DETAIL: (id: string): string => `/vehicles/${id}`,
+    /** Vehicle history tab (page not implemented yet) */
+    VEHICLE_HISTORY: (id: string): string => `/vehicles/${id}/history`,
+    /** Vehicle active-trips page (not implemented yet) */
+    VEHICLE_TRIPS_ACTIVE: (id: string): string =>
+        `/vehicles/${id}/trips/active`,
+    /** Vehicle archive-trips page (not implemented yet) */
+    VEHICLE_TRIPS_ARCHIVE: (id: string): string =>
+        `/vehicles/${id}/trips/archive`,
     /** Driver detail page (e.g. /drivers/42) */
     DRIVER_DETAIL: (id: string): string => `/drivers/${id}`,
     /** Driver active-trips page */

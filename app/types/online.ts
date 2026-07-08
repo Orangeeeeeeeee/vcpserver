@@ -20,6 +20,44 @@ export interface OnlineGroup {
     description?: string;
 }
 
+/** Label→value row of the telemetry / additional-data sections. Labels come
+ * as-is from the device/API (arbitrary set), so they are plain strings. */
+export interface OnlineDetailEntry {
+    label: string;
+    value: string;
+}
+
+/** Today's activity stats («Статистика за сьогодні»); labels are fixed i18n */
+export interface OnlineDayStats {
+    /** Time with ignition on, "HH:MM" */
+    ignitionTime: string;
+    /** Idle time, "HH:MM" */
+    idleTime: string;
+    /** Departure time, "HH:MM" */
+    departureTime: string;
+    /** Arrival time, "HH:MM"; missing while the vehicle is still out */
+    arrivalTime?: string;
+    /** Today's mileage, km */
+    mileageKm: number;
+    /** Today's max speed, km/h */
+    maxSpeed: number;
+}
+
+export interface VehicleCamera {
+    id: string;
+    /** 1-based display number («Камера {n}») */
+    number: number;
+}
+
+/** Extra sections of the vehicle detail page («Онлайн» tab) */
+export interface OnlineVehicleDetail {
+    stats: OnlineDayStats;
+    telemetry: OnlineDetailEntry[];
+    additional: OnlineDetailEntry[];
+    /** Onboard cameras; empty when the vehicle has no video system */
+    cameras: VehicleCamera[];
+}
+
 export interface OnlineVehicle {
     id: string;
     /** Owning group id (resolved against the online groups) */

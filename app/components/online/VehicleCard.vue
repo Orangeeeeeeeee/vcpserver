@@ -127,18 +127,15 @@
 </template>
 
 <script setup lang="ts">
-import { useToast } from 'primevue/usetoast';
 import type { OnlineVehicle } from '~/types/online';
 import { ONLINE_STATUS_META, type OnlineStatusMeta } from '~/constants/online';
+import { ROUTES } from '~/constants/routes';
 
 interface VehicleCardProps {
     vehicle: OnlineVehicle;
 }
 
 const props = defineProps<VehicleCardProps>();
-
-const { t } = useI18n();
-const toast = useToast();
 
 /** Whether the extra details block is expanded */
 const expanded = ref<boolean>(false);
@@ -148,12 +145,8 @@ const meta = computed<OnlineStatusMeta>(
     () => ONLINE_STATUS_META[props.vehicle.status]
 );
 
-/** The vehicle-online detail page does not exist yet */
+/** Opens the vehicle detail page («Онлайн» tab) */
 const onDetails = (): void => {
-    toast.add({
-        severity: 'info',
-        summary: t('common.inDevelopment'),
-        life: 2000
-    });
+    void navigateTo(ROUTES.VEHICLE_DETAIL(props.vehicle.id));
 };
 </script>

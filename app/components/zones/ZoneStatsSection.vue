@@ -1,18 +1,17 @@
 <template>
-    <div class="flex flex-col gap-4 p-4">
-        <h3 class="text-lg font-semibold text-surface-900">
+    <div class="flex flex-col gap-2.5 p-4">
+        <h3 class="text-base font-semibold text-surface-900">
             {{ $t('zones.detail.stats.title') }}
         </h3>
 
-        <!-- «У зоні зараз» plaque -->
         <div
-            class="flex items-center justify-between gap-2 rounded-lg bg-surface-100 p-3"
+            class="flex items-center justify-between gap-2 rounded-lg border border-surface-300 p-3.5"
         >
             <span class="text-sm text-surface-900">
                 {{ $t('zones.detail.stats.inZoneNow') }}
             </span>
             <span
-                class="shrink-0 rounded bg-primary-100 px-2 py-0.5 text-sm font-medium text-primary-600"
+                class="shrink-0 rounded bg-primary-100 px-3 py-1 text-xs font-medium text-primary-600"
             >
                 {{
                     $t('zones.detail.stats.vehiclesCount', {
@@ -68,29 +67,29 @@
             :key="section.key"
             class="flex flex-col gap-2"
         >
-            <span class="text-sm font-medium text-surface-900">
+            <span class="text-base font-medium text-surface-900">
                 {{ $t(section.titleKey) }}
             </span>
-            <div class="rounded-lg border border-surface-200">
+            <div class="rounded-lg border border-surface-300 p-3">
                 <div
                     v-for="(event, index) in section.visibleEvents"
                     :key="`${event.vehicleId}:${event.time}:${index}`"
-                    class="flex items-center gap-2 border-b border-surface-200 p-3 last:border-b-0"
+                    class="flex items-center gap-2 border-b border-surface-200 last:border-b-0 py-2 first:pt-0 last:pb-0"
                 >
                     <Icon
                         :name="vehicleMeta(event.vehicleId).icon"
-                        class="size-5 shrink-0 text-surface-700"
+                        class="size-4 shrink-0 text-surface-600"
                     />
                     <span
-                        class="min-w-0 flex-1 truncate text-sm text-surface-950"
+                        class="min-w-0 flex-1 truncate text-sm text-surface-900"
                     >
                         {{ vehicleMeta(event.vehicleId).label }}
                     </span>
-                    <div class="flex shrink-0 flex-col items-end">
-                        <span class="text-sm font-medium text-surface-950">
+                    <div class="flex shrink-0 flex-col items-end leading-none">
+                        <span class="text-sm font-medium text-surface-900">
                             {{ event.time }}
                         </span>
-                        <span class="text-xs text-surface-700">
+                        <span class="text-xs text-surface-800">
                             {{ event.date }}
                         </span>
                     </div>
@@ -126,18 +125,20 @@
             <div
                 v-for="tile in timeTiles"
                 :key="tile.labelKey"
-                class="flex flex-col gap-1 rounded-lg border border-surface-200 p-3"
+                class="flex flex-col gap-0.5 rounded-lg border border-surface-300 px-4 py-3"
             >
                 <span
-                    class="flex items-center gap-1.5 font-semibold text-surface-950"
+                    class="flex items-center gap-1.5 text-surface-950"
                 >
                     <Icon
                         name="tabler:clock"
-                        class="size-5 shrink-0 text-surface-800"
+                        class="size-5 shrink-0 text-surface-700"
                     />
-                    {{ tile.duration }}
+                    <span class="text-surface-900 text-base">
+                        {{ tile.duration }}
+                    </span>
                 </span>
-                <span class="text-sm text-surface-700">
+                <span class="text-xs text-surface-700">
                     {{ $t(tile.labelKey) }}
                 </span>
             </div>

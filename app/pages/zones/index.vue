@@ -32,14 +32,13 @@
             </template>
         </SharedPanelMapLayout>
 
-        <!-- «+ Додати» in the page header (icon-only below md, per the mockup) -->
+        <!-- «+ Додати» in the page header (icon-only below lg, per the mockup) -->
         <Teleport to="#page-actions-header">
-            <Button as="router-link" :to="ROUTES.ZONES_NEW">
-                <Icon name="tabler:plus" class="size-5" />
-                <span class="hidden md:inline">
-                    {{ $t('zones.list.add') }}
-                </span>
-            </Button>
+            <UiActionButton
+                icon="tabler:plus"
+                :label="$t('objects.add')"
+                @click="onAdd"
+            />
         </Teleport>
     </div>
 </template>
@@ -67,4 +66,9 @@ const view = ref<PanelMapLayoutView>('map');
 const hasToken = computed<boolean>(() =>
     Boolean(useRuntimeConfig().public.mapboxToken)
 );
+
+/** Navigates to the zone creation page */
+const onAdd = (): void => {
+    navigateTo(ROUTES.ZONES_NEW);
+};
 </script>

@@ -32,19 +32,13 @@
             />
         </Teleport>
 
-        <!-- «Редагувати» in the page header (icon-only below md) -->
+        <!-- «Редагувати» in the page header (icon-only below lg) -->
         <Teleport to="#page-actions-header">
-            <Button
-                as="router-link"
-                :to="ROUTES.ZONE_EDIT(zone.id)"
-                severity="secondary"
-                outlined
-            >
-                <Icon name="tabler:pencil" class="size-5" />
-                <span class="hidden md:inline">
-                    {{ $t('zones.detail.edit') }}
-                </span>
-            </Button>
+            <UiActionButton
+                icon="tabler:pencil"
+                :label="$t('zones.detail.edit')"
+                @click="onEdit"
+            />
         </Teleport>
     </div>
 </template>
@@ -78,4 +72,9 @@ const view = ref<PanelMapLayoutView>('panel');
 const hasToken = computed<boolean>(() =>
     Boolean(useRuntimeConfig().public.mapboxToken)
 );
+
+/** Navigates to the zone edit page */
+const onEdit = (): void => {
+    navigateTo(ROUTES.ZONE_EDIT(zone.id));
+};
 </script>
