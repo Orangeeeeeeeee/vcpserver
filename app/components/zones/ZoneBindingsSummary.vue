@@ -1,94 +1,13 @@
 <template>
     <div v-if="hasBindings" class="flex flex-col gap-3">
-        <!-- Group binding chips -->
-        <div v-if="groupChips.length" class="flex flex-col gap-2 p-4 pb-0">
-            <span class="text-sm font-medium text-surface-900">
-                {{ $t('zones.list.groups') }}
-            </span>
-            <div class="flex flex-wrap gap-1">
-                <span
-                    v-for="chip in visibleGroupChips"
-                    :key="chip.key"
-                    class="inline-flex items-center gap-1 rounded px-2 py-1 text-xs"
-                    :style="{
-                        backgroundColor: chip.background,
-                        color: chip.color
-                    }"
-                >
-                    <Icon :name="chip.icon" class="size-4 shrink-0" />
-                    {{ chip.name }}
-                </span>
-            </div>
-        </div>
+        <ZonesZoneBindingsGroups :chips="visibleGroupChips" />
 
-        <div
-            v-if="vehicleRows.length"
-            class="p-4 pb-0 border-t border-surface-300"
-        >
-            <!-- Individual vehicle bindings -->
-            <div class="flex flex-col gap-2">
-                <span class="text-sm font-medium text-surface-900">
-                    {{ $t('zones.list.singleVehicles') }}
-                </span>
-                <div
-                    v-for="row in visibleVehicleRows"
-                    :key="row.key"
-                    class="flex items-start gap-3 border-b border-surface-200 pb-2"
-                >
-                    <span
-                        class="flex h-6 px-1.5 shrink-0 items-center justify-center rounded"
-                        :style="{
-                            backgroundColor: badgeBackground,
-                            color: badgeColor
-                        }"
-                    >
-                        <Icon :name="row.icon" class="size-4" />
-                    </span>
-                    <div class="flex min-w-0 flex-col gap-1">
-                        <span
-                            class="flex items-center gap-1 text-sm text-surface-900"
-                        >
-                            <Icon
-                                name="tabler:truck"
-                                class="size-4.5 shrink-0 text-surface-600"
-                            />
-                            {{ row.label }}
-                        </span>
-                        <span
-                            class="flex items-center gap-1 text-sm text-surface-900"
-                        >
-                            <Icon
-                                name="tabler:user"
-                                class="size-4.5 shrink-0 text-surface-600"
-                            />
-                            {{ row.driverName ?? '—' }}
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Expand / collapse the truncated lists -->
-            <button
-                v-if="hasHiddenItems"
-                type="button"
-                class="w-full p-4 pb-0 flex cursor-pointer items-center justify-center gap-2 self-center text-sm text-surface-700 transition-colors hover:text-surface-900"
-                @click="listExpanded = !listExpanded"
-            >
-                {{
-                    listExpanded
-                        ? $t('zones.list.collapse')
-                        : $t('zones.list.expand')
-                }}
-                <Icon
-                    :name="
-                        listExpanded
-                            ? 'tabler:chevron-up'
-                            : 'tabler:chevron-down'
-                    "
-                    class="size-5"
-                />
-            </button>
-        </div>
+        <ZonesZoneBindingsVehicles
+            v-model:expanded="listExpanded"
+            :rows="visibleVehicleRows"
+            :zone-color="zone.color"
+            :expandable="hasHiddenItems"
+        />
     </div>
 </template>
 
@@ -96,30 +15,8 @@
 import type { Zone } from '~/types/zone';
 import { ZONE_TRIGGER_ICONS } from '~/constants/zones';
 import { primitiveColors } from '~/theme/colors';
-
-/** Group binding chip of the summary */
-interface ZoneGroupChip {
-    key: string;
-    /** Trigger icon of the binding */
-    icon: string;
-    /** Group display name */
-    name: string;
-    /** Chip background derived from the group color */
-    background: string;
-    /** Chip text/icon color derived from the group color */
-    color: string;
-}
-
-/** Individual vehicle row of the summary */
-interface ZoneVehicleRow {
-    key: string;
-    /** Trigger icon of the binding */
-    icon: string;
-    /** Vehicle label, e.g. "MAN TGX 18.480 (ID: TRK-112)" */
-    label: string;
-    /** Assigned driver name; null when the vehicle has no driver */
-    driverName: string | null;
-}
+import type { ZoneGroupChip } from './ZoneBindingsGroups.vue';
+import type { ZoneVehicleRow } from './ZoneBindingsVehicles.vue';
 
 /** Group chips shown before collapsing the rest behind «Розгорнути» */
 const MAX_GROUP_CHIPS = 5;
@@ -141,16 +38,6 @@ const { drivers } = useDrivers();
 
 /** Whether the truncated group/vehicle lists are fully shown */
 const listExpanded = ref<boolean>(false);
-
-/** Trigger badge background derived from the zone color */
-const badgeBackground = computed<string>(
-    () => primitiveColors[props.zone.color]['200']
-);
-
-/** Trigger badge text color derived from the zone color */
-const badgeColor = computed<string>(
-    () => primitiveColors[props.zone.color]['700']
-);
 
 /** Group lookup for the binding chips */
 const groupById = computed(

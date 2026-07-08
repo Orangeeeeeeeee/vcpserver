@@ -2,11 +2,11 @@
     <div
         class="flex h-full flex-col lg:rounded-[10px] lg:border lg:border-surface-300"
     >
-        <div class="p-4">
+        <div class="p-4 border-b border-surface-300">
             <!-- Header: company avatar + names -->
             <div class="flex w-full justify-between items-center gap-3">
                 <div
-                    class="flex items-center gap-2 border-b border-surface-200 growp pb-2"
+                    class="flex items-center gap-2 border-b border-surface-200 grow pb-2"
                 >
                     <Avatar
                         :label="companyInitials"
@@ -59,7 +59,7 @@
         <!-- Scrollable body -->
         <div class="min-h-0 flex-1">
             <UiScrollPanel class="h-full">
-                <div class="border-b border-surface-200 p-4">
+                <div class="border-b border-surface-200">
                     <ZonesZoneBindingsSummary :zone="zone" />
                 </div>
                 <ZonesZoneStatsSection />
