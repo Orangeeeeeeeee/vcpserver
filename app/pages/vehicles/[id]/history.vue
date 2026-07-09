@@ -39,7 +39,7 @@
                         <!-- Telemetry panel, or the slim timeline bar -->
                         <VehicleTelemetryPanel
                             v-if="telemetryOpen"
-                            class="mt-3 shrink-0"
+                            class="mt-4 ml-4 mr-4 shrink-0 lg:ml-0"
                         />
                         <div
                             v-else

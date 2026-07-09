@@ -3,7 +3,7 @@
         <!-- Track with event badges; the whole strip is draggable -->
         <div
             ref="trackRef"
-            class="relative h-12 cursor-pointer touch-none"
+            class="relative h-15 cursor-pointer touch-none"
             @pointerdown="onPointerDown"
             @pointermove="onPointerMove"
             @pointerup="onPointerUp"
@@ -34,14 +34,14 @@
 
             <!-- Base track -->
             <div
-                class="absolute inset-x-0 bottom-2 h-1 rounded-full bg-surface-300"
+                class="absolute inset-x-0 bottom-5.5 h-1 rounded-full bg-surface-300"
             />
 
             <!-- Colored event segments -->
             <div
                 v-for="segment in history.segments"
                 :key="`bar-${segment.id}`"
-                class="absolute bottom-1.5 h-2 rounded-full"
+                class="absolute bottom-5 h-2 rounded-full"
                 :class="
                     segment.type === 'idleEngine'
                         ? 'bg-yellow-500'
@@ -53,16 +53,17 @@
                 }"
             />
 
-            <!-- Cursor -->
+            <!-- Cursor: the circle sits below the track so it never covers
+                 the colored segment bar -->
             <span
-                class="absolute bottom-0 size-4.5 -translate-x-1/2 rounded-full border-2 border-primary-400 bg-surface-0 shadow"
+                class="absolute bottom-1.5 size-4.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-primary-400 bg-surface-0 shadow"
                 :style="{ left: `${cursor * 100}%` }"
             />
         </div>
 
         <!-- Period labels: start / middle / end -->
         <div
-            class="mt-1.5 flex items-center justify-between text-xs text-surface-600"
+            class="flex items-center justify-between text-xs text-surface-800 mb-3"
         >
             <span>{{ rangeLabels[0] }}</span>
             <span>{{ rangeLabels[1] }}</span>

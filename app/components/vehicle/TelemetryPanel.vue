@@ -1,30 +1,20 @@
 <template>
-    <div class="rounded-[10px] border border-surface-300 p-4">
+    <div class="rounded-[10px] border border-surface-300 p-3">
         <!-- Parameter tabs + scroll/close controls -->
         <div class="mb-3 flex items-center gap-2 border-b border-surface-200">
-            <div
-                ref="tabsRef"
-                class="scrollbar-none -mb-px flex min-w-0 flex-1 items-center gap-5 overflow-x-auto whitespace-nowrap"
-            >
-                <button
-                    v-for="param in history.params"
-                    :key="param.key"
-                    type="button"
-                    class="cursor-pointer border-b-2 pb-2.5 text-sm transition-colors"
-                    :class="
-                        selectedParamKey === param.key
-                            ? 'border-primary-600 font-medium text-primary-800'
-                            : 'border-transparent text-surface-700 hover:text-surface-950'
-                    "
-                    @click="selectedParamKey = param.key"
-                >
-                    {{ param.label }}
-                </button>
+            <div ref="tabsRef" class="-mb-px min-w-0 flex-1">
+                <UiTabNav
+                    v-model:value="selectedParamKey"
+                    :items="paramTabs"
+                    size="sm"
+                    scrollable
+                    :border="false"
+                />
             </div>
-            <div class="flex shrink-0 items-center gap-1 pb-2">
+            <div class="flex shrink-0 items-center gap-2">
                 <button
                     type="button"
-                    class="flex size-7 cursor-pointer items-center justify-center rounded text-surface-600 transition-colors hover:text-surface-950"
+                    class="flex size-7 cursor-pointer items-center justify-center rounded text-surface-800 transition-colors hover:text-surface-950"
                     :aria-label="
                         $t('objects.vehicles.detail.history.moreParams')
                     "
@@ -34,7 +24,7 @@
                 </button>
                 <button
                     type="button"
-                    class="flex size-7 cursor-pointer items-center justify-center rounded text-surface-600 transition-colors hover:text-surface-950"
+                    class="flex size-7 cursor-pointer items-center justify-center rounded text-surface-800 transition-colors hover:text-surface-950"
                     :aria-label="
                         $t('objects.vehicles.detail.history.closeTelemetry')
                     "
@@ -48,21 +38,28 @@
         <!-- Chart of the selected parameter -->
         <div :id="CHART_CONTAINER_ID" class="h-36 w-full md:h-40" />
 
-        <VehicleHistoryTimeline class="mt-2" />
+        <!-- Padded to the chart plot area so the cursor circle stays
+             exactly under the chart cursor line -->
+        <VehicleHistoryTimeline
+            :style="{ paddingLeft: `${chartPlotLeft}px` }"
+            class="-mt-10"
+        />
 
         <!-- Playback row -->
-        <div class="grid grid-cols-3 grid-rows-2 gap-y-3 -px-3">
+        <div
+            class="grid grid-cols-[minmax(124px,1fr)_1fr_1fr] grid-rows-2 gap-y-4 md:grid-cols-[minmax(134px,1fr)_1fr_minmax(auto,250px)_1fr] lg:grid-cols-[minmax(auto,134px)_minmax(auto,132px)_auto_minmax(auto,130px)] md:grid-rows-1"
+        >
             <div>
-                <div class="flex flex-col items-center gap-3 px-3">
+                <div class="flex flex-col items-center gap-2 pr-3">
                     <Button
                         :aria-label="
                             playing
                                 ? $t('objects.vehicles.detail.history.pause')
                                 : $t('objects.vehicles.detail.history.play')
                         "
-                        @click="playing = !playing"
                         severity="secondary"
                         raised
+                        @click="playing = !playing"
                     >
                         <template #icon>
                             <Icon
@@ -75,7 +72,7 @@
                         </template>
                     </Button>
 
-                    <div class="flex items-center gap-2 text-sm">
+                    <div class="flex items-center gap-3 text-sm">
                         <button
                             v-for="speed in PLAYBACK_SPEEDS"
                             :key="speed"
@@ -83,7 +80,7 @@
                             class="cursor-pointer transition-colors"
                             :class="
                                 playSpeed === speed
-                                    ? 'font-semibold text-primary-700'
+                                    ? 'text-primary-300'
                                     : 'text-surface-500 hover:text-surface-800'
                             "
                             @click="playSpeed = speed"
@@ -93,42 +90,38 @@
                     </div>
                 </div>
             </div>
-            <div>
-                <div
-                    class="px-3 flex flex-col gap-0.5 border-l border-r border-surface-300 md:border-l md:border-surface-200 md:pl-6"
-                >
+            <div class="border-l border-r border-surface-300">
+                <div class="px-4 pt-2 flex flex-col gap-1.5">
                     <span class="text-xs text-surface-500">
                         {{ $t('objects.vehicles.detail.history.dateTime') }}
                     </span>
-                    <span class="text-sm font-semibold text-surface-950">
+                    <span class="text-sm font-medium text-surface-800">
                         {{ cursorInfo.dateLabel }}
-                        <span class="font-normal text-surface-800">
+                        <span class="font-normal text-surface-700">
                             {{ cursorInfo.timeLabel }}
                         </span>
                     </span>
                 </div>
             </div>
             <div>
-                <div
-                    class="px-3 ml-auto flex flex-col gap-0.5 md:border-l md:border-surface-200 md:pl-6"
-                >
+                <div class="px-4 pt-2 ml-auto flex flex-col gap-0.5">
                     <span class="text-xs text-surface-500">
                         {{ $t('objects.vehicles.detail.history.speed') }}
                     </span>
-                    <span class="text-sm text-surface-900">
+                    <span class="text-sm text-surface-700">
                         {{ cursorInfo.speed }}
                         {{ $t('objects.online.card.speedUnit') }}
                     </span>
                 </div>
             </div>
-            <div class="col-span-3 row-start-2">
-                <div
-                    class="px-3 flex min-w-0 flex-col gap-0.5 md:flex-1 md:border-l md:border-surface-200 md:pl-6"
-                >
+            <div
+                class="md:pt-2 col-span-3 row-start-2 min-w-0 md:col-span-1 md:col-start-3 md:row-start-1 md:border-r md:border-surface-300"
+            >
+                <div class="px-3 flex min-w-0 flex-col gap-0.5 md:flex-1">
                     <span class="text-xs text-surface-500">
                         {{ $t('objects.vehicles.detail.history.location') }}
                     </span>
-                    <span class="truncate text-sm text-surface-900">
+                    <span class="truncate text-sm text-surface-800">
                         {{ cursorInfo.address }}
                     </span>
                 </div>
@@ -139,6 +132,7 @@
 
 <script setup lang="ts">
 import Highcharts from 'highcharts';
+import type { TabItem } from '~/components/ui/TabNav/TabNav.vue';
 import { primitiveColors } from '~/theme/colors';
 import {
     useVehicleHistoryContext,
@@ -169,9 +163,19 @@ const {
 
 const tabsRef = useTemplateRef<HTMLDivElement>('tabsRef');
 
+/** Device parameters as tab items for the tab nav */
+const paramTabs = computed<TabItem[]>(() =>
+    history.value.params.map((param) => ({
+        label: param.label,
+        value: param.key
+    }))
+);
+
 /** Scrolls the tab strip to reveal the parameters behind the arrow */
 const scrollTabs = (): void => {
-    tabsRef.value?.scrollBy({ left: 160, behavior: 'smooth' });
+    tabsRef.value
+        ?.querySelector('.p-tablist-content')
+        ?.scrollBy({ left: 160, behavior: 'smooth' });
 };
 
 /** Currently charted parameter */
@@ -182,6 +186,12 @@ const selectedParam = computed(
 );
 
 let chart: Highcharts.Chart | null = null;
+
+/**
+ * Left offset of the chart plot area (y-axis labels width); the timeline
+ * below is padded by it so both share the same horizontal scale
+ */
+const chartPlotLeft = ref<number>(0);
 
 /** (Re)creates the chart for the selected parameter */
 const renderChart = (): void => {
@@ -194,7 +204,9 @@ const renderChart = (): void => {
             type: 'area',
             backgroundColor: 'transparent',
             style: { fontFamily: 'inherit' },
-            spacing: [10, 0, 0, 0]
+            // 8px bottom spacing so the lowest y-axis label ("0") is not
+            // clipped by the container edge
+            spacing: [10, 0, 8, 0]
         },
         title: { text: '' },
         credits: { enabled: false },
@@ -204,6 +216,10 @@ const renderChart = (): void => {
             labels: { enabled: false },
             lineWidth: 0,
             tickWidth: 0,
+            // no edge padding: the series spans the full plot width, so the
+            // cursor plot line lands exactly over the timeline circle below
+            minPadding: 0,
+            maxPadding: 0,
             plotLines: [cursorPlotLine()]
         },
         yAxis: {
@@ -236,6 +252,7 @@ const renderChart = (): void => {
         tooltip: { enabled: false },
         legend: { enabled: false }
     });
+    chartPlotLeft.value = chart.plotLeft;
 };
 
 /** Cursor vertical line options at the current timeline position */
@@ -264,14 +281,3 @@ watch(cursor, () => {
     axis.addPlotLine(cursorPlotLine());
 });
 </script>
-
-<style scoped>
-/* Hide the tab strip scrollbar; the arrow button drives the overflow */
-.scrollbar-none {
-    scrollbar-width: none;
-}
-
-.scrollbar-none::-webkit-scrollbar {
-    display: none;
-}
-</style>

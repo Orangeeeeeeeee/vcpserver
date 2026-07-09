@@ -4,7 +4,7 @@
             class="flex h-full flex-col lg:rounded-[10px] lg:border lg:border-surface-300 lg:p-4"
         >
             <!-- Date filter + mobile/tablet map toggle -->
-            <div class="mb-4 flex items-center gap-2">
+            <div class="mb-5 flex items-center gap-2">
                 <VehicleHistoryPeriodFilter />
                 <div class="flex shrink-0 items-center gap-2 lg:hidden">
                     <UiMapAction
@@ -36,7 +36,7 @@
                             class="absolute left-[1.1875rem] top-10 bottom-0 w-px bg-surface-300"
                         />
                         <span
-                            class="z-[1] flex size-9.5 shrink-0 items-center justify-center rounded-md border border-surface-300 bg-surface-0"
+                            class="z-[1] flex size-10 shrink-0 items-center justify-center rounded-md border border-surface-300 bg-surface-0"
                         >
                             <Icon
                                 :name="HISTORY_EVENT_META[event.type].icon"
@@ -46,7 +46,7 @@
                                 class="size-5"
                             />
                         </span>
-                        <div class="flex min-w-0 flex-col gap-1 pt-0.5">
+                        <div class="flex min-w-0 flex-col gap-0.5 pt-0.5">
                             <span class="font-medium text-surface-950">
                                 {{
                                     $t(HISTORY_EVENT_META[event.type].labelKey)
@@ -97,9 +97,9 @@
 
                 <!-- Summary cards -->
                 <div class="mt-1 grid grid-cols-2 gap-3">
-                    <div class="rounded-md border border-surface-300 p-3">
+                    <div class="rounded-md border border-surface-300 px-3 py-2">
                         <span
-                            class="mb-2 block border-b border-surface-200 pb-2 font-medium text-surface-950"
+                            class="mb-2 block border-b border-surface-200 pb-1 font-medium text-surface-950"
                         >
                             {{
                                 $t(
@@ -108,7 +108,7 @@
                             }}
                         </span>
                         <div
-                            class="flex flex-col gap-1.5 text-sm text-surface-800"
+                            class="flex flex-col gap-1 text-sm text-surface-800"
                         >
                             <span class="flex items-center gap-1.5">
                                 <Icon
@@ -132,9 +132,9 @@
                         </div>
                     </div>
 
-                    <div class="rounded-md border border-surface-300 p-3">
+                    <div class="rounded-md border border-surface-300 px-3 py-2">
                         <span
-                            class="mb-2 block border-b border-surface-200 pb-2 font-medium text-surface-950"
+                            class="mb-2 block border-b border-surface-200 pb-1 font-medium text-surface-950"
                         >
                             {{
                                 $t(
@@ -143,7 +143,7 @@
                             }}
                         </span>
                         <div
-                            class="flex flex-col gap-1.5 text-sm text-surface-800"
+                            class="flex flex-col gap-1 text-sm text-surface-800"
                         >
                             <span class="flex items-center gap-1.5">
                                 <Icon
