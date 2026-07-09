@@ -1,5 +1,5 @@
 <template>
-    <div class="rounded-[10px] border border-surface-300 bg-surface-0 p-4">
+    <div class="rounded-[10px] border border-surface-300 p-4">
         <!-- Parameter tabs + scroll/close controls -->
         <div class="mb-3 flex items-center gap-2 border-b border-surface-200">
             <div
@@ -51,82 +51,87 @@
         <VehicleHistoryTimeline class="mt-2" />
 
         <!-- Playback row -->
-        <div
-            class="mt-3 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-surface-200 pt-3"
-        >
-            <div class="flex items-center gap-3">
-                <button
-                    type="button"
-                    class="flex size-11 cursor-pointer items-center justify-center rounded-md border border-surface-300 text-surface-800 transition-colors hover:border-primary-300"
-                    :aria-label="
-                        playing
-                            ? $t('objects.vehicles.detail.history.pause')
-                            : $t('objects.vehicles.detail.history.play')
-                    "
-                    @click="playing = !playing"
-                >
-                    <Icon
-                        :name="
+        <div class="grid grid-cols-3 grid-rows-2 gap-y-3 -px-3">
+            <div>
+                <div class="flex flex-col items-center gap-3 px-3">
+                    <Button
+                        :aria-label="
                             playing
-                                ? 'tabler:player-pause'
-                                : 'tabler:player-play'
+                                ? $t('objects.vehicles.detail.history.pause')
+                                : $t('objects.vehicles.detail.history.play')
                         "
-                        class="size-5"
-                    />
-                </button>
-                <div class="flex items-center gap-2 text-sm">
-                    <button
-                        v-for="speed in PLAYBACK_SPEEDS"
-                        :key="speed"
-                        type="button"
-                        class="cursor-pointer transition-colors"
-                        :class="
-                            playSpeed === speed
-                                ? 'font-semibold text-primary-700'
-                                : 'text-surface-500 hover:text-surface-800'
-                        "
-                        @click="playSpeed = speed"
+                        @click="playing = !playing"
+                        severity="secondary"
+                        raised
                     >
-                        {{ speed }}x
-                    </button>
+                        <template #icon>
+                            <Icon
+                                :name="
+                                    playing
+                                        ? 'tabler:player-pause'
+                                        : 'tabler:player-play'
+                                "
+                            />
+                        </template>
+                    </Button>
+
+                    <div class="flex items-center gap-2 text-sm">
+                        <button
+                            v-for="speed in PLAYBACK_SPEEDS"
+                            :key="speed"
+                            type="button"
+                            class="cursor-pointer transition-colors"
+                            :class="
+                                playSpeed === speed
+                                    ? 'font-semibold text-primary-700'
+                                    : 'text-surface-500 hover:text-surface-800'
+                            "
+                            @click="playSpeed = speed"
+                        >
+                            {{ speed }}x
+                        </button>
+                    </div>
                 </div>
             </div>
-
-            <div
-                class="flex flex-col gap-0.5 md:border-l md:border-surface-200 md:pl-6"
-            >
-                <span class="text-xs text-surface-500">
-                    {{ $t('objects.vehicles.detail.history.dateTime') }}
-                </span>
-                <span class="text-sm font-semibold text-surface-950">
-                    {{ cursorInfo.dateLabel }}
-                    <span class="font-normal text-surface-800">
-                        {{ cursorInfo.timeLabel }}
+            <div>
+                <div
+                    class="px-3 flex flex-col gap-0.5 border-l border-r border-surface-300 md:border-l md:border-surface-200 md:pl-6"
+                >
+                    <span class="text-xs text-surface-500">
+                        {{ $t('objects.vehicles.detail.history.dateTime') }}
                     </span>
-                </span>
+                    <span class="text-sm font-semibold text-surface-950">
+                        {{ cursorInfo.dateLabel }}
+                        <span class="font-normal text-surface-800">
+                            {{ cursorInfo.timeLabel }}
+                        </span>
+                    </span>
+                </div>
             </div>
-
-            <div
-                class="flex min-w-0 flex-col gap-0.5 md:flex-1 md:border-l md:border-surface-200 md:pl-6"
-            >
-                <span class="text-xs text-surface-500">
-                    {{ $t('objects.vehicles.detail.history.location') }}
-                </span>
-                <span class="truncate text-sm text-surface-900">
-                    {{ cursorInfo.address }}
-                </span>
+            <div>
+                <div
+                    class="px-3 ml-auto flex flex-col gap-0.5 md:border-l md:border-surface-200 md:pl-6"
+                >
+                    <span class="text-xs text-surface-500">
+                        {{ $t('objects.vehicles.detail.history.speed') }}
+                    </span>
+                    <span class="text-sm text-surface-900">
+                        {{ cursorInfo.speed }}
+                        {{ $t('objects.online.card.speedUnit') }}
+                    </span>
+                </div>
             </div>
-
-            <div
-                class="ml-auto flex flex-col gap-0.5 md:border-l md:border-surface-200 md:pl-6"
-            >
-                <span class="text-xs text-surface-500">
-                    {{ $t('objects.vehicles.detail.history.speed') }}
-                </span>
-                <span class="text-sm text-surface-900">
-                    {{ cursorInfo.speed }}
-                    {{ $t('objects.online.card.speedUnit') }}
-                </span>
+            <div class="col-span-3 row-start-2">
+                <div
+                    class="px-3 flex min-w-0 flex-col gap-0.5 md:flex-1 md:border-l md:border-surface-200 md:pl-6"
+                >
+                    <span class="text-xs text-surface-500">
+                        {{ $t('objects.vehicles.detail.history.location') }}
+                    </span>
+                    <span class="truncate text-sm text-surface-900">
+                        {{ cursorInfo.address }}
+                    </span>
+                </div>
             </div>
         </div>
     </div>
