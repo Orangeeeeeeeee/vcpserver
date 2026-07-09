@@ -64,10 +64,9 @@
             </template>
 
             <template #cell-name="{ row }">
-                <button
-                    type="button"
-                    class="flex items-center gap-2 cursor-pointer"
-                    @click="onEdit(row.route)"
+                <NuxtLink
+                    :to="ROUTES.ROUTE_DETAIL(row.id)"
+                    class="flex items-center gap-2"
                 >
                     <span
                         class="size-2 shrink-0 rounded-full"
@@ -78,7 +77,7 @@
                     >
                         {{ row.name }}
                     </span>
-                </button>
+                </NuxtLink>
             </template>
 
             <template #cell-date="{ row }">

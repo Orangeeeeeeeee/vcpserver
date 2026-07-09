@@ -30,6 +30,11 @@ export interface RoutePoint {
     directPath: boolean;
     /** Travel time from the previous point as "HH:mm"; null for the start */
     timeToPoint: string | null;
+    /**
+     * Dwell time at the point in minutes (stops and stations). Optional:
+     * absent on points created by the forms, which do not edit it yet.
+     */
+    stopDurationMinutes?: number | null;
 }
 
 /** Lifecycle status of a route (extensible union) */
