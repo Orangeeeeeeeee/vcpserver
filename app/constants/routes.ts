@@ -12,6 +12,8 @@ export const ROUTES = {
     ROUTES_PAGE: '/routes',
     ROUTES_SCHEDULED: '/routes/scheduled',
     ROUTES_NEW: '/routes/new',
+    /** Route detail page (e.g. /routes/3) */
+    ROUTE_DETAIL: (id: string): string => `/routes/${id}`,
     /** Route groups tab (page not implemented yet) */
     ROUTES_GROUPS: '/routes/groups',
     /** Active trips tab (page not implemented yet) */

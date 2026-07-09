@@ -89,21 +89,24 @@ const chainToPoints = (routeIndex: number, chain: number[]): RoutePoint[] =>
                 : i === chain.length - 1
                   ? 'finish'
                   : 'intermediate';
+        const type: RoutePoint['type'] =
+            kind === 'intermediate'
+                ? i % 2 === 1
+                    ? 'checkpoint'
+                    : 'stop'
+                : null;
         return {
             id: `r${routeIndex}-p${i + 1}`,
             kind,
             address: entry.label,
             coords: [...entry.coords] as RouteCoords,
             name: cityOf(entry.label),
-            type:
-                kind === 'intermediate'
-                    ? i % 2 === 1
-                        ? 'checkpoint'
-                        : 'stop'
-                    : null,
+            type,
             radius: 50,
             directPath: false,
-            timeToPoint: i === 0 ? null : `0${1 + ((routeIndex + i) % 4)}:10`
+            timeToPoint: i === 0 ? null : `0${1 + ((routeIndex + i) % 4)}:10`,
+            stopDurationMinutes:
+                type === 'stop' ? 30 + ((routeIndex + i) % 3) * 15 : null
         };
     });
 

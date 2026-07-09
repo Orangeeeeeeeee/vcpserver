@@ -891,6 +891,21 @@
             "price": {
                 "suffix": " грн"
             }
+        },
+        "detail": {
+            "notFound": "Маршрут не знайдено",
+            "tabs": {
+                "route": "Маршрут"
+            },
+            "movement": "Рух",
+            "hoursShort": "{n} г",
+            "groups": "Групи",
+            "resources": "Ресурси",
+            "expand": "Розгорнути",
+            "collapse": "Згорнути",
+            "legendTitle": "Точки маршруту",
+            "googleMaps": "Google Maps",
+            "exportJson": "Експорт JSON"
         }
     },
     "reports": {
