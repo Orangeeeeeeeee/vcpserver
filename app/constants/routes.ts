@@ -10,6 +10,16 @@ export const ROUTES = {
     OBJECTS_VEHICLES: '/objects/vehicles',
     OBJECTS_GROUPS: '/objects/groups',
     ROUTES_PAGE: '/routes',
+    ROUTES_SCHEDULED: '/routes/scheduled',
+    ROUTES_NEW: '/routes/new',
+    /** Route groups tab (page not implemented yet) */
+    ROUTES_GROUPS: '/routes/groups',
+    /** Active trips tab (page not implemented yet) */
+    ROUTES_TRIPS_ACTIVE: '/routes/trips/active',
+    /** Archive trips tab (page not implemented yet) */
+    ROUTES_TRIPS_ARCHIVE: '/routes/trips/archive',
+    /** Cancelled trips tab (page not implemented yet) */
+    ROUTES_TRIPS_CANCELLED: '/routes/trips/cancelled',
     ZONES: '/zones',
     ZONES_NEW: '/zones/new',
     /** Zone detail page (e.g. /zones/3) */

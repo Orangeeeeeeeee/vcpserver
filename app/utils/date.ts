@@ -33,3 +33,27 @@ export const formatIsoDateToUa = (value: string): string => {
     if (!yyyy || !mm || !dd) return value;
     return `${dd}.${mm}.${yyyy}`;
 };
+
+/**
+ * Parses a "HH:mm" duration into a time-only Date (DatePicker model).
+ * @param value - Duration string, e.g. "04:10".
+ * @returns {Date | null} Time-only date, or null when malformed.
+ */
+export const durationToDate = (value?: string | null): Date | null => {
+    const match = /^(\d{1,2}):(\d{2})$/.exec(value ?? '');
+    if (!match) return null;
+    const [, h, m] = match;
+    if (Number(h) > 23 || Number(m) > 59) return null;
+    return new Date(0, 0, 0, Number(h), Number(m));
+};
+
+/**
+ * Formats a time-only Date back into a "HH:mm" duration string.
+ * @param date - DatePicker model value.
+ * @returns {string | null} Duration string, or null when the date is null.
+ */
+export const dateToDuration = (date: Date | null): string | null => {
+    if (!date) return null;
+    const pad = (n: number): string => String(n).padStart(2, '0');
+    return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
+};

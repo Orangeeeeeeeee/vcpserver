@@ -1,11 +1,58 @@
 <template>
-    <div class="p-6">
-        <h1 class="text-2xl font-semibold">{{ $t('sidebar.routes') }}</h1>
-    </div>
+    <SharedPageLayout :title="title" :tabs="tabs">
+        <template #content>
+            <NuxtPage />
+        </template>
+    </SharedPageLayout>
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-    layout: 'default'
-});
+import type { PageLayoutTab } from '~/components/shared/PageLayout';
+import { ROUTES } from '~/constants/routes';
+
+const route = useRoute();
+const { t } = useI18n();
+
+/** «Новий маршрут» on the create page, the section title elsewhere */
+const title = computed<string>(() =>
+    route.path === ROUTES.ROUTES_NEW
+        ? t('routes.create.title')
+        : t('routes.title')
+);
+
+/**
+ * Routes section tabs (2 list pages + 4 links whose pages are not
+ * implemented yet). Hidden on the create page — it has no tab of its own.
+ */
+const tabs = computed<PageLayoutTab[] | undefined>(() =>
+    route.path === ROUTES.ROUTES_NEW
+        ? undefined
+        : [
+              { label: t('routes.tabs.regular'), to: ROUTES.ROUTES_PAGE },
+              {
+                  label: t('routes.tabs.scheduled'),
+                  to: ROUTES.ROUTES_SCHEDULED
+              },
+              {
+                  label: t('routes.tabs.groups'),
+                  to: ROUTES.ROUTES_GROUPS,
+                  trailingIcon: 'tabler:arrow-up-right'
+              },
+              {
+                  label: t('routes.tabs.activeTrips'),
+                  to: ROUTES.ROUTES_TRIPS_ACTIVE,
+                  trailingIcon: 'tabler:arrow-up-right'
+              },
+              {
+                  label: t('routes.tabs.archiveTrips'),
+                  to: ROUTES.ROUTES_TRIPS_ARCHIVE,
+                  trailingIcon: 'tabler:arrow-up-right'
+              },
+              {
+                  label: t('routes.tabs.cancelledTrips'),
+                  to: ROUTES.ROUTES_TRIPS_CANCELLED,
+                  trailingIcon: 'tabler:arrow-up-right'
+              }
+          ]
+);
 </script>

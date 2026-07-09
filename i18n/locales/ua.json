@@ -730,6 +730,169 @@
             }
         }
     },
+    "routes": {
+        "title": "Маршрути",
+        "breadcrumbRegular": "Регулярні маршрути",
+        "create": {
+            "title": "Новий маршрут",
+            "cancel": "Скасувати",
+            "submit": "Зберегти",
+            "created": "Маршрут створено",
+            "tabs": {
+                "general": "Основне",
+                "points": "Точки маршруту",
+                "assignment": "Призначення"
+            },
+            "general": {
+                "title": "Основне",
+                "company": "Компанії",
+                "companyPlaceholder": "Оберіть компанії",
+                "name": "Назва",
+                "namePlaceholder": "Введіть назву маршруту",
+                "active": "Активний",
+                "scheduled": "Запланований",
+                "startAt": "Дата та час старту",
+                "startAtPlaceholder": "Оберіть дату",
+                "errorCount": "Кількість помилок",
+                "errorCountPlaceholder": "Введіть кількість помилок"
+            },
+            "passenger": {
+                "title": "Перевезення пасажирів",
+                "route": "Маршрут для перевезення пасажирів",
+                "intercity": "Міжмісто",
+                "reverseCalculation": "Зворотній порядок розрахунку"
+            },
+            "tariff": {
+                "title": "Пасажирський тариф",
+                "price": "Ціна проїзду",
+                "pricePlaceholder": "Введіть ціну проїзду",
+                "empty": "Спочатку додайте точки маршруту, щоб налаштувати тарифи",
+                "goToPoints": "Перейти до точок маршруту"
+            },
+            "points": {
+                "title": "Точки маршруту",
+                "importJson": "Імпорт JSON",
+                "importSuccess": "Точки маршруту імпортовано",
+                "importError": "Не вдалося прочитати файл. Очікується JSON з масивом точок маршруту",
+                "start": "Старт",
+                "finish": "Фініш",
+                "intermediate": "Проміжна точка {n}",
+                "addIntermediate": "Додати проміжну точку",
+                "remove": "Видалити точку",
+                "address": "Адреса",
+                "addressPlaceholder": "Введіть адресу",
+                "pickOnMap": "Обрати на карті",
+                "name": "Назва",
+                "namePlaceholder": "Введіть назву точки",
+                "type": "Тип точки",
+                "typePlaceholder": "Оберіть тип точки",
+                "radius": "Радіус",
+                "directPath": "Прямий шлях",
+                "timeToPoint": "Час до точки",
+                "timeToFinish": "Час до фінішу",
+                "distance": "Відстань",
+                "distanceValue": "{n} км",
+                "pointTypes": {
+                    "stop": "Зупинка",
+                    "busStation": "Автостанція",
+                    "checkpoint": "Контрольна точка",
+                    "technicalStop": "Технічна зупинка",
+                    "rest": "Відпочинок"
+                }
+            },
+            "assignment": {
+                "title": "Призначення",
+                "vehicles": "Транспортні засоби",
+                "vehiclesPlaceholder": "Оберіть транспортні засоби",
+                "groups": "Групи",
+                "groupsPlaceholder": "Оберіть групи"
+            },
+            "map": {
+                "showForm": "Показати форму",
+                "showMap": "Показати карту",
+                "pickHint": "Клікніть на карті, щоб обрати розташування точки"
+            }
+        },
+        "breadcrumbScheduled": "Заплановані маршрути",
+        "tabs": {
+            "regular": "Регулярні маршрути",
+            "scheduled": "Заплановані маршрути",
+            "groups": "Групи",
+            "activeTrips": "Активні рейси",
+            "archiveTrips": "Архівні рейси",
+            "cancelledTrips": "Скасовані рейси"
+        },
+        "list": {
+            "add": "Додати",
+            "searchPlaceholder": "Пошук за назвою або маршрутом",
+            "deleted": "Маршрут видалено",
+            "distance": "{n} км",
+            "durationHours": "{n} год",
+            "durationMinutes": "{n} хв",
+            "vehiclesCount": "{n} транспортних засобів",
+            "driversCount": "{n} водіїв",
+            "statuses": {
+                "active": "Активний",
+                "inactive": "Неактивний"
+            },
+            "columns": {
+                "company": "Компанія",
+                "name": "Назва",
+                "date": "Дата",
+                "route": "Маршрут",
+                "params": "Параметри",
+                "points": "Точки",
+                "groups": "Групи",
+                "resources": "Ресурси",
+                "actions": "Дії"
+            },
+            "filters": {
+                "company": "Компанія",
+                "companyPlaceholder": "Оберіть компанію",
+                "status": "Статус",
+                "statusPlaceholder": "Оберіть статус",
+                "group": "Група",
+                "groupPlaceholder": "Оберіть групу",
+                "driver": "Водій",
+                "driverPlaceholder": "Оберіть водія",
+                "vehicle": "Транспортний засіб",
+                "vehiclePlaceholder": "Оберіть транспортний засіб"
+            },
+            "modal": {
+                "deleteTitle": "Видалити маршрут?",
+                "deleteSubtitle": "Ви впевнені, що хочете видалити маршрут"
+            }
+        },
+        "edit": {
+            "title": "Редагувати маршрут",
+            "submit": "Редагувати",
+            "updated": "Маршрут оновлено",
+            "tabs": {
+                "general": "Основне",
+                "points": "Точки маршруту",
+                "price": "Ціна за проїзд"
+            },
+            "general": {
+                "name": "Назва",
+                "namePlaceholder": "Введіть назву маршруту",
+                "status": "Статус",
+                "statusPlaceholder": "Оберіть статус",
+                "vehicles": "Транспортний засіб",
+                "vehiclesPlaceholder": "Оберіть транспортні засоби",
+                "groups": "Групи",
+                "groupsPlaceholder": "Оберіть групи"
+            },
+            "points": {
+                "namePlaceholder": "Введіть назву точки",
+                "checkpoint": "Контрольна точка {n}",
+                "stop": "Зупинка {n}",
+                "timeToStop": "Час до зупинки"
+            },
+            "price": {
+                "suffix": " грн"
+            }
+        }
+    },
     "reports": {
         "title": "Звіти",
         "generate": "Згенерувати",

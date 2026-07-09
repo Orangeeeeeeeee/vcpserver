@@ -1,3 +1,4 @@
+import accordion from './accordion';
 import avatar from './avatar';
 import badge from './badge';
 import breadcrumb from './breadcrumb';
@@ -23,6 +24,7 @@ import togglebutton from './togglebutton';
 import toggleswitch from './toggleswitch';
 
 export default {
+    accordion,
     avatar,
     badge,
     breadcrumb,
