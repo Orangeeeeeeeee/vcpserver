@@ -214,7 +214,7 @@ export const WithCustomCells: Story = {
                     </div>
                 </template>
                 <template #cell-actions="{ row }">
-                    <div class="flex items-center gap-2 justify-end">
+                    <div class="flex items-center gap-2">
                         <button
                             type="button"
                             class="cursor-pointer text-primary-600 hover:text-primary-800"

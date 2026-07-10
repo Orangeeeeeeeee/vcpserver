@@ -135,7 +135,7 @@
                 </span>
             </template>
             <template #cell-actions="{ row }">
-                <div class="flex items-center gap-2 justify-end">
+                <div class="flex items-center gap-2">
                     <button
                         type="button"
                         class="cursor-pointer p-1 text-surface-800 transition-colors hover:text-surface-950"

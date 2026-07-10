@@ -11,7 +11,7 @@
                 class="absolute left-[1.1875rem] top-10 bottom-0 w-px bg-surface-300"
             />
             <span
-                class="z-[1] flex size-10 shrink-0 items-center justify-center rounded-md border border-surface-300 bg-surface-0"
+                class="z-[1] flex size-10 shrink-0 items-center justify-center rounded-md border border-surface-300"
             >
                 <Icon
                     :name="item.icon"

@@ -78,7 +78,7 @@
             </template>
             <template #cell-actions>
                 <div
-                    class="flex items-center gap-1 justify-end text-surface-950"
+                    class="flex items-center gap-1 text-surface-950"
                 >
                     <span>{{ $t('passengerFlow.table.columns.goto') }}</span>
                     <Icon name="tabler:arrow-up-right" class="size-5" />

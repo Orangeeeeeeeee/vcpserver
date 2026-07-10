@@ -16,9 +16,9 @@ export const ROUTES = {
     ROUTE_DETAIL: (id: string): string => `/routes/${id}`,
     /** Route groups tab (page not implemented yet) */
     ROUTES_GROUPS: '/routes/groups',
-    /** Active trips tab (page not implemented yet) */
+    /** Active trips list */
     ROUTES_TRIPS_ACTIVE: '/routes/trips/active',
-    /** Archive trips tab (page not implemented yet) */
+    /** Archive trips list (finished and cancelled trips) */
     ROUTES_TRIPS_ARCHIVE: '/routes/trips/archive',
     /** Cancelled trips tab (page not implemented yet) */
     ROUTES_TRIPS_CANCELLED: '/routes/trips/cancelled',

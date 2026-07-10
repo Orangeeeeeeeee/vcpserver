@@ -98,7 +98,7 @@
                 </div>
             </template>
             <template #cell-actions="{ row }">
-                <div class="flex items-center gap-2 justify-end">
+                <div class="flex items-center gap-2">
                     <UiActionCommonButton @click="onEdit(row)">
                         <template #icon>
                             <Icon

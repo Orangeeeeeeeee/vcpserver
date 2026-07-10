@@ -822,6 +822,49 @@
             "archiveTrips": "Архівні рейси",
             "cancelledTrips": "Скасовані рейси"
         },
+        "groups": {
+            "add": "Додати",
+            "searchPlaceholder": "Пошук за назвою",
+            "card": {
+                "statusActive": "Активна",
+                "statusInactive": "Не активна",
+                "expand": "Розгорнути",
+                "collapse": "Згорнути"
+            },
+            "filters": {
+                "company": "Компанія",
+                "companyPlaceholder": "Оберіть компанію",
+                "status": "Статус",
+                "statusPlaceholder": "Оберіть статус"
+            },
+            "modal": {
+                "title": "Додати групу",
+                "editTitle": "Редагувати групу",
+                "tabs": {
+                    "general": "Основне",
+                    "routes": "Маршрути"
+                },
+                "name": "Назва",
+                "namePlaceholder": "Введіть назву групи",
+                "company": "Компанія",
+                "companyPlaceholder": "Оберіть компанію",
+                "status": "Статус",
+                "statusPlaceholder": "Оберіть статус",
+                "order": "Номер за порядком",
+                "orderPlaceholder": "Введіть порядковий номер",
+                "comment": "Коментар",
+                "commentPlaceholder": "Залиште коментар",
+                "routes": "Маршрути",
+                "routesPlaceholder": "Оберіть маршрути",
+                "submit": "Додати",
+                "editSubmit": "Редагувати",
+                "added": "Групу додано",
+                "updated": "Групу оновлено",
+                "deleted": "Групу видалено",
+                "deleteTitle": "Видалити групу?",
+                "deleteSubtitle": "Ви впевнені, що хочете видалити групу"
+            }
+        },
         "list": {
             "add": "Додати",
             "searchPlaceholder": "Пошук за назвою або маршрутом",
@@ -890,6 +933,65 @@
             },
             "price": {
                 "suffix": " грн"
+            }
+        },
+        "trips": {
+            "breadcrumbActive": "Активні рейси",
+            "breadcrumbArchive": "Архівні рейси",
+            "deleted": "Рейс видалено",
+            "list": {
+                "searchPlaceholder": "Пошук за назвою",
+                "open": "Перейти",
+                "ofDistance": "з {n} км",
+                "ofValue": "з {value}",
+                "statuses": {
+                    "active": "Активний",
+                    "finished": "Закінчений",
+                    "cancelled": "Скасований"
+                },
+                "columns": {
+                    "company": "Компанія",
+                    "route": "Маршрут",
+                    "status": "Стан",
+                    "groups": "Групи",
+                    "params": "Параметри",
+                    "vehicles": "Транспорти",
+                    "start": "Старт",
+                    "finish": "Фініш",
+                    "resources": "Ресурси",
+                    "distance": "Дистанція",
+                    "time": "Час",
+                    "trackMatch": "Збіг треків",
+                    "actions": "Дії"
+                },
+                "modal": {
+                    "deleteTitle": "Видалити рейс?",
+                    "deleteSubtitle": "Ви впевнені, що хочете видалити рейс маршруту"
+                }
+            },
+            "filters": {
+                "route": "Маршрут",
+                "routePlaceholder": "Оберіть маршрут",
+                "date": "Дата",
+                "datePlaceholder": "Оберіть дату",
+                "status": "Стан",
+                "statusPlaceholder": "Оберіть стан"
+            },
+            "resources": {
+                "progressValue": "{actual} / {planned} км",
+                "columns": {
+                    "resources": "Ресурси",
+                    "status": "Статус",
+                    "start": "Старт",
+                    "progress": "Прогрес",
+                    "time": "Час",
+                    "lastAddress": "Остання адреса"
+                },
+                "statuses": {
+                    "waiting": "Чекає виїзду",
+                    "moving": "Рухається",
+                    "offRoute": "Зійшов з маршруту"
+                }
             }
         },
         "detail": {

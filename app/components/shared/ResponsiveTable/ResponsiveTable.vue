@@ -141,7 +141,7 @@ const onRowClick = (event: { data: TableRow }): void => {
 <style scoped>
 /* Below md: transform the DataTable DOM into stacked label/value cards.
    No second DOM tree — single <DataTable> serves both layouts. */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .responsive-table :deep(.p-datatable-thead) {
         display: none;
     }
@@ -201,7 +201,7 @@ const onRowClick = (event: { data: TableRow }): void => {
     .responsive-table :deep(.p-datatable-tbody > tr > td)::before {
         content: attr(data-label);
         font-size: 0.75rem;
-        font-weight: 600;
+        font-weight: 500;
         color: var(--p-surface-700);
     }
 

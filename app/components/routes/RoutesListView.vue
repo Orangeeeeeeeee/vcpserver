@@ -55,7 +55,7 @@
                         :label="row.companyBadge"
                         shape="circle"
                         size="small"
-                        class="size-[26px] text-[0.625rem] font-medium"
+                        class="size-[26px] text-[0.625rem] font-medium shrink-0"
                     />
                     <span class="font-semibold text-sm text-surface-950">
                         {{ row.company }}
@@ -66,14 +66,14 @@
             <template #cell-name="{ row }">
                 <NuxtLink
                     :to="ROUTES.ROUTE_DETAIL(row.id)"
-                    class="flex items-center gap-2"
+                    class="flex items-center gap-2.5 whitespace-nowrap"
                 >
                     <span
                         class="size-2 shrink-0 rounded-full"
                         :class="statusDotClass(row.route)"
                     />
                     <span
-                        class="font-medium text-surface-950 underline underline-offset-4"
+                        class="font-medium text-sm text-surface-800 underline underline-offset-4"
                     >
                         {{ row.name }}
                     </span>
@@ -82,27 +82,33 @@
 
             <template #cell-date="{ row }">
                 <div class="flex flex-col gap-[0.125rem] leading-snug">
-                    <span>{{ row.dateLabel }}</span>
-                    <span>{{ row.timeLabel }}</span>
+                    <span class="text-surface-800">
+                        {{ row.dateLabel }}
+                    </span>
+                    <span class="text-surface-700">
+                        {{ row.timeLabel }}
+                    </span>
                 </div>
             </template>
 
             <template #cell-routePath="{ row }">
-                <span class="text-surface-900">
+                <span class="block max-w-40 truncate text-surface-900">
                     {{ row.routePath }}
                 </span>
             </template>
 
             <template #cell-distanceKm="{ row }">
-                <div class="flex flex-col gap-[0.125rem] leading-snug">
-                    <span class="font-medium">
+                <div
+                    class="flex lg:flex-col gap-2.5 lg:gap-1 leading-snug text-sm"
+                >
+                    <span class="font-medium text-surface-800">
                         {{
                             $t('routes.list.distance', {
                                 n: row.distanceKm
                             })
                         }}
                     </span>
-                    <span class="text-surface-600">
+                    <span class="text-surface-700">
                         {{ row.durationLabel }}
                     </span>
                 </div>
@@ -130,16 +136,18 @@
             </template>
 
             <template #cell-resources="{ row }">
-                <div class="flex flex-col gap-1 text-surface-900">
+                <div class="flex flex-col gap-1 text-sm">
                     <span
                         v-if="row.vehicleLabel"
                         class="flex items-center gap-1.5"
                     >
                         <Icon
                             name="tabler:truck"
-                            class="size-4 shrink-0 text-surface-700"
+                            class="size-4 shrink-0 text-surface-600"
                         />
-                        {{ row.vehicleLabel }}
+                        <span class="text-surface-900">
+                            {{ row.vehicleLabel }}
+                        </span>
                     </span>
                     <span
                         v-if="row.driverLabel"
@@ -147,15 +155,17 @@
                     >
                         <Icon
                             name="tabler:user"
-                            class="size-4 shrink-0 text-surface-700"
+                            class="size-4 shrink-0 text-surface-600"
                         />
-                        {{ row.driverLabel }}
+                        <span class="text-surface-800">
+                            {{ row.driverLabel }}
+                        </span>
                     </span>
                 </div>
             </template>
 
             <template #cell-actions="{ row }">
-                <div class="flex items-center gap-2 justify-end">
+                <div class="flex items-center gap-2">
                     <UiActionCommonButton @click="onEdit(row.route)">
                         <template #icon>
                             <Icon
@@ -328,7 +338,8 @@ const columns = computed<TableColumn[]>(() => [
         : []),
     {
         field: 'routePath',
-        header: t('routes.list.columns.route')
+        header: t('routes.list.columns.route'),
+        width: '200px'
     },
     {
         field: 'distanceKm',
@@ -348,7 +359,8 @@ const columns = computed<TableColumn[]>(() => [
     },
     {
         field: 'resources',
-        header: t('routes.list.columns.resources')
+        header: t('routes.list.columns.resources'),
+        width: '250px'
     },
     {
         field: 'actions',

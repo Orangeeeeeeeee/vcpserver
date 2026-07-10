@@ -33,8 +33,8 @@ const title = computed<string>(() => {
 });
 
 /**
- * Routes section tabs (2 list pages + 4 links whose pages are not
- * implemented yet). Hidden on the create page — it has no tab of its own.
+ * Routes section tabs (5 list pages + the cancelled-trips link whose page is
+ * not implemented yet). Hidden on the create page — it has no tab of its own.
  * The detail page swaps in its own tab set (route + trip links).
  */
 const tabs = computed<PageLayoutTab[] | undefined>(() => {
@@ -47,13 +47,11 @@ const tabs = computed<PageLayoutTab[] | undefined>(() => {
             },
             {
                 label: t('routes.tabs.activeTrips'),
-                to: ROUTES.ROUTES_TRIPS_ACTIVE,
-                trailingIcon: 'tabler:arrow-up-right'
+                to: ROUTES.ROUTES_TRIPS_ACTIVE
             },
             {
                 label: t('routes.tabs.archiveTrips'),
-                to: ROUTES.ROUTES_TRIPS_ARCHIVE,
-                trailingIcon: 'tabler:arrow-up-right'
+                to: ROUTES.ROUTES_TRIPS_ARCHIVE
             }
         ];
     }
@@ -65,18 +63,15 @@ const tabs = computed<PageLayoutTab[] | undefined>(() => {
         },
         {
             label: t('routes.tabs.groups'),
-            to: ROUTES.ROUTES_GROUPS,
-            trailingIcon: 'tabler:arrow-up-right'
+            to: ROUTES.ROUTES_GROUPS
         },
         {
             label: t('routes.tabs.activeTrips'),
-            to: ROUTES.ROUTES_TRIPS_ACTIVE,
-            trailingIcon: 'tabler:arrow-up-right'
+            to: ROUTES.ROUTES_TRIPS_ACTIVE
         },
         {
             label: t('routes.tabs.archiveTrips'),
-            to: ROUTES.ROUTES_TRIPS_ARCHIVE,
-            trailingIcon: 'tabler:arrow-up-right'
+            to: ROUTES.ROUTES_TRIPS_ARCHIVE
         },
         {
             label: t('routes.tabs.cancelledTrips'),
