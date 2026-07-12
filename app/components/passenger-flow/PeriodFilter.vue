@@ -7,7 +7,9 @@
             class="h-[2.5rem] w-40 md:w-56 flex cursor-pointer items-center justify-between gap-2 rounded-md border border-surface-300 px-3 text-sm transition duration-300 hover:border-primary-300 aria-expanded:border-primary-300"
             @click="togglePeriodPopover"
         >
-            <span class="truncate text-surface-950">{{ selectedPeriodLabel }}</span>
+            <span class="truncate text-surface-950">
+                {{ selectedPeriodLabel }}
+            </span>
             <Icon
                 name="tabler:chevron-down"
                 class="size-6 shrink-0 text-surface-600 transition-transform"
@@ -26,8 +28,7 @@
                         :key="option.value"
                         :label="option.shortLabel"
                         size="small"
-                        :outlined="selectedPeriod !== option.value"
-                        class="border-surface-300 w-full justify-center text-surface-500"
+                        severity="secondary"
                         @click="onSelectPeriod(option.value)"
                     />
                 </div>
@@ -66,7 +67,9 @@ const periodPopoverRef = ref<InstanceType<typeof Popover> | null>(null);
 const isPeriodOpen = ref<boolean>(false);
 
 /** Full labels shown on the trigger for each fixed time period */
-const periodFullLabels = computed<Record<Exclude<PassengerFlowPeriod, 'custom'>, string>>(() => ({
+const periodFullLabels = computed<
+    Record<Exclude<PassengerFlowPeriod, 'custom'>, string>
+>(() => ({
     '1h': t('calendar.hour1'),
     '8h': t('calendar.hours8'),
     '24h': t('calendar.hours24'),
@@ -76,7 +79,9 @@ const periodFullLabels = computed<Record<Exclude<PassengerFlowPeriod, 'custom'>,
 }));
 
 /** Short-label options listed inside the popover */
-const periodShortOptions = computed<{ shortLabel: string; value: PassengerFlowPeriod }[]>(() => [
+const periodShortOptions = computed<
+    { shortLabel: string; value: PassengerFlowPeriod }[]
+>(() => [
     { shortLabel: t('calendar.hour1Short'), value: '1h' },
     { shortLabel: t('calendar.hours8Short'), value: '8h' },
     { shortLabel: t('calendar.hours24Short'), value: '24h' },
@@ -91,7 +96,11 @@ const selectedPeriodLabel = computed<string>(() => {
         const [from, to] = customRange.value;
         if (from && to) return `${formatUaDate(from)} - ${formatUaDate(to)}`;
     }
-    return periodFullLabels.value[selectedPeriod.value as Exclude<PassengerFlowPeriod, 'custom'>] ?? '';
+    return (
+        periodFullLabels.value[
+            selectedPeriod.value as Exclude<PassengerFlowPeriod, 'custom'>
+        ] ?? ''
+    );
 });
 
 const togglePeriodPopover = (event: MouseEvent): void => {

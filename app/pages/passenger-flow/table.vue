@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col gap-4">
         <h2 class="text-lg text-surface-900">
-                {{ $t('passengerFlow.table.title') }}
+            {{ $t('passengerFlow.table.title') }}
         </h2>
 
         <!-- Filters bar -->
@@ -44,7 +44,7 @@
             </template>
             <template #cell-group="{ row }">
                 <span
-                    class="inline-flex items-center rounded-md bg-violet-100 px-2 py-1 text-xs font-medium text-violet-600"
+                    class="inline-flex items-center rounded-md bg-violet-100 px-2 py-1 text-xs font-medium text-violet-700"
                 >
                     {{ row.group }}
                 </span>
@@ -77,9 +77,7 @@
                 </span>
             </template>
             <template #cell-actions>
-                <div
-                    class="flex items-center gap-1 text-surface-950"
-                >
+                <div class="flex items-center gap-1 text-surface-950">
                     <span>{{ $t('passengerFlow.table.columns.goto') }}</span>
                     <Icon name="tabler:arrow-up-right" class="size-5" />
                 </div>
@@ -158,7 +156,8 @@ const filteredRecords = computed((): PassengerFlowRecord[] => {
             item.driver.toLowerCase().includes(q);
 
         const matchesGroup =
-            selectedGroups.value.length === 0 || selectedGroups.value.includes(item.group);
+            selectedGroups.value.length === 0 ||
+            selectedGroups.value.includes(item.group);
 
         return matchesQuery && matchesGroup;
     });
