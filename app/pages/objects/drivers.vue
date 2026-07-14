@@ -21,11 +21,7 @@
         <!-- Drivers grid + paginator OR empty banner -->
         <template v-if="filteredDrivers.length > 0">
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-                <NuxtLink
-                    v-for="driver in paginatedDrivers"
-                    :key="driver.id"
-                    :to="ROUTES.DRIVER_DETAIL(driver.id)"
-                >
+                <div v-for="driver in paginatedDrivers" :key="driver.id">
                     <ObjectsDriverCard
                         :driver="driver"
                         :labels="cardLabels"
@@ -33,7 +29,7 @@
                         @edit="onEdit"
                         @delete="onDelete"
                     />
-                </NuxtLink>
+                </div>
             </div>
 
             <UiPagination v-model:page="currentPage" :page-count="pageCount" />

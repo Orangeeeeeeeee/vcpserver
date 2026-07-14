@@ -1,6 +1,6 @@
 <template>
     <div
-        class="border border-surface-300 cursor-pointer rounded-md w-full lg:hover:bg-surface-200 lg:transition-colors duration-300"
+        class="border border-surface-300 rounded-md w-full lg:hover:bg-surface-200 lg:transition-colors duration-300"
     >
         <!-- Header: status + overflow menu -->
         <div class="border-b border-surface-300 px-3 pt-4 pb-3">
@@ -48,11 +48,12 @@
                     class="font-semibold"
                 />
                 <div class="flex flex-col">
-                    <span
+                    <NuxtLink
                         class="font-semibold text-surface-900 truncate text-sm"
+                        :to="ROUTES.DRIVER_DETAIL(driver.id)"
                     >
                         {{ driver.name }}
-                    </span>
+                    </NuxtLink>
                     <span class="text-xs text-surface-700 truncate">
                         {{ driver.company }}
                     </span>
@@ -147,6 +148,7 @@
 
 <script lang="ts">
 import Menu from 'primevue/menu';
+import { ROUTES } from '~/constants/routes';
 import type { MenuItem } from 'primevue/menuitem';
 import type { Driver, DriverStatus } from '~/types/driver';
 
