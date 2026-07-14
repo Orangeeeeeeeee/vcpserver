@@ -50,7 +50,7 @@
             name="notificationTypes"
             :label="$t('zones.create.notificationType')"
         >
-            <MultiSelect
+            <Select
                 v-model="notificationTypes"
                 :options="ZONE_NOTIFICATION_TYPE_OPTIONS"
                 option-value="value"
@@ -58,21 +58,7 @@
                 display="chip"
                 :placeholder="$t('zones.create.notificationTypePlaceholder')"
                 fluid
-            >
-                <template #chip="{ value, removeCallback }">
-                    <span
-                        class="inline-flex items-center gap-1.5 rounded px-2 py-1 text-sm"
-                        :class="notificationChipClass(value)"
-                    >
-                        {{ notificationChipLabel(value) }}
-                        <Icon
-                            name="tabler:x"
-                            class="size-3.5 cursor-pointer"
-                            @click.stop="removeCallback($event)"
-                        />
-                    </span>
-                </template>
-            </MultiSelect>
+            ></Select>
         </SharedAppFormField>
 
         <!-- Notification channels -->
