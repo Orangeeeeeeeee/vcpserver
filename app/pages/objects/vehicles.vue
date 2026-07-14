@@ -127,12 +127,14 @@
                 <span class="text-surface-800 text-sm">{{ row.address }}</span>
             </template>
             <template #cell-updatedAgo="{ row }">
-                <span
-                    class="inline-flex items-center gap-1.5 rounded bg-surface-200 px-2 py-1 text-sm text-surface-800"
-                >
-                    <Icon name="tabler:refresh" class="size-4 shrink-0" />
-                    {{ row.updatedAgo }}
-                </span>
+                <div>
+                    <span
+                        class="inline-flex items-center gap-1.5 rounded bg-surface-200 px-2 py-1 text-sm text-surface-800"
+                    >
+                        <Icon name="tabler:refresh" class="size-4 shrink-0" />
+                        {{ row.updatedAgo }}
+                    </span>
+                </div>
             </template>
             <template #cell-actions="{ row }">
                 <div class="flex items-center gap-2">
