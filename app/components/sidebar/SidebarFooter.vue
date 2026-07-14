@@ -33,7 +33,7 @@
             </button>
         </div>
         <div
-            class="flex items-center md:-order-1 md:items-stretch md:p-3 md:border-b md:border-b-[var(--p-surface-800)] md:justify-center"
+            class="flex items-center md:-order-1 md:items-stretch md:p-3 md:border-b md:border-b-[var(--p-surface-900)] md:justify-center"
             :class="collapsed ? 'flex-col gap-3' : 'gap-4'"
         >
             <button
