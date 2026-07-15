@@ -57,7 +57,7 @@
                 </span>
             </template>
             <template #cell-vehicle="{ row }">
-                <div class="flex items-center gap-1">
+                <div class="flex items-center lg:items-start gap-1">
                     <Icon
                         :name="VEHICLE_MOTION_META[row.motionStatus].icon"
                         :class="VEHICLE_MOTION_META[row.motionStatus].class"
@@ -138,22 +138,35 @@
             </template>
             <template #cell-actions="{ row }">
                 <div class="flex items-center gap-2">
-                    <button
-                        type="button"
-                        class="cursor-pointer p-1 text-surface-800 transition-colors hover:text-surface-950"
-                        :aria-label="$t('common.edit')"
-                        @click="onEdit(row)"
-                    >
-                        <Icon name="tabler:pencil" class="size-5" />
-                    </button>
-                    <button
-                        type="button"
-                        class="cursor-pointer p-1 text-red-500 transition-colors hover:text-red-600"
-                        :aria-label="$t('common.delete')"
+                    <UiActionCommonButton @click="onEdit(row)">
+                        <template #icon>
+                            <Icon
+                                name="tabler:pencil"
+                                class="size-5 text-surface-800"
+                            />
+                        </template>
+                        <template #label>
+                            <span class="text-surface-900">
+                                {{ $t('common.edit') }}
+                            </span>
+                        </template>
+                    </UiActionCommonButton>
+                    <UiActionCommonButton
+                        severity="danger"
                         @click="onDelete(row)"
                     >
-                        <Icon name="tabler:trash" class="size-5" />
-                    </button>
+                        <template #icon>
+                            <Icon
+                                name="tabler:trash"
+                                class="size-5 text-red-500"
+                            />
+                        </template>
+                        <template #label>
+                            <span class="text-red-600">
+                                {{ $t('common.delete') }}
+                            </span>
+                        </template>
+                    </UiActionCommonButton>
                 </div>
             </template>
         </SharedResponsiveTable>
