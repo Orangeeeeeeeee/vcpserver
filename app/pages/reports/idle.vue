@@ -173,14 +173,14 @@
             </div>
         </template>
 
-        <Teleport to="#page-breadcrumbs-target">
+        <SharedClientTeleport to="#page-breadcrumbs-target">
             <SharedPageBreadcrumb
                 :items="[
                     { icon: 'tabler:file-text', to: ROUTES.REPORTS },
                     { label: $t('reports.items.idle.title') }
                 ]"
             />
-        </Teleport>
+        </SharedClientTeleport>
     </div>
 </template>
 

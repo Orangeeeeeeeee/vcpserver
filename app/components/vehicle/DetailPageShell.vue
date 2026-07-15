@@ -20,7 +20,7 @@
             @confirm="onConfirmDelete"
         />
 
-        <Teleport to="#page-breadcrumbs-target">
+        <SharedClientTeleport to="#page-breadcrumbs-target">
             <SharedPageBreadcrumb
                 :items="[
                     { icon: 'tabler:bus', to: ROUTES.OBJECTS_ONLINE },
@@ -31,9 +31,9 @@
                     { label: vehicle.name }
                 ]"
             />
-        </Teleport>
+        </SharedClientTeleport>
 
-        <Teleport to="#page-actions-target">
+        <SharedClientTeleport to="#page-actions-target">
             <Button
                 severity="secondary"
                 outlined
@@ -64,7 +64,7 @@
                     <Icon name="tabler:trash" class="size-5" />
                 </template>
             </Button>
-        </Teleport>
+        </SharedClientTeleport>
     </div>
 </template>
 

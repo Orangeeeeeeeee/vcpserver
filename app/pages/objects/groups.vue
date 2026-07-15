@@ -81,22 +81,22 @@
         />
 
         <!-- Teleports -->
-        <Teleport to="#page-actions-target">
+        <SharedClientTeleport to="#page-actions-target">
             <UiActionButton
                 icon="tabler:plus"
                 :label="$t('objects.add')"
                 @click="onAdd"
             />
-        </Teleport>
+        </SharedClientTeleport>
 
-        <Teleport to="#page-breadcrumbs-target">
+        <SharedClientTeleport to="#page-breadcrumbs-target">
             <SharedPageBreadcrumb
                 :items="[
                     { icon: 'tabler:bus', to: ROUTES.OBJECTS_ONLINE },
                     { label: $t('objects.tabs.groups') }
                 ]"
             />
-        </Teleport>
+        </SharedClientTeleport>
     </div>
 </template>
 

@@ -29,14 +29,14 @@
             </template>
         </SharedPanelMapLayout>
 
-        <Teleport to="#page-breadcrumbs-target">
+        <SharedClientTeleport to="#page-breadcrumbs-target">
             <SharedPageBreadcrumb
                 :items="[
                     { icon: 'tabler:bus', to: ROUTES.OBJECTS_ONLINE },
                     { label: $t('objects.tabs.online') }
                 ]"
             />
-        </Teleport>
+        </SharedClientTeleport>
     </div>
 </template>
 

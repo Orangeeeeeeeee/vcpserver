@@ -268,14 +268,14 @@
             @reset="onResetFilters"
         />
 
-        <Teleport to="#page-breadcrumbs-target">
+        <SharedClientTeleport to="#page-breadcrumbs-target">
             <SharedPageBreadcrumb
                 :items="[
                     { icon: 'tabler:route', to: ROUTES.ROUTES_PAGE },
                     { label: breadcrumbLabel }
                 ]"
             />
-        </Teleport>
+        </SharedClientTeleport>
 
         <RoutesTripsResourcesDialog
             v-model:visible="resourcesVisible"

@@ -25,14 +25,14 @@
             </template>
         </SharedPanelMapLayout>
 
-        <Teleport to="#page-breadcrumbs-target">
+        <SharedClientTeleport to="#page-breadcrumbs-target">
             <SharedPageBreadcrumb
                 :items="[
                     { icon: 'tabler:border-radius', to: ROUTES.ZONES },
                     { label: $t('zones.create.breadcrumb') }
                 ]"
             />
-        </Teleport>
+        </SharedClientTeleport>
     </div>
 </template>
 

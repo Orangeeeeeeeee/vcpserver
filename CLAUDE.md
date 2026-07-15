@@ -129,6 +129,7 @@ VCPServer — веб-застосунок на Nuxt 4 з використанн�
 - Текст інтерфейсу українською мовою
 - Тексти інтерфейсу виносити у файли локалізації (`i18n/locales/ua.json`), у шаблонах використовувати `$t('key')` або `useI18n()` composable
 - Сторінки вказують лейаут через `definePageMeta({ layout: 'layoutName' })`
+- Телепорти у контейнери `PageLayout` (`#page-actions-header`, `#page-actions-target`, `#page-breadcrumbs-target`) — лише через `<SharedClientTeleport :to>` (обгортка `ClientOnly` + `Teleport`), НЕ голий `<Teleport>`: Nuxt рендерить SSR-телепорти лише в `#teleports`, голий телепорт спричиняє hydration mismatch
 - Коментарі та JSDoc писати **англійською мовою**
 - Весь TypeScript-код повинен мати **JSDoc-коментарі**: функції, composables, утиліти, константи
 - Для всіх функцій та composables додавати **явні типи** параметрів та повертаємих значень

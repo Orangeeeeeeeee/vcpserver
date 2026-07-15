@@ -83,22 +83,22 @@
         />
 
         <!-- Teleports -->
-        <Teleport :to="actionsTarget">
+        <SharedClientTeleport :to="actionsTarget">
             <UiActionButton
                 icon="tabler:plus"
                 :label="$t('routes.groups.add')"
                 @click="onAdd"
             />
-        </Teleport>
+        </SharedClientTeleport>
 
-        <Teleport to="#page-breadcrumbs-target">
+        <SharedClientTeleport to="#page-breadcrumbs-target">
             <SharedPageBreadcrumb
                 :items="[
                     { icon: 'tabler:route', to: ROUTES.ROUTES_PAGE },
                     { label: $t('routes.tabs.groups') }
                 ]"
             />
-        </Teleport>
+        </SharedClientTeleport>
     </div>
 </template>
 

@@ -33,13 +33,13 @@
         </SharedPanelMapLayout>
 
         <!-- «+ Додати» in the page header (icon-only below lg, per the mockup) -->
-        <Teleport to="#page-actions-header">
+        <SharedClientTeleport to="#page-actions-header">
             <UiActionButton
                 icon="tabler:plus"
                 :label="$t('objects.add')"
                 @click="onAdd"
             />
-        </Teleport>
+        </SharedClientTeleport>
     </div>
 </template>
 

@@ -24,7 +24,7 @@
             </template>
         </SharedPanelMapLayout>
 
-        <Teleport to="#page-breadcrumbs-target">
+        <SharedClientTeleport to="#page-breadcrumbs-target">
             <SharedPageBreadcrumb
                 :items="[
                     {
@@ -35,7 +35,7 @@
                     { label: $t('routes.create.title') }
                 ]"
             />
-        </Teleport>
+        </SharedClientTeleport>
     </div>
 </template>
 

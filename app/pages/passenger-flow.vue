@@ -1,7 +1,7 @@
 <template>
     <SharedPageLayout :title="$t('passengerFlow.title')">
         <template #content>
-            <Teleport to="#page-breadcrumbs-target">
+            <SharedClientTeleport to="#page-breadcrumbs-target">
                 <div class="flex flex-wrap items-center gap-3">
                     <MultiSelect
                         v-model="multiSelectValue"
@@ -18,7 +18,7 @@
 
                     <PassengerFlowPeriodFilter />
                 </div>
-            </Teleport>
+            </SharedClientTeleport>
             <PassengerFlowTotalInfo />
             <PassengerFlowMainCharts />
             <PassengerFlowAdditionalCharts />

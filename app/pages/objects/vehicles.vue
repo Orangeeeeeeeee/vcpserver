@@ -196,22 +196,22 @@
         />
 
         <!-- Teleports -->
-        <Teleport :to="actionsTarget">
+        <SharedClientTeleport :to="actionsTarget">
             <UiActionButton
                 icon="tabler:plus"
                 :label="$t('objects.add')"
                 @click="onAdd"
             />
-        </Teleport>
+        </SharedClientTeleport>
 
-        <Teleport to="#page-breadcrumbs-target">
+        <SharedClientTeleport to="#page-breadcrumbs-target">
             <SharedPageBreadcrumb
                 :items="[
                     { icon: 'tabler:bus', to: ROUTES.OBJECTS_ONLINE },
                     { label: $t('objects.tabs.vehicles') }
                 ]"
             />
-        </Teleport>
+        </SharedClientTeleport>
     </div>
 </template>
 

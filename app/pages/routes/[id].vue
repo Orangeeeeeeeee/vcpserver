@@ -23,7 +23,7 @@
             </template>
         </SharedPanelMapLayout>
 
-        <Teleport to="#page-breadcrumbs-target">
+        <SharedClientTeleport to="#page-breadcrumbs-target">
             <SharedPageBreadcrumb
                 :items="[
                     { icon: 'tabler:route', to: listPath },
@@ -31,9 +31,9 @@
                     { label: viewedRoute.name }
                 ]"
             />
-        </Teleport>
+        </SharedClientTeleport>
 
-        <Teleport :to="actionsTarget">
+        <SharedClientTeleport :to="actionsTarget">
             <Button
                 severity="secondary"
                 outlined
@@ -54,7 +54,7 @@
                     <Icon name="tabler:trash" class="size-5" />
                 </template>
             </Button>
-        </Teleport>
+        </SharedClientTeleport>
 
         <RoutesRouteEditDialog
             v-model:visible="editVisible"

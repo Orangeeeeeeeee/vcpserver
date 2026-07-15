@@ -23,23 +23,23 @@
             </template>
         </SharedPanelMapLayout>
 
-        <Teleport to="#page-breadcrumbs-target">
+        <SharedClientTeleport to="#page-breadcrumbs-target">
             <SharedPageBreadcrumb
                 :items="[
                     { icon: 'tabler:border-radius', to: ROUTES.ZONES },
                     { label: zone.name }
                 ]"
             />
-        </Teleport>
+        </SharedClientTeleport>
 
         <!-- «Редагувати» in the page header (icon-only below lg) -->
-        <Teleport to="#page-actions-header">
+        <SharedClientTeleport to="#page-actions-header">
             <UiActionButton
                 icon="tabler:pencil"
                 :label="$t('zones.detail.edit')"
                 @click="onEdit"
             />
-        </Teleport>
+        </SharedClientTeleport>
     </div>
 </template>
 

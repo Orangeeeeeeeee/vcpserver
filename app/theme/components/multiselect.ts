@@ -71,6 +71,10 @@ const multiselect: MultiSelectDesignTokens = {
         .p-multiselect-empty-message {
             font-size: 0.875rem;
         }
+        
+        .p-multiselect-label:has(.p-chip) {
+            padding: calc(var(--p-multiselect-padding-y) / 2) var(--p-multiselect-padding-x);
+        }
     `
 };
 

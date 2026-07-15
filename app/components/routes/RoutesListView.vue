@@ -205,22 +205,22 @@
             @reset="onResetFilters"
         />
 
-        <Teleport :to="actionsTarget">
+        <SharedClientTeleport :to="actionsTarget">
             <UiActionButton
                 icon="tabler:plus"
                 :label="$t('routes.list.add')"
                 @click="onAdd"
             />
-        </Teleport>
+        </SharedClientTeleport>
 
-        <Teleport to="#page-breadcrumbs-target">
+        <SharedClientTeleport to="#page-breadcrumbs-target">
             <SharedPageBreadcrumb
                 :items="[
                     { icon: 'tabler:route', to: ROUTES.ROUTES_PAGE },
                     { label: breadcrumbLabel }
                 ]"
             />
-        </Teleport>
+        </SharedClientTeleport>
 
         <RoutesRouteEditDialog
             v-model:visible="editVisible"
