@@ -181,6 +181,14 @@ const renderRoute = (map: L.Map): void => {
 
     points.value.forEach((point, index) => {
         if (!point.coords) return;
+        // arrival detection radius, in real meters (scales with zoom)
+        L.circle(point.coords, {
+            radius: point.radius,
+            color: markerColor(index),
+            weight: 2,
+            fillColor: markerColor(index),
+            fillOpacity: 0.2
+        }).addTo(routeLayer as L.LayerGroup);
         L.circleMarker(point.coords, {
             radius: 8,
             color: '#ffffff',
@@ -247,7 +255,12 @@ onUnmounted((): void => {
 /** Signature of everything the drawn route depends on */
 const routeSignature = computed<string>(() =>
     JSON.stringify(
-        points.value.map((point) => [point.id, point.coords, point.directPath])
+        points.value.map((point) => [
+            point.id,
+            point.coords,
+            point.directPath,
+            point.radius
+        ])
     )
 );
 
