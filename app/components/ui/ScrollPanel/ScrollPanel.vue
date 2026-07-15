@@ -2,7 +2,7 @@
     <ScrollPanel
         :pt="{
             root: 'group',
-            barY: 'w-1.5! rounded-full! bg-surface-300! opacity-100! transition-colors duration-200 group-hover:bg-surface-400! hover:bg-surface-400!'
+            barY: 'w-1.5! rounded-full! bg-surface-300! opacity-100! transition-colors duration-200 group-hover:bg-surface-400! hover:bg-surface-400! translate-x-2'
         }"
     >
         <slot />
