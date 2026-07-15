@@ -9,7 +9,7 @@
                 :class="
                     collapsed
                         ? 'justify-center'
-                        : 'md:px-4 md:py-2 hover:bg-primary-900 rounded-md transition-colors'
+                        : 'p-2 md:px-4 md:py-2 hover:bg-primary-900 rounded-md transition-colors'
                 "
                 @click="onProfileClick"
             >

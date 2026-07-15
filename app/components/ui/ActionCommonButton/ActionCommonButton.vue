@@ -1,7 +1,7 @@
 <template>
     <button
         :class="[
-            'size-auto flex items-center justify-center font-medium leading-none gap-1.5 lg:size-10 lg:rounded-md transition duration-300 cursor-pointer',
+            'size-auto flex items-center justify-center font-medium leading-none py-1 px-2 lg:p-0 gap-1.5 lg:size-10 rounded-md transition duration-300 cursor-pointer',
             severityClasses.bgHover
         ]"
     >
