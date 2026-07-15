@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center justify-between gap-5 w-full">
+    <div v-if="pageCount > 1" class="flex items-center justify-between gap-5 w-full">
         <button
             class="border-surface-300 size-10 lg:size-auto lg:border-none flex items-center min-h-[2.5rem] border px-2 gap-1.5 justify-center rounded-lg text-sm font-medium transition-colors duration-300 cursor-pointer text-surface-800 hover:bg-surface-200"
             :class="page === 0 ? 'pointer-events-none opacity-30' : ''"

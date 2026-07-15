@@ -4,7 +4,7 @@
     >
         <DataTable
             :value="value"
-            :paginator="paginator"
+            :paginator="showPaginator"
             :rows="rows"
             :rows-per-page-options="rowsPerPageOptions"
             :data-key="rowKey"
@@ -105,7 +105,7 @@ interface ResponsiveTableProps {
     footerRow?: TableRow;
 }
 
-const { footerRow } = withDefaults(defineProps<ResponsiveTableProps>(), {
+const { footerRow, paginator, value, rows } = withDefaults(defineProps<ResponsiveTableProps>(), {
     paginator: false,
     rows: 10,
     rowsPerPageOptions: undefined,
@@ -113,6 +113,9 @@ const { footerRow } = withDefaults(defineProps<ResponsiveTableProps>(), {
     loading: false,
     footerRow: undefined
 });
+
+/** Paginator is rendered only when the data spans more than one page. */
+const showPaginator = computed<boolean>(() => paginator && value.length > rows);
 
 const emit = defineEmits<{
     /** Emitted when a row is clicked */
