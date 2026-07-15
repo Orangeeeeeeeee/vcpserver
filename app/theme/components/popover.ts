@@ -9,7 +9,15 @@ const popover: PopoverDesignTokens = {
     },
     content: {
         padding: '1.25rem'
-    }
+    },
+    // The arrow is drawn with border-trick pseudo-elements and has no design token to disable it.
+    // Must be a plain string (not a function): the Nuxt module serializes the preset into runtime config
+    css: `
+        .p-popover::before,
+        .p-popover::after {
+            display: none;
+        }
+    `
 };
 
 export default popover;
