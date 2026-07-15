@@ -21,6 +21,7 @@
         v-model:visible="isMobileOpen"
         class="md:!hidden !w-full"
         :modal="true"
+        :block-scroll="true"
         :position="isRight ? 'right' : 'left'"
         :pt="{
             root: { style: 'border: none' }
