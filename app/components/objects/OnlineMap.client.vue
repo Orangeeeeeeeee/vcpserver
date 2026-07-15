@@ -64,7 +64,8 @@ const emit = defineEmits<{
     showList: [];
 }>();
 
-const { visibleVehicles, groups, mapLayer, overlays } = useOnlineFleetContext();
+const { visibleVehicles, groups, mapLayer, overlays, focusRequest } =
+    useOnlineFleetContext();
 
 /** Shared Leaflet + Mapbox tiles plumbing (creation, layer switch, cleanup) */
 const { init, getMap, zoomIn, zoomOut, toggleFullscreen } = useLeafletMap({
@@ -77,8 +78,8 @@ const wrapperRef = useTemplateRef<HTMLDivElement>('wrapperRef');
 /** Whether the map search box is open */
 const searchOpen = ref<boolean>(false);
 
-/** Zoom level the map flies to when a search result is picked */
-const SEARCH_FOCUS_ZOOM = 15;
+/** Minimum zoom level the map flies to when a vehicle is focused */
+const FOCUS_ZOOM = 15;
 
 /** Marker layer; created on mount on top of the shared map */
 let markersLayer: L.LayerGroup | null = null;
@@ -110,6 +111,7 @@ const renderMarkers = (): void => {
                 opacity: 1
             }
         );
+        marker.on('click', () => focusVehicle(vehicle));
         markersLayer.addLayer(marker);
         markerById.set(vehicle.id, marker);
     }
@@ -129,14 +131,23 @@ onMounted(async (): Promise<void> => {
 /** Markers follow panel filters and group visibility */
 watch(visibleVehicles, renderMarkers);
 
+/** Focus requests from the panel (vehicle name clicks) */
+watch(focusRequest, (request) => {
+    if (request) focusVehicle(request.vehicle);
+});
+
 /**
  * Flies the map to a vehicle, pulses its marker and closes the search box.
- * @param {OnlineVehicle} vehicle Selected search result.
+ * Keeps the current zoom when the user is already closer than {@link FOCUS_ZOOM}.
+ * @param {OnlineVehicle} vehicle Vehicle picked in search or clicked on the map.
  */
 const focusVehicle = (vehicle: OnlineVehicle): void => {
-    getMap()?.flyTo([vehicle.lat, vehicle.lng], SEARCH_FOCUS_ZOOM, {
-        duration: 0.75
-    });
+    const map = getMap();
+    map?.flyTo(
+        [vehicle.lat, vehicle.lng],
+        Math.max(map.getZoom(), FOCUS_ZOOM),
+        { duration: 0.75 }
+    );
     const element = markerById.get(vehicle.id)?.getElement();
     if (element) {
         element.classList.remove('online-marker-active');

@@ -52,6 +52,11 @@ provide(ONLINE_FLEET_KEY, fleet);
 /** Panel visibility switch below lg; the map shows by default */
 const view = ref<PanelMapLayoutView>('map');
 
+/** Focusing a vehicle from the panel reveals the map below lg */
+watch(fleet.focusRequest, (request) => {
+    if (request) view.value = 'map';
+});
+
 /** Map renders only when the Mapbox token is configured */
 const hasToken = computed<boolean>(() =>
     Boolean(useRuntimeConfig().public.mapboxToken)

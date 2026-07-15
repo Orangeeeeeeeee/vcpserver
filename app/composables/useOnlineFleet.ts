@@ -186,6 +186,18 @@ export const useOnlineFleet = () => {
         if (key === 'toggleB') toggleB.value = false;
     };
 
+    /**
+     * Pending «fly the map to this vehicle» request (panel card / marker
+     * click). Wrapped in a fresh object per request so repeat clicks on the
+     * same vehicle still trigger the map watcher.
+     */
+    const focusRequest = shallowRef<{ vehicle: OnlineVehicle } | null>(null);
+
+    /** Asks the map to fly to the vehicle and pulse its marker */
+    const requestFocus = (vehicle: OnlineVehicle): void => {
+        focusRequest.value = { vehicle };
+    };
+
     /** Map base layer + mock overlay toggles (geo-zones on, per the mockup) */
     const mapLayer = ref<OnlineMapLayer>('streets');
     const overlays = reactive<OnlineMapOverlays>({
@@ -211,6 +223,8 @@ export const useOnlineFleet = () => {
         toggleB,
         filterChips,
         removeChip,
+        focusRequest,
+        requestFocus,
         mapLayer,
         overlays
     };

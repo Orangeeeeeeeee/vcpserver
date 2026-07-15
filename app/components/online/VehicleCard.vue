@@ -15,11 +15,14 @@
                 />
             </span>
             <div class="flex min-w-0 flex-col">
-                <span
-                    class="font-semibold text-sm md:text-base text-surface-900 truncate"
+                <button
+                    type="button"
+                    class="cursor-pointer self-start max-w-full truncate text-left font-semibold text-sm md:text-base text-surface-900 transition-colors hover:text-primary-900"
+                    :title="$t('objects.online.card.showOnMap')"
+                    @click="requestFocus(vehicle)"
                 >
                     {{ vehicle.name }}
-                </span>
+                </button>
                 <span class="text-xs md:text-sm text-surface-800">
                     ID: {{ vehicle.vehicleId }}
                 </span>
@@ -130,12 +133,16 @@
 import type { OnlineVehicle } from '~/types/online';
 import { ONLINE_STATUS_META, type OnlineStatusMeta } from '~/constants/online';
 import { ROUTES } from '~/constants/routes';
+import { useOnlineFleetContext } from '~/composables/useOnlineFleet';
 
 interface VehicleCardProps {
     vehicle: OnlineVehicle;
 }
 
 const props = defineProps<VehicleCardProps>();
+
+/** Flies the map to the vehicle when its name is clicked */
+const { requestFocus } = useOnlineFleetContext();
 
 /** Whether the extra details block is expanded */
 const expanded = ref<boolean>(false);
