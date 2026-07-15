@@ -104,66 +104,68 @@
                 <!-- Resources -->
                 <div
                     v-if="resourcePairs.length"
-                    class="flex flex-col border-b border-surface-200 py-4"
+                    class="border-b border-surface-200 py-4"
                 >
-                    <span class="mb-2.5 font-semibold text-surface-950">
-                        {{ $t('routes.detail.resources') }}
-                    </span>
-                    <div
-                        v-for="(pair, i) in visiblePairs"
-                        :key="pair.id"
-                        class="flex flex-col gap-1 py-2.5 text-sm text-surface-900"
-                        :class="{
-                            'border-b border-surface-200':
-                                i < visiblePairs.length - 1 || canToggle
-                        }"
-                    >
-                        <span
-                            v-if="pair.vehicleLabel"
-                            class="flex items-center gap-1.5"
-                        >
-                            <Icon
-                                name="tabler:truck"
-                                class="size-4 shrink-0 text-surface-700"
-                            />
-                            {{ pair.vehicleLabel }}
+                    <SharedAnimatedHeight class="flex flex-col">
+                        <span class="mb-2.5 font-semibold text-surface-950">
+                            {{ $t('routes.detail.resources') }}
                         </span>
-                        <span
-                            v-if="pair.driverLabel"
-                            class="flex items-center gap-1.5"
+                        <div
+                            v-for="(pair, i) in visiblePairs"
+                            :key="pair.id"
+                            class="flex flex-col gap-1 py-2.5 text-sm text-surface-900"
+                            :class="{
+                                'border-b border-surface-200':
+                                    i < visiblePairs.length - 1 || canToggle
+                            }"
                         >
-                            <Icon
-                                name="tabler:user"
-                                class="size-4 shrink-0 text-surface-700"
-                            />
-                            {{ pair.driverLabel }}
-                        </span>
-                    </div>
-                    <Button
-                        v-if="canToggle"
-                        text
-                        severity="secondary"
-                        class="mt-1 self-center text-sm font-medium text-surface-900"
-                        @click="resourcesExpanded = !resourcesExpanded"
-                    >
-                        {{
-                            $t(
-                                resourcesExpanded
-                                    ? 'routes.detail.collapse'
-                                    : 'routes.detail.expand'
-                            )
-                        }}
-                        <template #icon>
-                            <Icon
-                                :name="
+                            <span
+                                v-if="pair.vehicleLabel"
+                                class="flex items-center gap-1.5"
+                            >
+                                <Icon
+                                    name="tabler:truck"
+                                    class="size-4 shrink-0 text-surface-700"
+                                />
+                                {{ pair.vehicleLabel }}
+                            </span>
+                            <span
+                                v-if="pair.driverLabel"
+                                class="flex items-center gap-1.5"
+                            >
+                                <Icon
+                                    name="tabler:user"
+                                    class="size-4 shrink-0 text-surface-700"
+                                />
+                                {{ pair.driverLabel }}
+                            </span>
+                        </div>
+                        <Button
+                            v-if="canToggle"
+                            text
+                            severity="secondary"
+                            class="mt-1 self-center text-sm font-medium text-surface-900"
+                            @click="resourcesExpanded = !resourcesExpanded"
+                        >
+                            {{
+                                $t(
                                     resourcesExpanded
-                                        ? 'tabler:chevron-up'
-                                        : 'tabler:chevron-down'
-                                "
-                                class="size-4"
-                            />
-                        </template>
-                    </Button>
+                                        ? 'routes.detail.collapse'
+                                        : 'routes.detail.expand'
+                                )
+                            }}
+                            <template #icon>
+                                <Icon
+                                    :name="
+                                        resourcesExpanded
+                                            ? 'tabler:chevron-up'
+                                            : 'tabler:chevron-down'
+                                    "
+                                    class="size-4"
+                                />
+                            </template>
+                        </Button>
+                    </SharedAnimatedHeight>
                 </div>
 
                 <!-- Points timeline -->

@@ -67,35 +67,40 @@
             </div>
 
             <!-- Expanded details -->
-            <div
-                v-if="expanded"
-                class="flex flex-col gap-2 text-xs md:text-sm text-surface-800 md:gap-1"
-            >
-                <span class="flex items-center gap-1">
-                    <Icon
-                        name="tabler:truck"
-                        class="size-[1.125rem] shrink-0 text-surface-600"
-                    />
-                    {{ $t(vehicle.typeKey) }}
-                </span>
-                <span class="flex items-center gap-1">
-                    <Icon
-                        name="tabler:user"
-                        class="size-[1.125rem] shrink-0 text-surface-600"
-                    />
-                    {{ vehicle.driver }}
-                </span>
-                <Tag v-if="vehicle.passenger" class="w-fit self-start text-xs">
-                    <Icon name="tabler:users" class="size-3.5" />
-                    {{ $t('objects.online.card.passengerBadge') }}
-                </Tag>
-                <p
-                    v-if="vehicle.comment"
-                    class="text-sm/tight text-surface-700"
+            <SharedCollapseTransition>
+                <div
+                    v-if="expanded"
+                    class="flex flex-col gap-2 text-xs md:text-sm text-surface-800 md:gap-1"
                 >
-                    {{ vehicle.comment }}
-                </p>
-            </div>
+                    <span class="flex items-center gap-1">
+                        <Icon
+                            name="tabler:truck"
+                            class="size-[1.125rem] shrink-0 text-surface-600"
+                        />
+                        {{ $t(vehicle.typeKey) }}
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <Icon
+                            name="tabler:user"
+                            class="size-[1.125rem] shrink-0 text-surface-600"
+                        />
+                        {{ vehicle.driver }}
+                    </span>
+                    <Tag
+                        v-if="vehicle.passenger"
+                        class="w-fit self-start text-xs"
+                    >
+                        <Icon name="tabler:users" class="size-3.5" />
+                        {{ $t('objects.online.card.passengerBadge') }}
+                    </Tag>
+                    <p
+                        v-if="vehicle.comment"
+                        class="text-sm/tight text-surface-700"
+                    >
+                        {{ vehicle.comment }}
+                    </p>
+                </div>
+            </SharedCollapseTransition>
         </div>
 
         <!-- Actions -->

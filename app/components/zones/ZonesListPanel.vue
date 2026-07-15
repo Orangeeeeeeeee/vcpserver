@@ -22,7 +22,7 @@
             </div>
 
             <!-- Active filter chips -->
-            <div
+            <SharedAnimatedHeight
                 v-if="filterChips.length"
                 class="flex flex-wrap items-center gap-1.5"
             >
@@ -47,7 +47,7 @@
                     v-model="showAllChips"
                     :count="hiddenCount"
                 />
-            </div>
+            </SharedAnimatedHeight>
         </div>
 
         <!-- Zone cards -->

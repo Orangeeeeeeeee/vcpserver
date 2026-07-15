@@ -71,52 +71,56 @@
                 {{ $t(section.titleKey) }}
             </span>
             <div class="rounded-lg border border-surface-300 p-3">
-                <div
-                    v-for="(event, index) in section.visibleEvents"
-                    :key="`${event.vehicleId}:${event.time}:${index}`"
-                    class="flex items-center gap-2 border-b border-surface-200 last:border-b-0 py-2 first:pt-0 last:pb-0"
-                >
-                    <Icon
-                        :name="vehicleMeta(event.vehicleId).icon"
-                        class="size-4 shrink-0 text-surface-600"
-                    />
-                    <span
-                        class="min-w-0 flex-1 truncate text-sm text-surface-900"
+                <SharedAnimatedHeight>
+                    <div
+                        v-for="(event, index) in section.visibleEvents"
+                        :key="`${event.vehicleId}:${event.time}:${index}`"
+                        class="flex items-center gap-2 border-b border-surface-200 last:border-b-0 py-2 first:pt-0 last:pb-0"
                     >
-                        {{ vehicleMeta(event.vehicleId).label }}
-                    </span>
-                    <div class="flex shrink-0 flex-col items-end leading-none">
-                        <span class="text-sm font-medium text-surface-900">
-                            {{ event.time }}
+                        <Icon
+                            :name="vehicleMeta(event.vehicleId).icon"
+                            class="size-4 shrink-0 text-surface-600"
+                        />
+                        <span
+                            class="min-w-0 flex-1 truncate text-sm text-surface-900"
+                        >
+                            {{ vehicleMeta(event.vehicleId).label }}
                         </span>
-                        <span class="text-xs text-surface-800">
-                            {{ event.date }}
-                        </span>
+                        <div
+                            class="flex shrink-0 flex-col items-end leading-none"
+                        >
+                            <span class="text-sm font-medium text-surface-900">
+                                {{ event.time }}
+                            </span>
+                            <span class="text-xs text-surface-800">
+                                {{ event.date }}
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <button
-                    v-if="section.hasHiddenEvents"
-                    type="button"
-                    class="flex w-full cursor-pointer items-center justify-center gap-1 p-3 text-sm text-surface-800 transition-colors hover:text-surface-950"
-                    @click="
-                        expandedSections[section.key] =
-                            !expandedSections[section.key]
-                    "
-                >
-                    {{
-                        expandedSections[section.key]
-                            ? $t('zones.list.collapse')
-                            : $t('zones.list.expand')
-                    }}
-                    <Icon
-                        :name="
-                            expandedSections[section.key]
-                                ? 'tabler:chevron-up'
-                                : 'tabler:chevron-down'
+                    <button
+                        v-if="section.hasHiddenEvents"
+                        type="button"
+                        class="flex w-full cursor-pointer items-center justify-center gap-1 p-3 text-sm text-surface-800 transition-colors hover:text-surface-950"
+                        @click="
+                            expandedSections[section.key] =
+                                !expandedSections[section.key]
                         "
-                        class="size-4"
-                    />
-                </button>
+                    >
+                        {{
+                            expandedSections[section.key]
+                                ? $t('zones.list.collapse')
+                                : $t('zones.list.expand')
+                        }}
+                        <Icon
+                            :name="
+                                expandedSections[section.key]
+                                    ? 'tabler:chevron-up'
+                                    : 'tabler:chevron-down'
+                            "
+                            class="size-4"
+                        />
+                    </button>
+                </SharedAnimatedHeight>
             </div>
         </div>
 
@@ -127,9 +131,7 @@
                 :key="tile.labelKey"
                 class="flex flex-col gap-0.5 rounded-lg border border-surface-300 px-4 py-3"
             >
-                <span
-                    class="flex items-center gap-1.5 text-surface-950"
-                >
+                <span class="flex items-center gap-1.5 text-surface-950">
                     <Icon
                         name="tabler:clock"
                         class="size-5 shrink-0 text-surface-700"

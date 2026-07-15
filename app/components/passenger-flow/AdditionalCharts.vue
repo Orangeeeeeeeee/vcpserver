@@ -9,32 +9,46 @@
             <h2 class="text-lg text-surface-900">
                 {{ $t('passengerFlow.additionalCharts.caption') }}
             </h2>
-            <Icon :name="open ? 'tabler:chevron-up' : 'tabler:chevron-down'" class="size-5 text-surface-700" />
+            <Icon
+                :name="open ? 'tabler:chevron-up' : 'tabler:chevron-down'"
+                class="size-5 text-surface-700"
+            />
         </button>
 
-        <div v-show="open" class="grid grid-cols-6 gap-4 mt-4">
-            <div
-                v-for="(chart, index) in charts"
-                :key="chart.id"
-                :class="[
-                    'p-4 pb-1 border border-surface-300 rounded-md',
-                    index === 0 || index === 1 ? 'col-span-6 md:col-span-3 xl:col-span-3' : 'col-span-6 md:col-span-3 xl:col-span-2',
-                    index === 4 ? 'col-span-6 md:col-span-6 xl:col-span-2' : 'col-span-6 md:col-span-3 xl:col-span-2'
-                ]"
-            >
-                <div class="flex justify-between items-basearea mb-4">
-                    <h2 v-if="chart.title" class="text-lg text-surface-900">
-                        {{ chart.title }}
-                    </h2>
+        <SharedCollapseTransition>
+            <div v-show="open">
+                <div class="grid grid-cols-6 gap-4 mt-4">
+                    <div
+                        v-for="(chart, index) in charts"
+                        :key="chart.id"
+                        :class="[
+                            'p-4 pb-1 border border-surface-300 rounded-md',
+                            index === 0 || index === 1
+                                ? 'col-span-6 md:col-span-3 xl:col-span-3'
+                                : 'col-span-6 md:col-span-3 xl:col-span-2',
+                            index === 4
+                                ? 'col-span-6 md:col-span-6 xl:col-span-2'
+                                : 'col-span-6 md:col-span-3 xl:col-span-2'
+                        ]"
+                    >
+                        <div class="flex justify-between items-basearea mb-4">
+                            <h2
+                                v-if="chart.title"
+                                class="text-lg text-surface-900"
+                            >
+                                {{ chart.title }}
+                            </h2>
+                        </div>
+                        <PassengerFlowChart
+                            :data="chart.data"
+                            :type="chart.type"
+                            :color="chart.color"
+                            :title="chart.title"
+                        />
+                    </div>
                 </div>
-                <PassengerFlowChart
-                    :data="chart.data"
-                    :type="chart.type"
-                    :color="chart.color"
-                    :title="chart.title"
-                />
             </div>
-        </div>
+        </SharedCollapseTransition>
     </div>
 </template>
 

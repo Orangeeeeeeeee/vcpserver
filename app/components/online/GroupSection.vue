@@ -48,19 +48,21 @@
         </div>
 
         <!-- Vehicles -->
-        <div v-if="state.expanded" class="divide-y divide-surface-200">
-            <OnlineVehicleCard
-                v-for="vehicle in vehicles"
-                :key="vehicle.id"
-                :vehicle="vehicle"
-            />
-            <p
-                v-if="!vehicles.length"
-                class="px-3 py-3 text-sm text-surface-600"
-            >
-                {{ $t('objects.online.group.empty') }}
-            </p>
-        </div>
+        <SharedCollapseTransition>
+            <div v-if="state.expanded" class="divide-y divide-surface-200">
+                <OnlineVehicleCard
+                    v-for="vehicle in vehicles"
+                    :key="vehicle.id"
+                    :vehicle="vehicle"
+                />
+                <p
+                    v-if="!vehicles.length"
+                    class="px-3 py-3 text-sm text-surface-600"
+                >
+                    {{ $t('objects.online.group.empty') }}
+                </p>
+            </div>
+        </SharedCollapseTransition>
     </div>
 </template>
 

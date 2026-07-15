@@ -1,5 +1,5 @@
 <template>
-    <div v-if="hasBindings" class="flex flex-col gap-3">
+    <SharedAnimatedHeight v-if="hasBindings" class="flex flex-col gap-3">
         <ZonesZoneBindingsGroups :chips="visibleGroupChips" />
 
         <ZonesZoneBindingsVehicles
@@ -8,7 +8,7 @@
             :zone-color="zone.color"
             :expandable="hasHiddenItems"
         />
-    </div>
+    </SharedAnimatedHeight>
 </template>
 
 <script lang="ts">

@@ -130,6 +130,7 @@ VCPServer — веб-застосунок на Nuxt 4 з використанн�
 - Тексти інтерфейсу виносити у файли локалізації (`i18n/locales/ua.json`), у шаблонах використовувати `$t('key')` або `useI18n()` composable
 - Сторінки вказують лейаут через `definePageMeta({ layout: 'layoutName' })`
 - Телепорти у контейнери `PageLayout` (`#page-actions-header`, `#page-actions-target`, `#page-breadcrumbs-target`) — лише через `<SharedClientTeleport :to>` (обгортка `ClientOnly` + `Teleport`), НЕ голий `<Teleport>`: Nuxt рендерить SSR-телепорти лише в `#teleports`, голий телепорт спричиняє hydration mismatch
+- Розгортання/згортання контенту анімувати slide-up/slide-down (WAAPI, тривалість масштабується від висоти — хелпери в `utils/animation.ts`, поважають `prefers-reduced-motion`): `v-if`/`v-show`-блоки — через `<SharedCollapseTransition>` (слот — один блоковий елемент без власних вертикальних margin); «показати ще»-списки зі `slice` — обгорткою `<SharedAnimatedHeight>` (ResizeObserver, атрибути/класи падають на внутрішній контейнер, розмітку списку міняти не треба). Винятки — картки груп (`ObjectsGroupCard`, `RoutesGroupsCard`) і водіїв: без анімації
 - Коментарі та JSDoc писати **англійською мовою**
 - Весь TypeScript-код повинен мати **JSDoc-коментарі**: функції, composables, утиліти, константи
 - Для всіх функцій та composables додавати **явні типи** параметрів та повертаємих значень

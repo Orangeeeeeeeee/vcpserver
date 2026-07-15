@@ -46,19 +46,21 @@
         </button>
 
         <!-- Expanded body -->
-        <div v-if="expanded" class="flex flex-col gap-3">
-            <ZonesZoneBindingsSummary :zone="zone" />
+        <SharedCollapseTransition>
+            <div v-if="expanded" class="flex flex-col gap-3">
+                <ZonesZoneBindingsSummary :zone="zone" />
 
-            <div class="pt-0 p-4">
-                <Button
-                    :label="$t('zones.list.details')"
-                    severity="secondary"
-                    fluid
-                    size="small"
-                    @click="emit('details')"
-                />
+                <div class="pt-0 p-4">
+                    <Button
+                        :label="$t('zones.list.details')"
+                        severity="secondary"
+                        fluid
+                        size="small"
+                        @click="emit('details')"
+                    />
+                </div>
             </div>
-        </div>
+        </SharedCollapseTransition>
     </div>
 </template>
 
