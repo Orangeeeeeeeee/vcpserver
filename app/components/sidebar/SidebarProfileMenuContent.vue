@@ -18,7 +18,7 @@
         >
             <button
                 type="button"
-                class="flex items-center gap-3 p-3 text-sm text-surface-800 hover:bg-surface-200 cursor-pointer text-left rounded-[4px]"
+                class="flex items-center gap-3 px-3 py-2 text-sm text-surface-800 hover:bg-surface-200 cursor-pointer text-left rounded-[4px]"
                 @click="emit('action', ROUTES.ACCOUNT_INFO)"
             >
                 <Icon name="tabler:user" class="size-5" />
@@ -27,7 +27,7 @@
 
             <button
                 type="button"
-                class="flex items-center gap-3 p-3 text-sm text-surface-800 hover:bg-surface-200 cursor-pointer text-left rounded-[4px]"
+                class="flex items-center gap-3 px-3 py-2 text-sm text-surface-800 hover:bg-surface-200 cursor-pointer text-left rounded-[4px]"
                 @click="emit('action', ROUTES.ACCOUNT_SETTINGS)"
             >
                 <Icon name="tabler:settings" class="size-5" />
@@ -37,7 +37,7 @@
 
         <button
             type="button"
-            class="flex items-center gap-3 px-4 py-3 text-sm text-red-500 hover:bg-surface-200 cursor-pointer text-left rounded-[4px]"
+            class="flex items-center gap-3 px-3 py-2 text-sm text-red-500 hover:bg-surface-200 cursor-pointer text-left rounded-[4px]"
             @click="emit('action', ROUTES.LOGIN)"
         >
             <Icon name="tabler:logout" class="size-5" />
