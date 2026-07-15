@@ -16,7 +16,10 @@
                 />
             </SharedAppFormField>
 
-            <div v-else class="grid grid-cols-[1fr_minmax(8rem,auto)] gap-3">
+            <div
+                v-else
+                class="grid grid-cols-[1fr_1fr] md:grid-cols-[auto_max(9.125rem)] gap-2"
+            >
                 <SharedAppFormField
                     :id="`routeEditPoint-${point.id}`"
                     name="pointName"
