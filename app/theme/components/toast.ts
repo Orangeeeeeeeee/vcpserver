@@ -6,8 +6,8 @@ const toast: ToastDesignTokens = {
         gap: '0.75rem'
     },
     css: `
-        .p-toast-top-right .p-toast-message {
-            margin-left: 1.25rem;
+        .p-toast {
+            max-width: calc(100vw - 2.5rem);
         }
     `
 };
