@@ -92,7 +92,7 @@
             </template>
 
             <template #cell-routePath="{ row }">
-                <span class="block max-w-40 truncate text-surface-900">
+                <span class="block max-w-120 truncate text-surface-900">
                     {{ row.routePath }}
                 </span>
             </template>
@@ -339,28 +339,27 @@ const columns = computed<TableColumn[]>(() => [
     {
         field: 'routePath',
         header: t('routes.list.columns.route'),
-        width: '200px'
     },
     {
         field: 'distanceKm',
         header: t('routes.list.columns.params'),
         sortable: true,
-        width: '120px'
+        width: '150px'
     },
     {
         field: 'pointsCount',
         header: t('routes.list.columns.points'),
         sortable: true,
-        width: '90px'
+        width: '120px'
     },
     {
         field: 'groups',
-        header: t('routes.list.columns.groups')
+        header: t('routes.list.columns.groups'),
+        width: '350px'
     },
     {
         field: 'resources',
         header: t('routes.list.columns.resources'),
-        width: '250px'
     },
     {
         field: 'actions',
