@@ -57,7 +57,7 @@
                 </span>
             </template>
             <template #cell-vehicle="{ row }">
-                <div class="flex items-center lg:items-start gap-1">
+                <div class="flex gap-1">
                     <Icon
                         :name="VEHICLE_MOTION_META[row.motionStatus].icon"
                         :class="VEHICLE_MOTION_META[row.motionStatus].class"
