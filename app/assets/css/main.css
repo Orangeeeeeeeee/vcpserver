@@ -132,3 +132,10 @@ body {
 input {
     cursor: pointer;
 }
+
+/* Leaflet makes vector shapes focusable; hide the browser focus rectangle
+   drawn around a zone polygon when it is clicked/tapped */
+.leaflet-interactive:focus,
+.leaflet-interactive:focus-visible {
+    outline: none;
+}
