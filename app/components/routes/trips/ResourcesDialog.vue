@@ -6,10 +6,10 @@
         :style="{ maxWidth: '64rem', width: '100%' }"
     >
         <template #header>
-            <div class="flex w-full items-center justify-center gap-2">
+            <div class="flex w-full lg:items-center justify-center gap-2">
                 <Icon
                     name="tabler:route"
-                    class="size-5 shrink-0 text-surface-800"
+                    class="size-7 lg:size-6 shrink-0 text-surface-800 mt-1"
                 />
                 <UiTypography variant="h3">{{ routePath }}</UiTypography>
             </div>
@@ -21,39 +21,40 @@
             paginator
             :rows="6"
             row-key="id"
+            hoverable
         >
             <template #cell-resources="{ row }">
                 <div class="flex flex-col gap-1 text-surface-900">
-                    <span class="flex items-center gap-1.5">
+                    <span class="flex gap-1.5 max-w-11/12 truncate">
                         <Icon
                             name="tabler:truck"
-                            class="size-4 shrink-0 text-surface-700"
+                            class="size-5 shrink-0 text-surface-600"
                         />
-                        {{ row.vehicleLabel }}
+                        <span class="text-surface-800">{{ row.vehicleLabel }}</span>
                     </span>
-                    <span class="flex items-center gap-1.5">
+                    <span class="flex gap-1.5">
                         <Icon
                             name="tabler:user"
-                            class="size-4 shrink-0 text-surface-700"
+                            class="size-5 shrink-0 text-surface-600"
                         />
-                        {{ row.driverLabel }}
+                        <span class="text-surface-700 max-w-11/12 truncate">{{ row.driverLabel }}</span>
                     </span>
                 </div>
             </template>
 
             <template #cell-status="{ row }">
-                <UiColorChip :label="row.statusLabel" :color="row.statusColor" />
+                <div><UiColorChip :label="row.statusLabel" :color="row.statusColor" /></div>
             </template>
 
             <template #cell-start="{ row }">
-                <div class="flex flex-col gap-[0.125rem] leading-snug">
-                    <span>{{ row.startDateLabel }}</span>
-                    <span>{{ row.startTimeLabel }}</span>
+                <div class="flex flex-col gap-[0.125rem] leading-snug text-sm">
+                    <span class="text-surface-800 font-medium whitespace-nowrap">{{ row.startDateLabel }}</span>
+                    <span class="text-surface-700 whitespace-nowrap">{{ row.startTimeLabel }}</span>
                 </div>
             </template>
 
             <template #cell-progress="{ row }">
-                <div class="flex flex-col gap-1.5">
+                <div class="flex flex-col gap-2">
                     <span class="font-medium text-surface-950">
                         {{
                             $t('routes.trips.resources.progressValue', {
@@ -64,7 +65,7 @@
                     </span>
                     <div class="flex items-center gap-2">
                         <div
-                            class="h-1.5 w-20 overflow-hidden rounded-full bg-surface-200"
+                            class="h-2 w-20 overflow-hidden rounded-full bg-surface-300"
                         >
                             <div
                                 class="h-full rounded-full"
@@ -76,7 +77,7 @@
                                 :style="{ width: `${row.barPercent}%` }"
                             />
                         </div>
-                        <span class="text-sm text-surface-700">
+                        <span class="text-sm text-surface-800">
                             {{ row.progressPercent }}%
                         </span>
                     </div>
@@ -86,7 +87,7 @@
             <template #cell-time="{ row }">
                 <div class="flex flex-col gap-[0.125rem] leading-snug">
                     <span
-                        class="font-medium"
+                        class="font-medium text-surface-800 whitespace-nowrap"
                         :class="
                             row.timeExceeded
                                 ? 'text-red-600'
@@ -95,7 +96,7 @@
                     >
                         {{ row.elapsedLabel }}
                     </span>
-                    <span class="text-surface-600">
+                    <span class="text-surface-700 whitespace-nowrap">
                         {{ row.plannedTimeLabel }}
                     </span>
                 </div>
@@ -156,7 +157,7 @@ const routePath = computed<string>(() => {
 const columns = computed<TableColumn[]>(() => [
     {
         field: 'resources',
-        header: t('routes.trips.resources.columns.resources')
+        header: t('routes.trips.resources.columns.resources'),
     },
     { field: 'status', header: t('routes.trips.resources.columns.status') },
     {

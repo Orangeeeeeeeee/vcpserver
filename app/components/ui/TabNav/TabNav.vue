@@ -1,5 +1,6 @@
 <template>
     <Tabs
+        :key="itemsKey"
         v-model:value="value"
         :class="{ 'tabnav--borderless': !props.border }"
     >
@@ -60,6 +61,17 @@ const props = withDefaults(defineProps<TabNavProps>(), {
     border: true
 });
 const value = defineModel<string>('value');
+
+/**
+ * Identity of the current item set, used as `key` on <Tabs> to force a
+ * remount when the set is swapped. PrimeVue repositions the ink bar only on
+ * value change or active-tab resize, so swapping items while the active
+ * value stays the same would leave the bar at stale coordinates next to the
+ * active tab's own border.
+ */
+const itemsKey = computed<string>(() =>
+    props.items.map((item) => item.value ?? item.to).join('|')
+);
 </script>
 
 <style scoped>
