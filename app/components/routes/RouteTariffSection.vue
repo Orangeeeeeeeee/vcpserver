@@ -45,7 +45,7 @@
             :value="String(index)"
         >
             <AccordionHeader>
-                <RoutesRoutePointChip
+                <UiColorChip
                     :label="group.from.label"
                     :color="tariffColor(index)"
                 />

@@ -39,6 +39,14 @@ export default defineNuxtConfig({
         mode: 'svg',
         customCollections: [{ prefix: 'custom', dir: './app/assets/icons' }]
     },
+    fonts: {
+        defaults: {
+            // Variable-font range: one woff2 per subset covers weights 400-700.
+            // Without this @nuxt/fonts falls back to the fontless default [400],
+            // so medium/semibold/bold render as faux-bold synthesized from 400.
+            weights: ['400 700']
+        }
+    },
     i18n: {
         locales: [{ code: 'ua', language: 'uk-UA', file: 'ua.json' }],
         defaultLocale: 'ua',

@@ -92,7 +92,7 @@
                         {{ $t('routes.detail.groups') }}
                     </span>
                     <div class="flex flex-wrap gap-1.5">
-                        <RoutesRoutePointChip
+                        <UiColorChip
                             v-for="group in routeGroups"
                             :key="group.id"
                             :label="group.name"

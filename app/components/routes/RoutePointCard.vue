@@ -2,7 +2,7 @@
     <div v-if="point" class="flex flex-col gap-4">
         <!-- Role chip + remove (intermediates only) -->
         <div class="flex items-center justify-between gap-2">
-            <RoutesRoutePointChip :label="chipLabel" :color="chipColor" />
+            <UiColorChip :label="chipLabel" :color="chipColor" />
             <Button
                 v-if="kind === 'intermediate'"
                 type="button"

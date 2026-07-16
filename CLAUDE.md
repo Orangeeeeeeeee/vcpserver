@@ -23,6 +23,7 @@ VCPServer — веб-застосунок на Nuxt 4 з використанн�
 - **Фреймворк:** Nuxt 4 з Vue 3 (Composition API)
 - **UI-компоненти:** PrimeVue 4 з кастомним пресетом VcpPreset на основі Aura (`@primevue/nuxt-module`)
 - **Стилі:** Tailwind CSS v4 через Vite-плагін + інтеграція `tailwindcss-primeui`
+- **Шрифти:** `@nuxt/fonts` (Inter — базовий для `body`, Manrope; сімейства оголошені в `@theme inline` у `main.css` як `--font-inter`/`--font-manrope`). У `nuxt.config.ts` задано `fonts.defaults.weights: ['400 700']` (варіативний діапазон) — НЕ видаляти: без цього модуль вантажить лише вагу 400 (дефолт `fontless`), і medium/semibold/bold рендеряться синтезованими з 400. У Storybook `@nuxt/fonts` не працює — там прямі імпорти `@fontsource-variable/inter` та `@fontsource-variable/manrope` у `preview.ts`
 - **Іконки:** `@nuxt/icon` (Iconify, SVG mode), колекція **Tabler Icons** (`tabler:icon-name`). Кастомні SVG — в `app/assets/icons/` з префіксом `custom:` (`<Icon name="custom:logo" />`). В Storybook — `import { Icon } from '@iconify/vue'` з `<Icon icon="tabler:arrow-left" />`
 - **Лінтер:** ESLint через `@nuxt/eslint` (конфіг генерується автоматично у `.nuxt/eslint.config.mjs`) + Prettier для форматування
 - **Інтернаціоналізація:** `@nuxtjs/i18n` (vue-i18n, Composition API mode)

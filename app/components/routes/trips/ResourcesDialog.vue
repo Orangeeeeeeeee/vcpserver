@@ -42,12 +42,7 @@
             </template>
 
             <template #cell-status="{ row }">
-                <span
-                    class="inline-flex rounded-md px-2 py-0.5 text-xs font-medium whitespace-nowrap"
-                    :class="row.statusClass"
-                >
-                    {{ row.statusLabel }}
-                </span>
+                <UiColorChip :label="row.statusLabel" :color="row.statusColor" />
             </template>
 
             <template #cell-start="{ row }">
@@ -112,6 +107,7 @@
 <script setup lang="ts">
 import type { TableColumn } from '~/components/shared/ResponsiveTable';
 import type { Trip } from '~/types/trip';
+import type { PrimitiveColorName } from '~/theme/colors';
 import { TRIP_RESOURCE_STATUS_META } from '~/constants/trip-list';
 
 /** One display row of the trip resources table */
@@ -120,7 +116,7 @@ interface TripResourceRow extends Record<string, unknown> {
     vehicleLabel: string;
     driverLabel: string;
     statusLabel: string;
-    statusClass: string;
+    statusColor: PrimitiveColorName;
     startDateLabel: string;
     startTimeLabel: string;
     progressKm: number;
@@ -211,7 +207,7 @@ const rows = computed<TripResourceRow[]>(() => {
                 drivers.value.find((d) => d.id === resource.driverId)?.name ??
                 '',
             statusLabel: t(meta.labelKey),
-            statusClass: meta.badgeClass,
+            statusColor: meta.badgeColor,
             startDateLabel: formatUaDate(started),
             startTimeLabel: `${started.getHours()}:${String(started.getMinutes()).padStart(2, '0')}`,
             progressKm: resource.progressKm,

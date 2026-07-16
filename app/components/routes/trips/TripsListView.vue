@@ -48,6 +48,7 @@
             paginator
             :rows="6"
             row-key="id"
+            hoverable
         >
             <template #cell-company="{ row }">
                 <div class="flex items-center gap-1">
@@ -66,7 +67,7 @@
             <template #cell-routePath="{ row }">
                 <NuxtLink
                     :to="ROUTES.ROUTE_DETAIL(row.route.id)"
-                    class="text-sm block w-full max-w-40 truncate font-medium text-surface-900 underline underline-offset-4 ьф"
+                    class="text-sm block w-full max-w-11/12 truncate font-medium text-surface-900 underline underline-offset-4"
                 >
                     {{ row.routePath }}
                 </NuxtLink>
@@ -74,26 +75,23 @@
 
             <template #cell-status="{ row }">
                 <div>
-                    <span
-                        class="rounded-md px-2 py-0.5 text-xs font-medium whitespace-nowrap"
-                        :class="row.statusClass"
-                    >
-                        {{ row.statusLabel }}
-                    </span>
+                    <UiColorChip
+                        :label="row.statusLabel"
+                        :color="row.statusColor"
+                    />
                 </div>
             </template>
 
             <template #cell-groups="{ row }">
                 <div class="flex flex-wrap items-center gap-1.5">
-                    <RoutesRoutePointChip
+                    <UiColorChip
                         v-for="group in row.visibleGroups"
                         :key="group.id"
                         :label="group.name"
                         :color="group.color"
                     />
-                    <Chip
+                    <UiColorChip
                         v-if="row.extraGroupsCount > 0"
-                        class="text-xs font-medium"
                         :label="`+${row.extraGroupsCount}`"
                     />
                 </div>
@@ -116,7 +114,7 @@
 
             <template #cell-startAt="{ row }">
                 <div class="flex flex-col gap-[0.125rem] leading-snug">
-                    <span class="text-surface-800">
+                    <span class="text-surface-800 font-medium">
                         {{ row.startDateLabel }}
                     </span>
                     <span class="text-surface-700">
@@ -127,7 +125,7 @@
 
             <template #cell-finishAt="{ row }">
                 <div class="flex flex-col gap-[0.125rem] leading-snug">
-                    <span class="text-surface-800">
+                    <span class="text-surface-800 font-medium">
                         {{ row.finishDateLabel }}
                     </span>
                     <span class="text-surface-700">
@@ -140,7 +138,7 @@
                 <div class="flex flex-col gap-1 text-surface-900 w-full">
                     <span
                         v-if="row.vehicleLabel"
-                        class="flex items-center gap-1.5 max-w-40"
+                        class="flex items-center gap-1.5 max-w-11/12"
                     >
                         <Icon
                             name="tabler:truck"
@@ -152,7 +150,7 @@
                     </span>
                     <span
                         v-if="row.driverLabel"
-                        class="flex items-center gap-1.5 max-w-40 truncate"
+                        class="flex items-center gap-1.5 max-w-11/12"
                     >
                         <Icon
                             name="tabler:user"
@@ -215,12 +213,10 @@
 
             <template #cell-trackMatchPercent="{ row }">
                 <div>
-                    <span
-                        class="inline-flex rounded-md px-2 py-0.5 text-xs font-medium"
-                        :class="trackMatchClass(row.trackMatchPercent)"
-                    >
-                        {{ row.trackMatchPercent }}%
-                    </span>
+                    <UiColorChip
+                        :label="`${row.trackMatchPercent}%`"
+                        :color="trackMatchColor(row.trackMatchPercent)"
+                    />
                 </div>
             </template>
 
@@ -300,8 +296,9 @@ import type { TableColumn } from '~/components/shared/ResponsiveTable';
 import type { GroupColor } from '~/types/group';
 import type { Route } from '~/types/route';
 import type { Trip } from '~/types/trip';
+import type { PrimitiveColorName } from '~/theme/colors';
 import { ROUTES } from '~/constants/routes';
-import { TRIP_STATUS_META, trackMatchClass } from '~/constants/trip-list';
+import { TRIP_STATUS_META, trackMatchColor } from '~/constants/trip-list';
 import { COMPANY_BADGES } from '~/mocks/vehicles';
 import { useTripFilters, TRIP_FILTERS_KEY } from '~/composables/useTripFilters';
 
@@ -318,7 +315,7 @@ interface TripListRow extends Record<string, unknown> {
     /** "start → finish" summary of the «Маршрут» column */
     routePath: string;
     statusLabel: string;
-    statusClass: string;
+    statusColor: PrimitiveColorName;
     /** First groups shown as chips; the rest collapse into «+N» */
     visibleGroups: { id: string; name: string; color: GroupColor }[];
     extraGroupsCount: number;
@@ -389,7 +386,6 @@ const columns = computed<TableColumn[]>(() =>
                   field: 'routePath',
                   header: t('routes.trips.list.columns.route'),
                   sortable: true,
-                  width: '200px'
               },
               {
                   field: 'status',
@@ -398,7 +394,9 @@ const columns = computed<TableColumn[]>(() =>
               },
               {
                   field: 'groups',
-                  header: t('routes.trips.list.columns.groups')
+                  header: t('routes.trips.list.columns.groups'),
+                  width: '140px'
+
               },
               {
                   field: 'startAt',
@@ -415,7 +413,6 @@ const columns = computed<TableColumn[]>(() =>
               {
                   field: 'resources',
                   header: t('routes.trips.list.columns.resources'),
-                  width: '150px'
               },
               {
                   field: 'actualDistanceKm',
@@ -452,7 +449,8 @@ const columns = computed<TableColumn[]>(() =>
               },
               {
                   field: 'groups',
-                  header: t('routes.trips.list.columns.groups')
+                  header: t('routes.trips.list.columns.groups'),
+                  width: '140px'
               },
               {
                   field: 'plannedDistanceKm',
@@ -564,7 +562,7 @@ const rows = computed<TripListRow[]>(() => {
                     companyBadge: COMPANY_BADGES[company] ?? '—',
                     routePath: `${start} → ${finish}`,
                     statusLabel: t(statusMeta.labelKey),
-                    statusClass: statusMeta.badgeClass,
+                    statusColor: statusMeta.badgeColor,
                     visibleGroups: tripGroups.slice(0, 2),
                     extraGroupsCount: Math.max(tripGroups.length - 2, 0),
                     plannedDistanceKm: trip.plannedDistanceKm,

@@ -1,5 +1,5 @@
 import type { RoutePointType } from '~/types/route';
-import type { primitiveColors } from '~/theme/colors';
+import type { PrimitiveColorName } from '~/theme/colors';
 
 /** A route point type paired with its i18n label key */
 export interface RoutePointTypeOption {
@@ -34,7 +34,7 @@ export const ROUTE_POINT_RADIUS = {
 } as const;
 
 /** Palette key of a route point accent color (maps to `primitiveColors`) */
-export type RoutePointColor = keyof typeof primitiveColors;
+export type RoutePointColor = PrimitiveColorName;
 
 /** Accent color of the start point badge and marker */
 export const ROUTE_START_COLOR: RoutePointColor = 'indigo';

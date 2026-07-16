@@ -126,7 +126,7 @@
 
             <template #cell-groups="{ row }">
                 <div class="flex flex-wrap gap-1.5">
-                    <RoutesRoutePointChip
+                    <UiColorChip
                         v-for="group in row.groups"
                         :key="group.id"
                         :label="group.name"

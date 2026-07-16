@@ -145,3 +145,6 @@ export const primitiveColors = {
         '950': '#3e1d06'
     }
 };
+
+/** Name of a `primitiveColors` palette (also bridged as Tailwind color utilities) */
+export type PrimitiveColorName = keyof typeof primitiveColors;

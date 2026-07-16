@@ -1,6 +1,7 @@
 <template>
     <div
         class="border border-surface-300 rounded-lg md:rounded-xl overflow-hidden"
+        :class="{ 'hover-table': hoverable }"
     >
         <DataTable
             :value="value"
@@ -23,6 +24,7 @@
                 :body-style="col.align ? { textAlign: col.align } : undefined"
                 :header-style="col.align ? { textAlign: col.align } : undefined"
                 :pt="{
+                    sort: { class: 'leading-none'},
                     bodyCell: { 'data-label': col.header },
                     footerCell: {
                         'data-label': col.header,
@@ -32,7 +34,9 @@
             >
                 <template #header>
                     <slot :name="`header-${col.field}`">
-                        {{ col.header }}
+                        <span class="leading-none">
+                            {{ col.header }}
+                        </span>
                     </slot>
                 </template>
                 <template #body="{ data }">
@@ -103,6 +107,8 @@ interface ResponsiveTableProps {
     loading?: boolean;
     /** Optional aggregated row rendered as a highlighted tfoot row */
     footerRow?: TableRow;
+    /** Highlights rows on hover and shows a pointer cursor (for clickable rows) */
+    hoverable?: boolean;
 }
 
 const { footerRow, paginator, value, rows } = withDefaults(defineProps<ResponsiveTableProps>(), {
@@ -111,7 +117,8 @@ const { footerRow, paginator, value, rows } = withDefaults(defineProps<Responsiv
     rowsPerPageOptions: undefined,
     rowKey: undefined,
     loading: false,
-    footerRow: undefined
+    footerRow: undefined,
+    hoverable: false
 });
 
 /** Paginator is rendered only when the data spans more than one page. */
@@ -156,7 +163,7 @@ const onRowClick = (event: { data: TableRow }): void => {
     }
     /* Row = 2-column grid: shared max-content label track + value track,
        so every data-label is as wide as the longest one. */
-    .responsive-table :deep(.p-datatable-tfoot > tr), 
+    .responsive-table :deep(.p-datatable-tfoot > tr),
     .responsive-table :deep(.p-datatable-tbody > tr) {
         display: grid;
         grid-template-columns: max-content 1fr;
@@ -217,10 +224,6 @@ const onRowClick = (event: { data: TableRow }): void => {
 .hover-table :deep(.p-datatable-tbody > tr:hover) {
     background-color: var(--p-surface-200);
     cursor: pointer;
-}
-
-.hover-table :deep(.p-datatable-tbody > tr:hover .p-chip) {
-    background-color: var(--p-surface-300);
 }
 
 .hover-table :deep(.p-datatable-tbody > tr) {

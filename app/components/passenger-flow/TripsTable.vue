@@ -10,7 +10,7 @@
             :columns="columns"
             :footer-row="totalRow"
             paginator
-            class="hover-table"
+            hoverable
             :rows="9"
             row-key="id"
             @row-click="onRowClick"
