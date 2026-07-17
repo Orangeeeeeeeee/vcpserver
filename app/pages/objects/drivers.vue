@@ -56,7 +56,7 @@
         />
 
         <!-- Teleports -->
-        <SharedClientTeleport to="#page-actions-target">
+        <SharedClientTeleport :to="actionsTarget">
             <UiActionButton
                 icon="tabler:plus"
                 :label="$t('objects.add')"
@@ -95,6 +95,12 @@ const { drivers, deleteDriver } = useDrivers();
 /** Shared filter state/options, provided to the DriverFilters popover */
 const filters = useDriverFilters();
 provide(DRIVER_FILTERS_KEY, filters);
+
+const isTablet = useMediaQuery('(min-width: 768px)');
+/** PageLayout slot to teleport the add button into — mobile sits next to title, desktop next to tabs */
+const actionsTarget = computed((): string =>
+    isTablet.value ? '#page-actions-target' : '#page-actions-header'
+);
 
 const searchQuery = ref('');
 const currentPage = ref<number>(0);
