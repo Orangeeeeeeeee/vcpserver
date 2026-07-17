@@ -64,6 +64,11 @@ const multiselect: MultiSelectDesignTokens = {
             flex-wrap: wrap;
         }
 
+        .p-multiselect-label .p-chip {
+            padding-top: 0.35rem;
+            padding-bottom: 0.35rem;
+        }
+
         .p-multiselect-option {
             font-size: 0.875rem;
         }
@@ -71,7 +76,7 @@ const multiselect: MultiSelectDesignTokens = {
         .p-multiselect-empty-message {
             font-size: 0.875rem;
         }
-        
+
         .p-multiselect-label:has(.p-chip) {
             padding: calc(var(--p-multiselect-padding-y) / 2) var(--p-multiselect-padding-x);
         }

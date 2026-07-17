@@ -7,11 +7,13 @@
                 :id="`routeEditPoint-${point.id}`"
                 name="pointName"
                 :label="pointLabel(index)"
+                :error="pointFields(index)?.name.$errors"
             >
                 <InputText
                     :id="`routeEditPoint-${point.id}`"
                     v-model="point.name"
                     :placeholder="$t('routes.edit.points.namePlaceholder')"
+                    :invalid="pointFields(index)?.name.$error"
                     fluid
                 />
             </SharedAppFormField>
@@ -24,11 +26,13 @@
                     :id="`routeEditPoint-${point.id}`"
                     name="pointName"
                     :label="pointLabel(index)"
+                    :error="pointFields(index)?.name.$errors"
                 >
                     <InputText
                         :id="`routeEditPoint-${point.id}`"
                         v-model="point.name"
                         :placeholder="$t('routes.edit.points.namePlaceholder')"
+                        :invalid="pointFields(index)?.name.$error"
                         fluid
                     />
                 </SharedAppFormField>
@@ -37,6 +41,7 @@
                     :id="`routeEditPointTime-${point.id}`"
                     name="pointTime"
                     :label="timeLabel(point)"
+                    :error="pointFields(index)?.timeToPoint.$errors"
                 >
                     <DatePicker
                         v-model="point.timeToPoint"
@@ -44,6 +49,7 @@
                         time-only
                         show-icon
                         icon-display="input"
+                        :invalid="pointFields(index)?.timeToPoint.$error"
                         fluid
                     >
                         <template #inputicon="{ clickCallback }">
@@ -68,12 +74,23 @@ import {
 
 /**
  * «Точки маршруту» tab of the route edit dialog: in-place edits of the
- * point names and travel times. Adding, removing and relocating points is
- * out of scope of the dialog — that stays with the full route form.
+ * point names and travel times (both required). Adding, removing and
+ * relocating points is out of scope of the dialog — that stays with the
+ * full route form.
  */
 
 const { t } = useI18n();
-const { points } = useRouteEditFormContext();
+const { points, r$ } = useRouteEditFormContext();
+
+/** Field statuses of one point row of the regle collection */
+type PointFieldStatuses = (typeof r$.$fields.points.$each)[number]['$fields'];
+
+/**
+ * regle field statuses of the point at the given index.
+ * @param index - Index within {@link points}.
+ */
+const pointFields = (index: number): PointFieldStatuses | undefined =>
+    r$.$fields.points.$each[index]?.$fields;
 
 /**
  * Row label of a point: «Старт», «Фініш», or a numbered «Контрольна точка N»

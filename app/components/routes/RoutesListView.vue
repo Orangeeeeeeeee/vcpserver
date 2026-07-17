@@ -139,7 +139,7 @@
                 <div class="flex flex-col gap-1 text-sm">
                     <span
                         v-if="row.vehicleLabel"
-                        class="flex items-center gap-1.5"
+                        class="flex gap-1.5"
                     >
                         <Icon
                             name="tabler:truck"
@@ -151,7 +151,7 @@
                     </span>
                     <span
                         v-if="row.driverLabel"
-                        class="flex items-center gap-1.5"
+                        class="flex gap-1.5"
                     >
                         <Icon
                             name="tabler:user"
