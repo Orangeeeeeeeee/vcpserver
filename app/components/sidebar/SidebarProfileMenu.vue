@@ -1,7 +1,7 @@
 <template>
     <!-- Desktop popover -->
     <Popover ref="popoverRef" class="hidden md:block">
-        <div class="flex flex-col min-w-64">
+        <div class="flex flex-col min-w-56 -mb-2">
             <SidebarProfileMenuContent @action="onAction" />
         </div>
     </Popover>
