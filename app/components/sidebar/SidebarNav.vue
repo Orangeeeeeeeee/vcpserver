@@ -45,6 +45,15 @@ const route = useRoute();
 const { isCollapsed, isMobileOpen, isRight, toggleCollapse, closeMobile } =
     useSidebar();
 
+/** Matches Tailwind's `lg` breakpoint — sidebar auto-collapses below it */
+const isDesktopWide = useMediaQuery('(min-width: 1024px)');
+
+watch(isDesktopWide, (wide) => {
+    if (!wide) {
+        isCollapsed.value = true;
+    }
+});
+
 watch(
     () => route.path,
     () => {
