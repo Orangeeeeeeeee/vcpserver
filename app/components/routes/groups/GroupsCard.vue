@@ -12,7 +12,9 @@
             ref="cardRef"
             :class="[
                 'bg-surface-100 border border-surface-300 rounded-lg w-full overflow-hidden flex flex-col',
-                expanded ? 'absolute inset-x-0 top-0 z-10 shadow-lg' : 'h-full'
+                expanded
+                    ? 'absolute inset-x-0 top-0 z-10 min-h-full shadow-lg'
+                    : 'h-full'
             ]"
         >
             <!-- Header: status + overflow menu + identity -->
@@ -105,7 +107,7 @@
                 <button
                     v-if="routes.length > COLLAPSED_ROUTES"
                     type="button"
-                    class="mt-auto flex cursor-pointer items-center gap-2 self-start text-sm font-medium text-surface-800 transition-colors hover:text-surface-950"
+                    class="flex cursor-pointer items-center gap-2 self-start text-sm font-medium text-surface-800 transition-colors hover:text-surface-950"
                     @click.stop.prevent="toggleExpanded"
                 >
                     {{ expanded ? labels.collapse : labels.expand }}
