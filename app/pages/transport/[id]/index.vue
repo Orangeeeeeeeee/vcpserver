@@ -106,6 +106,8 @@ interface ChartConfig {
     type: PassengerFlowChartType;
     color: string;
     title: string;
+    /** Unit appended to the tooltip value (e.g. "км", "₴") */
+    valueSuffix?: string;
     data: PassengerFlowDataPoint[];
 }
 
@@ -159,6 +161,7 @@ const transportMainCharts = computed<MainChartConfig[]>(() => [
         color: primitiveColors.sky['500'],
         title: t('passengerFlow.mainCharts.title2'),
         total: `${totals.value.distance} км`,
+        valueSuffix: 'км',
         data: generatePassengerFlowSeries(totals.value.distance, `${transportId.value}-${selectedPeriod.value}`)
     },
     {
@@ -175,6 +178,7 @@ const transportMainCharts = computed<MainChartConfig[]>(() => [
         color: primitiveColors.teal['500'],
         title: t('passengerFlow.mainCharts.title4'),
         total: `${totals.value.profit} грн`,
+        valueSuffix: '₴',
         data: generatePassengerFlowSeries(totals.value.profit, `${transportId.value}-${selectedPeriod.value}`)
     }
 ]);
@@ -185,6 +189,7 @@ const transportCharts = computed<ChartConfig[]>(() => [
         type: 'area',
         color: primitiveColors.teal['500'],
         title: t('passengerFlow.additionalCharts.title1'),
+        valueSuffix: 'км',
         data: generatePassengerFlowSeries(totals.value.trips, `${transportId.value}-1-${selectedPeriod.value}`)
     },
     {
@@ -206,6 +211,7 @@ const transportCharts = computed<ChartConfig[]>(() => [
         type: 'area',
         color: primitiveColors.indigo['500'],
         title: t('passengerFlow.additionalCharts.title4'),
+        valueSuffix: '₴',
         data: generatePassengerFlowSeries(totals.value.profit, `${transportId.value}-4-${selectedPeriod.value}`)
     },
     {
@@ -213,6 +219,7 @@ const transportCharts = computed<ChartConfig[]>(() => [
         type: 'area',
         color: primitiveColors.amber['500'],
         title: t('passengerFlow.additionalCharts.title5'),
+        valueSuffix: '₴',
         data: generatePassengerFlowSeries(totals.value.profit, `${transportId.value}-5-${selectedPeriod.value}`)
     }
 ]);

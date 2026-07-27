@@ -17,6 +17,8 @@ interface ChartConfig {
     type: PassengerFlowChartType;
     color: string;
     title: string;
+    /** Unit appended to the tooltip value (e.g. "км", "₴") */
+    valueSuffix?: string;
     data: PassengerFlowDataPoint[];
 }
 
@@ -58,6 +60,7 @@ const charts = computed<ChartConfig[]>(() => [
         type: 'area',
         color: primitiveColors.teal['500'],
         title: t('passengerFlow.additionalCharts.title1'),
+        valueSuffix: 'км',
         data: generatePassengerFlowSeries(totals.value.avgDistance, `${seed.value}-routes`)
     },
     {
@@ -79,6 +82,7 @@ const charts = computed<ChartConfig[]>(() => [
         type: 'area',
         color: primitiveColors.indigo['500'],
         title: t('passengerFlow.additionalCharts.title4'),
+        valueSuffix: '₴',
         data: generatePassengerFlowSeries(totals.value.avgProfit, `${seed.value}-average_profit`)
     },
     {
@@ -86,6 +90,7 @@ const charts = computed<ChartConfig[]>(() => [
         type: 'area',
         color: primitiveColors.amber['500'],
         title: t('passengerFlow.additionalCharts.title5'),
+        valueSuffix: '₴',
         data: generatePassengerFlowSeries(totals.value.avgPassengerRevenue, `${seed.value}-average_passenger_revenue`)
     }
 ]);

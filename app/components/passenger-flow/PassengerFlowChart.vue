@@ -6,6 +6,7 @@
 
 <script lang="ts">
 import Highcharts from 'highcharts';
+import { surface } from '~/theme/colors';
 
 /**
  * Passenger flow chart data point
@@ -24,12 +25,18 @@ export interface PassengerFlowChartProps {
     type?: PassengerFlowChartType;
     color: string;
     data: PassengerFlowDataPoint[];
+    /** Metric name used as the value label inside the tooltip */
+    title?: string;
+    /** Unit appended to the tooltip value (e.g. "км", "₴") */
+    valueSuffix?: string;
 }
 </script>
 
 <script setup lang="ts">
 const props = withDefaults(defineProps<PassengerFlowChartProps>(), {
     type: 'area',
+    title: undefined,
+    valueSuffix: undefined
 });
 
 const chartContainer = useTemplateRef<HTMLDivElement>('chartContainer');
@@ -59,6 +66,7 @@ const initChart = () => {
         },
         xAxis: {
             categories: times,
+            lineColor: "##F3F3F3",
             labels: {
                 style: {
                     color: '#666'
@@ -91,7 +99,10 @@ const initChart = () => {
                     enabled: false,
                     states: {
                         hover: {
-                            enabled: false
+                            enabled: true,
+                            radius: 4,
+                            fillColor: props.color,
+                            lineWidth: 0
                         }
                     },
                 },
@@ -136,7 +147,26 @@ const initChart = () => {
                 }
             ],
         tooltip: {
-            enabled: false
+            backgroundColor: surface[50],
+            borderColor: surface[300],
+            borderRadius: 8,
+            padding: 10,
+            shadow: false,
+            style: {
+                color: surface[900],
+                fontSize: '13px'
+            },
+            /** Date header + "<metric>: <value> <unit>" for the hovered/tapped point */
+            formatter(this: Highcharts.Point): string {
+                const value = (this.y ?? 0).toLocaleString('uk-UA');
+                const suffix = props.valueSuffix ? ` ${props.valueSuffix}` : '';
+                const label = props.title ? `${props.title}: ` : '';
+
+                return (
+                    `<span style="font-size: 11px; color: ${surface[700]}">${this.category}</span><br/>` +
+                    `${label}<b>${value}${suffix}</b>`
+                );
+            }
         },
         legend: {
             enabled: false

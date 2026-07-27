@@ -50,6 +50,7 @@ const charts = computed<MainChartConfig[]>(() => [
         color: primitiveColors.sky['500'],
         title: t('passengerFlow.mainCharts.title2'),
         total: totals.value.distance,
+        valueSuffix: 'км',
         data: generatePassengerFlowSeries(totals.value.distance, `${seed.value}-distance`)
     },
     {
@@ -66,6 +67,7 @@ const charts = computed<MainChartConfig[]>(() => [
         color: primitiveColors.teal['500'],
         title: t('passengerFlow.mainCharts.title4'),
         total: totals.value.profit,
+        valueSuffix: '₴',
         data: generatePassengerFlowSeries(totals.value.profit, `${seed.value}-revenue`)
     }
 ]);

@@ -44,6 +44,7 @@
                             :type="chart.type"
                             :color="chart.color"
                             :title="chart.title"
+                            :value-suffix="chart.valueSuffix"
                         />
                     </div>
                 </div>
@@ -66,6 +67,8 @@ interface ChartConfig {
     type: PassengerFlowChartType;
     color: string;
     title: string;
+    /** Unit appended to the tooltip value (e.g. "км", "₴") */
+    valueSuffix?: string;
     data: PassengerFlowDataPoint[];
 }
 
