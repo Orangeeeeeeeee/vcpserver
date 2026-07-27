@@ -25,7 +25,7 @@
                         :label="$t('zones.create.fields.company')"
                         :error="r$.$fields.companies.$errors"
                     >
-                        <MultiSelect
+                        <UiMultiSelect
                             v-model="state.companies"
                             input-id="zoneCompany"
                             :options="mockCompanies"
@@ -35,6 +35,7 @@
                             "
                             :invalid="r$.$fields.companies.$error"
                             fluid
+                            show-select-all
                         />
                     </SharedAppFormField>
 
@@ -44,7 +45,7 @@
                         :label="$t('zones.create.fields.type')"
                         :error="r$.$fields.types.$errors"
                     >
-                        <MultiSelect
+                        <UiMultiSelect
                             v-model="state.types"
                             input-id="zoneType"
                             :options="ZONE_TYPE_OPTIONS"

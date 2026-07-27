@@ -3,18 +3,17 @@
         <template #content>
             <SharedClientTeleport to="#page-breadcrumbs-target">
                 <div class="flex flex-wrap items-center gap-3">
-                    <MultiSelect
+                    <UiMultiSelect
                         v-model="multiSelectValue"
-                        :options="allOptions"
-                        :option-label="getOptionLabel"
+                        :options="GROUPS"
                         :placeholder="$t('objects.trackers.allCompanies')"
+                        show-select-all
                         class="w-40 md:w-56 groups-multiselect"
-                        :pt="{ label: { class: 'p-placeholder' }, header: { style: 'display:none' } }"
                     >
                         <template #value="{ value }">
                             {{ displayLabel(value) }}
                         </template>
-                    </MultiSelect>
+                    </UiMultiSelect>
 
                     <PassengerFlowPeriodFilter />
                 </div>
@@ -38,39 +37,26 @@ import { GROUPS } from '~/mocks/passenger-flow';
 const { t } = useI18n();
 const { selectedGroups } = usePassengerFlowGroupFilter();
 
-const ALL = '__all__';
-
-const allOptions = [ALL, ...GROUPS];
-
-/** Returns display label for a given option value */
-const getOptionLabel = (opt: string): string =>
-    opt === ALL ? t('objects.trackers.allCompanies') : opt;
-
 /** Label shown in the trigger when values are selected */
-const displayLabel = (value: string[]): string => {
-    const real = value.filter((v) => v !== ALL);
-    return real.length === 0 || real.length === GROUPS.length
+const displayLabel = (value: string[]): string =>
+    value.length === 0 || value.length === GROUPS.length
         ? t('objects.trackers.allCompanies')
-        : real.join(', ');
-};
+        : value.join(', ');
 
+/**
+ * Bridges the multiselect model to the shared group filter, where an empty
+ * `selectedGroups` means "no filter" (all groups): the full selection
+ * collapses to an empty filter, and an empty filter is displayed as the
+ * full selection.
+ */
 const multiSelectValue = computed<string[]>({
     get() {
-        return selectedGroups.value.length === 0 ? [ALL, ...GROUPS] : selectedGroups.value;
+        return selectedGroups.value.length === 0
+            ? [...GROUPS]
+            : selectedGroups.value;
     },
     set(val: string[]) {
-        const prevAllChecked = selectedGroups.value.length === 0;
-        const newHasAll = val.includes(ALL);
-
-        if (!prevAllChecked && newHasAll) {
-            selectedGroups.value = [];
-        } else if (prevAllChecked && !newHasAll) {
-            selectedGroups.value = val.filter((v) => v !== ALL);
-        } else {
-            const groups = val.filter((v) => v !== ALL);
-            selectedGroups.value = groups.length === GROUPS.length ? [] : groups;
-        }
+        selectedGroups.value = val.length === GROUPS.length ? [] : val;
     }
 });
 </script>
-

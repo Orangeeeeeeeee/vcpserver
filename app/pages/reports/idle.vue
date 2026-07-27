@@ -32,7 +32,7 @@
                 fluid
             />
 
-            <MultiSelect
+            <UiMultiSelect
                 v-model="selectedVehicles"
                 :options="vehicleOptions"
                 option-label="label"
@@ -70,7 +70,7 @@
                         </span>
                     </span>
                 </template>
-            </MultiSelect>
+            </UiMultiSelect>
 
             <Select
                 v-model="geoZone"

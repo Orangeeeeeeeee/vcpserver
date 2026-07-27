@@ -30,7 +30,7 @@
                     <span class="text-sm font-medium text-surface-900">
                         {{ $t('routes.trips.filters.route') }}
                     </span>
-                    <MultiSelect
+                    <UiMultiSelect
                         v-model="state.routeIds"
                         :options="routeOptions"
                         option-label="label"
@@ -42,6 +42,7 @@
                             $t('routes.trips.filters.routePlaceholder')
                         "
                         fluid
+                        show-select-all
                     >
                         <template #chipicon="{ removeCallback }">
                             <Icon
@@ -50,7 +51,7 @@
                                 @click="removeCallback"
                             />
                         </template>
-                    </MultiSelect>
+                    </UiMultiSelect>
                 </div>
 
                 <!-- Date (archive only) -->
@@ -75,7 +76,7 @@
                     <span class="text-sm font-medium text-surface-900">
                         {{ $t('routes.trips.filters.status') }}
                     </span>
-                    <MultiSelect
+                    <UiMultiSelect
                         v-model="state.statuses"
                         :options="statusOptions"
                         option-label="label"
@@ -85,6 +86,7 @@
                             $t('routes.trips.filters.statusPlaceholder')
                         "
                         fluid
+                        show-select-all
                     >
                         <template #chipicon="{ removeCallback }">
                             <Icon
@@ -93,7 +95,7 @@
                                 @click="removeCallback"
                             />
                         </template>
-                    </MultiSelect>
+                    </UiMultiSelect>
                 </div>
 
                 <!-- Vehicle -->
@@ -101,7 +103,7 @@
                     <span class="text-sm font-medium text-surface-900">
                         {{ $t('routes.list.filters.vehicle') }}
                     </span>
-                    <MultiSelect
+                    <UiMultiSelect
                         v-model="state.vehicleIds"
                         :options="vehicleOptions"
                         option-label="label"
@@ -113,6 +115,7 @@
                             $t('routes.list.filters.vehiclePlaceholder')
                         "
                         fluid
+                        show-select-all
                     >
                         <template #chipicon="{ removeCallback }">
                             <Icon
@@ -121,7 +124,7 @@
                                 @click="removeCallback"
                             />
                         </template>
-                    </MultiSelect>
+                    </UiMultiSelect>
                 </div>
 
                 <!-- Driver -->
@@ -129,7 +132,7 @@
                     <span class="text-sm font-medium text-surface-900">
                         {{ $t('routes.list.filters.driver') }}
                     </span>
-                    <MultiSelect
+                    <UiMultiSelect
                         v-model="state.driverIds"
                         :options="driverOptions"
                         option-label="label"
@@ -141,6 +144,7 @@
                             $t('routes.list.filters.driverPlaceholder')
                         "
                         fluid
+                        show-select-all
                     >
                         <template #chipicon="{ removeCallback }">
                             <Icon
@@ -149,7 +153,7 @@
                                 @click="removeCallback"
                             />
                         </template>
-                    </MultiSelect>
+                    </UiMultiSelect>
                 </div>
             </div>
         </Popover>

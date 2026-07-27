@@ -83,7 +83,7 @@
                 :label="$t('objects.trackers.modal.params')"
                 :error="r$.$fields.params.$errors"
             >
-                <MultiSelect
+                <UiMultiSelect
                     id="trackerParams"
                     v-model="state.params"
                     :options="paramsList"
@@ -93,6 +93,7 @@
                     "
                     :invalid="r$.$fields.params.$invalid"
                     fluid
+                    show-select-all
                 />
             </SharedAppFormField>
         </form>

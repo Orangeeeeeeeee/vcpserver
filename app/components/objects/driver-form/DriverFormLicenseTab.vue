@@ -41,7 +41,7 @@
             :label="$t('objects.drivers.modal.licenseCategories')"
             :error="r$.$fields.licenseCategories.$errors"
         >
-            <MultiSelect
+            <UiMultiSelect
                 id="drvLicenseCat"
                 v-model="state.licenseCategories"
                 :options="licenseCategoryOptions"
@@ -51,6 +51,7 @@
                 "
                 :invalid="r$.$fields.licenseCategories.$invalid"
                 fluid
+                show-select-all
             >
                 <template #chipicon="{ removeCallback }">
                     <Icon
@@ -59,7 +60,7 @@
                         @click="removeCallback"
                     />
                 </template>
-            </MultiSelect>
+            </UiMultiSelect>
         </SharedAppFormField>
     </div>
 </template>

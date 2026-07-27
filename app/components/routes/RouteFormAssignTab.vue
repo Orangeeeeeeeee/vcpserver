@@ -9,7 +9,7 @@
             name="vehicles"
             :label="$t('routes.create.assignment.vehicles')"
         >
-            <MultiSelect
+            <UiMultiSelect
                 v-model="state.vehicleIds"
                 input-id="routeVehicles"
                 :options="vehicleOptions"
@@ -21,6 +21,7 @@
                     $t('routes.create.assignment.vehiclesPlaceholder')
                 "
                 fluid
+                show-select-all
             />
         </SharedAppFormField>
 
@@ -29,7 +30,7 @@
             name="groups"
             :label="$t('routes.create.assignment.groups')"
         >
-            <MultiSelect
+            <UiMultiSelect
                 v-model="state.groupIds"
                 input-id="routeGroups"
                 :options="groupOptions"
@@ -39,6 +40,7 @@
                 filter
                 :placeholder="$t('routes.create.assignment.groupsPlaceholder')"
                 fluid
+                show-select-all
             />
         </SharedAppFormField>
     </div>

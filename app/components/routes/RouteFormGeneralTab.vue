@@ -12,7 +12,7 @@
                 :label="$t('routes.create.general.company')"
                 :error="r$.$fields.companies.$errors"
             >
-                <MultiSelect
+                <UiMultiSelect
                     v-model="state.companies"
                     input-id="routeCompanies"
                     :options="mockCompanies"
@@ -22,6 +22,7 @@
                     "
                     :invalid="r$.$fields.companies.$error"
                     fluid
+                    show-select-all
                 />
             </SharedAppFormField>
 

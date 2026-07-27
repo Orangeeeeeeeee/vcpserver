@@ -5,7 +5,7 @@
             name="routes"
             :label="$t('routes.groups.modal.routes')"
         >
-            <MultiSelect
+            <UiMultiSelect
                 id="rtGrpRoutes"
                 v-model="selectedRouteIds"
                 :options="routeOptions"
@@ -15,6 +15,7 @@
                 filter
                 :placeholder="$t('routes.groups.modal.routesPlaceholder')"
                 fluid
+                show-select-all
             >
                 <template #chipicon="{ removeCallback }">
                     <Icon
@@ -23,7 +24,7 @@
                         @click="removeCallback"
                     />
                 </template>
-            </MultiSelect>
+            </UiMultiSelect>
         </SharedAppFormField>
 
         <ul v-if="state.routeIds.length" class="flex flex-col">

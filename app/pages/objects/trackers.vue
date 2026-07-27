@@ -16,7 +16,7 @@
                 />
             </IconField>
 
-            <MultiSelect
+            <UiMultiSelect
                 v-model="selectedCompanies"
                 :options="companies"
                 :placeholder="$t('objects.trackers.allCompanies')"
@@ -26,7 +26,7 @@
                 <template #value>
                     {{ $t('objects.trackers.allCompanies') }}
                 </template>
-            </MultiSelect>
+            </UiMultiSelect>
 
             <div
                 v-if="selectedCompanies.length"

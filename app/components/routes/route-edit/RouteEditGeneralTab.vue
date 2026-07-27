@@ -36,7 +36,7 @@
             name="vehicles"
             :label="$t('routes.edit.general.vehicles')"
         >
-            <MultiSelect
+            <UiMultiSelect
                 v-model="state.vehicleIds"
                 input-id="routeEditVehicles"
                 :options="vehicleOptions"
@@ -44,6 +44,7 @@
                 option-value="value"
                 display="chip"
                 filter
+                show-select-all
                 :placeholder="$t('routes.edit.general.vehiclesPlaceholder')"
                 fluid
             />
@@ -54,7 +55,7 @@
             name="groups"
             :label="$t('routes.edit.general.groups')"
         >
-            <MultiSelect
+            <UiMultiSelect
                 v-model="state.groupIds"
                 input-id="routeEditGroups"
                 :options="groupOptions"
@@ -62,6 +63,7 @@
                 option-value="value"
                 display="chip"
                 filter
+                show-select-all
                 :placeholder="$t('routes.edit.general.groupsPlaceholder')"
                 fluid
             />

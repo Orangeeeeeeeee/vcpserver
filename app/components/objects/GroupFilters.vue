@@ -18,7 +18,7 @@
                     <span class="text-sm font-medium text-surface-900">
                         {{ $t('objects.groups.filters.company') }}
                     </span>
-                    <MultiSelect
+                    <UiMultiSelect
                         v-model="state.companies"
                         :options="companies"
                         display="chip"
@@ -26,6 +26,7 @@
                             $t('objects.groups.filters.companyPlaceholder')
                         "
                         fluid
+                        show-select-all
                     >
                         <template #chipicon="{ removeCallback }">
                             <Icon
@@ -34,7 +35,7 @@
                                 @click="removeCallback"
                             />
                         </template>
-                    </MultiSelect>
+                    </UiMultiSelect>
                 </div>
 
                 <!-- Status -->
@@ -42,7 +43,7 @@
                     <span class="text-sm font-medium text-surface-900">
                         {{ $t('objects.groups.filters.status') }}
                     </span>
-                    <MultiSelect
+                    <UiMultiSelect
                         v-model="state.statuses"
                         :options="statusOptions"
                         option-label="label"
@@ -52,6 +53,7 @@
                             $t('objects.groups.filters.statusPlaceholder')
                         "
                         fluid
+                        show-select-all
                     >
                         <template #chipicon="{ removeCallback }">
                             <Icon
@@ -60,7 +62,7 @@
                                 @click="removeCallback"
                             />
                         </template>
-                    </MultiSelect>
+                    </UiMultiSelect>
                 </div>
             </div>
         </Popover>

@@ -75,6 +75,7 @@ VCPServer — веб-застосунок на Nuxt 4 з використанн�
 
 - **Валідація:** `@regle/core` + `@regle/rules` — headless, model-based валідація через composable `useRegle`. Валідація виконується на submit через `r$.$validate()`. Перевикористовувані правила зберігаються в `app/utils/validations.ts` (auto-imported Nuxt). Наявні: `emailRules()`, `passwordRules()`
 - **Поля форми:** для побудови полів форми використовувати компонент `<SharedAppFormField>` (`app/components/shared/AppFormField.vue`). Він містить label + повідомлення про помилки (проп `error` приймає i18n-ключ або масив ключів — передавати весь `$errors`, рендериться по одному `Message` на помилку). Інпут передається через слот.
+- **MultiSelect:** голий PrimeVue `<MultiSelect>` у застосунку не використовувати — скрізь обгортка `<UiMultiSelect>` (`app/components/ui/MultiSelect/`). З пропом `show-select-all` інʼєктить синтетичну опцію «Вибрати всі» першим рядком списку (лейбл — `common.selectAll`, кастомний — проп `select-all-label`); зовнішній `v-model` ніколи не містить службове значення. Без `show-select-all` — прозора заміна MultiSelect. Обмеження `show-select-all` (у таких місцях не вмикати): примітивні значення, без option-groups і функційного `optionLabel`, не поєднувати з `maxSelectedLabels`; лейбл згорнутого поля — `display="chip"` або кастомний `#value` (слот отримує значення вже без сентинела), дефолтний comma-лейбл показував би сентинел
 - **Приклад використання:**
 
     ```vue

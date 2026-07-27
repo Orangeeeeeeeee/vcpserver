@@ -18,7 +18,8 @@
         "email": "Email",
         "emailPlaceholder": "Введіть електронну адресу",
         "search": "Пошук",
-        "password": "Пароль"
+        "password": "Пароль",
+        "selectAll": "Вибрати всі"
     },
     "errors": {
         "401": {

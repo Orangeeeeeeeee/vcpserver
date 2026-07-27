@@ -34,7 +34,7 @@
                     <span class="text-sm font-medium text-surface-900">
                         {{ $t('objects.drivers.filters.status') }}
                     </span>
-                    <MultiSelect
+                    <UiMultiSelect
                         v-model="state.statuses"
                         :options="statusOptions"
                         option-label="label"
@@ -44,6 +44,7 @@
                             $t('objects.drivers.filters.statusPlaceholder')
                         "
                         fluid
+                        show-select-all
                     >
                         <template #chipicon="{ removeCallback }">
                             <Icon
@@ -52,7 +53,7 @@
                                 @click="removeCallback"
                             />
                         </template>
-                    </MultiSelect>
+                    </UiMultiSelect>
                 </div>
 
                 <!-- Employment type -->
@@ -60,7 +61,7 @@
                     <span class="text-sm font-medium text-surface-900">
                         {{ $t('objects.drivers.filters.employment') }}
                     </span>
-                    <MultiSelect
+                    <UiMultiSelect
                         v-model="state.employment"
                         :options="employmentTypes"
                         display="chip"
@@ -68,6 +69,7 @@
                             $t('objects.drivers.filters.employmentPlaceholder')
                         "
                         fluid
+                        show-select-all
                     >
                         <template #chipicon="{ removeCallback }">
                             <Icon
@@ -76,7 +78,7 @@
                                 @click="removeCallback"
                             />
                         </template>
-                    </MultiSelect>
+                    </UiMultiSelect>
                 </div>
 
                 <!-- License categories -->
@@ -84,7 +86,7 @@
                     <span class="text-sm font-medium text-surface-900">
                         {{ $t('objects.drivers.filters.categories') }}
                     </span>
-                    <MultiSelect
+                    <UiMultiSelect
                         v-model="state.categories"
                         :options="licenseCategoryOptions"
                         display="chip"
@@ -92,6 +94,7 @@
                             $t('objects.drivers.filters.categoriesPlaceholder')
                         "
                         fluid
+                        show-select-all
                     >
                         <template #chipicon="{ removeCallback }">
                             <Icon
@@ -100,7 +103,7 @@
                                 @click="removeCallback"
                             />
                         </template>
-                    </MultiSelect>
+                    </UiMultiSelect>
                 </div>
 
                 <!-- Vehicle — grouped, searchable, select-all -->
@@ -108,7 +111,7 @@
                     <span class="text-sm font-medium text-surface-900">
                         {{ $t('objects.drivers.filters.vehicle') }}
                     </span>
-                    <MultiSelect
+                    <UiMultiSelect
                         v-model="state.vehicles"
                         :options="vehicleGroups"
                         option-group-label="label"
@@ -148,7 +151,7 @@
                                 @click="removeCallback"
                             />
                         </template>
-                    </MultiSelect>
+                    </UiMultiSelect>
                 </div>
             </div>
         </Popover>

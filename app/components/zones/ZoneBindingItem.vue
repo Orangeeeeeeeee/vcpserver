@@ -2,7 +2,7 @@
     <div class="flex flex-col gap-3">
         <!-- Entity multiselect + remove button -->
         <div class="flex items-start gap-1">
-            <MultiSelect
+            <UiMultiSelect
                 v-model="ids"
                 :options="options"
                 option-label="label"
@@ -11,6 +11,7 @@
                 filter
                 :placeholder="placeholder"
                 class="min-w-0 flex-1"
+                show-select-all
             >
                 <template #chipicon="{ removeCallback }">
                     <Icon
@@ -19,7 +20,7 @@
                         @click.stop="removeCallback"
                     />
                 </template>
-            </MultiSelect>
+            </UiMultiSelect>
             <Button
                 v-if="removable"
                 type="button"

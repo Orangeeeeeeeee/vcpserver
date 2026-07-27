@@ -5,7 +5,7 @@
             name="vehicles"
             :label="$t('objects.groups.modal.vehicles')"
         >
-            <MultiSelect
+            <UiMultiSelect
                 id="grpVehicles"
                 v-model="selectedVehicleIds"
                 :options="vehicleOptions"
@@ -15,6 +15,7 @@
                 filter
                 :placeholder="$t('objects.groups.modal.vehiclesPlaceholder')"
                 fluid
+                show-select-all
             >
                 <template #chipicon="{ removeCallback }">
                     <Icon
@@ -23,7 +24,7 @@
                         @click="removeCallback"
                     />
                 </template>
-            </MultiSelect>
+            </UiMultiSelect>
         </SharedAppFormField>
 
         <ul v-if="state.vehicles.length" class="flex flex-col">

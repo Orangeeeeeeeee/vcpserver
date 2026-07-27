@@ -18,7 +18,7 @@
                     <span class="text-sm font-medium text-surface-900">
                         {{ $t('zones.list.filters.company') }}
                     </span>
-                    <MultiSelect
+                    <UiMultiSelect
                         v-model="filters.companies"
                         :options="mockCompanies"
                         display="chip"
@@ -26,6 +26,7 @@
                             $t('zones.list.filters.companyPlaceholder')
                         "
                         fluid
+                        show-select-all
                     >
                         <template #chipicon="{ removeCallback }">
                             <Icon
@@ -34,7 +35,7 @@
                                 @click.stop="removeCallback"
                             />
                         </template>
-                    </MultiSelect>
+                    </UiMultiSelect>
                 </div>
 
                 <!-- Zone shape -->
@@ -42,7 +43,7 @@
                     <span class="text-sm font-medium text-surface-900">
                         {{ $t('zones.list.filters.shape') }}
                     </span>
-                    <MultiSelect
+                    <UiMultiSelect
                         v-model="filters.shapes"
                         :options="ZONE_SHAPE_OPTIONS"
                         option-value="value"
@@ -67,7 +68,7 @@
                                 @click.stop="removeCallback"
                             />
                         </template>
-                    </MultiSelect>
+                    </UiMultiSelect>
                 </div>
 
                 <!-- Zone type -->
@@ -75,7 +76,7 @@
                     <span class="text-sm font-medium text-surface-900">
                         {{ $t('zones.list.filters.type') }}
                     </span>
-                    <MultiSelect
+                    <UiMultiSelect
                         v-model="filters.types"
                         :options="ZONE_TYPE_OPTIONS"
                         option-value="value"
@@ -91,7 +92,7 @@
                                 @click.stop="removeCallback"
                             />
                         </template>
-                    </MultiSelect>
+                    </UiMultiSelect>
                 </div>
 
                 <!-- Vehicle groups -->
@@ -99,7 +100,7 @@
                     <span class="text-sm font-medium text-surface-900">
                         {{ $t('zones.list.filters.groups') }}
                     </span>
-                    <MultiSelect
+                    <UiMultiSelect
                         v-model="filters.groupIds"
                         :options="groupOptions"
                         option-label="label"
@@ -109,6 +110,7 @@
                             $t('zones.list.filters.groupsPlaceholder')
                         "
                         fluid
+                        show-select-all
                     >
                         <template #chipicon="{ removeCallback }">
                             <Icon
@@ -117,7 +119,7 @@
                                 @click.stop="removeCallback"
                             />
                         </template>
-                    </MultiSelect>
+                    </UiMultiSelect>
                 </div>
 
                 <!-- Vehicle -->
@@ -125,7 +127,7 @@
                     <span class="text-sm font-medium text-surface-900">
                         {{ $t('zones.list.filters.vehicle') }}
                     </span>
-                    <MultiSelect
+                    <UiMultiSelect
                         v-model="filters.vehicleIds"
                         :options="vehicleOptions"
                         option-label="label"
@@ -135,6 +137,7 @@
                             $t('zones.list.filters.vehiclePlaceholder')
                         "
                         fluid
+                        show-select-all
                     >
                         <template #chipicon="{ removeCallback }">
                             <Icon
@@ -143,7 +146,7 @@
                                 @click.stop="removeCallback"
                             />
                         </template>
-                    </MultiSelect>
+                    </UiMultiSelect>
                 </div>
             </div>
         </Popover>

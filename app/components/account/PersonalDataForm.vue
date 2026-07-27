@@ -77,7 +77,7 @@
             :label="$t('account.info.affiliation')"
             :error="r$.$fields.affiliations.$errors"
         >
-            <MultiSelect
+            <UiMultiSelect
                 id="affiliations"
                 v-model="state.affiliations"
                 :options="affiliationOptions"
@@ -85,6 +85,7 @@
                 :placeholder="$t('account.info.affiliationPlaceholder')"
                 :invalid="r$.$fields.affiliations.$invalid"
                 fluid
+                show-select-all
             >
                 <template #chipicon="{ removeCallback }">
                     <Icon
@@ -93,7 +94,7 @@
                         @click="removeCallback"
                     />
                 </template>
-            </MultiSelect>
+            </UiMultiSelect>
         </SharedAppFormField>
 
         <div class="flex items-end gap-3">
