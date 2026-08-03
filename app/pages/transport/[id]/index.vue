@@ -2,26 +2,54 @@
     <div>
         <SharedPageLayout :title="$t('passengerFlow.title')">
             <template #content>
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4 md:mb-4 md:pt-5 md:pb-5 md:border-b border-surface-200">
+                <div
+                    class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4 md:mb-4 md:pt-5 md:pb-5 md:border-b border-surface-200"
+                >
                     <div class="flex gap-2">
-                        <div class="flex items-center justify-center bg-surface-200 rounded-md size-12 shrink-0">
-                            <Icon name="tabler:bus" class="size-6 text-surface-700" />
+                        <div
+                            class="flex items-center justify-center bg-surface-200 rounded-md size-10 lg:size-12 shrink-0"
+                        >
+                            <Icon
+                                name="tabler:bus"
+                                class="size-5 lg:size-6 text-surface-700"
+                            />
                         </div>
 
-                        <div class="grid md:grid-cols-2 md:grid-rows-2 gap-1 md:items-center">
-                            <div class="flex items-center gap-1 min-w-0 md:gap-4">
-                                <UiTypography variant="h5">
-                                    {{ transport.transport }} (ID: {{ transport.transportId }})
+                        <div
+                            class="grid md:grid-cols-2 md:grid-rows-2 gap-1 md:items-center"
+                        >
+                            <div
+                                class="flex items-center gap-1 min-w-0 md:gap-4"
+                            >
+                                <UiTypography
+                                    variant="h5"
+                                    class="-mb-0.5 lg:mb-0"
+                                >
+                                    {{ transport.transport }} (ID:
+                                    {{ transport.transportId }})
                                 </UiTypography>
                             </div>
-                            <ul class="flex gap-3 truncate text-sm text-surface-900 list-disc md:col-start-1 md:col-end-2 md:row-start-2">
-                                <li class="list-none pl-3 relative before:absolute before:left-0 before:top-1/2 before:w-[6px] before:h-[6px] before:bg-surface-300 before:content-[''] before:-translate-y-1/2">{{ transport.group }}</li>
-                                <li class="list-none pl-3 relative before:absolute before:left-0 before:top-1/2 before:w-[6px] before:h-[6px] before:bg-surface-300 before:content-[''] before:-translate-y-1/2">{{ transport.driver }}</li>
+                            <ul
+                                class="flex gap-3 truncate text-sm text-surface-900 list-disc md:col-start-1 md:col-end-2 md:row-start-2 mb-1 lg:-mt-2"
+                            >
+                                <li
+                                    class="list-none pl-3 relative before:absolute before:left-0 before:top-1/2 before:w-[6px] before:h-[6px] before:bg-surface-300 before:content-[''] before:-translate-y-1/2"
+                                >
+                                    {{ transport.group }}
+                                </li>
+                                <li
+                                    class="list-none pl-3 relative before:absolute before:left-0 before:top-1/2 before:w-[6px] before:h-[6px] before:bg-surface-300 before:content-[''] before:-translate-y-1/2"
+                                >
+                                    {{ transport.driver }}
+                                </li>
                             </ul>
 
                             <div>
-                                <Tag class="text-primary-600 text-xs md:self-center">
-                                    <Icon name="tabler:users" class="size-3 text-primary-300" />
+                                <Tag class="text-primary-600 md:self-center">
+                                    <Icon
+                                        name="tabler:users"
+                                        class="size-3 text-primary-300"
+                                    />
                                     {{ $t('passengerFlow.label') }}
                                 </Tag>
                             </div>
@@ -35,7 +63,10 @@
 
                 <MainCharts :charts="transportMainCharts" />
 
-                <AdditionalCharts :charts="transportCharts" :openDefault="true" />
+                <AdditionalCharts
+                    :charts="transportCharts"
+                    :openDefault="true"
+                />
 
                 <TripsTable :trips="trips" />
             </template>
@@ -45,7 +76,9 @@
             <SharedPageBreadcrumb
                 :items="[
                     { icon: 'tabler:chart-bar', to: ROUTES.PASSENGER_FLOW },
-                    { label: `${transport.transport} (ID: ${transport.transportId})` }
+                    {
+                        label: `${transport.transport} (ID: ${transport.transportId})`
+                    }
                 ]"
             />
         </SharedClientTeleport>
@@ -64,7 +97,10 @@ import PassengerFlowPeriodFilter from '~/components/passenger-flow/PeriodFilter.
 import { primitiveColors } from '~/theme/colors';
 import { generatePassengerFlowSeries } from '~/mocks/passenger-flow';
 import { getPassengerFlowPeriodFactor } from '~/composables/usePassengerFlow';
-import type { PassengerFlowDataPoint, PassengerFlowChartType } from '~/components/passenger-flow/PassengerFlowChart.vue';
+import type {
+    PassengerFlowDataPoint,
+    PassengerFlowChartType
+} from '~/components/passenger-flow/PassengerFlowChart.vue';
 import type { PassengerFlowTotal } from '~/components/passenger-flow/PassengerFlowTotalCard.vue';
 import { computed } from 'vue';
 
@@ -86,14 +122,19 @@ if (!transportRef.value) {
     });
 }
 
-const transport = computed<PassengerFlowRecord>(() => transportRef.value as PassengerFlowRecord);
+const transport = computed<PassengerFlowRecord>(
+    () => transportRef.value as PassengerFlowRecord
+);
 
 const { trips } = usePassengerFlowTrips(transportId.value);
 const { selectedPeriod, customRange } = usePassengerFlowPeriodFilter();
 
 /** Transport totals scaled to the selected time period */
 const totals = computed(() => {
-    const factor = getPassengerFlowPeriodFactor(selectedPeriod.value, customRange.value);
+    const factor = getPassengerFlowPeriodFactor(
+        selectedPeriod.value,
+        customRange.value
+    );
 
     return {
         trips: Math.round(transport.value.trips * factor),
@@ -155,7 +196,10 @@ const transportMainCharts = computed<MainChartConfig[]>(() => [
         color: primitiveColors.violet['500'],
         title: t('passengerFlow.mainCharts.title1'),
         total: totals.value.trips,
-        data: generatePassengerFlowSeries(totals.value.trips, `${transportId.value}-${selectedPeriod.value}`)
+        data: generatePassengerFlowSeries(
+            totals.value.trips,
+            `${transportId.value}-${selectedPeriod.value}`
+        )
     },
     {
         id: 'distance',
@@ -164,7 +208,10 @@ const transportMainCharts = computed<MainChartConfig[]>(() => [
         title: t('passengerFlow.mainCharts.title2'),
         total: `${totals.value.distance} км`,
         valueSuffix: 'км',
-        data: generatePassengerFlowSeries(totals.value.distance, `${transportId.value}-${selectedPeriod.value}`)
+        data: generatePassengerFlowSeries(
+            totals.value.distance,
+            `${transportId.value}-${selectedPeriod.value}`
+        )
     },
     {
         id: 'passengers',
@@ -172,7 +219,10 @@ const transportMainCharts = computed<MainChartConfig[]>(() => [
         color: primitiveColors.amber['500'],
         title: t('passengerFlow.mainCharts.title3'),
         total: totals.value.passengers,
-        data: generatePassengerFlowSeries(totals.value.passengers, `${transportId.value}-${selectedPeriod.value}`)
+        data: generatePassengerFlowSeries(
+            totals.value.passengers,
+            `${transportId.value}-${selectedPeriod.value}`
+        )
     },
     {
         id: 'revenue',
@@ -181,7 +231,10 @@ const transportMainCharts = computed<MainChartConfig[]>(() => [
         title: t('passengerFlow.mainCharts.title4'),
         total: `${totals.value.profit} грн`,
         valueSuffix: '₴',
-        data: generatePassengerFlowSeries(totals.value.profit, `${transportId.value}-${selectedPeriod.value}`)
+        data: generatePassengerFlowSeries(
+            totals.value.profit,
+            `${transportId.value}-${selectedPeriod.value}`
+        )
     }
 ]);
 
@@ -192,21 +245,30 @@ const transportCharts = computed<ChartConfig[]>(() => [
         color: primitiveColors.teal['500'],
         title: t('passengerFlow.additionalCharts.title1'),
         valueSuffix: 'км',
-        data: generatePassengerFlowSeries(totals.value.trips, `${transportId.value}-1-${selectedPeriod.value}`)
+        data: generatePassengerFlowSeries(
+            totals.value.trips,
+            `${transportId.value}-1-${selectedPeriod.value}`
+        )
     },
     {
         id: 'distance',
         type: 'area',
         color: primitiveColors.violet['500'],
         title: t('passengerFlow.additionalCharts.title2'),
-        data: generatePassengerFlowSeries(totals.value.distance, `${transportId.value}-2-${selectedPeriod.value}`)
+        data: generatePassengerFlowSeries(
+            totals.value.distance,
+            `${transportId.value}-2-${selectedPeriod.value}`
+        )
     },
     {
         id: 'passengers',
         type: 'area',
         color: primitiveColors.rose['500'],
         title: t('passengerFlow.additionalCharts.title3'),
-        data: generatePassengerFlowSeries(totals.value.passengers, `${transportId.value}-3-${selectedPeriod.value}`)
+        data: generatePassengerFlowSeries(
+            totals.value.passengers,
+            `${transportId.value}-3-${selectedPeriod.value}`
+        )
     },
     {
         id: 'profit',
@@ -214,7 +276,10 @@ const transportCharts = computed<ChartConfig[]>(() => [
         color: primitiveColors.indigo['500'],
         title: t('passengerFlow.additionalCharts.title4'),
         valueSuffix: '₴',
-        data: generatePassengerFlowSeries(totals.value.profit, `${transportId.value}-4-${selectedPeriod.value}`)
+        data: generatePassengerFlowSeries(
+            totals.value.profit,
+            `${transportId.value}-4-${selectedPeriod.value}`
+        )
     },
     {
         id: 'passenger_revenue',
@@ -222,8 +287,10 @@ const transportCharts = computed<ChartConfig[]>(() => [
         color: primitiveColors.amber['500'],
         title: t('passengerFlow.additionalCharts.title5'),
         valueSuffix: '₴',
-        data: generatePassengerFlowSeries(totals.value.profit, `${transportId.value}-5-${selectedPeriod.value}`)
+        data: generatePassengerFlowSeries(
+            totals.value.profit,
+            `${transportId.value}-5-${selectedPeriod.value}`
+        )
     }
 ]);
-
 </script>
