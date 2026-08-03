@@ -153,6 +153,7 @@ const initChart = () => {
         tooltip: {
             backgroundColor: surface[50],
             borderColor: surface[300],
+            borderWidth: 1,
             borderRadius: 8,
             padding: 10,
             shadow: false,

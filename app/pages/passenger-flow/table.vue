@@ -78,13 +78,13 @@
                 </span>
             </template>
             <template #cell-actions="{ row }">
-                <div
+                <NuxtLink
                     class="flex cursor-pointer items-center gap-1 text-surface-950"
-                    @click="onRowClick(row)"
+                    :to="ROUTES.PASSENGER_FLOW_TRANSPORT_DETAIL(row.transportId)"
                 >
                     <span>{{ $t('passengerFlow.table.columns.goto') }}</span>
                     <Icon name="tabler:arrow-up-right" class="size-5" />
-                </div>
+                </NuxtLink>
             </template>
         </SharedResponsiveTable>
         <SharedTableEmpty
@@ -171,12 +171,5 @@ const filteredRecords = computed((): PassengerFlowRecord[] => {
 const onResetFilters = (): void => {
     searchQuery.value = '';
     selectedGroups.value = [];
-};
-
-/**
- * Navigate to transport details page on row click
- */
-const onRowClick = (row: PassengerFlowRecord): void => {
-    navigateTo(ROUTES.PASSENGER_FLOW_TRANSPORT_DETAIL(row.transportId));
 };
 </script>

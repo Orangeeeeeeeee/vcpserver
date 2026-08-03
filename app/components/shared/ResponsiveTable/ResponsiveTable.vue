@@ -25,7 +25,10 @@
                 :header-style="col.align ? { textAlign: col.align } : undefined"
                 :pt="{
                     sort: { class: 'leading-none'},
-                    bodyCell: { 'data-label': col.header },
+                    bodyCell: {
+                        'data-label': col.header,
+                        class: [!col.header ? 'label-empty' : '']
+                    },
                     footerCell: {
                         'data-label': col.header,
                         class: ['bg-primary-100 text-sm', isFooterCellEmpty(col.field) ? 'empty-footer-cell' : '']
@@ -194,6 +197,10 @@ const onRowClick = (event: { data: TableRow }): void => {
         border-bottom: 1px solid var(--p-surface-200);
     }
 
+     .responsive-table :deep(.p-datatable-tbody > tr > td).label-empty {
+         display: block;
+     }
+
     .responsive-table :deep(.p-datatable-tfoot > tr > td) {
         border-bottom: 1px solid #469BC31A;
     }
@@ -227,7 +234,6 @@ const onRowClick = (event: { data: TableRow }): void => {
 /* Hover effect for table rows (desktop & mobile stacked view) */
 .hover-table :deep(.p-datatable-tbody > tr:hover) {
     background-color: var(--p-surface-200);
-    cursor: pointer;
 }
 
 .hover-table :deep(.p-datatable-tbody > tr) {
