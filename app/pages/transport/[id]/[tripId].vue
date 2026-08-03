@@ -33,12 +33,12 @@
                                 class="flex gap-3 truncate text-sm text-surface-900 list-none lg:col-start-1 lg:col-end-2 lg:row-start-2 mb-1 lg:-mt-2"
                             >
                                 <li
-                                    class="list-none pl-3 relative before:absolute before:left-0 before:top-1/2 before:w-[6px] before:h-[6px] before:bg-surface-300 before:content-[''] before:-translate-y-1/2"
+                                    class="list-none pl-3 relative before:absolute before:left-0 before:top-1/2 before:w-[6px] before:h-[6px] before:bg-surface-300 before:content-[''] before:-translate-y-1/2 before:rounded-full"
                                 >
                                     {{ transport.group }}
                                 </li>
                                 <li
-                                    class="list-none pl-3 relative before:absolute before:left-0 before:top-1/2 before:w-[6px] before:h-[6px] before:bg-surface-300 before:content-[''] before:-translate-y-1/2"
+                                    class="list-none pl-3 relative before:absolute before:left-0 before:top-1/2 before:w-[6px] before:h-[6px] before:bg-surface-300 before:content-[''] before:-translate-y-1/2 before:rounded-full"
                                 >
                                     {{ transport.driver }}
                                 </li>
