@@ -19,7 +19,7 @@
             <slot />
         </main>
 
-        <Toast />
+        <SharedAppToast />
     </div>
 </template>
 
