@@ -8,16 +8,31 @@
             :value="stops"
             :columns="columns"
             :footer-row="totalRow"
+            hoverable
             row-key="id"
         >
             <template #cell-departureTime="{ row }">
-                <div class="flex flex-col">
-                    <span class="font-medium">{{ formatIsoDateToUa((row.departureTime as string).split(' ')[0] as string) }}</span>
-                    <span class="text-surface-700">{{ (row.departureTime as string).split(' ')[1] }}</span>
+                <div class="flex lg:flex-col gap-2 lg:gap-0">
+                    <span class="font-medium">
+                        {{
+                            formatIsoDateToUa(
+                                (row.departureTime as string).split(
+                                    ' '
+                                )[0] as string
+                            )
+                        }}
+                    </span>
+                    <span class="text-surface-700">
+                        {{ (row.departureTime as string).split(' ')[1] }}
+                    </span>
                 </div>
             </template>
             <template #cell-distance="{ row }">
-                {{ $t('passengerFlow.trip.table.distanceValue', { value: row.distance }) }}
+                {{
+                    $t('passengerFlow.trip.table.distanceValue', {
+                        value: row.distance
+                    })
+                }}
             </template>
             <template #cell-passengers="{ row }">
                 <Chip
@@ -28,18 +43,42 @@
             </template>
             <template #cell-amount="{ row }">
                 <div class="flex flex-col gap-0.5">
-                    <span v-for="(entry, index) in row.amountBreakdown as PassengerFlowAmountEntry[]" :key="index">
-                        {{ formatAmountBreakdown(entry.count, entry.price, entry.total, entry.location) }}
+                    <span
+                        v-for="(
+                            entry, index
+                        ) in row.amountBreakdown as PassengerFlowAmountEntry[]"
+                        :key="index"
+                    >
+                        {{
+                            formatAmountBreakdown(
+                                entry.count,
+                                entry.price,
+                                entry.total,
+                                entry.location
+                            )
+                        }}
                     </span>
                 </div>
             </template>
             <template #cell-photo="{ row }">
-                <img
-                    :src="row.photo as string"
-                    :alt="row.zone as string"
-                    class="w-28 h-14 object-cover cursor-pointer"
-                    @click="openPreview(row.photo as string, row.zone as string)"
+                <button
+                    type="button"
+                    class="group relative block h-14 w-28 cursor-pointer overflow-hidden"
+                    :aria-label="row.zone as string"
+                    @click="
+                        openPreview(
+                            row.videoUrl as string,
+                            row.photo as string,
+                            row.zone as string
+                        )
+                    "
                 >
+                    <img
+                        :src="row.photo as string"
+                        :alt="row.zone as string"
+                        class="h-full w-full object-cover"
+                    />
+                </button>
             </template>
             <template #footer-departureTime="{ value }">
                 {{ value }}
@@ -47,15 +86,11 @@
             <template #footer-distance="{ value }">
                 {{ $t('passengerFlow.trip.table.distanceValue', { value }) }}
             </template>
-            <template #footer-passengers>
-                &nbsp;
-            </template>
+            <template #footer-passengers>&nbsp;</template>
             <template #footer-amount="{ value }">
                 {{ value }}
             </template>
-            <template #footer-photo>
-                &nbsp;
-            </template>
+            <template #footer-photo>&nbsp;</template>
         </SharedResponsiveTable>
 
         <Dialog
@@ -71,14 +106,20 @@
             @click="previewVisible = false"
         >
             <div class="relative" @click.stop>
-                <img
-                    :src="previewSrc"
-                    :alt="previewAlt"
-                    class="max-h-[80vh] max-w-[90vw] rounded-2xl object-contain block"
+                <div
+                    class="w-[min(90vw,60rem)] aspect-video overflow-hidden rounded-2xl bg-surface-950"
                 >
+                    <UiVideoPlayer
+                        :src="previewVideo"
+                        :poster="previewPoster"
+                        :title="previewAlt"
+                        load="eager"
+                        autoplay
+                    />
+                </div>
                 <button
                     type="button"
-                    class="absolute top-3 right-3 cursor-pointer flex items-center justify-center size-8 rounded-full bg-white shadow-md text-surface-700 hover:bg-surface-100 transition-colors"
+                    class="absolute -top-10 right-0 cursor-pointer flex items-center justify-center size-8 rounded-full bg-white shadow-md text-surface-700 hover:bg-surface-100 transition-colors"
                     @click="previewVisible = false"
                 >
                     <Icon name="tabler:x" class="size-4" />
@@ -90,7 +131,10 @@
 
 <script setup lang="ts">
 import type { TableColumn } from '~/components/shared/ResponsiveTable';
-import type { PassengerFlowAmountEntry, PassengerFlowTripStop } from '~/types/passenger-flow';
+import type {
+    PassengerFlowAmountEntry,
+    PassengerFlowTripStop
+} from '~/types/passenger-flow';
 import { formatAmountBreakdown } from '~/utils/string';
 
 const { stops } = defineProps<{
@@ -100,12 +144,14 @@ const { stops } = defineProps<{
 const { t } = useI18n();
 
 const previewVisible = ref<boolean>(false);
-const previewSrc = ref<string>('');
+const previewVideo = ref<string>('');
+const previewPoster = ref<string>('');
 const previewAlt = ref<string>('');
 
-/** Open the image preview dialog */
-const openPreview = (src: string, alt: string): void => {
-    previewSrc.value = src;
+/** Open the stop video dialog (player mounts on open, unmounts on close) */
+const openPreview = (video: string, poster: string, alt: string): void => {
+    previewVideo.value = video;
+    previewPoster.value = poster;
     previewAlt.value = alt;
     previewVisible.value = true;
 };
@@ -150,7 +196,8 @@ const totalRow = computed(() => {
     const totalDistance = stops.reduce((sum, stop) => sum + stop.distance, 0);
     const totalBoarded = stops.reduce((sum, stop) => sum + stop.boarded, 0);
     const totalAlighted = stops.reduce((sum, stop) => sum + stop.alighted, 0);
-    const totalAmount = Math.round(stops.reduce((sum, stop) => sum + stop.amount, 0) * 10) / 10;
+    const totalAmount =
+        Math.round(stops.reduce((sum, stop) => sum + stop.amount, 0) * 10) / 10;
 
     return {
         id: t('passengerFlow.total'),

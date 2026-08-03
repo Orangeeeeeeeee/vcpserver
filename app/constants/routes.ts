@@ -31,6 +31,8 @@ export const ROUTES = {
     REPORTS: '/reports',
     REPORTS_IDLE: '/reports/idle',
     PASSENGER_FLOW: '/passenger-flow',
+    /** Base path of passenger flow transport detail pages (no index page; used for sidebar active state) */
+    PASSENGER_FLOW_TRANSPORT: '/transport',
     PASSENGER_FLOW_MAIN: '/passenger-flow/main-charts',
     PASSENGER_FLOW_ADDITIONAL: '/passenger-flow/additional-charts',
     PASSENGER_FLOW_TOTAL: '/passenger-flow/total-info',
@@ -42,6 +44,10 @@ export const ROUTES = {
     ACCOUNT: '/account',
     ACCOUNT_INFO: '/account/info',
     ACCOUNT_SETTINGS: '/account/settings',
+    /** Base path of vehicle detail pages (no index page; used for sidebar active state) */
+    VEHICLES: '/vehicles',
+    /** Base path of driver detail pages (no index page; used for sidebar active state) */
+    DRIVERS: '/drivers',
     /** Vehicle detail page, «Онлайн» tab (e.g. /vehicles/on-3) */
     VEHICLE_DETAIL: (id: string): string => `/vehicles/${id}`,
     /** Vehicle history tab (page not implemented yet) */

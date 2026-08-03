@@ -58,8 +58,10 @@ export interface PassengerFlowTripStop {
     amount: number;
     /** Breakdown of the collected amount by fare price */
     amountBreakdown: PassengerFlowAmountEntry[];
-    /** Photo URL taken at the stop */
+    /** Poster photo shown in the table; opens the stop video on click */
     photo: string;
+    /** Video URL recorded at the stop (demo clip until the API exists) */
+    videoUrl: string;
 }
 
 export interface PassengerFlowRecord {

@@ -1,5 +1,11 @@
-import type { PassengerFlowAmountEntry, PassengerFlowRecord, PassengerFlowTrip, PassengerFlowTripStop } from '~/types/passenger-flow';
+import type {
+    PassengerFlowAmountEntry,
+    PassengerFlowRecord,
+    PassengerFlowTrip,
+    PassengerFlowTripStop
+} from '~/types/passenger-flow';
 import type { PassengerFlowDataPoint } from '~/components/passenger-flow/PassengerFlowChart.vue';
+import { DEMO_MEDIA_SOURCES, type DemoMediaSource } from '~/mocks/demo-media';
 
 /** Transport models cycled across mock records */
 const TRANSPORT_MODELS = [
@@ -46,7 +52,16 @@ export const generatePassengerFlowRecords = (): PassengerFlowRecord[] => {
 };
 
 /** Cities used as trip route endpoints */
-const LOCATIONS = ['Київ', 'Львів', 'Одеса', 'Харків', 'Дніпро', 'Вінниця', 'Полтава', 'Чернігів'];
+const LOCATIONS = [
+    'Київ',
+    'Львів',
+    'Одеса',
+    'Харків',
+    'Дніпро',
+    'Вінниця',
+    'Полтава',
+    'Чернігів'
+];
 
 /** Full departure addresses used as trip route start points, aligned with {@link LOCATIONS} */
 const ADDRESSES = [
@@ -61,7 +76,14 @@ const ADDRESSES = [
 ];
 
 /** Foreign destination cities used to vary trip endpoints */
-const DESTINATIONS = ['Варшава', 'Прага', 'Берлін', 'Відень', 'Будапешт', 'Бухарест'];
+const DESTINATIONS = [
+    'Варшава',
+    'Прага',
+    'Берлін',
+    'Відень',
+    'Будапешт',
+    'Бухарест'
+];
 
 /**
  * Generates 12 mock trips for the given transport.
@@ -69,7 +91,9 @@ const DESTINATIONS = ['Варшава', 'Прага', 'Берлін', 'Віде�
  * @param transportId - Id of the transport the trips belong to
  * @returns Mock trip list
  */
-export const generatePassengerFlowTrips = (transportId: string): PassengerFlowTrip[] => {
+export const generatePassengerFlowTrips = (
+    transportId: string
+): PassengerFlowTrip[] => {
     return Array.from({ length: 12 }, (_, i) => {
         const from = ADDRESSES[i % ADDRESSES.length] as string;
         const to = DESTINATIONS[i % DESTINATIONS.length] as string;
@@ -102,7 +126,10 @@ export const generatePassengerFlowTrips = (transportId: string): PassengerFlowTr
  * @param pointsCount - Number of stops to generate
  * @returns Mock trip stop list
  */
-export const generatePassengerFlowTripStops = (tripId: string, pointsCount: number): PassengerFlowTripStop[] => {
+export const generatePassengerFlowTripStops = (
+    tripId: string,
+    pointsCount: number
+): PassengerFlowTripStop[] => {
     return Array.from({ length: pointsCount }, (_, i) => {
         const boarded = 2 + ((i * 5) % 12);
         const alighted = 1 + ((i * 3) % 10);
@@ -114,7 +141,11 @@ export const generatePassengerFlowTripStops = (tripId: string, pointsCount: numb
             const count2 = boarded - count1;
             const price2 = price + 10 + ((i * 7) % 15);
             amountBreakdown.push(
-                { count: count1, price, total: Math.round(count1 * price * 10) / 10 },
+                {
+                    count: count1,
+                    price,
+                    total: Math.round(count1 * price * 10) / 10
+                },
                 {
                     count: count2,
                     price: price2,
@@ -123,7 +154,11 @@ export const generatePassengerFlowTripStops = (tripId: string, pointsCount: numb
                 }
             );
         } else {
-            amountBreakdown.push({ count: boarded, price, total: Math.round(boarded * price * 10) / 10 });
+            amountBreakdown.push({
+                count: boarded,
+                price,
+                total: Math.round(boarded * price * 10) / 10
+            });
         }
 
         return {
@@ -135,14 +170,37 @@ export const generatePassengerFlowTripStops = (tripId: string, pointsCount: numb
             boarded,
             alighted,
             amountBreakdown,
-            amount: Math.round(amountBreakdown.reduce((sum, entry) => sum + entry.total, 0) * 10) / 10,
-            photo: `https://picsum.photos/seed/${tripId}-${i + 1}/1000/600`
+            amount:
+                Math.round(
+                    amountBreakdown.reduce(
+                        (sum, entry) => sum + entry.total,
+                        0
+                    ) * 10
+                ) / 10,
+            photo: (
+                DEMO_MEDIA_SOURCES[
+                    i % DEMO_MEDIA_SOURCES.length
+                ] as DemoMediaSource
+            ).posterUrl,
+            videoUrl: (
+                DEMO_MEDIA_SOURCES[
+                    i % DEMO_MEDIA_SOURCES.length
+                ] as DemoMediaSource
+            ).streamUrl
         };
     });
 };
 
 /** Dates used as x-axis categories for transport chart series */
-const CHART_DATES = ['01.03', '08.03', '16.03', '24.03', '28.03', '31.03', '01.04'];
+const CHART_DATES = [
+    '01.03',
+    '08.03',
+    '16.03',
+    '24.03',
+    '28.03',
+    '31.03',
+    '01.04'
+];
 
 /**
  * Generates a deterministic weekly data series oscillating around a base value.
@@ -151,8 +209,13 @@ const CHART_DATES = ['01.03', '08.03', '16.03', '24.03', '28.03', '31.03', '01.0
  * @param transportId - Id of the transport, used to vary the series shape
  * @returns Data points for {@link PassengerFlowChart}
  */
-export const generatePassengerFlowSeries = (base: number, transportId: string): PassengerFlowDataPoint[] => {
-    const seed = transportId.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
+export const generatePassengerFlowSeries = (
+    base: number,
+    transportId: string
+): PassengerFlowDataPoint[] => {
+    const seed = transportId
+        .split('')
+        .reduce((sum, char) => sum + char.charCodeAt(0), 0);
 
     return CHART_DATES.map((date, i) => {
         const variance = ((seed + i * 17) % 21) - 10;

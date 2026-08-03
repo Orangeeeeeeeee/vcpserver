@@ -9,7 +9,7 @@
             :icon="item.icon"
             :label="$t(`sidebar.${item.key}`)"
             :to="item.route"
-            :active="isActive(item.route)"
+            :active="isActive(item)"
             :collapsed="collapsed"
         />
     </nav>
@@ -17,7 +17,10 @@
 </template>
 
 <script setup lang="ts">
-import { navigationItems } from '~/constants/navigation';
+import {
+    navigationItems,
+    type NavigationItem
+} from '~/constants/navigation';
 
 interface SidebarContentProps {
     /** Whether the sidebar is collapsed */
@@ -30,9 +33,11 @@ const route = useRoute();
 
 /**
  * Checks whether a navigation item is currently active.
- * @param {string} itemRoute - Route path to check
- * @returns {boolean} True if the route matches or is a child of the given path
+ * @param {NavigationItem} item - Navigation item to check
+ * @returns {boolean} True if the route matches or is a child of the item's path or one of its extra prefixes
  */
-const isActive = (itemRoute: string): boolean =>
-    route.path === itemRoute || route.path.startsWith(itemRoute + '/');
+const isActive = (item: NavigationItem): boolean =>
+    [item.route, ...(item.activePrefixes ?? [])].some(
+        (prefix) => route.path === prefix || route.path.startsWith(prefix + '/')
+    );
 </script>

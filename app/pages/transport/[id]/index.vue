@@ -2,28 +2,30 @@
     <div>
         <SharedPageLayout :title="$t('passengerFlow.title')">
             <template #content>
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-4 md:mb-4 md:p-5 md:border-b border-surface-200">
-                    <div class="flex items-center gap-2 min-w-0">
-                        <div class="flex items-center justify-center bg-surface-200 rounded-md size-12">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4 md:mb-4 md:pt-5 md:pb-5 md:border-b border-surface-200">
+                    <div class="flex gap-2">
+                        <div class="flex items-center justify-center bg-surface-200 rounded-md size-12 shrink-0">
                             <Icon name="tabler:bus" class="size-6 text-surface-700" />
                         </div>
 
-                        <div class="flex flex-col min-w-0 grow">
+                        <div class="grid md:grid-cols-2 md:grid-rows-2 gap-1 md:items-center">
                             <div class="flex items-center gap-1 min-w-0 md:gap-4">
-                                <h4 class="font-semibold text-surface-900 truncate text-lg md:text-xl font-manrope">
+                                <UiTypography variant="h5">
                                     {{ transport.transport }} (ID: {{ transport.transportId }})
-                                </h4>
+                                </UiTypography>
                             </div>
-                            <ul class="flex gap-3 truncate text-sm text-surface-900 list-disc marker:text-lg marker:text-surface-300">
-                                <li class="ml-4">{{ transport.group }}</li>
-                                <li class="ml-4">{{ transport.driver }}</li>
+                            <ul class="flex gap-3 truncate text-sm text-surface-900 list-disc md:col-start-1 md:col-end-2 md:row-start-2">
+                                <li class="list-none pl-3 relative before:absolute before:left-0 before:top-1/2 before:w-[6px] before:h-[6px] before:bg-surface-300 before:content-[''] before:-translate-y-1/2">{{ transport.group }}</li>
+                                <li class="list-none pl-3 relative before:absolute before:left-0 before:top-1/2 before:w-[6px] before:h-[6px] before:bg-surface-300 before:content-[''] before:-translate-y-1/2">{{ transport.driver }}</li>
                             </ul>
-                        </div>
 
-                        <Tag class="text-primary-600 text-xs self-start">
-                            <Icon name="tabler:users" class="size-3 text-primary-300" />
-                            {{ $t('passengerFlow.label') }}
-                        </Tag>
+                            <div>
+                                <Tag class="text-primary-600 text-xs md:self-center lg:mt-1.5">
+                                    <Icon name="tabler:users" class="size-3 text-primary-300" />
+                                    {{ $t('passengerFlow.label') }}
+                                </Tag>
+                            </div>
+                        </div>
                     </div>
 
                     <PassengerFlowPeriodFilter />

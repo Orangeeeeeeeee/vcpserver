@@ -194,6 +194,10 @@ const onRowClick = (event: { data: TableRow }): void => {
         border-bottom: 1px solid var(--p-surface-200);
     }
 
+    .responsive-table :deep(.p-datatable-tfoot > tr > td) {
+        border-bottom: 1px solid #469BC31A;
+    }
+
     .responsive-table :deep(.p-datatable-tfoot > tr > td:last-child) {
         border-color: var(--p-surface-400);
     }

@@ -7,17 +7,25 @@ export interface NavigationItem {
     icon: string;
     /** Route path */
     route: string;
+    /** Extra path prefixes of section pages living outside `route` that also mark this item as active */
+    activePrefixes?: string[];
 }
 
 /** Sidebar navigation items */
 export const navigationItems: NavigationItem[] = [
-    { key: 'objects', icon: 'tabler:bus', route: ROUTES.OBJECTS },
+    {
+        key: 'objects',
+        icon: 'tabler:bus',
+        route: ROUTES.OBJECTS,
+        activePrefixes: [ROUTES.VEHICLES, ROUTES.DRIVERS]
+    },
     { key: 'routes', icon: 'tabler:route', route: ROUTES.ROUTES_PAGE },
     { key: 'zones', icon: 'tabler:border-radius', route: ROUTES.ZONES },
     { key: 'reports', icon: 'tabler:file-text', route: ROUTES.REPORTS },
     {
         key: 'passengerFlow',
         icon: 'tabler:chart-bar',
-        route: ROUTES.PASSENGER_FLOW
+        route: ROUTES.PASSENGER_FLOW,
+        activePrefixes: [ROUTES.PASSENGER_FLOW_TRANSPORT]
     }
 ];

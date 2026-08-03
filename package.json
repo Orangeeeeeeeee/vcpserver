@@ -32,6 +32,7 @@
         "primevue": "^4.5.5",
         "tailwindcss": "^4.2.4",
         "tailwindcss-primeui": "^0.6.1",
+        "vidstack": "^1.15.6",
         "vue": "^3.5.32",
         "vue-router": "^5.0.4"
     },

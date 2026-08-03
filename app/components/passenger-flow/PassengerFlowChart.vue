@@ -66,6 +66,8 @@ const initChart = () => {
         },
         xAxis: {
             categories: times,
+            // Area points are placed 'on' ticks (edge-to-edge), so ticks must sit on categories too
+            tickmarkPlacement: props.type === 'area' ? 'on' : 'between',
             lineColor: "##F3F3F3",
             labels: {
                 style: {
@@ -93,6 +95,8 @@ const initChart = () => {
                 pointStart: 0
             },
             area: {
+                // Start/end the area exactly at the plot edges instead of half a category slot in
+                pointPlacement: 'on',
                 lineColor: props.color,
                 lineWidth: 2,
                 marker: {

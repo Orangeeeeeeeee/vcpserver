@@ -6,6 +6,7 @@ import type {
     OnlineVehicleDetail,
     VehicleCamera
 } from '~/types/online';
+import { DEMO_MEDIA_SOURCES, type DemoMediaSource } from '~/mocks/demo-media';
 
 /** Mock online groups (panel sections; counts: 20 / 4 / 7) */
 export const ONLINE_GROUPS: OnlineGroup[] = [
@@ -153,7 +154,10 @@ export const generateOnlineVehicleDetail = (
         { length: 2 + (seed % 2) },
         (_, k) => ({
             id: `${vehicle.id}-cam-${k + 1}`,
-            number: k + 1
+            number: k + 1,
+            ...(DEMO_MEDIA_SOURCES[
+                (seed + k) % DEMO_MEDIA_SOURCES.length
+            ] as DemoMediaSource)
         })
     );
 

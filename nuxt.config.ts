@@ -7,6 +7,12 @@ export default defineNuxtConfig({
     vite: {
         plugins: [tailwindcss()]
     },
+    vue: {
+        compilerOptions: {
+            // Vidstack player ships <media-*> web components
+            isCustomElement: (tag) => tag.startsWith('media-')
+        }
+    },
     compatibilityDate: '2025-07-15',
     routeRules: {
         '/': { redirect: ROUTES.OBJECTS_ONLINE },

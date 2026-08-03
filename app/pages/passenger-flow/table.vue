@@ -30,7 +30,6 @@
             hoverable
             :rows="9"
             row-key="id"
-            @row-click="onRowClick"
         >
             <template #cell-transport="{ row }">
                 <div class="flex flex-col gap-[0.125rem] leading-none">
@@ -43,23 +42,25 @@
                 </div>
             </template>
             <template #cell-group="{ row }">
-                <span
-                    class="inline-flex items-center rounded-md bg-violet-100 px-2 py-1 text-xs font-medium text-violet-700"
-                >
-                    {{ row.group }}
-                </span>
+                <div>
+                    <span
+                        class="inline-flex items-center rounded-md bg-violet-100 px-2 py-1 text-xs font-medium text-violet-700"
+                    >
+                        {{ row.group }}
+                    </span>
+                </div>
             </template>
             <template #cell-driver="{ row }">
                 <div class="flex items-center gap-1.5">
                     <Icon name="tabler:user" class="size-5 text-surface-600" />
-                    <span class="text-surface-900">{{ row.driver }}</span>
+                    <span class="text-surface-800">{{ row.driver }}</span>
                 </div>
             </template>
             <template #cell-trips="{ row }">
-                <Chip class="text-xs font-medium" :label="String(row.trips)" />
+                <div><Chip class="text-xs font-medium" :label="String(row.trips)" /></div>
             </template>
             <template #cell-distance="{ row }">
-                <span class="font-semibold">
+                <span class="font-medium text-surface-900">
                     {{
                         $t('passengerFlow.table.distanceValue', {
                             value: row.distance
@@ -68,7 +69,7 @@
                 </span>
             </template>
             <template #cell-profit="{ row }">
-                <span class="font-semibold">
+                <span class="text-surface-800">
                     {{
                         $t('passengerFlow.table.profitValue', {
                             value: row.profit
@@ -76,8 +77,11 @@
                     }}
                 </span>
             </template>
-            <template #cell-actions>
-                <div class="flex items-center gap-1 text-surface-950">
+            <template #cell-actions="{ row }">
+                <div
+                    class="flex cursor-pointer items-center gap-1 text-surface-950"
+                    @click="onRowClick(row)"
+                >
                     <span>{{ $t('passengerFlow.table.columns.goto') }}</span>
                     <Icon name="tabler:arrow-up-right" class="size-5" />
                 </div>

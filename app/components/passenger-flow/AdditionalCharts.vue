@@ -6,9 +6,9 @@
             :aria-expanded="open"
             @click="open = !open"
         >
-            <h2 class="text-lg text-surface-900">
+            <UiTypography variant="h5">
                 {{ $t('passengerFlow.additionalCharts.caption') }}
-            </h2>
+            </UiTypography>
             <Icon
                 :name="open ? 'tabler:chevron-up' : 'tabler:chevron-down'"
                 class="size-5 text-surface-700"
@@ -32,12 +32,12 @@
                         ]"
                     >
                         <div class="flex justify-between items-basearea mb-4">
-                            <h2
+                            <UiTypography
                                 v-if="chart.title"
-                                class="text-lg text-surface-900"
+                                variant="h5"
                             >
                                 {{ chart.title }}
-                            </h2>
+                            </UiTypography>
                         </div>
                         <PassengerFlowChart
                             :data="chart.data"

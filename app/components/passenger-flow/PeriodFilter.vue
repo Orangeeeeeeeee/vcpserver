@@ -4,7 +4,7 @@
             type="button"
             :aria-expanded="isPeriodOpen"
             aria-haspopup="dialog"
-            class="h-[2.5rem] w-40 md:w-56 flex cursor-pointer items-center justify-between gap-2 rounded-md border border-surface-300 px-3 text-sm transition duration-300 hover:border-primary-300 aria-expanded:border-primary-300"
+            class="h-[2.5rem] w-full md:w-56 flex cursor-pointer items-center justify-between gap-2 rounded-md border border-surface-300 px-3 text-sm transition duration-300 hover:border-primary-300 aria-expanded:border-primary-300"
             @click="togglePeriodPopover"
         >
             <span class="truncate text-surface-950">

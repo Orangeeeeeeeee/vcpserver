@@ -47,6 +47,10 @@ export interface VehicleCamera {
     id: string;
     /** 1-based display number («Камера {n}») */
     number: number;
+    /** Video stream URL (demo clips until the streaming API exists) */
+    streamUrl: string;
+    /** Poster image shown before playback starts */
+    posterUrl?: string;
 }
 
 /** Extra sections of the vehicle detail page («Онлайн» tab) */

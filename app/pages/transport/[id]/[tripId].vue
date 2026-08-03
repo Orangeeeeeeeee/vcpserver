@@ -3,9 +3,9 @@
         <SharedPageLayout :title="$t('passengerFlow.title')">
             <template #content>
                 <div
-                    class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-4 md:mb-4 md:p-5 md:border-b border-surface-200"
+                    class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-4 md:mb-4 md:pt-5 md:pb-5 md:border-b border-surface-200"
                 >
-                    <div class="flex flex-wrap items-center gap-2 min-w-0">
+                    <div class="flex flex-wrap gap-2 min-w-0">
                         <div
                             class="flex items-center justify-center bg-surface-200 rounded-md size-12 shrink-0"
                         >
@@ -15,39 +15,29 @@
                             />
                         </div>
 
-                        <div class="flex flex-wrap items-center gap-2">
-                            <div class="flex flex-col min-w-0 grow">
-                                <div
-                                    class="flex items-center gap-1 min-w-0 md:gap-4"
-                                >
-                                    <h4
-                                        class="font-semibold text-surface-900 truncate text-[1.125rem] font-manrope"
-                                    >
-                                        {{ transport.transport }} (ID:
-                                        {{ transport.transportId }})
-                                    </h4>
-                                </div>
-                                <ul
-                                    class="flex gap-3 truncate text-sm text-surface-900 list-disc marker:text-lg marker:text-surface-300"
-                                >
-                                    <li class="ml-4">{{ transport.group }}</li>
-                                    <li class="ml-4">{{ transport.driver }}</li>
-                                </ul>
+                        <div class="flex flex-col lg:grid lg:grid-cols-2 lg:grid-rows-2 gap-1 lg:items-center">
+                            <div class="flex items-center gap-1 min-w-0 md:gap-4">
+                                <UiTypography variant="h5">
+                                    {{ transport.transport }} (ID: {{ transport.transportId }})
+                                </UiTypography>
                             </div>
+                            <ul class="flex gap-3 truncate text-sm text-surface-900 list-none lg:col-start-1 lg:col-end-2 lg:row-start-2">
+                                <li class="list-none pl-3 relative before:absolute before:left-0 before:top-1/2 before:w-[6px] before:h-[6px] before:bg-surface-300 before:content-[''] before:-translate-y-1/2">{{ transport.group }}</li>
+                                <li class="list-none pl-3 relative before:absolute before:left-0 before:top-1/2 before:w-[6px] before:h-[6px] before:bg-surface-300 before:content-[''] before:-translate-y-1/2">{{ transport.driver }}</li>
+                            </ul>
 
-                            <Tag class="text-primary-600 text-xs self-start">
-                                <Icon
-                                    name="tabler:users"
-                                    class="size-3 text-primary-300"
-                                />
-                                {{ $t('passengerFlow.label') }}
-                            </Tag>
+                            <div>
+                                <Tag class="text-primary-600 text-xs md:self-center lg:mt-1.5">
+                                    <Icon name="tabler:users" class="size-3 text-primary-300" />
+                                    {{ $t('passengerFlow.label') }}
+                                </Tag>
+                            </div>
                         </div>
                     </div>
 
                     <div class="flex flex-wrap items-center gap-3">
                         <div
-                            class="flex items-center justify-center bg-surface-200 rounded-md size-12"
+                            class="flex items-center justify-center bg-surface-200 rounded-md size-12 shrink-0"
                         >
                             <Icon
                                 name="tabler:route"
@@ -55,16 +45,16 @@
                             />
                         </div>
 
-                        <div class="flex flex-col gap-2">
-                            <div
-                                class="flex items-center gap-1.5 text-surface-900 font-medium text-[1.125rem]"
+                        <div class="flex flex-col">
+                            <UiTypography
+                                variant="h5"
                             >
                                 {{ trip.fromLocation }}
                                 —
                                 {{ trip.toLocation }}
-                            </div>
+                            </UiTypography>
 
-                            <div class="flex gap-2">
+                            <div class="flex gap-2 text-sm lg:text-base">
                                 <div
                                     class="flex items-center gap-1.5 text-surface-800"
                                 >

@@ -13,25 +13,24 @@
             hoverable
             :rows="9"
             row-key="id"
-            @row-click="onRowClick"
         >
+            <template #cell-id="{ row }">
+                <span class="inline-flex items-center gap-1.5 hover:underline" @click="onRowClick(row)">
+                    {{ row.fromLocation }}
+                    <Icon name="tabler:arrow-right" class="size-4" />
+                    {{ row.toLocation }}
+                </span>
+            </template>
             <template #cell-departureAt="{ row }">
-                <div class="flex flex-col">
+                <div class="flex lg:flex-col gap-2 lg:gap-0">
                     <span class="font-medium">{{ formatIsoDateToUa((row.departureAt as string).split(' ')[0] as string) }}</span>
                     <span class="text-surface-700">{{ (row.departureAt as string).split(' ')[1] }}</span>
                 </div>
             </template>
             <template #cell-arrivalAt="{ row }">
-                <div class="flex flex-col">
+                <div class="flex lg:flex-col gap-2 lg:gap-0">
                     <span class="font-medium">{{ formatIsoDateToUa((row.arrivalAt as string).split(' ')[0] as string) }}</span>
                     <span class="text-surface-700">{{ (row.arrivalAt as string).split(' ')[1] }}</span>
-                </div>
-            </template>
-            <template #cell-id="{ row }">
-                <div class="flex items-center gap-1.5">
-                    {{ row.fromLocation }}
-                    <Icon name="tabler:arrow-right" class="size-4" />
-                    {{ row.toLocation }}
                 </div>
             </template>
             <template #cell-distance="{ row }">
@@ -45,7 +44,9 @@
                 </span>
             </template>
             <template #footer-id="{ value }">
-                {{ value }}
+                <span class="text-surface-900">
+                    {{ value }}
+                </span>
             </template>
             <template #footer-departureAt>
                 &nbsp;
@@ -53,11 +54,20 @@
             <template #footer-arrivalAt>
                 &nbsp;
             </template>
+            <template #footer-passengers="{ value }">
+                <span class="text-surface-800">
+                    {{ value }}
+                </span>
+            </template>
             <template #footer-distance="{ value }">
-                {{ $t('passengerFlow.transport.tripsTable.distanceValue', { value }) }}
+                <span class="text-surface-900 font-medium">
+                    {{ $t('passengerFlow.transport.tripsTable.distanceValue', { value }) }}
+                </span>
             </template>
             <template #footer-profit="{ value }">
-                {{ value }}
+                <span class="text-surface-800">
+                    {{ value }}
+                </span>
             </template>
         </SharedResponsiveTable>
         <SharedTableEmpty
@@ -78,6 +88,7 @@ const { t } = useI18n();
 const { trips } = defineProps<{
     trips: PassengerFlowTrip[];
 }>();
+
 
 const columns = computed<TableColumn[]>(() => [
     {

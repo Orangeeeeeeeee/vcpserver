@@ -3,12 +3,12 @@
         <div
             v-for="chart in charts"
             :key="chart.id"
-            class="p-4 pb-1 border border-surface-300 rounded-md"
+            class="p-4 pb-0 border border-surface-300 rounded-md"
         >
             <div class="flex justify-between items-basearea mb-4">
-                <h2 v-if="chart.title" class="text-lg text-surface-900">
+                <UiTypography variant="h5" v-if="chart.title">
                     {{ chart.title }}
-                </h2>
+                </UiTypography>
                 <div v-if="chart.total" class="text-base text-surface-900 rounded-2xl py-1 px-3" :style="{ background: `color-mix(in srgb, ${chart.color} 20%, transparent)` }">
                     {{ chart.total }}
                 </div>

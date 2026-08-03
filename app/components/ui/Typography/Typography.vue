@@ -1,5 +1,5 @@
 <template>
-    <component :is="tag" :class="variantClasses[variant]">
+    <component :is="tag" :class="variantClasses[variant]" class="font-manrope font-medium text-surface-900">
         <slot />
     </component>
 </template>
@@ -24,11 +24,11 @@ const tag = computed((): string => props.as ?? props.variant);
 
 /** Tailwind classes mapped to each heading variant */
 const variantClasses: Record<Variant, string> = {
-    h1: 'font-manrope text-[1.5rem] md:text-[2rem] lg:text-[2.5rem] font-semibold text-surface-900',
-    h2: 'font-manrope text-[2rem] font-semibold text-surface-900',
-    h3: 'font-manrope text-[1.5rem] font-semibold text-surface-900',
-    h4: 'font-manrope text-[1rem] md:text-[1.125rem] lg:text-[1.25rem] font-semibold text-surface-900',
-    h5: 'font-manrope text-[1.125rem] font-semibold text-surface-900',
-    h6: 'font-manrope text-[1rem] font-semibold text-surface-900'
+    h1: 'text-[1.5rem] md:text-[2rem] lg:text-[2.5rem]',
+    h2: 'text-[2rem]',
+    h3: 'text-[1.5rem]',
+    h4: 'text-base md:text-[1.125rem] lg:text-[1.25rem]',
+    h5: 'text-base lg:text-[1.125rem] ',
+    h6: 'text-[1rem]'
 };
 </script>
