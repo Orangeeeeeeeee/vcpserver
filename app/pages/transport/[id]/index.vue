@@ -20,7 +20,7 @@
                             </ul>
 
                             <div>
-                                <Tag class="text-primary-600 text-xs md:self-center lg:mt-1.5">
+                                <Tag class="text-primary-600 text-xs md:self-center">
                                     <Icon name="tabler:users" class="size-3 text-primary-300" />
                                     {{ $t('passengerFlow.label') }}
                                 </Tag>
