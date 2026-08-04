@@ -5,7 +5,7 @@
                 <div
                     class="flex flex-col md:flex-row md:justify-between gap-3 mb-4 md:mb-4 md:pt-5 md:pb-5 md:border-b border-surface-200"
                 >
-                    <div class="flex flex-wrap gap-1.5 min-w-0">
+                    <div class="flex gap-1.5 min-w-0">
                         <div
                             class="flex items-center justify-center bg-surface-200 rounded-md size-10 lg:size-12 shrink-0"
                         >
@@ -30,7 +30,7 @@
                                 </UiTypography>
                             </div>
                             <ul
-                                class="flex gap-3 truncate text-sm text-surface-900 list-none lg:col-start-1 lg:col-end-2 lg:row-start-2 mb-1 lg:-mt-2"
+                                class="flex gap-3 truncate text-sm text-surface-900 list-none lg:col-start-1 lg:col-end-2 lg:row-start-2 lg:-mt-2"
                             >
                                 <li
                                     class="list-none pl-3 relative before:absolute before:left-0 before:top-1/2 before:w-[6px] before:h-[6px] before:bg-surface-300 before:content-[''] before:-translate-y-1/2 before:rounded-full"
@@ -56,7 +56,7 @@
                         </div>
                     </div>
 
-                    <div class="flex flex-wrap gap-2 lg:gap-3">
+                    <div class="flex gap-2 lg:gap-3">
                         <div
                             class="flex items-center justify-center bg-surface-200 rounded-md size-10 lg:size-12 shrink-0"
                         >

@@ -16,11 +16,11 @@
         >
             <template #cell-id="{ row }">
                 <NuxtLink
-                    class="inline-flex items-center gap-1.5 relative cursor-pointer after:absolute after:left-0 after:right-0 after:bottom-[0.08em] after:h-[1px] after:bg-current"
+                    class="inline-flex items-center gap-1.5 relative underline"
                     :to="ROUTES.PASSENGER_FLOW_TRIP_DETAIL(row.transportId, row.id)"
                 >
                     {{ row.fromLocation }}
-                    <Icon name="tabler:arrow-right" class="size-4" />
+                    →
                     {{ row.toLocation }}
                 </NuxtLink>
             </template>

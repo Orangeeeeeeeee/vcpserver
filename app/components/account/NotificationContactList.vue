@@ -20,6 +20,7 @@
                 severity="secondary"
                 class="shrink-0"
                 @click="onAdd"
+
             >
                 <template #icon>
                     <Icon name="tabler:plus" class="size-5" />

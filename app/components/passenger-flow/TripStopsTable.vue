@@ -107,7 +107,7 @@
         >
             <div class="relative" @click.stop>
                 <div
-                    class="w-[min(90vw,60rem)] aspect-video overflow-hidden rounded-2xl bg-surface-950"
+                    class="w-[min(90vw,60rem)] aspect-video overflow-hidden rounded-md bg-surface-950"
                 >
                     <UiVideoPlayer
                         :src="previewVideo"
