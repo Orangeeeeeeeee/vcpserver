@@ -34,12 +34,15 @@
                     })
                 }}
             </template>
-            <template #cell-passengers="{ row }">
-                <Chip
-                    :label="String(row.passengers)"
-                    severity="primary"
-                    class="text-xs font-medium"
-                />
+            <template #cell-passengers="{ row, rowHovered }">
+                <span>
+                    <Chip
+                        :label="String(row.passengers)"
+                        severity="primary"
+                        class="text-xs font-medium transition"
+                        :class="rowHovered ? 'bg-surface-300' : ''"
+                    />
+                </span>
             </template>
             <template #cell-amount="{ row }">
                 <div class="flex flex-col gap-0.5">

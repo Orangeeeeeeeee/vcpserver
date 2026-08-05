@@ -33,7 +33,7 @@
         >
             <template #cell-transport="{ row }">
                 <div class="flex flex-col gap-[0.125rem] leading-none">
-                    <span class="font-semibold">
+                    <span class="font-semibold text-surface-950">
                         {{ row.transport }}
                     </span>
                     <span class="text-surface-600">
