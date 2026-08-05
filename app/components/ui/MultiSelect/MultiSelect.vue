@@ -291,8 +291,10 @@ const forwardedSlotNames = computed<string[]>(() =>
 );
 
 /**
- * Strips the sentinel from the `value` slot props before forwarding, so a
- * parent `#value` template never sees the synthetic select-all entry.
+ * Sanitizes the `value` slot props before forwarding: strips the sentinel so
+ * a parent `#value` template never sees the synthetic select-all entry, and
+ * normalizes a missing value to an empty array (PrimeVue resets an empty
+ * array model to `undefined` on init via its `$formDefaultValue` watcher).
  *
  * @param name - Forwarded slot name
  * @param slotProps - Slot props emitted by the underlying MultiSelect
@@ -302,16 +304,14 @@ const sanitizeSlotProps = (
     name: string,
     slotProps: Record<string, unknown>
 ): Record<string, unknown> => {
-    if (
-        name !== 'value' ||
-        !props.showSelectAll ||
-        !Array.isArray(slotProps.value)
-    ) {
+    if (name !== 'value' || !props.showSelectAll) {
         return slotProps;
     }
     return {
         ...slotProps,
-        value: slotProps.value.filter((value) => !isSentinelValue(value))
+        value: Array.isArray(slotProps.value)
+            ? slotProps.value.filter((value) => !isSentinelValue(value))
+            : []
     };
 };
 

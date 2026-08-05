@@ -34,7 +34,8 @@
                         <div class="flex justify-between items-basearea mb-4">
                             <UiTypography
                                 v-if="chart.title"
-                                variant="h5"
+                                variant="h6"
+                                class="text-surface-800"
                             >
                                 {{ chart.title }}
                             </UiTypography>

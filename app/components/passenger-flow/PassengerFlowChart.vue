@@ -47,8 +47,8 @@ const chartContainer = useTemplateRef<HTMLDivElement>('chartContainer');
 const initChart = () => {
     if (!chartContainer.value) return;
 
-    const times = props.data.map(d => d.date);
-    const counts = props.data.map(d => d.count);
+    const times = props.data.map((d) => d.date);
+    const counts = props.data.map((d) => d.count);
 
     const options: Highcharts.Options = {
         chart: {
@@ -59,7 +59,7 @@ const initChart = () => {
             }
         },
         title: {
-            text: '',
+            text: ''
         },
         credits: {
             enabled: false
@@ -68,7 +68,7 @@ const initChart = () => {
             categories: times,
             // Area points are placed 'on' ticks (edge-to-edge), so ticks must sit on categories too
             tickmarkPlacement: props.type === 'area' ? 'on' : 'between',
-            lineColor: "##F3F3F3",
+            lineColor: '##F3F3F3',
             labels: {
                 style: {
                     color: '#666'
@@ -77,7 +77,7 @@ const initChart = () => {
         },
         yAxis: {
             title: {
-                text: '',
+                text: ''
             },
             labels: {
                 style: {
@@ -108,11 +108,11 @@ const initChart = () => {
                             fillColor: props.color,
                             lineWidth: 0
                         }
-                    },
+                    }
                 },
                 states: {
                     hover: {
-                        lineWidth: 2,
+                        lineWidth: 2
                     }
                 },
                 color: {
@@ -123,33 +123,39 @@ const initChart = () => {
                         y2: 1
                     },
                     stops: [
-                        [0, `color-mix(in srgb, ${props.color} 10%, transparent)`],
-                        [1, '#fffbfb']
+                        [
+                            0,
+                            `color-mix(in srgb, ${props.color} 5%, transparent)`
+                        ],
+                        [1, 'rgba(255, 255, 255, 0)']
                     ]
-                },
+                }
             }
         },
-        series: props.type === 'area'
-            ? [
-                { name: '', data: counts },
-                { name: '', data: counts },
-                { name: '', data: counts }
-            ]
-            : [
-                {
-                    name: '',
-                    color: `color-mix(in srgb, ${props.color} 20%, transparent)`,
-                    data: counts
-                }, {
-                    name: '',
-                    color: `color-mix(in srgb, ${props.color} 50%, transparent)`,
-                    data: counts
-                }, {
-                    name: '',
-                    color: props.color,
-                    data: counts
-                }
-            ],
+        series:
+            props.type === 'area'
+                ? [
+                      { name: '', data: counts },
+                      { name: '', data: counts },
+                      { name: '', data: counts }
+                  ]
+                : [
+                      {
+                          name: '',
+                          color: `color-mix(in srgb, ${props.color} 20%, transparent)`,
+                          data: counts
+                      },
+                      {
+                          name: '',
+                          color: `color-mix(in srgb, ${props.color} 50%, transparent)`,
+                          data: counts
+                      },
+                      {
+                          name: '',
+                          color: props.color,
+                          data: counts
+                      }
+                  ],
         tooltip: {
             backgroundColor: surface[50],
             borderColor: surface[300],
@@ -185,10 +191,7 @@ onMounted(() => {
     initChart();
 });
 
-watch([
-    () => props.data,
-    () => props.type
-], () => {
+watch([() => props.data, () => props.type], () => {
     initChart();
 });
 </script>

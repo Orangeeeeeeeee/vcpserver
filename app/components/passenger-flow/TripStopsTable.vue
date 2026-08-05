@@ -12,7 +12,7 @@
             row-key="id"
         >
             <template #cell-departureTime="{ row }">
-                <div class="flex lg:flex-col gap-2 lg:gap-0">
+                <div class="flex flex-wrap lg:flex-col gap-2 lg:gap-0">
                     <span class="font-medium">
                         {{
                             formatIsoDateToUa(

@@ -1,5 +1,9 @@
 <template>
-    <component :is="tag" :class="variantClasses[variant]" class="font-manrope font-medium text-surface-900">
+    <component
+        :is="tag"
+        :class="variantClasses[variant]"
+        class="font-manrope font-medium text-surface-900"
+    >
         <slot />
     </component>
 </template>
@@ -29,6 +33,6 @@ const variantClasses: Record<Variant, string> = {
     h3: 'text-[1.5rem]',
     h4: 'text-base md:text-[1.125rem] lg:text-[1.25rem]',
     h5: 'text-base lg:text-[1.125rem] ',
-    h6: 'text-[1rem]'
+    h6: 'text-[0.875rem] lg:text-[1rem]'
 };
 </script>

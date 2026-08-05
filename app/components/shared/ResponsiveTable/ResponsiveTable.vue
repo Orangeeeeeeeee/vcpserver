@@ -24,14 +24,22 @@
                 :body-style="col.align ? { textAlign: col.align } : undefined"
                 :header-style="col.align ? { textAlign: col.align } : undefined"
                 :pt="{
-                    sort: { class: 'leading-none'},
-                    bodyCell: {
+                    sort: { class: 'leading-none' },
+                    bodyCell: ({ parent }) => ({
                         'data-label': col.header,
-                        class: [!col.header ? 'label-empty' : '']
-                    },
+                        class: [!col.header ? 'label-empty' : ''],
+                        onMouseenter: () =>
+                            onCellMouseEnter(parent.props.rowIndex, col.field),
+                        onMouseleave: onCellMouseLeave
+                    }),
                     footerCell: {
                         'data-label': col.header,
-                        class: ['bg-primary-100 text-sm', isFooterCellEmpty(col.field) ? 'empty-footer-cell' : '']
+                        class: [
+                            'bg-primary-100 text-sm',
+                            isFooterCellEmpty(col.field)
+                                ? 'empty-footer-cell'
+                                : ''
+                        ]
                     }
                 }"
             >
@@ -42,11 +50,14 @@
                         </span>
                     </slot>
                 </template>
-                <template #body="{ data }">
+                <template #body="{ data, index }">
                     <slot
                         :name="`cell-${col.field}`"
                         :row="data"
                         :value="data[col.field]"
+                        :hovered="isCellHovered(index, col.field)"
+                        :row-hovered="hoveredCell?.rowIndex === index"
+                        :hovered-cell="hoveredCell"
                     >
                         {{ data[col.field] }}
                     </slot>
@@ -76,6 +87,13 @@
 </template>
 
 <script lang="ts">
+export interface HoveredCell {
+    /** Row index within the currently displayed (sorted/paginated) data */
+    rowIndex: number;
+    /** Column field of the hovered cell */
+    field: string;
+}
+
 export interface TableColumn {
     /** Data property key */
     field: string;
@@ -114,22 +132,25 @@ interface ResponsiveTableProps {
     hoverable?: boolean;
 }
 
-const { footerRow, paginator, value, rows } = withDefaults(defineProps<ResponsiveTableProps>(), {
-    paginator: false,
-    rows: 10,
-    rowsPerPageOptions: undefined,
-    rowKey: undefined,
-    loading: false,
-    footerRow: undefined,
-    hoverable: false
-});
+const { footerRow, paginator, value, rows } = withDefaults(
+    defineProps<ResponsiveTableProps>(),
+    {
+        paginator: false,
+        rows: 10,
+        rowsPerPageOptions: undefined,
+        rowKey: undefined,
+        loading: false,
+        footerRow: undefined,
+        hoverable: false
+    }
+);
 
 /** Paginator is rendered only when the data spans more than one page. */
 const showPaginator = computed<boolean>(() => paginator && value.length > rows);
 
 const emit = defineEmits<{
     /** Emitted when a row is clicked */
-    'row-click': [row: TableRow]
+    'row-click': [row: TableRow];
 }>();
 
 /**
@@ -142,6 +163,33 @@ const isFooterCellEmpty = (field: string): boolean => {
     const value = footerRow?.[field];
     return value === undefined || value === null || value === '';
 };
+
+/** Currently hovered body cell, or null when no cell is hovered */
+const hoveredCell = ref<HoveredCell | null>(null);
+
+/**
+ * Stores the hovered cell so every `cell-*` slot can react to it.
+ * @param rowIndex - Row index of the hovered cell
+ * @param field - Column field of the hovered cell
+ */
+const onCellMouseEnter = (rowIndex: number, field: string): void => {
+    hoveredCell.value = { rowIndex, field };
+};
+
+/** Clears the hovered cell state */
+const onCellMouseLeave = (): void => {
+    hoveredCell.value = null;
+};
+
+/**
+ * Checks whether the given cell is the currently hovered one.
+ * @param rowIndex - Row index of the cell
+ * @param field - Column field of the cell
+ * @returns {boolean} True when this exact cell is hovered
+ */
+const isCellHovered = (rowIndex: number, field: string): boolean =>
+    hoveredCell.value?.rowIndex === rowIndex &&
+    hoveredCell.value?.field === field;
 
 /**
  * Handle row click event and emit custom event
@@ -190,19 +238,23 @@ const onRowClick = (event: { data: TableRow }): void => {
         grid-template-columns: subgrid;
         grid-column: span 2;
         align-items: center;
-        column-gap: 0.75rem;
+        column-gap: 2rem;
         padding: 0.75rem 0;
         border: none;
         text-align: left !important;
         border-bottom: 1px solid var(--p-surface-200);
     }
 
-     .responsive-table :deep(.p-datatable-tbody > tr > td).label-empty {
-         display: block;
-     }
+    .hover-table :deep(.p-datatable-tbody > tr:hover > td) {
+        border-bottom: 1px solid var(--p-surface-300);
+    }
+
+    .responsive-table :deep(.p-datatable-tbody > tr > td).label-empty {
+        display: block;
+    }
 
     .responsive-table :deep(.p-datatable-tfoot > tr > td) {
-        border-bottom: 1px solid #469BC31A;
+        border-bottom: 1px solid #469bc31a;
     }
 
     .responsive-table :deep(.p-datatable-tfoot > tr > td:last-child) {
@@ -238,5 +290,9 @@ const onRowClick = (event: { data: TableRow }): void => {
 
 .hover-table :deep(.p-datatable-tbody > tr) {
     transition: background-color 0.12s ease-in-out;
+}
+
+.hover-table :deep(.p-datatable-tbody > tr > td) {
+    transition: border-color 0.12s ease-in-out;
 }
 </style>

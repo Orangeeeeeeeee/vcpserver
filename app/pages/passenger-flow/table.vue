@@ -56,8 +56,14 @@
                     <span class="text-surface-800">{{ row.driver }}</span>
                 </div>
             </template>
-            <template #cell-trips="{ row }">
-                <div><Chip class="text-xs font-medium" :label="String(row.trips)" /></div>
+            <template #cell-trips="{ row, rowHovered }">
+                <div>
+                    <Chip
+                        class="text-xs font-medium transition"
+                        :class="rowHovered ? 'bg-surface-300' : ''"
+                        :label="String(row.trips)"
+                    />
+                </div>
             </template>
             <template #cell-distance="{ row }">
                 <span class="font-medium text-surface-900">
@@ -79,11 +85,16 @@
             </template>
             <template #cell-actions="{ row }">
                 <NuxtLink
-                    class="flex cursor-pointer items-center gap-1 text-surface-950"
-                    :to="ROUTES.PASSENGER_FLOW_TRANSPORT_DETAIL(row.transportId)"
+                    class="flex cursor-pointer items-center gap-1 text-primary-900 font-medium"
+                    :to="
+                        ROUTES.PASSENGER_FLOW_TRANSPORT_DETAIL(row.transportId)
+                    "
                 >
                     <span>{{ $t('passengerFlow.table.columns.goto') }}</span>
-                    <Icon name="tabler:arrow-up-right" class="size-5" />
+                    <Icon
+                        name="tabler:arrow-up-right"
+                        class="size-5 text-primary-600"
+                    />
                 </NuxtLink>
             </template>
         </SharedResponsiveTable>
