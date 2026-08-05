@@ -4,7 +4,7 @@
             class="pt-6 pb-2 pr-4 pl-4 md:p-4 lg:pl-10 lg:pr-10 lg:pt-6 lg:pb-4 border-b border-b-[var(--p-surface-300)]"
         >
             <div
-                class="page-header grid grid-cols-[1fr_auto] items-center gap-2"
+                class="page-header grid grid-cols-[1fr_auto] items-center gap-x-2"
             >
                 <div
                     class="[grid-area:title] flex items-center gap-3 justify-between"
@@ -41,7 +41,7 @@
                     v-if="tabs?.length"
                     :value="route.path"
                     :items="tabs"
-                    class="[grid-area:tabs] min-w-0"
+                    class="page-header-tabs [grid-area:tabs] min-w-0"
                     :border="false"
                 />
 
@@ -92,11 +92,35 @@ defineProps<PageLayoutProps>();
         'tabs tabs';
 }
 
+/* Teleport targets must exist in the DOM before pages mount their
+   <SharedClientTeleport>, so they can't be v-if'ed away — collapse them with
+   CSS instead. :has(*) rather than :empty: Vue Teleport keeps anchor text
+   nodes inside the target even when no content is mounted. */
+#page-actions-header:not(:has(*)),
+#page-breadcrumbs-target:not(:has(*)),
+#page-actions-target:not(:has(*)) {
+    display: none;
+}
+
+/* Vertical rhythm comes from margins on non-empty rows, not the grid's
+   row-gap: a uniform row-gap keeps spacing around empty (zero-height) tracks,
+   e.g. a page with tabs but no crumbs/actions would get a double gap. */
+.page-header > #page-breadcrumbs-target:has(*),
+.page-header > #page-actions-target:has(*),
+.page-header > .page-header-tabs {
+    margin-top: 0.5rem;
+}
+
 @media (min-width: 768px) {
     .page-header {
         grid-template-areas:
             'title crumb'
             'tabs actions';
+    }
+
+    /* The breadcrumb shares the first row with the title here. */
+    .page-header > #page-breadcrumbs-target {
+        margin-top: 0;
     }
 }
 </style>
