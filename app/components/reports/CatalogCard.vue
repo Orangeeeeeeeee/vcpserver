@@ -1,6 +1,6 @@
 <template>
     <div
-        class="report-card grid items-center gap-x-4 gap-y-1.5 border border-surface-300 rounded-md bg-surface-100 p-3 md:flex md:items-center md:gap-x-3 hover:bg-surface-200 lg:cursor-pointer lg:transition lg:duration-300"
+        class="report-card grid items-center gap-x-4 gap-y-1.5 border border-surface-300 rounded-md bg-surface-100 p-3 md:flex md:items-center md:gap-x-8 hover:bg-surface-200 lg:cursor-pointer lg:transition lg:duration-300"
     >
         <span
             class="[grid-area:tile] inline-flex size-8 md:size-10 lg:h-[2.875rem] lg:w-[2.875rem] shrink-0 items-center justify-center rounded-lg"
@@ -16,7 +16,7 @@
         </h3>
 
         <p
-            class="[grid-area:desc] text-xs text-surface-800 mb-2 md:mb-0 min-w-0 md:line-clamp-2 lg:line-clamp-none md:w-[37%] md:shrink-0 lg:w-[40%]"
+            class="[grid-area:desc] text-xs lg:text-sm text-surface-800 mb-2 md:mb-0 min-w-0 md:line-clamp-2 lg:line-clamp-none md:w-[37%] md:shrink-0 lg:w-[40%]"
         >
             {{ $t(`reports.items.${report.id}.description`) }}
         </p>
