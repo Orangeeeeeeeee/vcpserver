@@ -60,7 +60,7 @@ VCPServer — веб-застосунок на Nuxt 4 з використанн�
 - **CSS-шари:** PrimeVue використовує порядок `@layer`: `theme, base, primevue`
 - **Кастомний dark-варіант:** визначений як `@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *))` у main.css
 - **Tailwind CSS** підключений як Vite-плагін (не PostCSS), налаштований у `nuxt.config.ts`
-- **Кольорова палітра:** кастомний пресет VcpPreset (`app/theme/preset.ts`) на основі Aura з дизайнерськими кольорами (`app/theme/colors.ts`). Експорти: `primary` (бренд-колір), `surface` (нейтральні), `primitiveColors` (green, red, yellow, indigo, teal, violet, sky, rose, amber). Через `tailwindcss-primeui` автоматично бріджаться `primary` та `surface` палітри. Semantic кольори (`success`, `error`, `warning`) бріджаться вручну через `@theme inline` в `main.css`
+- **Кольорова палітра:** кастомний пресет VcpPreset (`app/theme/preset.ts`) на основі Aura з дизайнерськими кольорами (`app/theme/colors.ts`). Пресет імпортується у `nuxt.config.ts`, тому зміни файлів теми (`app/theme/**`) НЕ підхоплюються HMR — потрібен рестарт dev-сервера (досить `touch nuxt.config.ts`). Експорти: `primary` (бренд-колір), `surface` (нейтральні), `primitiveColors` (green, red, yellow, indigo, teal, violet, sky, rose, amber). Через `tailwindcss-primeui` автоматично бріджаться `primary` та `surface` палітри. Semantic кольори (`success`, `error`, `warning`) бріджаться вручну через `@theme inline` в `main.css`
 
 ## Storybook
 

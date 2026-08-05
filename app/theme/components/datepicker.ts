@@ -41,6 +41,10 @@ const datepicker: DatePickerDesignTokens = {
         color: '{surface.500}'
     },
     css: `
+    .p-datepicker-panel {
+        max-width: 320px;
+    }
+
     .p-datepicker-weekday {
         font-size: 0.875rem;
         width: 2rem;
