@@ -1,5 +1,6 @@
 import tailwindcss from '@tailwindcss/vite';
 import VcpPreset from './app/theme/preset';
+import { UK_LOCALE } from './app/theme/primevue-locale';
 import { ROUTES } from './app/constants/routes';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -60,6 +61,8 @@ export default defineNuxtConfig({
     },
     primevue: {
         options: {
+            // Deep-merged over the built-in English locale by PrimeVue
+            locale: UK_LOCALE,
             theme: {
                 preset: VcpPreset,
                 options: {

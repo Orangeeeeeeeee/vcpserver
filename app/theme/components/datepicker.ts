@@ -23,16 +23,14 @@ const datepicker: DatePickerDesignTokens = {
         color: '{surface.800}'
     },
     date: {
-        padding: '0',
-        width: '2rem',
-        height: '2rem',
+        padding: '0.2rem',
         color: '{surface.800}',
         hoverBackground: '{primary.300}',
         hoverColor: '{surface.100}',
         selectedColor: '{surface.100}',
         selectedBackground: '{primary.300}',
-        rangeSelectedColor: '{primary.300}',
-        rangeSelectedBackground: '{primary.300}',
+        rangeSelectedColor: '{surface.800}',
+        rangeSelectedBackground: '{surface.200}',
         borderRadius: '6px'
     },
     today: {

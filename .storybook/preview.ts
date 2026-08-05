@@ -16,6 +16,7 @@ import Tag from 'primevue/tag';
 import Avatar from 'primevue/avatar';
 import PrimeVueButton from 'primevue/button';
 import VcpPreset from '../app/theme/preset';
+import { UK_LOCALE } from '../app/theme/primevue-locale';
 import { Typography as UiTypography } from '../app/components/ui/Typography';
 import { Pagination as UiPagination } from '../app/components/ui/Pagination';
 import { TabNav as UiTabNav } from '../app/components/ui/TabNav';
@@ -67,6 +68,8 @@ setup((app) => {
     (app as unknown as Record<symbol, boolean>)[INSTALLED] = true;
 
     app.use(PrimeVue, {
+        // Deep-merged over the built-in English locale by PrimeVue
+        locale: UK_LOCALE,
         theme: {
             preset: VcpPreset,
             options: {

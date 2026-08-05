@@ -100,12 +100,13 @@
             />
         </div>
 
-        <!-- Info banner before generation -->
-        <SharedTableEmpty
-            v-if="!generated"
-            icon="tabler:info-circle"
-            :message="$t('reports.idle.banner')"
-        />
+        <div v-if="!generated" class="w-full lg:w-[60%]">
+            <!-- Info banner before generation -->
+            <SharedTableEmpty
+                icon="tabler:info-circle"
+                :message="$t('reports.idle.banner')"
+            />
+        </div>
 
         <!-- Generated report table -->
         <template v-else>
@@ -163,12 +164,14 @@
                 <Button
                     v-for="format in EXPORT_FORMATS"
                     :key="format"
-                    outlined
                     severity="secondary"
                     @click="onExport"
                 >
                     {{ $t(`reports.idle.export.${format}`) }}
-                    <Icon name="tabler:download" class="size-5 shrink-0" />
+                    <Icon
+                        name="tabler:download"
+                        class="size-5 shrink-0"
+                    />
                 </Button>
             </div>
         </template>
