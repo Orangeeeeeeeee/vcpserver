@@ -58,11 +58,12 @@ const datepicker: DatePickerDesignTokens = {
         font-size: 0.875rem;
     }
 
-    .p-datepicker-header .p-datepicker-prev-button, .p-datepicker-header .p-datepicker-next-button{
-        // padding: 0;
-        // width: 1rem;
-        // height: 1rem;
+    .p-datepicker-header .p-datepicker-prev-button, .p-datepicker-header .p-datepicker-next-button {
         color: var(--p-surface-800);
+    }
+    
+    .p-datepicker-header .p-datepicker-prev-button:hover, .p-datepicker-header .p-datepicker-next-button:hover {
+        background: transparent !important;
     }
 
     .p-datepicker-header .p-datepicker-prev-button svg, .p-datepicker-header .p-datepicker-next-button svg {
