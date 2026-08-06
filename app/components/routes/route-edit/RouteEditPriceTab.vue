@@ -26,7 +26,6 @@
                             v-model="segmentPrices[target.key]"
                             :input-id="`routeEditTariff-${target.key}`"
                             :min="0"
-                            :max-fraction-digits="2"
                             :suffix="$t('routes.edit.price.suffix')"
                             :placeholder="
                                 $t('routes.create.tariff.pricePlaceholder')
