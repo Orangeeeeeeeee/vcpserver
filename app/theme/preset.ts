@@ -19,7 +19,7 @@ const VcpPreset = definePreset(Aura, {
                 paddingX: '0.9rem',
                 paddingY: '0.9rem'
             },
-            borderRadius: '6px'
+            borderRadius: '6px',
         },
         text: {
             color: '{surface.600}',

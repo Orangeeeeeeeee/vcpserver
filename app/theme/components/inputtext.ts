@@ -1,6 +1,9 @@
 import type { InputTextDesignTokens } from '@primeuix/themes/types/inputtext';
 
 const inputtext: InputTextDesignTokens = {
+    root: {
+        invalidPlaceholderColor: '{surface.500}',
+    },
     css: `
     .p-inputtext {
         font-size: 0.875rem; max-height: 2.5rem;
