@@ -48,6 +48,7 @@
             paginator
             :rows="6"
             row-key="id"
+            hoverable
         >
             <template #cell-company="{ row }">
                 <div class="flex items-center gap-1">
@@ -114,11 +115,12 @@
                 </div>
             </template>
 
-            <template #cell-pointsCount="{ row }">
+            <template #cell-pointsCount="{ row, rowHovered }">
                 <div>
                     <Chip
                         severity="primary"
-                        class="text-xs font-medium"
+                        class="text-xs font-medium transition"
+                        :class="rowHovered ? 'bg-surface-300' : ''"
                         :label="String(row.pointsCount)"
                     />
                 </div>
@@ -143,7 +145,7 @@
                     >
                         <Icon
                             name="tabler:truck"
-                            class="size-4 shrink-0 text-surface-600"
+                            class="size-4 shrink-0 text-surface-600 mt-0.5"
                         />
                         <span class="text-surface-900">
                             {{ row.vehicleLabel }}
@@ -155,7 +157,7 @@
                     >
                         <Icon
                             name="tabler:user"
-                            class="size-4 shrink-0 text-surface-600"
+                            class="size-4 shrink-0 text-surface-600 mt-0.5"
                         />
                         <span class="text-surface-800">
                             {{ row.driverLabel }}
