@@ -157,7 +157,7 @@ const initChart = () => {
                       }
                   ],
         tooltip: {
-            backgroundColor: surface[50],
+            backgroundColor: surface[100],
             borderColor: surface[300],
             borderWidth: 1,
             borderRadius: 8,
