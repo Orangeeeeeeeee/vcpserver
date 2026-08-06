@@ -25,8 +25,14 @@
         </template>
 
         <template #[ownChipSlot]="{ value, removeCallback }">
-            <template v-if="!isSentinelValue(value)">
-                <!-- eslint-disable vue/attribute-hyphenation -- Vue passes slot prop keys verbatim (no camelization), so they must stay camelCase to match PrimeVue's #chip/#chipicon API -->
+            <span
+                v-if="isSentinelValue(value)"
+                data-ui-sentinel
+                style="display:none"
+                aria-hidden="true"
+            />
+            <template v-else>
+                <!-- eslint-disable vue/attribute-hyphenation -- slot prop keys are verbatim (no camelization) -->
                 <slot
                     name="chip"
                     :value="value"
@@ -63,41 +69,16 @@
 </template>
 
 <script setup lang="ts">
-// PrimeVue MultiSelect must be imported under an alias: a bare <MultiSelect>
-// tag inside a file named MultiSelect.vue resolves to the SFC itself
-// (implicit self-reference) and recurses infinitely.
 import PMultiSelect, {
     type MultiSelectChangeEvent
 } from 'primevue/multiselect';
 import Chip from 'primevue/chip';
 
-/**
- * Wrapper around PrimeVue MultiSelect that injects a synthetic «Select all»
- * option as the first list row when `showSelectAll` is enabled.
- *
- * The synthetic option never leaves the wrapper: it is appended to the
- * internal model only while every selectable option is selected (so its row
- * checkbox reflects the state) and is stripped from every outgoing value,
- * therefore the external v-model never contains the sentinel.
- *
- * Limitations with `showSelectAll`:
- * - primitive model values only (membership is checked with `includes`);
- * - option groups and a function `optionLabel` are not supported;
- * - use `display="chip"` or a custom `#value` template (its `value` slot
- *   prop is forwarded sentinel-free); the built-in `display="comma"` text
- *   label would include the select-all caption when everything is selected;
- * - do not combine with `maxSelectedLabels` (the sentinel affects the count);
- * - while filtering, the select-all row is filtered out like any other
- *   option; toggling always applies to all options, not the visible subset.
- */
-
-/** Internal marker used as the select-all option value; never leaves the wrapper */
 const SELECT_ALL_VALUE = '__ui-multiselect-select-all__';
+const SENTINEL_MARKER: unique symbol = Symbol('ui-multiselect-sentinel');
 
 interface UiMultiSelectProps {
-    /** Renders the synthetic «Select all» row on top of the option list */
     showSelectAll?: boolean;
-    /** Caption of the select-all row; defaults to the `common.selectAll` translation */
     selectAllLabel?: string;
     options?: unknown[];
     optionLabel?: string | ((option: unknown) => string);
@@ -115,7 +96,6 @@ const props = withDefaults(defineProps<UiMultiSelectProps>(), {
 });
 
 const emit = defineEmits<{
-    /** PrimeVue change event re-emitted with the sentinel stripped from the value */
     change: [event: MultiSelectChangeEvent];
 }>();
 
@@ -127,25 +107,12 @@ const { t } = useI18n();
 const attrs = useAttrs();
 const slots = useSlots();
 
-/** Narrows an option to a plain object */
 const isRecord = (option: unknown): option is Record<string, unknown> =>
     typeof option === 'object' && option !== null;
 
-/**
- * Extracts the model value of an option (mirrors PrimeVue `optionValue`).
- *
- * @param option - Option to read the value from
- * @returns The option value used in the model
- */
 const getOptionValue = (option: unknown): unknown =>
     props.optionValue && isRecord(option) ? option[props.optionValue] : option;
 
-/**
- * Resolves the display label of an option (mirrors PrimeVue `optionLabel`).
- *
- * @param option - Option to read the label from
- * @returns The human-readable option label
- */
 const getOptionLabelText = (option: unknown): string => {
     if (typeof props.optionLabel === 'function') {
         return props.optionLabel(option);
@@ -156,41 +123,37 @@ const getOptionLabelText = (option: unknown): string => {
     return String(option ?? '');
 };
 
-/** Whether the option is excluded from selection (mirrors PrimeVue `optionDisabled`) */
 const isOptionDisabled = (option: unknown): boolean =>
     Boolean(
         props.optionDisabled && isRecord(option) && option[props.optionDisabled]
     );
 
-/** Resolved caption of the select-all row */
 const selectAllLabelText = computed<string>(
     () => props.selectAllLabel ?? t('common.selectAll')
 );
 
-/** Synthetic select-all option shaped after the configured option keys */
 const sentinelOption = computed<unknown>(() => {
     const labelKey =
         typeof props.optionLabel === 'string' ? props.optionLabel : undefined;
     if (!labelKey && !props.optionValue) return SELECT_ALL_VALUE;
-    const option: Record<string, unknown> = {};
+    const option: Record<string | symbol, unknown> = {
+        [SENTINEL_MARKER]: true
+    };
     if (labelKey) option[labelKey] = selectAllLabelText.value;
     if (props.optionValue) option[props.optionValue] = SELECT_ALL_VALUE;
     return option;
 });
 
-/** Model value representing the select-all option */
 const sentinelValue = computed<unknown>(() =>
     getOptionValue(sentinelOption.value)
 );
 
-/** Values of all selectable (non-disabled) real options */
 const selectableValues = computed<unknown[]>(() =>
     (props.options ?? [])
         .filter((option) => !isOptionDisabled(option))
         .map(getOptionValue)
 );
 
-/** Whether every selectable option is present in the external model */
 const allSelected = computed<boolean>(() => {
     const value = model.value ?? [];
     return (
@@ -201,11 +164,6 @@ const allSelected = computed<boolean>(() => {
     );
 });
 
-/**
- * Options passed down, with the select-all row prepended when enabled.
- * With no real options the sentinel is omitted so the built-in empty
- * message still renders.
- */
 const internalOptions = computed<unknown[] | undefined>(() => {
     const options = props.options ?? [];
     return props.showSelectAll && options.length > 0
@@ -213,29 +171,25 @@ const internalOptions = computed<unknown[] | undefined>(() => {
         : props.options;
 });
 
-/** Model passed down: the external model plus the sentinel when everything is selected */
 const internalValue = computed<unknown[] | null | undefined>(() =>
     props.showSelectAll && allSelected.value
         ? [sentinelValue.value, ...(model.value ?? [])]
         : model.value
 );
 
-/** Whether the given option is the synthetic select-all option */
-const isSentinelOption = (option: unknown): boolean =>
-    props.showSelectAll && option === sentinelOption.value;
+const isSentinelOption = (option: unknown): boolean => {
+    if (!props.showSelectAll) return false;
+    if (isRecord(option)) return Boolean((option as Record<symbol, unknown>)[SENTINEL_MARKER]);
+    return option === SELECT_ALL_VALUE;
+};
 
-/** Whether the given model value belongs to the synthetic select-all option */
-const isSentinelValue = (value: unknown): boolean =>
-    props.showSelectAll && value === sentinelValue.value;
+const isSentinelValue = (value: unknown): boolean => {
+    if (!props.showSelectAll) return false;
+    if (props.optionValue) return value === SELECT_ALL_VALUE;
+    if (isRecord(value)) return Boolean((value as Record<symbol, unknown>)[SENTINEL_MARKER]);
+    return value === SELECT_ALL_VALUE;
+};
 
-/**
- * Translates model updates of the underlying MultiSelect into the external
- * model: the sentinel appearing in the value selects every option, the
- * sentinel disappearing clears the selection, any other update is forwarded
- * with the sentinel stripped. Covers both mouse and keyboard toggling.
- *
- * @param newValue - Raw model value emitted by the underlying MultiSelect
- */
 const onInternalUpdate = (newValue: unknown[] | null | undefined): void => {
     if (!props.showSelectAll) {
         model.value = newValue ?? null;
@@ -256,23 +210,10 @@ const onInternalUpdate = (newValue: unknown[] | null | undefined): void => {
     }
 };
 
-/**
- * Re-emits the PrimeVue change event with a sanitized value. The external
- * model is already updated at this point (PrimeVue writes the value before
- * emitting change), so it is used as the payload instead of the raw value
- * that may contain the sentinel.
- *
- * @param event - Original PrimeVue change event
- */
 const onInternalChange = (event: MultiSelectChangeEvent): void => {
     emit('change', { ...event, value: model.value });
 };
 
-/**
- * Attributes forwarded to the underlying MultiSelect. `onChange` is held
- * back (a sanitized `change` is re-emitted instead) and the built-in header
- * toggle-all checkbox is forced off when the select-all row is shown.
- */
 const forwardedAttrs = computed<Record<string, unknown>>(() => {
     const rest: Record<string, unknown> = { ...attrs };
     delete rest.onChange;
@@ -283,23 +224,12 @@ const forwardedAttrs = computed<Record<string, unknown>>(() => {
     return rest;
 });
 
-/** Parent slot names passed through (the wrapper owns option/chip while select-all is on) */
 const forwardedSlotNames = computed<string[]>(() =>
     Object.keys(slots).filter(
         (name) => !props.showSelectAll || (name !== 'option' && name !== 'chip')
     )
 );
 
-/**
- * Sanitizes the `value` slot props before forwarding: strips the sentinel so
- * a parent `#value` template never sees the synthetic select-all entry, and
- * normalizes a missing value to an empty array (PrimeVue resets an empty
- * array model to `undefined` on init via its `$formDefaultValue` watcher).
- *
- * @param name - Forwarded slot name
- * @param slotProps - Slot props emitted by the underlying MultiSelect
- * @returns Slot props safe to expose to the parent
- */
 const sanitizeSlotProps = (
     name: string,
     slotProps: Record<string, unknown>
@@ -315,7 +245,6 @@ const sanitizeSlotProps = (
     };
 };
 
-/** Wrapper-owned slot names; swapped to inert names when select-all is off so the wrapper stays transparent */
 const ownOptionSlot = computed<string>(() =>
     props.showSelectAll ? 'option' : 'ui-unused-option'
 );
@@ -323,13 +252,6 @@ const ownChipSlot = computed<string>(() =>
     props.showSelectAll ? 'chip' : 'ui-unused-chip'
 );
 
-/**
- * Resolves the chip label for a model value (mirrors PrimeVue
- * `getLabelByValue`).
- *
- * @param value - Model value to look up
- * @returns Label of the matching option, or the stringified value
- */
 const getLabelByValue = (value: unknown): string => {
     const option = (props.options ?? []).find(
         (candidate) => getOptionValue(candidate) === value
@@ -341,10 +263,7 @@ const getLabelByValue = (value: unknown): string => {
 </script>
 
 <style scoped>
-/* The hidden select-all chip still renders an empty chip-item wrapper span;
-   without this the label flex gap produces a stray double gap. Unlayered
-   :deep() so it wins over @layer primevue. */
-:deep(.p-multiselect-chip-item:empty) {
+:deep(.p-multiselect-chip-item:has(> [data-ui-sentinel])) {
     display: none;
 }
 </style>
