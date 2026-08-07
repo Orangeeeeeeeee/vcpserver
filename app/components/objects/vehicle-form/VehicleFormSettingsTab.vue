@@ -34,8 +34,9 @@
                 date-format="dd.mm.yy"
                 show-icon
                 icon-display="input"
-                :placeholder="$t('objects.vehicles.modal.datePlaceholder')"
                 fluid
+                :pt="{ panel: { class: 'veh-form-datepicker-panel' } }"
+                :placeholder="$t('objects.vehicles.modal.datePlaceholder')"
             />
         </SharedAppFormField>
 
@@ -67,8 +68,9 @@
                 date-format="dd.mm.yy"
                 show-icon
                 icon-display="input"
-                :placeholder="$t('objects.vehicles.modal.datePlaceholder')"
                 fluid
+                :pt="{ panel: { class: 'veh-form-datepicker-panel' } }"
+                :placeholder="$t('objects.vehicles.modal.datePlaceholder')"
             />
         </SharedAppFormField>
     </div>
@@ -79,3 +81,10 @@ import { useVehicleFormContext } from '~/composables/useVehicleForm';
 
 const { state } = useVehicleFormContext();
 </script>
+
+<style>
+/* Override PrimeVue's JS-set min-width so the calendar popup keeps its natural width */
+.veh-form-datepicker-panel {
+    min-width: auto !important;
+}
+</style>
