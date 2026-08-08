@@ -61,7 +61,7 @@ const datepicker: DatePickerDesignTokens = {
     .p-datepicker-header .p-datepicker-prev-button, .p-datepicker-header .p-datepicker-next-button {
         color: var(--p-surface-800);
     }
-    
+
     .p-datepicker-header .p-datepicker-prev-button:hover, .p-datepicker-header .p-datepicker-next-button:hover {
         background: transparent !important;
     }
@@ -69,6 +69,26 @@ const datepicker: DatePickerDesignTokens = {
     .p-datepicker-header .p-datepicker-prev-button svg, .p-datepicker-header .p-datepicker-next-button svg {
         width: 0.8rem;
         height: 0.8rem;
+    }
+
+    .p-datepicker-month-view {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 0.4rem;
+    }
+
+    .p-datepicker-month {
+        width: 100%;
+    }
+
+    .p-datepicker-year-view {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.4rem;
+    }
+
+    .p-datepicker-year {
+        width: 100%;
     }
     `
 };
