@@ -82,7 +82,7 @@
                 </div>
             </template>
 
-            <template #cell-groups="{ row }">
+            <template #cell-groups="{ row, rowHovered }">
                 <div class="flex flex-wrap items-center gap-1.5">
                     <UiColorChip
                         v-for="group in row.visibleGroups"
@@ -93,6 +93,7 @@
                     <UiColorChip
                         v-if="row.extraGroupsCount > 0"
                         :label="`+${row.extraGroupsCount}`"
+                        :class="rowHovered ? 'bg-surface-300 transition' : ''"
                     />
                 </div>
             </template>
@@ -381,7 +382,8 @@ const columns = computed<TableColumn[]>(() =>
               {
                   field: 'company',
                   header: t('routes.trips.list.columns.company'),
-                  sortable: true
+                  sortable: true,
+                  width: '155px'
               },
               {
                   field: 'routePath',
@@ -397,7 +399,6 @@ const columns = computed<TableColumn[]>(() =>
                   field: 'groups',
                   header: t('routes.trips.list.columns.groups'),
                   width: '140px'
-
               },
               {
                   field: 'startAt',
@@ -414,6 +415,7 @@ const columns = computed<TableColumn[]>(() =>
               {
                   field: 'resources',
                   header: t('routes.trips.list.columns.resources'),
+                  width: '195px'
               },
               {
                   field: 'actualDistanceKm',
@@ -441,7 +443,8 @@ const columns = computed<TableColumn[]>(() =>
               {
                   field: 'company',
                   header: t('routes.trips.list.columns.company'),
-                  sortable: true
+                  sortable: true,
+                  width: '155px'
               },
               {
                   field: 'routePath',
@@ -461,7 +464,8 @@ const columns = computed<TableColumn[]>(() =>
               },
               {
                   field: 'resources',
-                  header: t('routes.trips.list.columns.vehicles')
+                  header: t('routes.trips.list.columns.vehicles'),
+                  width: '195px'
               },
               {
                   field: 'actions',

@@ -34,7 +34,7 @@
 
                 <div
                     id="page-breadcrumbs-target"
-                    class="[grid-area:crumb] min-w-0 md:ml-auto"
+                    class="[grid-area:crumb] min-w-0"
                 ></div>
 
                 <UiTabNav
@@ -83,8 +83,9 @@ defineProps<PageLayoutProps>();
 </script>
 
 <style scoped>
-/* Header reflows between breakpoints: actions sit by the tabs on desktop,
-   and move up next to the breadcrumb on mobile. */
+/* Header reflows between breakpoints: on mobile breadcrumb/actions share row 2
+   and tabs span full width in row 3; on desktop breadcrumb floats right in row 1
+   and tabs/actions share row 2. */
 .page-header {
     grid-template-areas:
         'title title'
@@ -114,12 +115,18 @@ defineProps<PageLayoutProps>();
 @media (min-width: 768px) {
     .page-header {
         grid-template-areas:
-            'title crumb'
-            'tabs actions';
+            'title .'
+            'tabs  actions';
     }
 
-    /* The breadcrumb shares the first row with the title here. */
+    /* Crumb spans the full first row and right-aligns. Placing it with
+       grid-column: 1 / -1 (instead of a named single-column area) prevents
+       it from contributing to the auto column's minimum size, so the tabs in
+       row 2 are constrained only by the actions button, not by the breadcrumb. */
     .page-header > #page-breadcrumbs-target {
+        grid-row: 1;
+        grid-column: 1 / -1;
+        justify-self: end;
         margin-top: 0;
     }
 }
