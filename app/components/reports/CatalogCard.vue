@@ -16,7 +16,7 @@
         </h3>
 
         <p
-            class="[grid-area:desc] text-xs lg:text-sm text-surface-800 mb-2 md:mb-0 min-w-0 md:line-clamp-2 lg:line-clamp-none md:w-[37%] md:shrink-0 lg:w-[40%]"
+            class="[grid-area:desc] text-xs lg:text-sm text-surface-800 mb-2 md:mb-0 min-w-0 md:line-clamp-2 lg:line-clamp-none md:w-[37%] md:shrink-1 lg:w-[40%]"
         >
             {{ $t(`reports.items.${report.id}.description`) }}
         </p>
@@ -28,16 +28,18 @@
             {{ $t(`reports.categories.${report.category}`) }}
         </span>
 
-        <Button
-            size="small"
-            severity="secondary"
-            class="[grid-area:btn] w-full md:ml-auto md:w-[2.25rem] md:h-[2.25rem] lg:w-auto lg:h-auto"
-            :aria-label="$t('reports.generate')"
-            @click="emit('generate')"
-        >
-            <span class="md:hidden lg:block">{{ $t('reports.generate') }}</span>
-            <Icon name="tabler:arrow-right" class="size-5 shrink-0" />
-        </Button>
+        <div class="[grid-area:btn]">
+            <Button
+                size="small"
+                severity="secondary"
+                class=" w-full md:ml-auto md:w-[2.25rem] md:h-[2.25rem] lg:w-auto lg:h-auto"
+                :aria-label="$t('reports.generate')"
+                @click="emit('generate')"
+            >
+                <span class="md:hidden lg:block">{{ $t('reports.generate') }}</span>
+                <Icon name="tabler:arrow-right" class="size-5 shrink-0" />
+            </Button>
+        </div>
     </div>
 </template>
 
