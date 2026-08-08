@@ -4,10 +4,10 @@
         <div class="flex items-center gap-3 pb-3">
             <Avatar :label="initials" shape="circle" />
             <div class="min-w-0 flex flex-col gap-0.5">
-                <p class="text-sm text-surface-900 truncate">
+                <p class="text-sm text-surface-900 md:truncate" :title="`${profile.firstName} ${profile.lastName}`">
                     {{ profile.firstName }} {{ profile.lastName }}
                 </p>
-                <p class="text-xs text-surface-600 truncate">
+                <p class="text-xs text-surface-600 md:truncate" :title="subtitle">
                     {{ subtitle }}
                 </p>
             </div>

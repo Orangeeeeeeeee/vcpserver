@@ -13,9 +13,13 @@
                     class="size-5 shrink-0 text-surface-600"
                 />
                 <span
-                    class="truncate"
+                    class="md:truncate"
                     :class="
                         triggerLabel ? 'text-surface-950' : 'text-surface-500'
+                    "
+                    :title="
+                        triggerLabel ||
+                        $t('objects.vehicles.detail.history.period.placeholder')
                     "
                 >
                     {{

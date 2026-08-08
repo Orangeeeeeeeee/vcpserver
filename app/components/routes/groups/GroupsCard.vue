@@ -63,11 +63,12 @@
                 <!-- Identity -->
                 <div class="flex min-w-0 flex-col">
                     <span
-                        class="font-medium text-surface-950 truncate text-base"
+                        class="font-medium text-surface-950 md:truncate text-base"
+                        :title="group.name"
                     >
                         {{ group.name }}
                     </span>
-                    <span class="text-sm text-surface-800 truncate">
+                    <span class="text-sm text-surface-800 md:truncate" :title="group.company">
                         {{ group.company }}
                     </span>
                 </div>
@@ -95,7 +96,7 @@
                             :to="ROUTES.ROUTE_DETAIL(route.id)"
                             class="inline-flex max-w-full items-center gap-1 text-sm text-surface-800 transition-colors hover:text-surface-950"
                         >
-                            <span class="truncate">{{ route.name }}</span>
+                            <span class="md:truncate" :title="route.name">{{ route.name }}</span>
                             <Icon
                                 name="tabler:arrow-up-right"
                                 class="size-4 shrink-0 text-surface-600"

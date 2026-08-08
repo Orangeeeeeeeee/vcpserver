@@ -46,10 +46,13 @@
                             }"
                         />
                         <div class="flex min-w-0 flex-col">
-                            <span class="truncate text-sm text-surface-900">
+                            <span class="md:truncate text-sm text-surface-900" :title="`${option.name} · ${option.label}`">
                                 {{ option.name }} · {{ option.label }}
                             </span>
-                            <span class="truncate text-xs text-surface-500">
+                            <span
+                                class="md:truncate text-xs text-surface-500"
+                                :title="$t(`zones.detail.map.statuses.${option.status}`) + (option.driver ? ' · ' + option.driver : '')"
+                            >
                                 {{
                                     $t(
                                         `zones.detail.map.statuses.${option.status}`

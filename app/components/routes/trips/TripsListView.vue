@@ -67,7 +67,8 @@
             <template #cell-routePath="{ row }">
                 <NuxtLink
                     :to="ROUTES.ROUTE_DETAIL(row.route.id)"
-                    class="text-sm inline-block max-w-[99.9%] truncate font-medium text-surface-900 underline underline-offset-4"
+                    :title="row.routePath"
+                    class="text-sm inline-block max-w-[99.9%] md:truncate font-medium text-surface-900 underline underline-offset-4"
                 >
                     {{ row.routePath }}
                 </NuxtLink>
@@ -145,7 +146,7 @@
                             name="tabler:truck"
                             class="size-4 shrink-0 text-surface-600"
                         />
-                        <span class="truncate text-surface-900">
+                        <span class="md:truncate text-surface-900" :title="row.vehicleLabel">
                             {{ row.vehicleLabel }}
                         </span>
                     </span>
@@ -157,7 +158,7 @@
                             name="tabler:user"
                             class="size-4 shrink-0 text-surface-600"
                         />
-                        <span class="truncate text-surface-800">
+                        <span class="md:truncate text-surface-800" :title="row.driverLabel">
                             {{ row.driverLabel }}
                         </span>
                     </span>

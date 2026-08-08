@@ -27,10 +27,10 @@
             </FileUpload>
         </div>
         <div class="flex min-w-0 flex-col gap-2">
-            <p class="truncate text-sm font-semibold text-surface-950">
+            <p class="md:truncate text-sm font-semibold text-surface-950" :title="profile.email">
                 {{ profile.email }}
             </p>
-            <p class="truncate text-sm text-surface-800">
+            <p class="md:truncate text-sm text-surface-800" :title="profile.phone">
                 {{ profile.phone }}
             </p>
         </div>

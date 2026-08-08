@@ -6,7 +6,7 @@
         :label="label"
         class="max-w-full rounded-md! px-2! font-medium"
         :class="COLOR_CLASSES[color]"
-        :pt="{ label: { class: 'truncate text-xs' } }"
+        :pt="{ label: { class: 'md:truncate text-xs' } }"
     />
 </template>
 

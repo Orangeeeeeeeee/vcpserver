@@ -6,7 +6,8 @@
         <div class="size-8 rounded-md bg-primary-300 shrink-0" />
         <span
             v-if="!collapsed"
-            class="text-white font-semibold text-xl truncate"
+            class="text-white font-semibold text-xl md:truncate"
+            title="Logotype"
         >
             Logotype
         </span>

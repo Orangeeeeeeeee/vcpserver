@@ -93,7 +93,7 @@
             </template>
 
             <template #cell-routePath="{ row }">
-                <span class="block max-w-120 truncate text-surface-900">
+                <span class="block max-w-120 md:truncate text-surface-900" :title="row.routePath">
                     {{ row.routePath }}
                 </span>
             </template>

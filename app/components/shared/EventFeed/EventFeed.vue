@@ -26,7 +26,8 @@
                     </span>
                     <span
                         v-if="item.badge"
-                        class="inline-flex max-w-full items-center truncate rounded-md px-2 py-0.5 text-sm font-medium"
+                        :title="item.badge.label"
+                        class="inline-flex max-w-full items-center md:truncate rounded-md px-2 py-0.5 text-sm font-medium"
                         :style="{
                             background:
                                 primitiveColors[item.badge.color]['100'],

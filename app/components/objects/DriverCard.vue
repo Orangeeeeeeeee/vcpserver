@@ -49,12 +49,13 @@
                 />
                 <div class="flex flex-col">
                     <NuxtLink
-                        class="font-semibold text-surface-900 truncate text-sm"
+                        class="font-semibold text-surface-900 md:truncate text-sm"
                         :to="ROUTES.DRIVER_DETAIL(driver.id)"
+                        :title="driver.name"
                     >
                         {{ driver.name }}
                     </NuxtLink>
-                    <span class="text-xs text-surface-700 truncate">
+                    <span class="text-xs text-surface-700 md:truncate" :title="driver.company">
                         {{ driver.company }}
                     </span>
                 </div>
@@ -69,7 +70,7 @@
                         name="tabler:truck"
                         class="size-4 text-surface-600 shrink-0"
                     />
-                    <span class="truncate">
+                    <span class="md:truncate" :title="`${driver.transport} (ID: ${driver.transportId})`">
                         {{ driver.transport }} (ID: {{ driver.transportId }})
                     </span>
                 </div>
@@ -85,7 +86,7 @@
                         name="tabler:mail"
                         class="size-4 text-surface-600 shrink-0"
                     />
-                    <span class="truncate">{{ driver.email }}</span>
+                    <span class="md:truncate" :title="driver.email">{{ driver.email }}</span>
                 </div>
             </div>
 

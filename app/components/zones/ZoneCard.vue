@@ -15,7 +15,7 @@
                     "
                     class="size-5 shrink-0 text-surface-800"
                 />
-                <span class="min-w-0 flex-1 truncate text-sm text-surface-900">
+                <span class="min-w-0 flex-1 md:truncate text-sm text-surface-900" :title="zone.companies.join(', ')">
                     {{ zone.companies.join(', ') }}
                 </span>
                 <span
@@ -35,7 +35,7 @@
                         class="size-5 shrink-0"
                         :style="{ color: shapeIconColor }"
                     />
-                    <span class="min-w-0 truncate font-medium text-surface-900">
+                    <span class="min-w-0 md:truncate font-medium text-surface-900" :title="zone.name">
                         {{ zone.name }}
                     </span>
                 </div>

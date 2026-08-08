@@ -21,7 +21,8 @@
                                     class="flex items-center gap-1 min-w-0 md:gap-4"
                                 >
                                     <h4
-                                        class="font-semibold text-surface-900 truncate text-lg md:text-xl font-manrope"
+                                        class="font-semibold text-surface-900 md:truncate text-lg md:text-xl font-manrope"
+                                        :title="driver.name"
                                     >
                                         {{ driver.name }}
                                     </h4>
@@ -32,7 +33,8 @@
                                     />
                                 </div>
                                 <span
-                                    class="text-surface-700 truncate md:text-lg"
+                                    class="text-surface-700 md:truncate md:text-lg"
+                                    :title="driver.company"
                                 >
                                     {{ driver.company }}
                                 </span>
@@ -54,7 +56,7 @@
                                     name="tabler:mail"
                                     class="size-5 text-surface-600 shrink-0"
                                 />
-                                <span class="truncate">{{ driver.email }}</span>
+                                <span class="md:truncate" :title="driver.email">{{ driver.email }}</span>
                             </div>
                         </div>
                     </div>

@@ -20,12 +20,14 @@
                 />
                 <div v-if="!collapsed" class="min-w-0 flex flex-col gap-1">
                     <p
-                        class="text-sm font-semibold text-surface-300 group-hover:text-surface-100 truncate"
+                        class="text-sm font-semibold text-surface-300 group-hover:text-surface-100 md:truncate"
+                        :title="`${profile.firstName} ${profile.lastName}`"
                     >
                         {{ profile.firstName }} {{ profile.lastName }}
                     </p>
                     <p
-                        class="text-xs text-surface-500 group-hover:text-primary-100 truncate"
+                        class="text-xs text-surface-500 group-hover:text-primary-100 md:truncate"
+                        :title="subtitle"
                     >
                         {{ subtitle }}
                     </p>

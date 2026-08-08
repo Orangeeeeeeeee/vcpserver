@@ -35,7 +35,8 @@
                     class="size-5 shrink-0 text-surface-600"
                 />
                 <span
-                    class="min-w-0 flex-1 truncate text-left text-surface-950"
+                    class="min-w-0 flex-1 md:truncate text-left text-surface-950"
+                    :title="dateLabel"
                 >
                     {{ dateLabel }}
                 </span>
@@ -82,7 +83,8 @@
                             class="size-4 shrink-0 text-surface-600"
                         />
                         <span
-                            class="min-w-0 flex-1 truncate text-sm text-surface-900"
+                            class="min-w-0 flex-1 md:truncate text-sm text-surface-900"
+                            :title="vehicleMeta(event.vehicleId).label"
                         >
                             {{ vehicleMeta(event.vehicleId).label }}
                         </span>

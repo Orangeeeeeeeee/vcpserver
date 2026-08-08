@@ -21,10 +21,10 @@
                     }"
                 />
                 <div class="flex min-w-0 flex-col">
-                    <span class="truncate text-sm text-surface-900">
+                    <span class="md:truncate text-sm text-surface-900" :title="option.name">
                         {{ option.name }}
                     </span>
-                    <span class="truncate text-xs text-surface-500">
+                    <span class="md:truncate text-xs text-surface-500" :title="`ID: ${option.vehicleId} · ${option.driver}`">
                         ID: {{ option.vehicleId }} · {{ option.driver }}
                     </span>
                 </div>

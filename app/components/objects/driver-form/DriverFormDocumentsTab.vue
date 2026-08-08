@@ -33,7 +33,7 @@
                             />
                         </span>
                     </button>
-                    <span class="truncate text-sm text-surface-900 font-medium">
+                    <span class="md:truncate text-sm text-surface-900 font-medium" :title="doc.name">
                         {{ doc.name }}
                     </span>
                 </div>

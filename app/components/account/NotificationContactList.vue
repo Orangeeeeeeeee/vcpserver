@@ -44,7 +44,7 @@
                 class="flex items-center gap-2 text-sm py-4 border-b border-b-[var(--p-surface-200)] last:border-none"
                 :class="item.verified ? 'text-surface-900' : 'text-surface-500'"
             >
-                <span class="truncate">{{ item.value }}</span>
+                <span class="md:truncate" :title="item.value">{{ item.value }}</span>
                 <button
                     type="button"
                     class="cursor-pointer text-surface-500 transition-colors hover:text-surface-900"

@@ -43,7 +43,7 @@
                     name="tabler:grip-vertical"
                     class="size-5 shrink-0 cursor-grab text-surface-500"
                 />
-                <span class="flex-1 truncate text-sm text-surface-900">
+                <span class="flex-1 md:truncate text-sm text-surface-900" :title="routeNameOf(routeId)">
                     {{ routeNameOf(routeId) }}
                 </span>
                 <button

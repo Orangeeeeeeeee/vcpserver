@@ -17,8 +17,8 @@
             <div class="flex min-w-0 flex-col">
                 <button
                     type="button"
-                    class="cursor-pointer self-start max-w-full truncate text-left font-semibold text-sm md:text-base text-surface-900 transition-colors hover:text-primary-900"
-                    :title="$t('objects.online.card.showOnMap')"
+                    class="cursor-pointer self-start max-w-full md:truncate text-left font-semibold text-sm md:text-base text-surface-900 transition-colors hover:text-primary-900"
+                    :title="vehicle.name"
                     @click="requestFocus(vehicle)"
                 >
                     {{ vehicle.name }}

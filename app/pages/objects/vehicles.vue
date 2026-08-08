@@ -111,7 +111,7 @@
                         size="small"
                         class="size-[26px] text-[0.625rem] font-medium"
                     />
-                    <span class="text-sm truncate max-w-36 text-surface-900">
+                    <span class="text-sm md:truncate max-w-36 text-surface-900" :title="row.driver">
                         {{ row.driver }}
                     </span>
                 </div>

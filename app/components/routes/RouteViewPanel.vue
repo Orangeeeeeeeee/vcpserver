@@ -14,7 +14,7 @@
                         size="small"
                         class="size-[26px] shrink-0 text-[0.625rem] font-medium"
                     />
-                    <span class="truncate font-semibold text-surface-950">
+                    <span class="md:truncate font-semibold text-surface-950" :title="companyName">
                         {{ companyName }}
                     </span>
                 </div>

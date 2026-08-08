@@ -52,7 +52,7 @@
                             <Chip
                                 v-for="id in visibleVehicleIds"
                                 :key="id"
-                                class="min-w-0 [&>.p-chip-label]:min-w-0 [&>.p-chip-label]:truncate text-xs"
+                                class="min-w-0 [&>.p-chip-label]:min-w-0 md:[&>.p-chip-label]:truncate text-xs"
                                 :label="vehicleLabelById(id)"
                                 removable
                                 @remove="removeVehicle(id)"

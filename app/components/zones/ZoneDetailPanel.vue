@@ -14,7 +14,8 @@
                         class="shrink-0 bg-surface-200 text-surface-800 size-8"
                     />
                     <span
-                        class="min-w-0 flex-1 truncate text-sm font-medium text-surface-950"
+                        class="min-w-0 flex-1 md:truncate text-sm font-medium text-surface-950"
+                        :title="zone.companies.join(', ')"
                     >
                         {{ zone.companies.join(', ') }}
                     </span>
@@ -36,7 +37,8 @@
                         :style="{ color: shapeIconColor }"
                     />
                     <span
-                        class="min-w-0 flex-1 truncate font-medium text-surface-900"
+                        class="min-w-0 flex-1 md:truncate font-medium text-surface-900"
+                        :title="zone.name"
                     >
                         {{ zone.name }}
                     </span>

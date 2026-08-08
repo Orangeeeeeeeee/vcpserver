@@ -32,7 +32,7 @@
                         class="absolute inset-0 m-auto size-7 text-surface-300"
                     />
                 </div>
-                <span class="truncate text-sm text-surface-800 font-medium">
+                <span class="md:truncate text-sm text-surface-800 font-medium" :title="doc.name">
                     {{ doc.name }}
                 </span>
             </div>

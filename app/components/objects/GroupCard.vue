@@ -68,12 +68,13 @@
                         :style="{ '--dot-color': dotColor }"
                     >
                         <span
-                            class="font-medium text-surface-950 truncate text-base"
+                            class="font-medium text-surface-950 md:truncate text-base"
+                            :title="group.name"
                         >
                             {{ group.name }}
                         </span>
                     </div>
-                    <span class="text-sm text-surface-800 truncate">
+                    <span class="text-sm text-surface-800 md:truncate" :title="group.company">
                         {{ group.company }}
                     </span>
                 </div>
@@ -106,7 +107,8 @@
                             class="size-4 text-surface-600 shrink-0"
                         />
                         <span
-                            class="truncate text-sm uppercase text-surface-800"
+                            class="md:truncate text-sm uppercase text-surface-800"
+                            :title="`${vehicle.transport} (ID: ${vehicle.transportId})`"
                         >
                             {{ vehicle.transport }} (ID:
                             {{ vehicle.transportId }})

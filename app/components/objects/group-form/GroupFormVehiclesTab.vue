@@ -47,7 +47,7 @@
                     :name="VEHICLE_TYPE_ICONS[vehicle.type]"
                     class="size-5 shrink-0 text-surface-600"
                 />
-                <span class="flex-1 truncate text-sm text-surface-900">
+                <span class="flex-1 md:truncate text-sm text-surface-900" :title="`${vehicle.transport} (ID: ${vehicle.transportId})`">
                     {{ vehicle.transport }} (ID: {{ vehicle.transportId }})
                 </span>
                 <button

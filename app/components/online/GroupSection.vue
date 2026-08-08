@@ -21,7 +21,8 @@
                         class="size-4 md:size-5 shrink-0 text-surface-800"
                     />
                     <span
-                        class="truncate text-sm text-surface-950 md:text-base"
+                        class="md:truncate text-sm text-surface-950 md:text-base"
+                        :title="group.name"
                     >
                         {{ group.name }}
                     </span>

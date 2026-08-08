@@ -121,7 +121,7 @@
                     <span class="text-xs text-surface-500">
                         {{ $t('objects.vehicles.detail.history.location') }}
                     </span>
-                    <span class="truncate text-sm text-surface-800">
+                    <span class="md:truncate text-sm text-surface-800" :title="cursorInfo.address">
                         {{ cursorInfo.address }}
                     </span>
                 </div>

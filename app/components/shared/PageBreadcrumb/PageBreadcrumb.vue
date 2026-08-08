@@ -11,7 +11,7 @@
                     :name="item.icon"
                     class="size-[1.125rem] shrink-0"
                 />
-                <span v-if="item.label" class="truncate">
+                <span v-if="item.label" :title="item.label" class="md:truncate">
                     {{ item.label }}
                 </span>
             </NuxtLink>
@@ -24,7 +24,7 @@
                     :name="item.icon"
                     class="size-[1.125rem] shrink-0"
                 />
-                <span v-if="item.label" class="truncate">
+                <span v-if="item.label" :title="item.label" class="md:truncate">
                     {{ item.label }}
                 </span>
             </span>

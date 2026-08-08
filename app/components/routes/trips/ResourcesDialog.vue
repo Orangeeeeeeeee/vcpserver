@@ -30,14 +30,14 @@
                             name="tabler:truck"
                             class="size-5 shrink-0 text-surface-600"
                         />
-                        <span class="text-surface-800 truncate">{{ row.vehicleLabel }}</span>
+                        <span class="text-surface-800 md:truncate" :title="row.vehicleLabel">{{ row.vehicleLabel }}</span>
                     </span>
                     <span class="flex gap-1.5">
                         <Icon
                             name="tabler:user"
                             class="size-5 shrink-0 text-surface-600"
                         />
-                        <span class="text-surface-700 max-w-11/12 truncate">{{ row.driverLabel }}</span>
+                        <span class="text-surface-700 max-w-11/12 md:truncate" :title="row.driverLabel">{{ row.driverLabel }}</span>
                     </span>
                 </div>
             </template>
@@ -102,7 +102,7 @@
                 </div>
             </template>
             <template #cell-lastAddress="{ row }">
-                <p class="truncate max-w-11/12">
+                <p class="md:truncate max-w-11/12" :title="row.lastAddress">
                     {{row.lastAddress}}
                 </p>
             </template>
