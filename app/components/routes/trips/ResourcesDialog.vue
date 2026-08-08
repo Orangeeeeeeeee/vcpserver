@@ -25,12 +25,12 @@
         >
             <template #cell-resources="{ row }">
                 <div class="flex flex-col gap-1 text-surface-900">
-                    <span class="flex gap-1.5 max-w-11/12 truncate">
+                    <span class="flex gap-1.5 max-w-11/12">
                         <Icon
                             name="tabler:truck"
                             class="size-5 shrink-0 text-surface-600"
                         />
-                        <span class="text-surface-800">{{ row.vehicleLabel }}</span>
+                        <span class="text-surface-800 truncate">{{ row.vehicleLabel }}</span>
                     </span>
                     <span class="flex gap-1.5">
                         <Icon
@@ -100,6 +100,11 @@
                         {{ row.plannedTimeLabel }}
                     </span>
                 </div>
+            </template>
+            <template #cell-lastAddress="{ row }">
+                <p class="truncate max-w-11/12">
+                    {{row.lastAddress}}
+                </p>
             </template>
         </SharedResponsiveTable>
     </Dialog>

@@ -67,7 +67,7 @@
             <template #cell-routePath="{ row }">
                 <NuxtLink
                     :to="ROUTES.ROUTE_DETAIL(row.route.id)"
-                    class="text-sm block w-full max-w-11/12 truncate font-medium text-surface-900 underline underline-offset-4"
+                    class="text-sm inline-block max-w-11/12 truncate font-medium text-surface-900 underline underline-offset-4"
                 >
                     {{ row.routePath }}
                 </NuxtLink>
@@ -225,6 +225,7 @@
                     <UiActionCommonButton
                         v-if="!archive"
                         @click="onOpen(row.trip)"
+                        severity="contrast"
                     >
                         <template #icon>
                             <Icon

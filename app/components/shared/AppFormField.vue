@@ -3,7 +3,9 @@
         <label :for="id" class="text-sm font-normal text-surface-700">
             {{ label }}
         </label>
-        <slot />
+        <div>
+            <slot />
+        </div>
         <Message
             v-for="message in errorList"
             :key="message"

@@ -71,15 +71,39 @@ provide(VEHICLE_FORM_KEY, form);
 
 const activeTab = ref<VehicleFormTabKey>('general');
 
+/** Error count per tab, driven by regle's $errors after $validate() */
+const tabErrorCounts = computed(() => ({
+    general:
+        form.r$.$fields.company.$errors.length +
+        form.r$.$fields.name.$errors.length +
+        form.r$.$fields.type.$errors.length,
+    exploitation: 0,
+    settings: 0,
+    fuel: 0
+}));
+
 /** Tab definitions for the form dialog */
 const tabItems = computed<TabItem[]>(() => [
-    { value: 'general', label: t('objects.vehicles.modal.tabs.general') },
+    {
+        value: 'general',
+        label: t('objects.vehicles.modal.tabs.general'),
+        badge: tabErrorCounts.value.general || undefined
+    },
     {
         value: 'exploitation',
-        label: t('objects.vehicles.modal.tabs.exploitation')
+        label: t('objects.vehicles.modal.tabs.exploitation'),
+        badge: tabErrorCounts.value.exploitation || undefined
     },
-    { value: 'settings', label: t('objects.vehicles.modal.tabs.settings') },
-    { value: 'fuel', label: t('objects.vehicles.modal.tabs.fuel') }
+    {
+        value: 'settings',
+        label: t('objects.vehicles.modal.tabs.settings'),
+        badge: tabErrorCounts.value.settings || undefined
+    },
+    {
+        value: 'fuel',
+        label: t('objects.vehicles.modal.tabs.fuel'),
+        badge: tabErrorCounts.value.fuel || undefined
+    }
 ]);
 
 const isEdit = computed((): boolean => props.vehicle !== null);

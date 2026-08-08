@@ -15,13 +15,19 @@
             >
                 <span
                     :class="sizeClasses[props.size]"
-                    class="inline-flex items-center gap-1"
+                    class="inline-flex items-center gap-1.5"
                 >
                     {{ item.label }}
                     <Icon
                         v-if="item.trailingIcon"
                         :name="item.trailingIcon"
                         class="size-5"
+                    />
+                    <Badge
+                        v-if="item.badge"
+                        :value="item.badge"
+                        :severity="item.badgeSeverity ?? 'danger'"
+                        class="text-[10px] min-w-[16px] h-[16px]"
                     />
                 </span>
             </Tab>
@@ -39,6 +45,10 @@ export interface TabItem {
     to?: string;
     /** Optional Iconify icon rendered after the label (e.g. 'tabler:arrow-up-right') */
     trailingIcon?: string;
+    /** Optional error count badge rendered after the label */
+    badge?: number;
+    /** Severity of the badge (default: 'danger') */
+    badgeSeverity?: 'danger' | 'warn' | 'info' | 'success' | 'secondary' | 'contrast';
 }
 </script>
 

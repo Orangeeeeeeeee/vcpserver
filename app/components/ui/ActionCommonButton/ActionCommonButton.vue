@@ -28,6 +28,7 @@ interface ButtonStateClasses {
 interface ComponentClasses {
     default: ButtonStateClasses;
     danger: ButtonStateClasses;
+    contrast: ButtonStateClasses;
 }
 
 const classes: ComponentClasses = {
@@ -36,10 +37,16 @@ const classes: ComponentClasses = {
         icon: 'text-surface-800',
         bgHover: 'hover:bg-surface-200'
     },
+
     danger: {
         label: 'text-red-600',
         icon: 'text-red-500',
         bgHover: 'hover:bg-red-100'
+    },
+    contrast: {
+        label: 'text-surface-900',
+        icon: 'text-surface-800',
+        bgHover: 'hover:bg-surface-300'
     }
 };
 

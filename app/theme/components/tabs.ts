@@ -2,9 +2,9 @@ import type { TabsDesignTokens } from '@primeuix/themes/types/tabs';
 
 const tabs: TabsDesignTokens = {
     tablist: {
-        borderWidth: '0 0 1px 0',
+        borderWidth: '0 0 0 0',
         background: 'transparent',
-        borderColor: '{surface.300}'
+        borderColor: 'transparent'
     },
     tab: {
         background: 'transparent',
@@ -54,8 +54,15 @@ const tabs: TabsDesignTokens = {
         background: '{primary.600}'
     },
     css: `
+        .p-tablist {
+            border-bottom: 1px solid var(--p-surface-300);
+        }
+
         .p-tablist-nav-button {
-            display: none;
+            width: 1px;
+            overflow: hidden;
+            color: transparent;
+            box-shadow: 0px 0px 10px 23px color-mix(in srgb, var(--p-surface-100) 80%, transparent);
         }
 
         .p-tablist-tab-list {

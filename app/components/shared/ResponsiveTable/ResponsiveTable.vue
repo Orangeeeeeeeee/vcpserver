@@ -217,7 +217,7 @@ const onRowClick = (event: { data: TableRow }): void => {
     .responsive-table :deep(.p-datatable-tfoot > tr),
     .responsive-table :deep(.p-datatable-tbody > tr) {
         display: grid;
-        grid-template-columns: max-content 1fr;
+        grid-template-columns: max-content minmax(0, 1fr);
         width: 100%;
         border-bottom: 1px solid var(--p-surface-300);
         padding: 0.75rem 0.875rem;
