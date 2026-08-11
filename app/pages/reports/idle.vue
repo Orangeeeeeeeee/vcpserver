@@ -41,6 +41,7 @@
                     filter
                     :placeholder="$t('reports.idle.filters.vehiclePlaceholder')"
                     fluid
+                    show-select-all
                 >
                     <template #value="{ value, placeholder }">
                         <span v-if="!value?.length">{{ placeholder }}</span>
