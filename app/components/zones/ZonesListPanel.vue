@@ -22,32 +22,54 @@
             </div>
 
             <!-- Active filter chips -->
-            <SharedAnimatedHeight
-                v-if="filterChips.length"
-                class="flex flex-wrap items-center gap-1.5"
-            >
-                <Chip
-                    v-for="chip in shownChips"
-                    :key="chip.key"
-                    :label="chip.label"
-                    removable
-                    @remove="removeChip(chip.key)"
+            <div v-if="filterChips.length">
+                <div class="flex flex-wrap items-center gap-1.5">
+                    <Chip
+                        v-for="chip in visibleChips"
+                        :key="chip.key"
+                        :label="chip.label"
+                        removable
+                        @remove="removeChip(chip.key)"
+                    >
+                        <template #removeicon>
+                            <Icon
+                                name="tabler:x"
+                                class="size-3.5 cursor-pointer text-surface-600 transition-colors hover:text-surface-900"
+                                :aria-label="$t('common.delete')"
+                                @click="removeChip(chip.key)"
+                            />
+                        </template>
+                    </Chip>
+                    <OnlineChipToggle
+                        v-if="hiddenChips.length"
+                        v-model="showAllChips"
+                        :count="hiddenChips.length"
+                    />
+                </div>
+                <SharedAnimatedHeight
+                    v-if="hiddenChips.length"
+                    v-model:expanded="showAllChips"
                 >
-                    <template #removeicon>
-                        <Icon
-                            name="tabler:x"
-                            class="size-3.5 cursor-pointer text-surface-600 transition-colors hover:text-surface-900"
-                            :aria-label="$t('common.delete')"
-                            @click="removeChip(chip.key)"
-                        />
-                    </template>
-                </Chip>
-                <OnlineChipToggle
-                    v-if="hiddenCount > 0"
-                    v-model="showAllChips"
-                    :count="hiddenCount"
-                />
-            </SharedAnimatedHeight>
+                    <div class="flex flex-wrap items-center gap-1.5 pt-1.5">
+                        <Chip
+                            v-for="chip in hiddenChips"
+                            :key="chip.key"
+                            :label="chip.label"
+                            removable
+                            @remove="removeChip(chip.key)"
+                        >
+                            <template #removeicon>
+                                <Icon
+                                    name="tabler:x"
+                                    class="size-3.5 cursor-pointer text-surface-600 transition-colors hover:text-surface-900"
+                                    :aria-label="$t('common.delete')"
+                                    @click="removeChip(chip.key)"
+                                />
+                            </template>
+                        </Chip>
+                    </div>
+                </SharedAnimatedHeight>
+            </div>
         </div>
 
         <!-- Zone cards -->
@@ -88,18 +110,16 @@ const {
     selectZone
 } = useZonesOverviewContext();
 
-/** Whether the chip row is fully expanded */
+/** Whether the collapsed chip tail is expanded */
 const showAllChips = ref<boolean>(false);
 
-/** Chips visible in the row (first N unless expanded) */
-const shownChips = computed<ZonesFilterChip[]>(() =>
-    showAllChips.value
-        ? filterChips.value
-        : filterChips.value.slice(0, VISIBLE_CHIPS)
+/** Chips always visible in the first row */
+const visibleChips = computed<ZonesFilterChip[]>(() =>
+    filterChips.value.slice(0, VISIBLE_CHIPS)
 );
 
-/** Number of chips collapsed behind the «+ Ще N» button */
-const hiddenCount = computed<number>(() =>
-    Math.max(0, filterChips.value.length - VISIBLE_CHIPS)
+/** Chips collapsed behind the «+ Ще N» button */
+const hiddenChips = computed<ZonesFilterChip[]>(() =>
+    filterChips.value.slice(VISIBLE_CHIPS)
 );
 </script>

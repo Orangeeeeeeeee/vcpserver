@@ -1,14 +1,19 @@
 <template>
-    <SharedAnimatedHeight v-if="hasBindings" class="flex flex-col gap-3">
-        <ZonesZoneBindingsGroups :chips="visibleGroupChips" />
+    <div v-if="hasBindings" class="flex flex-col gap-3">
+        <ZonesZoneBindingsGroups
+            :chips="visibleGroupChips"
+            :hidden-chips="hiddenGroupChips"
+            :expanded="listExpanded"
+        />
 
         <ZonesZoneBindingsVehicles
             v-model:expanded="listExpanded"
             :rows="visibleVehicleRows"
+            :hidden-rows="hiddenVehicleRows"
             :zone-color="zone.color"
             :expandable="hasHiddenItems"
         />
-    </SharedAnimatedHeight>
+    </div>
 </template>
 
 <script lang="ts">
@@ -99,24 +104,29 @@ const hasBindings = computed<boolean>(
     () => groupChips.value.length > 0 || vehicleRows.value.length > 0
 );
 
-/** Group chips visible in the summary (first N unless expanded) */
+/** Group chips always visible in the summary (first N) */
 const visibleGroupChips = computed<ZoneGroupChip[]>(() =>
-    listExpanded.value
-        ? groupChips.value
-        : groupChips.value.slice(0, MAX_GROUP_CHIPS)
+    groupChips.value.slice(0, MAX_GROUP_CHIPS)
 );
 
-/** Vehicle rows visible in the summary (first N unless expanded) */
+/** Group chips collapsed behind the «Розгорнути» toggle */
+const hiddenGroupChips = computed<ZoneGroupChip[]>(() =>
+    groupChips.value.slice(MAX_GROUP_CHIPS)
+);
+
+/** Vehicle rows always visible in the summary (first N) */
 const visibleVehicleRows = computed<ZoneVehicleRow[]>(() =>
-    listExpanded.value
-        ? vehicleRows.value
-        : vehicleRows.value.slice(0, MAX_VEHICLE_ROWS)
+    vehicleRows.value.slice(0, MAX_VEHICLE_ROWS)
+);
+
+/** Vehicle rows collapsed behind the «Розгорнути» toggle */
+const hiddenVehicleRows = computed<ZoneVehicleRow[]>(() =>
+    vehicleRows.value.slice(MAX_VEHICLE_ROWS)
 );
 
 /** True when the «Розгорнути / Згорнути» toggle has something to reveal */
 const hasHiddenItems = computed<boolean>(
     () =>
-        groupChips.value.length > MAX_GROUP_CHIPS ||
-        vehicleRows.value.length > MAX_VEHICLE_ROWS
+        hiddenGroupChips.value.length > 0 || hiddenVehicleRows.value.length > 0
 );
 </script>

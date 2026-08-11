@@ -5,44 +5,61 @@
         </h5>
         <div
             class="rounded-md border border-surface-300 p-3"
-            :class="rows.length > collapsedCount ? 'pb-1' : ''"
+            :class="hiddenRows.length ? 'pb-1' : ''"
         >
-            <SharedAnimatedHeight>
-                <div
-                    v-for="(row, i) in shownRows"
-                    :key="`${row.label}-${i}`"
-                    class="flex items-center justify-between gap-4 border-b border-surface-200 py-1.5 last:border-b-0 first:pt-0 last:pb-0"
-                >
-                    <span class="text-xs text-surface-700">
-                        {{ row.label }}
-                    </span>
-                    <span
-                        class="text-sm font-medium text-surface-900 text-right"
+            <div
+                v-for="(row, i) in visibleRows"
+                :key="`${row.label}-${i}`"
+                class="flex items-center justify-between gap-4 border-b border-surface-200 py-1.5 last:border-b-0 first:pt-0 last:pb-0"
+            >
+                <span class="text-xs text-surface-700">
+                    {{ row.label }}
+                </span>
+                <span class="text-sm font-medium text-surface-900 text-right">
+                    {{ row.value }}
+                </span>
+            </div>
+
+            <SharedAnimatedHeight v-if="hiddenRows.length">
+                <div class="mt-1.5 border-t border-surface-200">
+                    <div
+                        v-for="(row, i) in hiddenRows"
+                        :key="`${row.label}-${i}`"
+                        class="flex items-center justify-between gap-4 border-b border-surface-200 py-1.5 last:border-b-0 last:pb-0"
                     >
-                        {{ row.value }}
-                    </span>
+                        <span class="text-xs text-surface-700">
+                            {{ row.label }}
+                        </span>
+                        <span
+                            class="text-sm font-medium text-surface-900 text-right"
+                        >
+                            {{ row.value }}
+                        </span>
+                    </div>
                 </div>
 
-                <button
-                    v-if="rows.length > collapsedCount"
-                    type="button"
-                    class="flex w-full cursor-pointer items-center justify-center gap-2 border-t border-surface-200 px-3.5 py-1.5 text-sm font-medium text-surface-800 transition-colors hover:text-surface-950"
-                    @click="expanded = !expanded"
-                >
-                    {{
-                        expanded
-                            ? $t('objects.vehicles.detail.collapse')
-                            : $t('objects.vehicles.detail.expand')
-                    }}
-                    <Icon
-                        :name="
+                <template #title="{ expanded, toggle }">
+                    <button
+                        type="button"
+                        class="flex w-full cursor-pointer items-center justify-center gap-2 border-t border-surface-200 px-3.5 py-1.5 text-sm font-medium text-surface-800 transition-colors hover:text-surface-950"
+                        :aria-expanded="expanded"
+                        @click="toggle"
+                    >
+                        {{
                             expanded
-                                ? 'tabler:chevron-up'
-                                : 'tabler:chevron-down'
-                        "
-                        class="size-5"
-                    />
-                </button>
+                                ? $t('objects.vehicles.detail.collapse')
+                                : $t('objects.vehicles.detail.expand')
+                        }}
+                        <Icon
+                            :name="
+                                expanded
+                                    ? 'tabler:chevron-up'
+                                    : 'tabler:chevron-down'
+                            "
+                            class="size-5"
+                        />
+                    </button>
+                </template>
             </SharedAnimatedHeight>
         </div>
     </section>
@@ -68,11 +85,13 @@ const props = withDefaults(defineProps<DetailSectionProps>(), {
     collapsedCount: 3
 });
 
-/** Whether all rows are shown */
-const expanded = ref<boolean>(false);
+/** Rows always shown above the collapsible tail */
+const visibleRows = computed<OnlineDetailEntry[]>(() =>
+    props.rows.slice(0, props.collapsedCount)
+);
 
-/** Rows visible in the current state */
-const shownRows = computed<OnlineDetailEntry[]>(() =>
-    expanded.value ? props.rows : props.rows.slice(0, props.collapsedCount)
+/** Rows collapsed behind the «Розгорнути» toggle */
+const hiddenRows = computed<OnlineDetailEntry[]>(() =>
+    props.rows.slice(props.collapsedCount)
 );
 </script>

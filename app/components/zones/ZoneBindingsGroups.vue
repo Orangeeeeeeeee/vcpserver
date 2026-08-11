@@ -1,21 +1,45 @@
 <template>
-    <div v-if="chips.length" class="flex flex-col gap-2 p-4 pb-0">
+    <div
+        v-if="chips.length || hiddenChips.length"
+        class="flex flex-col gap-2 p-4 pb-0"
+    >
         <span class="text-base font-medium text-surface-900">
             {{ $t('zones.list.groups') }}
         </span>
-        <div class="flex flex-wrap gap-1">
-            <span
-                v-for="chip in chips"
-                :key="chip.key"
-                class="inline-flex items-center gap-1 rounded px-2 py-1 text-xs"
-                :style="{
-                    backgroundColor: chip.background,
-                    color: chip.color
-                }"
+        <div>
+            <div class="flex flex-wrap gap-1">
+                <span
+                    v-for="chip in chips"
+                    :key="chip.key"
+                    class="inline-flex items-center gap-1 rounded px-2 py-1 text-xs"
+                    :style="{
+                        backgroundColor: chip.background,
+                        color: chip.color
+                    }"
+                >
+                    <Icon :name="chip.icon" class="size-4 shrink-0" />
+                    {{ chip.name }}
+                </span>
+            </div>
+            <SharedAnimatedHeight
+                v-if="hiddenChips.length"
+                :expanded="expanded"
             >
-                <Icon :name="chip.icon" class="size-4 shrink-0" />
-                {{ chip.name }}
-            </span>
+                <div class="flex flex-wrap gap-1 pt-1">
+                    <span
+                        v-for="chip in hiddenChips"
+                        :key="chip.key"
+                        class="inline-flex items-center gap-1 rounded px-2 py-1 text-xs"
+                        :style="{
+                            backgroundColor: chip.background,
+                            color: chip.color
+                        }"
+                    >
+                        <Icon :name="chip.icon" class="size-4 shrink-0" />
+                        {{ chip.name }}
+                    </span>
+                </div>
+            </SharedAnimatedHeight>
         </div>
     </div>
 </template>
@@ -37,8 +61,12 @@ export interface ZoneGroupChip {
 
 <script setup lang="ts">
 interface ZoneBindingsGroupsProps {
-    /** Chips to render (pre-truncated by the parent) */
+    /** Chips always visible in the first block */
     chips: ZoneGroupChip[];
+    /** Chips collapsed behind the summary-wide «Розгорнути» toggle */
+    hiddenChips: ZoneGroupChip[];
+    /** Whether the collapsed chip tail is shown (driven by the parent) */
+    expanded?: boolean;
 }
 
 defineProps<ZoneBindingsGroupsProps>();

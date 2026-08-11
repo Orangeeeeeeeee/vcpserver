@@ -106,7 +106,7 @@
                     v-if="resourcePairs.length"
                     class="border-b border-surface-200 py-4"
                 >
-                    <SharedAnimatedHeight class="flex flex-col">
+                    <div class="flex flex-col">
                         <span class="mb-2.5 font-semibold text-surface-950">
                             {{ $t('routes.detail.resources') }}
                         </span>
@@ -140,32 +140,70 @@
                                 {{ pair.driverLabel }}
                             </span>
                         </div>
-                        <Button
+                        <SharedAnimatedHeight
                             v-if="canToggle"
-                            text
-                            severity="secondary"
-                            class="mt-1 self-center text-sm font-medium text-surface-900"
-                            @click="resourcesExpanded = !resourcesExpanded"
+                            class="flex flex-col"
                         >
-                            {{
-                                $t(
-                                    resourcesExpanded
-                                        ? 'routes.detail.collapse'
-                                        : 'routes.detail.expand'
-                                )
-                            }}
-                            <template #icon>
-                                <Icon
-                                    :name="
-                                        resourcesExpanded
-                                            ? 'tabler:chevron-up'
-                                            : 'tabler:chevron-down'
+                            <div class="flex flex-col">
+                                <div
+                                    v-for="pair in hiddenPairs"
+                                    :key="pair.id"
+                                    class="flex flex-col gap-1 border-b border-surface-200 py-2.5 text-sm text-surface-900"
+                                >
+                                    <span
+                                        v-if="pair.vehicleLabel"
+                                        class="flex items-center gap-1.5"
+                                    >
+                                        <Icon
+                                            name="tabler:truck"
+                                            class="size-4 shrink-0 text-surface-700"
+                                        />
+                                        {{ pair.vehicleLabel }}
+                                    </span>
+                                    <span
+                                        v-if="pair.driverLabel"
+                                        class="flex items-center gap-1.5"
+                                    >
+                                        <Icon
+                                            name="tabler:user"
+                                            class="size-4 shrink-0 text-surface-700"
+                                        />
+                                        {{ pair.driverLabel }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <template #title="{ expanded, toggle }">
+                                <Button
+                                    text
+                                    severity="secondary"
+                                    icon-pos="right"
+                                    :label="
+                                        $t(
+                                            expanded
+                                                ? 'routes.detail.collapse'
+                                                : 'routes.detail.expand'
+                                        )
                                     "
-                                    class="size-4"
-                                />
+                                    class="mt-1 self-center text-sm font-medium text-surface-900"
+                                    :aria-expanded="expanded"
+                                    @click="toggle"
+                                >
+                                    <template #icon="{ class: iconClass }">
+                                        <Icon
+                                            :name="
+                                                expanded
+                                                    ? 'tabler:chevron-up'
+                                                    : 'tabler:chevron-down'
+                                            "
+                                            class="size-4"
+                                            :class="iconClass"
+                                        />
+                                    </template>
+                                </Button>
                             </template>
-                        </Button>
-                    </SharedAnimatedHeight>
+                        </SharedAnimatedHeight>
+                    </div>
                 </div>
 
                 <!-- Points timeline -->
@@ -298,17 +336,18 @@ const resourcePairs = computed<ResourcePair[]>(() => {
     }).filter((pair) => pair.vehicleLabel || pair.driverLabel);
 });
 
-/** Whether the resources list is longer than its collapsed preview */
-const canToggle = computed<boolean>(() => resourcePairs.value.length > 2);
-
-const resourcesExpanded = ref<boolean>(false);
-
-/** Resource entries currently shown (first 2 while collapsed) */
+/** Resource entries always shown above the collapsible tail */
 const visiblePairs = computed<ResourcePair[]>(() =>
-    resourcesExpanded.value || !canToggle.value
-        ? resourcePairs.value
-        : resourcePairs.value.slice(0, 2)
+    resourcePairs.value.slice(0, 2)
 );
+
+/** Resource entries collapsed behind the «Розгорнути» toggle */
+const hiddenPairs = computed<ResourcePair[]>(() =>
+    resourcePairs.value.slice(2)
+);
+
+/** Whether the resources list is longer than its collapsed preview */
+const canToggle = computed<boolean>(() => hiddenPairs.value.length > 0);
 
 /** View metadata of a point (start/finish by kind, otherwise by type) */
 const pointMeta = (point: RoutePoint): RoutePointViewMeta => {

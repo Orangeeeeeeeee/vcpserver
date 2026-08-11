@@ -72,56 +72,85 @@
                 {{ $t(section.titleKey) }}
             </span>
             <div class="rounded-lg border border-surface-300 p-3">
-                <SharedAnimatedHeight>
-                    <div
-                        v-for="(event, index) in section.visibleEvents"
-                        :key="`${event.vehicleId}:${event.time}:${index}`"
-                        class="flex items-center gap-2 border-b border-surface-200 last:border-b-0 py-2 first:pt-0 last:pb-0"
+                <div
+                    v-for="(event, index) in section.visibleEvents"
+                    :key="`${event.vehicleId}:${event.time}:${index}`"
+                    class="flex items-center gap-2 border-b border-surface-200 last:border-b-0 py-2 first:pt-0 last:pb-0"
+                >
+                    <Icon
+                        :name="vehicleMeta(event.vehicleId).icon"
+                        class="size-4 shrink-0 text-surface-600"
+                    />
+                    <span
+                        class="min-w-0 flex-1 md:truncate text-sm text-surface-900"
+                        :title="vehicleMeta(event.vehicleId).label"
                     >
-                        <Icon
-                            :name="vehicleMeta(event.vehicleId).icon"
-                            class="size-4 shrink-0 text-surface-600"
-                        />
-                        <span
-                            class="min-w-0 flex-1 md:truncate text-sm text-surface-900"
-                            :title="vehicleMeta(event.vehicleId).label"
-                        >
-                            {{ vehicleMeta(event.vehicleId).label }}
+                        {{ vehicleMeta(event.vehicleId).label }}
+                    </span>
+                    <div class="flex shrink-0 flex-col items-end leading-none">
+                        <span class="text-sm font-medium text-surface-900">
+                            {{ event.time }}
                         </span>
+                        <span class="text-xs text-surface-800">
+                            {{ event.date }}
+                        </span>
+                    </div>
+                </div>
+
+                <SharedAnimatedHeight v-if="section.hiddenEvents.length">
+                    <div class="mt-2 border-t border-surface-200">
                         <div
-                            class="flex shrink-0 flex-col items-end leading-none"
+                            v-for="(event, index) in section.hiddenEvents"
+                            :key="`${event.vehicleId}:${event.time}:${index}`"
+                            class="flex items-center gap-2 border-b border-surface-200 last:border-b-0 py-2 last:pb-0"
                         >
-                            <span class="text-sm font-medium text-surface-900">
-                                {{ event.time }}
+                            <Icon
+                                :name="vehicleMeta(event.vehicleId).icon"
+                                class="size-4 shrink-0 text-surface-600"
+                            />
+                            <span
+                                class="min-w-0 flex-1 md:truncate text-sm text-surface-900"
+                                :title="vehicleMeta(event.vehicleId).label"
+                            >
+                                {{ vehicleMeta(event.vehicleId).label }}
                             </span>
-                            <span class="text-xs text-surface-800">
-                                {{ event.date }}
-                            </span>
+                            <div
+                                class="flex shrink-0 flex-col items-end leading-none"
+                            >
+                                <span
+                                    class="text-sm font-medium text-surface-900"
+                                >
+                                    {{ event.time }}
+                                </span>
+                                <span class="text-xs text-surface-800">
+                                    {{ event.date }}
+                                </span>
+                            </div>
                         </div>
                     </div>
-                    <button
-                        v-if="section.hasHiddenEvents"
-                        type="button"
-                        class="flex w-full cursor-pointer items-center justify-center gap-1 p-3 text-sm text-surface-800 transition-colors hover:text-surface-950"
-                        @click="
-                            expandedSections[section.key] =
-                                !expandedSections[section.key]
-                        "
-                    >
-                        {{
-                            expandedSections[section.key]
-                                ? $t('zones.list.collapse')
-                                : $t('zones.list.expand')
-                        }}
-                        <Icon
-                            :name="
-                                expandedSections[section.key]
-                                    ? 'tabler:chevron-up'
-                                    : 'tabler:chevron-down'
-                            "
-                            class="size-4"
-                        />
-                    </button>
+
+                    <template #title="{ expanded, toggle }">
+                        <button
+                            type="button"
+                            class="flex w-full cursor-pointer items-center justify-center gap-1 p-3 text-sm text-surface-800 transition-colors hover:text-surface-950"
+                            :aria-expanded="expanded"
+                            @click="toggle"
+                        >
+                            {{
+                                expanded
+                                    ? $t('zones.list.collapse')
+                                    : $t('zones.list.expand')
+                            }}
+                            <Icon
+                                :name="
+                                    expanded
+                                        ? 'tabler:chevron-up'
+                                        : 'tabler:chevron-down'
+                                "
+                                class="size-4"
+                            />
+                        </button>
+                    </template>
                 </SharedAnimatedHeight>
             </div>
         </div>
@@ -165,10 +194,10 @@ interface ZoneEventSection {
     key: ZoneEventSectionKey;
     /** i18n key of the card title */
     titleKey: string;
-    /** Events visible in the card (first N unless expanded) */
+    /** Events always visible in the card (first N) */
     visibleEvents: ZoneVisitEvent[];
-    /** True when the «Розгорнути / Згорнути» toggle has something to reveal */
-    hasHiddenEvents: boolean;
+    /** Events collapsed behind the «Розгорнути / Згорнути» toggle */
+    hiddenEvents: ZoneVisitEvent[];
 }
 
 /** Render model of a total/average time tile */
@@ -284,12 +313,6 @@ watch(stats, () => {
     initChart();
 });
 
-/** Expanded state of the entry/exit event cards */
-const expandedSections = reactive<Record<ZoneEventSectionKey, boolean>>({
-    entries: false,
-    exits: false
-});
-
 /** Vehicle lookup for the event rows */
 const vehicleById = computed(
     () => new Map(vehicles.value.map((vehicle) => [vehicle.id, vehicle]))
@@ -327,10 +350,8 @@ const eventSections = computed<ZoneEventSection[]>(() =>
     ).map(({ key, titleKey, events }) => ({
         key,
         titleKey,
-        visibleEvents: expandedSections[key]
-            ? events
-            : events.slice(0, MAX_VISIBLE_EVENTS),
-        hasHiddenEvents: events.length > MAX_VISIBLE_EVENTS
+        visibleEvents: events.slice(0, MAX_VISIBLE_EVENTS),
+        hiddenEvents: events.slice(MAX_VISIBLE_EVENTS)
     }))
 );
 

@@ -1,98 +1,65 @@
 <template>
-    <div ref="outer">
-        <div ref="inner" v-bind="$attrs">
-            <slot />
+    <div>
+        <slot
+            v-if="titlePosition === 'top'"
+            name="title"
+            :expanded="expanded"
+            :toggle="toggle"
+        />
+        <div
+            class="grid transition-[grid-template-rows] duration-[250ms] ease-[ease] motion-reduce:transition-none"
+            :class="expanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
+        >
+            <div class="overflow-hidden" :inert="!expanded">
+                <slot />
+            </div>
         </div>
+        <slot
+            v-if="titlePosition === 'bottom'"
+            name="title"
+            :expanded="expanded"
+            :toggle="toggle"
+        />
     </div>
 </template>
 
 <script setup lang="ts">
-import {
-    collapseDurationFor,
-    prefersReducedMotion,
-    stopAnimationSilently
-} from '~/utils/animation';
-
 /**
- * Slide-down / slide-up wrapper for content that changes height in place
- * (e.g. «Розгорнути / Згорнути» toggles of truncated lists).
+ * Pure-CSS collapsible region: the default slot stays mounted and is
+ * shown/hidden by transitioning `grid-template-rows` between 0fr and 1fr.
+ * The optional `title` slot renders the trigger outside the collapsing
+ * region (above or below it via `titlePosition`) and receives
+ * `{ expanded, toggle }`; parents may bind `v-model:expanded` instead.
+ * The collapsed body is `inert`, so its interactive content is neither
+ * focusable nor exposed to assistive technologies. Honors
+ * `prefers-reduced-motion` via `motion-reduce:transition-none`.
  *
- * Watches the slot content size and animates its own height between the
- * previous and the new value, so no `v-if` restructuring is required —
- * wrap the existing container and keep slicing the list as usual.
- * Attributes (incl. `class`) fall through to the inner content wrapper.
- * Duration scales with the height difference (see `~/utils/animation`).
- * Honors `prefers-reduced-motion` by skipping the animation entirely.
+ * Spacing that must disappear when collapsed (e.g. a top gap before the
+ * hidden tail of a list) belongs inside the default slot, not in a parent
+ * `gap-*` — the 0fr row clips only its own content.
  */
 
-defineOptions({ inheritAttrs: false });
+interface AnimatedHeightProps {
+    /** Side of the collapsible body the `title` slot renders on */
+    titlePosition?: 'top' | 'bottom';
+}
 
-const outer = ref<HTMLElement | null>(null);
-const inner = ref<HTMLElement | null>(null);
+withDefaults(defineProps<AnimatedHeightProps>(), { titlePosition: 'bottom' });
 
-/** Content height after the previous resize (null until first measured) */
-let lastHeight: number | null = null;
-
-/** Currently running height animation */
-let animation: Animation | null = null;
-
-/** Observer of the slot content size */
-let observer: ResizeObserver | null = null;
+/** Whether the collapsible body is shown (internal state unless bound) */
+const expanded = defineModel<boolean>('expanded', { default: false });
 
 /**
- * Animates the outer wrapper from the previous content height to the new
- * one; interrupted animations continue from their current position.
- *
- * @param height - New natural content height in px
+ * Flips the expanded state.
  */
-const onContentResize = (height: number): void => {
-    const el = outer.value;
-    const previous = lastHeight;
-    lastHeight = height;
-
-    if (
-        !el ||
-        previous === null ||
-        height === previous ||
-        prefersReducedMotion()
-    ) {
-        return;
-    }
-
-    const fromHeight = animation ? el.getBoundingClientRect().height : previous;
-    stopAnimationSilently(animation);
-
-    el.style.overflow = 'hidden';
-
-    animation = el.animate(
-        [{ height: `${fromHeight}px` }, { height: `${height}px` }],
-        {
-            duration: collapseDurationFor(height - fromHeight),
-            easing: 'ease'
-        }
-    );
-
-    const finish = (): void => {
-        el.style.overflow = '';
-        animation = null;
-    };
-
-    animation.onfinish = finish;
-    animation.oncancel = finish;
+const toggle = (): void => {
+    expanded.value = !expanded.value;
 };
 
-onMounted(() => {
-    if (!inner.value) return;
-    observer = new ResizeObserver((entries) => {
-        const entry = entries[entries.length - 1];
-        if (!entry) return;
-        onContentResize((entry.target as HTMLElement).offsetHeight);
-    });
-    observer.observe(inner.value);
-});
-
-onBeforeUnmount(() => {
-    observer?.disconnect();
-    stopAnimationSilently(animation);
-});
+defineSlots<{
+    /** Collapsible body — always mounted, clipped while collapsed */
+    default(): unknown;
+    /** Trigger area rendered outside the collapsible region */
+    title?(props: { expanded: boolean; toggle: () => void }): unknown;
+}>();
 </script>
