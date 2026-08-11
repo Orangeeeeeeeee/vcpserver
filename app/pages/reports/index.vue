@@ -2,7 +2,9 @@
     <div class="flex flex-col gap-4">
         <UiTabNav v-model:value="activeTab" :items="tabItems" size="sm" />
 
-        <div class="flex flex-col gap-3 md:gap-2">
+        <div
+            class="flex flex-col gap-3 md:grid md:grid-cols-[auto_28%_minmax(0,1fr)_auto_auto] md:gap-y-2 md:gap-x-8 lg:grid-cols-[auto_29%_minmax(0,1fr)_auto_auto]"
+        >
             <ReportsCatalogCard
                 v-for="report in pageItems"
                 :key="report.id"
