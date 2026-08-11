@@ -45,6 +45,10 @@ export interface UseGroupCardCapacityReturn {
  * are shown and the toggle is hidden; otherwise as many rows as fit (never
  * fewer than {@link GROUP_CARD_BASELINE_ROWS}) are shown plus the toggle.
  *
+ * The DOM stays constant: the card renders EVERY row and hides the overflow
+ * with `display: none` (the `hidden` class) based on `visibleCount` — rows are
+ * never mounted/unmounted by expand/collapse or re-measures.
+ *
  * Stability: the rendered count always satisfies
  * `renderedHeight <= currentStretchedHeight (+1px)` at decision time, so the
  * card's natural height never exceeds the current row height and the grid row
@@ -101,7 +105,13 @@ export const useGroupCardCapacity = (
         }
         const body = bodyRef.value;
         const list = listRef.value;
-        const rows = list ? Array.from(list.children) : [];
+        // The list always holds ALL rows; collapsed ones are display:none
+        // (`hidden` class) and measure 0, so only visible rows are considered.
+        const rows = list
+            ? Array.from(list.children).filter(
+                  (row) => row.getBoundingClientRect().height > 0
+              )
+            : [];
         if (!body || !list || rows.length === 0) return;
 
         if (toggleRef.value) {

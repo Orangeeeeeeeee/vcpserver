@@ -98,9 +98,12 @@
 
                 <ul ref="listRef" class="flex flex-col gap-1">
                     <li
-                        v-for="vehicle in visibleVehicles"
+                        v-for="(vehicle, index) in group.vehicles"
                         :key="vehicle.transportId"
-                        class="flex items-center gap-1 text-sm text-surface-800"
+                        :class="[
+                            'flex items-center gap-1 text-sm text-surface-800',
+                            { hidden: isRowHidden(index) }
+                        ]"
                     >
                         <Icon
                             :name="VEHICLE_TYPE_ICONS[vehicle.type]"
@@ -141,7 +144,7 @@
 <script lang="ts">
 import Menu from 'primevue/menu';
 import type { MenuItem } from 'primevue/menuitem';
-import type { Group, GroupVehicle, GroupVehicleType } from '~/types/group';
+import type { Group, GroupVehicleType } from '~/types/group';
 import { primitiveColors } from '~/theme/colors';
 // Explicit import (despite Nuxt auto-import) so the Storybook build resolves it
 import { useGroupCardCapacity } from '~/composables/useGroupCardCapacity';
@@ -240,12 +243,9 @@ const { visibleCount, showToggle } = useGroupCardCapacity({
     expanded
 });
 
-/** As many vehicles as fit when collapsed, the full list when expanded */
-const visibleVehicles = computed<GroupVehicle[]>(() =>
-    expanded.value
-        ? props.group.vehicles
-        : props.group.vehicles.slice(0, visibleCount.value)
-);
+/** Whether the row at the given index is hidden in the collapsed state */
+const isRowHidden = (index: number): boolean =>
+    !expanded.value && index >= visibleCount.value;
 
 /** Toggles the overflow menu (PrimeVue popup mode) */
 const toggleMenu = (event: Event): void => {

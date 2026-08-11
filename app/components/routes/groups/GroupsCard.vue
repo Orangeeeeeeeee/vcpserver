@@ -91,7 +91,11 @@
                 </div>
 
                 <ul ref="listRef" class="flex flex-col gap-1">
-                    <li v-for="route in visibleRoutes" :key="route.id">
+                    <li
+                        v-for="(route, index) in routes"
+                        :key="route.id"
+                        :class="{ hidden: isRowHidden(index) }"
+                    >
                         <NuxtLink
                             :to="ROUTES.ROUTE_DETAIL(route.id)"
                             class="inline-flex max-w-full items-center gap-1 text-sm text-surface-800 transition-colors hover:text-surface-950"
@@ -220,10 +224,9 @@ const { visibleCount, showToggle } = useGroupCardCapacity({
     expanded
 });
 
-/** As many routes as fit when collapsed, the full list when expanded */
-const visibleRoutes = computed<RouteGroupCardRoute[]>(() =>
-    expanded.value ? props.routes : props.routes.slice(0, visibleCount.value)
-);
+/** Whether the row at the given index is hidden in the collapsed state */
+const isRowHidden = (index: number): boolean =>
+    !expanded.value && index >= visibleCount.value;
 
 /** Toggles the overflow menu (PrimeVue popup mode) */
 const toggleMenu = (event: Event): void => {
