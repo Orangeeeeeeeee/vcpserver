@@ -166,9 +166,9 @@
                 </div>
             </template>
 
-            <template #cell-actions="{ row }">
+            <template #cell-actions="{ row, rowHovered }">
                 <div class="flex items-center gap-2">
-                    <UiActionCommonButton @click="onEdit(row.route)">
+                    <UiActionCommonButton :severity="rowHovered ? 'contrast': 'default'" @click="onEdit(row.route)">
                         <template #icon>
                             <Icon
                                 name="tabler:pencil"

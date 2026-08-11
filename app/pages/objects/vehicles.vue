@@ -47,6 +47,7 @@
             paginator
             :rows="9"
             row-key="id"
+            hoverable
         >
             <template #header-vehicle>
                 <span class="hidden md:inline">
@@ -126,19 +127,21 @@
             <template #cell-address="{ row }">
                 <span class="text-surface-800 text-sm">{{ row.address }}</span>
             </template>
-            <template #cell-updatedAgo="{ row }">
+            <template #cell-updatedAgo="{ row, rowHovered }">
                 <div>
                     <span
                         class="inline-flex items-center gap-1.5 rounded bg-surface-200 px-2 py-1 text-sm text-surface-800"
+                        :class="rowHovered ? 'bg-surface-300 transition' : ''"
+
                     >
                         <Icon name="tabler:refresh" class="size-4 shrink-0" />
                         {{ row.updatedAgo }}
                     </span>
                 </div>
             </template>
-            <template #cell-actions="{ row }">
+            <template #cell-actions="{ row, rowHovered }">
                 <div class="flex items-center gap-2">
-                    <UiActionCommonButton @click="onEdit(row)">
+                    <UiActionCommonButton :severity="rowHovered ? 'contrast': 'default'" @click="onEdit(row)" >
                         <template #icon>
                             <Icon
                                 name="tabler:pencil"

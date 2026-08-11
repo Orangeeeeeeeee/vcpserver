@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 interface ActionCommonButtonProps {
-    severity?: 'default' | 'danger';
+    severity?: 'default' | 'danger' | 'contrast';
 }
 
 interface ButtonStateClasses {
