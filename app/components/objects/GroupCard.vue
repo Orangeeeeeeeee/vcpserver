@@ -81,7 +81,7 @@
             </div>
 
             <!-- Body: comment + vehicles -->
-            <div class="p-3 flex flex-1 flex-col gap-2">
+            <div ref="bodyRef" class="p-3 flex flex-1 flex-col gap-2">
                 <div
                     v-if="group.comment"
                     class="border-b border-surface-200 pb-1"
@@ -96,7 +96,7 @@
                     </p>
                 </div>
 
-                <ul class="flex flex-col gap-1">
+                <ul ref="listRef" class="flex flex-col gap-1">
                     <li
                         v-for="vehicle in visibleVehicles"
                         :key="vehicle.transportId"
@@ -117,7 +117,8 @@
                 </ul>
 
                 <button
-                    v-if="group.vehicles.length > 3"
+                    v-if="showToggle"
+                    ref="toggleRef"
                     type="button"
                     class="mt-auto flex cursor-pointer items-center gap-2 self-start text-sm font-medium text-surface-800 transition-colors hover:text-surface-950"
                     @click.stop.prevent="toggleExpanded"
@@ -142,6 +143,8 @@ import Menu from 'primevue/menu';
 import type { MenuItem } from 'primevue/menuitem';
 import type { Group, GroupVehicle, GroupVehicleType } from '~/types/group';
 import { primitiveColors } from '~/theme/colors';
+// Explicit import (despite Nuxt auto-import) so the Storybook build resolves it
+import { useGroupCardCapacity } from '~/composables/useGroupCardCapacity';
 
 export interface GroupCardLabels {
     statusActive: string;
@@ -182,6 +185,9 @@ const emit = defineEmits<{
 
 const menuRef = useTemplateRef<InstanceType<typeof Menu>>('menuRef');
 const cardRef = useTemplateRef<HTMLDivElement>('cardRef');
+const bodyRef = useTemplateRef<HTMLDivElement>('bodyRef');
+const listRef = useTemplateRef<HTMLUListElement>('listRef');
+const toggleRef = useTemplateRef<HTMLButtonElement>('toggleRef');
 
 /** Whether the full vehicle list is expanded */
 const expanded = ref<boolean>(false);
@@ -225,9 +231,20 @@ const statusLabel = computed<string>(() =>
         : props.labels.statusInactive
 );
 
-/** First 3 vehicles when collapsed, the full list when expanded */
+const { visibleCount, showToggle } = useGroupCardCapacity({
+    cardRef,
+    bodyRef,
+    listRef,
+    toggleRef,
+    itemCount: () => props.group.vehicles.length,
+    expanded
+});
+
+/** As many vehicles as fit when collapsed, the full list when expanded */
 const visibleVehicles = computed<GroupVehicle[]>(() =>
-    expanded.value ? props.group.vehicles : props.group.vehicles.slice(0, 3)
+    expanded.value
+        ? props.group.vehicles
+        : props.group.vehicles.slice(0, visibleCount.value)
 );
 
 /** Toggles the overflow menu (PrimeVue popup mode) */

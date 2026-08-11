@@ -75,7 +75,7 @@
             </div>
 
             <!-- Body: comment + route links -->
-            <div class="p-3 flex flex-1 flex-col gap-2">
+            <div ref="bodyRef" class="p-3 flex flex-1 flex-col gap-2">
                 <div
                     v-if="group.comment"
                     class="border-b border-surface-200 pb-1"
@@ -90,7 +90,7 @@
                     </p>
                 </div>
 
-                <ul class="flex flex-col gap-1">
+                <ul ref="listRef" class="flex flex-col gap-1">
                     <li v-for="route in visibleRoutes" :key="route.id">
                         <NuxtLink
                             :to="ROUTES.ROUTE_DETAIL(route.id)"
@@ -106,9 +106,10 @@
                 </ul>
 
                 <button
-                    v-if="routes.length > COLLAPSED_ROUTES"
+                    v-if="showToggle"
+                    ref="toggleRef"
                     type="button"
-                    class="flex cursor-pointer items-center gap-2 self-start text-sm font-medium text-surface-800 transition-colors hover:text-surface-950"
+                    class="mt-auto flex cursor-pointer items-center gap-2 self-start text-sm font-medium text-surface-800 transition-colors hover:text-surface-950"
                     @click.stop.prevent="toggleExpanded"
                 >
                     {{ expanded ? labels.collapse : labels.expand }}
@@ -131,6 +132,8 @@ import Menu from 'primevue/menu';
 import type { MenuItem } from 'primevue/menuitem';
 import type { RouteGroup } from '~/types/route-group';
 import { ROUTES } from '~/constants/routes';
+// Explicit import (despite Nuxt auto-import) so the Storybook build resolves it
+import { useGroupCardCapacity } from '~/composables/useGroupCardCapacity';
 
 export interface RouteGroupCardLabels {
     statusActive: string;
@@ -163,9 +166,6 @@ interface RouteGroupCardProps {
     labels: RouteGroupCardLabels;
 }
 
-/** Number of route rows shown while the card is collapsed */
-const COLLAPSED_ROUTES = 3;
-
 const props = defineProps<RouteGroupCardProps>();
 
 const emit = defineEmits<{
@@ -175,6 +175,9 @@ const emit = defineEmits<{
 
 const menuRef = useTemplateRef<InstanceType<typeof Menu>>('menuRef');
 const cardRef = useTemplateRef<HTMLDivElement>('cardRef');
+const bodyRef = useTemplateRef<HTMLDivElement>('bodyRef');
+const listRef = useTemplateRef<HTMLUListElement>('listRef');
+const toggleRef = useTemplateRef<HTMLButtonElement>('toggleRef');
 
 /** Whether the full route list is expanded */
 const expanded = ref<boolean>(false);
@@ -208,9 +211,18 @@ const statusLabel = computed<string>(() =>
         : props.labels.statusInactive
 );
 
-/** First 3 routes when collapsed, the full list when expanded */
+const { visibleCount, showToggle } = useGroupCardCapacity({
+    cardRef,
+    bodyRef,
+    listRef,
+    toggleRef,
+    itemCount: () => props.routes.length,
+    expanded
+});
+
+/** As many routes as fit when collapsed, the full list when expanded */
 const visibleRoutes = computed<RouteGroupCardRoute[]>(() =>
-    expanded.value ? props.routes : props.routes.slice(0, COLLAPSED_ROUTES)
+    expanded.value ? props.routes : props.routes.slice(0, visibleCount.value)
 );
 
 /** Toggles the overflow menu (PrimeVue popup mode) */
