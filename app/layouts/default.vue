@@ -6,12 +6,12 @@
             class="min-h-dvh transition-[margin] duration-200"
             :class="[
                 isRight
-                    ? 'md:mr-[var(--sidebar-width)]'
-                    : 'md:ml-[var(--sidebar-width)]',
+                    ? 'md:mr-[var(--sidebar-collapsed-width)] lg:mr-[var(--sidebar-width)]'
+                    : 'md:ml-[var(--sidebar-collapsed-width)] lg:ml-[var(--sidebar-width)]',
                 {
-                    'md:!mr-[var(--sidebar-collapsed-width)]':
+                    'lg:!mr-[var(--sidebar-collapsed-width)]':
                         isCollapsed && isRight,
-                    'md:!ml-[var(--sidebar-collapsed-width)]':
+                    'lg:!ml-[var(--sidebar-collapsed-width)]':
                         isCollapsed && !isRight
                 }
             ]"
