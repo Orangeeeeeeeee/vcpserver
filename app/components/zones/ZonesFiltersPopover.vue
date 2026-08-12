@@ -27,15 +27,7 @@
                         "
                         fluid
                         show-select-all
-                    >
-                        <template #chipicon="{ removeCallback }">
-                            <Icon
-                                name="tabler:x"
-                                class="size-4 cursor-pointer text-surface-700 transition-colors hover:text-surface-900"
-                                @click.stop="removeCallback"
-                            />
-                        </template>
-                    </UiMultiSelect>
+                    />
                 </div>
 
                 <!-- Zone shape -->
@@ -61,13 +53,6 @@
                                 {{ $t(option.labelKey) }}
                             </span>
                         </template>
-                        <template #chipicon="{ removeCallback }">
-                            <Icon
-                                name="tabler:x"
-                                class="size-4 cursor-pointer text-surface-700 transition-colors hover:text-surface-900"
-                                @click.stop="removeCallback"
-                            />
-                        </template>
                     </UiMultiSelect>
                 </div>
 
@@ -84,15 +69,7 @@
                         display="chip"
                         :placeholder="$t('zones.list.filters.typePlaceholder')"
                         fluid
-                    >
-                        <template #chipicon="{ removeCallback }">
-                            <Icon
-                                name="tabler:x"
-                                class="size-4 cursor-pointer text-surface-700 transition-colors hover:text-surface-900"
-                                @click.stop="removeCallback"
-                            />
-                        </template>
-                    </UiMultiSelect>
+                    />
                 </div>
 
                 <!-- Vehicle groups -->
@@ -111,15 +88,7 @@
                         "
                         fluid
                         show-select-all
-                    >
-                        <template #chipicon="{ removeCallback }">
-                            <Icon
-                                name="tabler:x"
-                                class="size-4 cursor-pointer text-surface-700 transition-colors hover:text-surface-900"
-                                @click.stop="removeCallback"
-                            />
-                        </template>
-                    </UiMultiSelect>
+                    />
                 </div>
 
                 <!-- Vehicle -->
@@ -138,15 +107,7 @@
                         "
                         fluid
                         show-select-all
-                    >
-                        <template #chipicon="{ removeCallback }">
-                            <Icon
-                                name="tabler:x"
-                                class="size-4 cursor-pointer text-surface-700 transition-colors hover:text-surface-900"
-                                @click.stop="removeCallback"
-                            />
-                        </template>
-                    </UiMultiSelect>
+                    />
                 </div>
             </div>
         </Popover>

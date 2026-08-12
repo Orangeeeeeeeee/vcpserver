@@ -10,7 +10,7 @@
         @change="onInternalChange"
     >
         <template #[ownOptionSlot]="{ option, selected, index }">
-            <span v-if="isSentinelOption(option)" class="font-medium">
+            <span v-if="isSentinelOption(option)" class="font-medium text-primary-600">
                 {{ selectAllLabelText }}
             </span>
             <slot
@@ -44,18 +44,34 @@
                         removable
                         @remove="removeCallback($event)"
                     >
-                        <template v-if="$slots.chipicon" #removeicon>
+                        <template #removeicon>
                             <slot
                                 name="chipicon"
                                 class="p-multiselect-chip-icon"
                                 :item="value"
                                 :removeCallback="removeCallback"
-                            />
+                            >
+                                <Icon
+                                    name="tabler:x"
+                                    class="size-4 cursor-pointer text-surface-700 transition-colors hover:text-surface-900"
+                                    @click="removeCallback"
+                                />
+                            </slot>
                         </template>
                     </Chip>
                 </slot>
                 <!-- eslint-enable vue/attribute-hyphenation -->
             </template>
+        </template>
+
+        <template #chipicon="slotProps">
+            <slot name="chipicon" v-bind="slotProps">
+                <Icon
+                    name="tabler:x"
+                    class="size-4 cursor-pointer text-surface-700 transition-colors hover:text-surface-900"
+                    @click="slotProps.removeCallback"
+                />
+            </slot>
         </template>
 
         <template
@@ -226,7 +242,9 @@ const forwardedAttrs = computed<Record<string, unknown>>(() => {
 
 const forwardedSlotNames = computed<string[]>(() =>
     Object.keys(slots).filter(
-        (name) => !props.showSelectAll || (name !== 'option' && name !== 'chip')
+        (name) =>
+            name !== 'chipicon' &&
+            (!props.showSelectAll || (name !== 'option' && name !== 'chip'))
     )
 );
 

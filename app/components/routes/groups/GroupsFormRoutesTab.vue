@@ -16,15 +16,7 @@
                 :placeholder="$t('routes.groups.modal.routesPlaceholder')"
                 fluid
                 show-select-all
-            >
-                <template #chipicon="{ removeCallback }">
-                    <Icon
-                        name="tabler:x"
-                        class="size-4 cursor-pointer text-surface-700 transition-colors hover:text-surface-900"
-                        @click="removeCallback"
-                    />
-                </template>
-            </UiMultiSelect>
+            />
         </SharedAppFormField>
 
         <ul v-if="state.routeIds.length" class="flex flex-col">

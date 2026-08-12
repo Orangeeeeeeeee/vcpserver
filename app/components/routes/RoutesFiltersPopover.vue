@@ -41,15 +41,7 @@
                         "
                         fluid
                         show-select-all
-                    >
-                        <template #chipicon="{ removeCallback }">
-                            <Icon
-                                name="tabler:x"
-                                class="size-4 cursor-pointer text-surface-700 transition-colors hover:text-surface-900"
-                                @click="removeCallback"
-                            />
-                        </template>
-                    </UiMultiSelect>
+                    />
                 </div>
 
                 <!-- Group -->
@@ -70,15 +62,7 @@
                         "
                         fluid
                         show-select-all
-                    >
-                        <template #chipicon="{ removeCallback }">
-                            <Icon
-                                name="tabler:x"
-                                class="size-4 cursor-pointer text-surface-700 transition-colors hover:text-surface-900"
-                                @click="removeCallback"
-                            />
-                        </template>
-                    </UiMultiSelect>
+                    />
                 </div>
 
                 <!-- Driver -->
@@ -99,15 +83,7 @@
                         "
                         fluid
                         show-select-all
-                    >
-                        <template #chipicon="{ removeCallback }">
-                            <Icon
-                                name="tabler:x"
-                                class="size-4 cursor-pointer text-surface-700 transition-colors hover:text-surface-900"
-                                @click="removeCallback"
-                            />
-                        </template>
-                    </UiMultiSelect>
+                    />
                 </div>
 
                 <!-- Vehicle -->
@@ -128,15 +104,7 @@
                         "
                         fluid
                         show-select-all
-                    >
-                        <template #chipicon="{ removeCallback }">
-                            <Icon
-                                name="tabler:x"
-                                class="size-4 cursor-pointer text-surface-700 transition-colors hover:text-surface-900"
-                                @click="removeCallback"
-                            />
-                        </template>
-                    </UiMultiSelect>
+                    />
                 </div>
             </div>
         </Popover>

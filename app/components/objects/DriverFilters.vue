@@ -45,15 +45,7 @@
                         "
                         fluid
                         show-select-all
-                    >
-                        <template #chipicon="{ removeCallback }">
-                            <Icon
-                                name="tabler:x"
-                                class="size-4 cursor-pointer text-surface-700 transition-colors hover:text-surface-900"
-                                @click="removeCallback"
-                            />
-                        </template>
-                    </UiMultiSelect>
+                    />
                 </div>
 
                 <!-- Employment type -->
@@ -70,15 +62,7 @@
                         "
                         fluid
                         show-select-all
-                    >
-                        <template #chipicon="{ removeCallback }">
-                            <Icon
-                                name="tabler:x"
-                                class="size-4 cursor-pointer text-surface-700 transition-colors hover:text-surface-900"
-                                @click="removeCallback"
-                            />
-                        </template>
-                    </UiMultiSelect>
+                    />
                 </div>
 
                 <!-- License categories -->
@@ -95,15 +79,7 @@
                         "
                         fluid
                         show-select-all
-                    >
-                        <template #chipicon="{ removeCallback }">
-                            <Icon
-                                name="tabler:x"
-                                class="size-4 cursor-pointer text-surface-700 transition-colors hover:text-surface-900"
-                                @click="removeCallback"
-                            />
-                        </template>
-                    </UiMultiSelect>
+                    />
                 </div>
 
                 <!-- Vehicle — grouped, searchable, select-all -->
@@ -143,13 +119,6 @@
                                 </div>
                                 <span>{{ option.label }}</span>
                             </span>
-                        </template>
-                        <template #chipicon="{ removeCallback }">
-                            <Icon
-                                name="tabler:x"
-                                class="size-4 cursor-pointer text-surface-700 transition-colors hover:text-surface-900"
-                                @click="removeCallback"
-                            />
                         </template>
                     </UiMultiSelect>
                 </div>

@@ -47,15 +47,7 @@
                 show-select-all
                 :placeholder="$t('routes.edit.general.vehiclesPlaceholder')"
                 fluid
-            >
-            <template #chipicon="{ removeCallback }">
-                <Icon
-                    name="tabler:x"
-                    class="size-4 cursor-pointer text-surface-700 transition-colors hover:text-surface-900"
-                    @click="removeCallback"
-                />
-            </template>
-        </UiMultiSelect>
+            />
         </SharedAppFormField>
 
         <SharedAppFormField
@@ -74,15 +66,7 @@
                 show-select-all
                 :placeholder="$t('routes.edit.general.groupsPlaceholder')"
                 fluid
-            >
-                <template #chipicon="{ removeCallback }">
-                    <Icon
-                        name="tabler:x"
-                        class="size-4 cursor-pointer text-surface-700 transition-colors hover:text-surface-900"
-                        @click="removeCallback"
-                    />
-                </template>
-            </UiMultiSelect>
+            />
         </SharedAppFormField>
     </div>
 </template>

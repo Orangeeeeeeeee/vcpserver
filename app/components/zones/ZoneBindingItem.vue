@@ -12,15 +12,7 @@
                 :placeholder="placeholder"
                 class="min-w-0 flex-1"
                 show-select-all
-            >
-                <template #chipicon="{ removeCallback }">
-                    <Icon
-                        name="tabler:x"
-                        class="size-4 cursor-pointer text-surface-700 transition-colors hover:text-surface-900"
-                        @click.stop="removeCallback"
-                    />
-                </template>
-            </UiMultiSelect>
+            />
             <Button
                 v-if="removable"
                 type="button"
