@@ -87,7 +87,7 @@ const itemsKey = computed<string>(() =>
 <style scoped>
 /* Remove the tablist bottom border defined in app/theme/components/tabs.ts.
    Unlayered scoped rule overrides the themed border in @layer primevue. */
-.tabnav--borderless :deep(.p-tablist-tab-list) {
+.tabnav--borderless :deep(.p-tablist) {
     border-bottom-width: 0;
 }
 </style>

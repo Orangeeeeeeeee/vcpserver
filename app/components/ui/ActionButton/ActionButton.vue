@@ -1,7 +1,7 @@
 <template>
-    <Button :severity="severity" class="size-10 lg:size-auto" size="small">
+    <Button :severity="severity" :outlined="outlined" class="size-10" :class="label ? 'lg:size-auto' : ''" size="small">
         <Icon :name="icon" class="size-5 shrink-0" />
-        <span class="hidden lg:block">{{ label }}</span>
+        <span v-if="label" class="hidden lg:block">{{ label }}</span>
     </Button>
 </template>
 
@@ -12,12 +12,15 @@ interface ActionButtonProps {
     /** Tabler icon name (e.g. `tabler:plus`) */
     icon: string;
     /** Button label — hidden on mobile, visible on md+ */
-    label: string;
+    label?: string;
     /** PrimeVue button severity, defaults to `secondary` */
     severity?: ButtonProps['severity'];
+    outlined?: ButtonProps['outlined'];
 }
 
 withDefaults(defineProps<ActionButtonProps>(), {
-    severity: 'secondary'
+    severity: 'secondary',
+    outlined: false,
+    label: ''
 });
 </script>

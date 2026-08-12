@@ -234,26 +234,20 @@
         </SharedClientTeleport>
 
         <SharedClientTeleport to="#page-actions-target">
-            <Button
-                severity="secondary"
-                outlined
-                :aria-label="$t('common.edit')"
+            <UiActionButton
+                icon="tabler:file-type-pdf"
+                :label="$t('common.downloadPdf')"
+            />
+            <UiActionButton
+                icon="tabler:pencil"
                 @click="onEdit"
-            >
-                <template #icon>
-                    <Icon name="tabler:pencil" class="size-5" />
-                </template>
-            </Button>
-            <Button
+            />
+            <UiActionButton
+                icon="tabler:trash"
                 severity="danger"
                 outlined
-                :aria-label="$t('common.delete')"
                 @click="onDelete"
-            >
-                <template #icon>
-                    <Icon name="tabler:trash" class="size-5" />
-                </template>
-            </Button>
+            />
         </SharedClientTeleport>
     </div>
 </template>

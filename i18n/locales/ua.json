@@ -19,7 +19,8 @@
         "emailPlaceholder": "Введіть електронну адресу",
         "search": "Пошук",
         "password": "Пароль",
-        "selectAll": "Вибрати всі"
+        "selectAll": "Вибрати всі",
+        "downloadPdf": "Завантажити у PDF"
     },
     "player": {
         "accessibility": "Доступність",
