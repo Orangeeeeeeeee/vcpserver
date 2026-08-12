@@ -98,34 +98,32 @@
                 </div>
 
                 <SharedAnimatedHeight v-if="section.hiddenEvents.length">
-                    <div class="mt-2 border-t border-surface-200">
-                        <div
-                            v-for="(event, index) in section.hiddenEvents"
-                            :key="`${event.vehicleId}:${event.time}:${index}`"
-                            class="flex items-center gap-2 border-b border-surface-200 last:border-b-0 py-2 last:pb-0"
+                    <div
+                        v-for="(event, index) in section.hiddenEvents"
+                        :key="`${event.vehicleId}:${event.time}:${index}`"
+                        class="flex items-center gap-2 border-b border-surface-200 last:border-b-0 py-2 last:pb-0"
+                    >
+                        <Icon
+                            :name="vehicleMeta(event.vehicleId).icon"
+                            class="size-4 shrink-0 text-surface-600"
+                        />
+                        <span
+                            class="min-w-0 flex-1 md:truncate text-sm text-surface-900"
+                            :title="vehicleMeta(event.vehicleId).label"
                         >
-                            <Icon
-                                :name="vehicleMeta(event.vehicleId).icon"
-                                class="size-4 shrink-0 text-surface-600"
-                            />
+                            {{ vehicleMeta(event.vehicleId).label }}
+                        </span>
+                        <div
+                            class="flex shrink-0 flex-col items-end leading-none"
+                        >
                             <span
-                                class="min-w-0 flex-1 md:truncate text-sm text-surface-900"
-                                :title="vehicleMeta(event.vehicleId).label"
+                                class="text-sm font-medium text-surface-900"
                             >
-                                {{ vehicleMeta(event.vehicleId).label }}
+                                {{ event.time }}
                             </span>
-                            <div
-                                class="flex shrink-0 flex-col items-end leading-none"
-                            >
-                                <span
-                                    class="text-sm font-medium text-surface-900"
-                                >
-                                    {{ event.time }}
-                                </span>
-                                <span class="text-xs text-surface-800">
-                                    {{ event.date }}
-                                </span>
-                            </div>
+                            <span class="text-xs text-surface-800">
+                                {{ event.date }}
+                            </span>
                         </div>
                     </div>
 

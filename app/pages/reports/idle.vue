@@ -1,27 +1,31 @@
 <template>
     <div class="flex flex-col gap-4">
-        <!-- Mobile: collapse toggle for the filter params (post-generation) -->
-        <button
-            v-if="generated"
-            type="button"
-            :aria-expanded="filtersExpanded"
-            class="md:hidden h-[2.5rem] flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-surface-300 px-4 text-sm text-surface-800 transition duration-300 hover:border-primary-300"
-            @click="filtersExpanded = !filtersExpanded"
-        >
-            <Icon name="tabler:settings" class="size-5 text-surface-700" />
-            {{ $t('reports.idle.params') }} ({{ activeFilterCount }})
-            <Icon
-                name="tabler:chevron-down"
-                class="size-4 text-surface-600 transition-transform"
-                :class="filtersExpanded ? 'rotate-180' : ''"
-            />
-        </button>
-
-        <!-- Filter bar -->
-        <SharedCollapseTransition>
+        <!-- Filter bar (with the mobile collapse toggle above it) -->
+        <SharedAnimatedHeight :expanded="filtersVisible" title-position="top">
+            <template #title>
+                <!-- Mobile: collapse toggle for the filter params (post-generation) -->
+                <button
+                    v-if="generated"
+                    type="button"
+                    :aria-expanded="filtersExpanded"
+                    class="md:hidden h-[2.5rem] flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-surface-300 px-4 text-sm text-surface-800 transition duration-300 hover:border-primary-300"
+                    @click="filtersExpanded = !filtersExpanded"
+                >
+                    <Icon
+                        name="tabler:settings"
+                        class="size-5 text-surface-700"
+                    />
+                    {{ $t('reports.idle.params') }} ({{ activeFilterCount }})
+                    <Icon
+                        name="tabler:chevron-down"
+                        class="size-4 text-surface-600 transition-transform"
+                        :class="filtersExpanded ? 'rotate-180' : ''"
+                    />
+                </button>
+            </template>
             <div
-                v-show="filtersVisible"
                 class="grid grid-cols-1 gap-3 md:grid-cols-3 xl:grid-cols-[1.2fr_1fr_1.4fr_1fr_1fr_auto] xl:items-center"
+                :class="generated ? 'max-md:pt-4' : ''"
             >
                 <ReportsPeriodPicker v-model:value="period" />
 
@@ -124,7 +128,7 @@
                     @click="onGenerate"
                 />
             </div>
-        </SharedCollapseTransition>
+        </SharedAnimatedHeight>
 
         <div v-if="!generated" class="w-full lg:w-[60%]">
             <!-- Info banner before generation -->

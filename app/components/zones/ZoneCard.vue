@@ -15,7 +15,10 @@
                     "
                     class="size-5 shrink-0 text-surface-800"
                 />
-                <span class="min-w-0 flex-1 md:truncate text-sm text-surface-900" :title="zone.companies.join(', ')">
+                <span
+                    class="min-w-0 flex-1 md:truncate text-sm text-surface-900"
+                    :title="zone.companies.join(', ')"
+                >
                     {{ zone.companies.join(', ') }}
                 </span>
                 <span
@@ -35,7 +38,10 @@
                         class="size-5 shrink-0"
                         :style="{ color: shapeIconColor }"
                     />
-                    <span class="min-w-0 md:truncate font-medium text-surface-900" :title="zone.name">
+                    <span
+                        class="min-w-0 md:truncate font-medium text-surface-900"
+                        :title="zone.name"
+                    >
                         {{ zone.name }}
                     </span>
                 </div>
@@ -46,8 +52,8 @@
         </button>
 
         <!-- Expanded body -->
-        <SharedCollapseTransition>
-            <div v-if="expanded" class="flex flex-col gap-3">
+        <SharedAnimatedHeight v-model:expanded="expanded">
+            <div class="flex flex-col gap-3">
                 <ZonesZoneBindingsSummary :zone="zone" />
 
                 <div class="pt-0 p-4">
@@ -60,7 +66,7 @@
                     />
                 </div>
             </div>
-        </SharedCollapseTransition>
+        </SharedAnimatedHeight>
     </div>
 </template>
 

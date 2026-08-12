@@ -21,6 +21,13 @@ const button: ButtonDesignTokens = {
     },
     colorScheme: {
         light: {
+            text: {
+                secondary: {
+                    hoverBackground: '{surface.100}',
+                    activeBackground: '{surface.100}',
+                    color: '{surface.900}'
+                }
+            },
             root: {
                 primary: {
                     borderColor: '{primary.900}',

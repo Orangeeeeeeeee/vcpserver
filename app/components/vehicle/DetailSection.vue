@@ -21,27 +21,25 @@
             </div>
 
             <SharedAnimatedHeight v-if="hiddenRows.length">
-                <div class="mt-1.5 border-t border-surface-200">
-                    <div
-                        v-for="(row, i) in hiddenRows"
-                        :key="`${row.label}-${i}`"
-                        class="flex items-center justify-between gap-4 border-b border-surface-200 py-1.5 last:border-b-0 last:pb-0"
+                <div
+                    v-for="(row, i) in hiddenRows"
+                    :key="`${row.label}-${i}`"
+                    class="flex items-center justify-between gap-4 border-b border-surface-200 py-1.5 last:border-b-0 last:pb-0"
+                >
+                    <span class="text-xs text-surface-700">
+                        {{ row.label }}
+                    </span>
+                    <span
+                        class="text-sm font-medium text-surface-900 text-right"
                     >
-                        <span class="text-xs text-surface-700">
-                            {{ row.label }}
-                        </span>
-                        <span
-                            class="text-sm font-medium text-surface-900 text-right"
-                        >
-                            {{ row.value }}
-                        </span>
-                    </div>
+                        {{ row.value }}
+                    </span>
                 </div>
 
                 <template #title="{ expanded, toggle }">
                     <button
                         type="button"
-                        class="flex w-full cursor-pointer items-center justify-center gap-2 border-t border-surface-200 px-3.5 py-1.5 text-sm font-medium text-surface-800 transition-colors hover:text-surface-950"
+                        class="flex w-full cursor-pointer items-center justify-center gap-2 px-3.5 py-1.5 text-sm font-medium text-surface-800 transition-colors hover:text-surface-950"
                         :aria-expanded="expanded"
                         @click="toggle"
                     >

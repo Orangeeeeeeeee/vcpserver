@@ -7,7 +7,7 @@
             :toggle="toggle"
         />
         <div
-            class="grid transition-[grid-template-rows] duration-[250ms] ease-[ease] motion-reduce:transition-none"
+            class="grid transition-[grid-template-rows] duration-[300ms] ease-[ease] motion-reduce:transition-none"
             :class="expanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
         >
             <div class="overflow-hidden" :inert="!expanded">

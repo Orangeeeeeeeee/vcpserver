@@ -49,8 +49,8 @@
         </div>
 
         <!-- Vehicles -->
-        <SharedCollapseTransition>
-            <div v-if="state.expanded" class="divide-y divide-surface-200">
+        <SharedAnimatedHeight v-model:expanded="state.expanded">
+            <div class="divide-y divide-surface-200">
                 <OnlineVehicleCard
                     v-for="vehicle in vehicles"
                     :key="vehicle.id"
@@ -63,7 +63,7 @@
                     {{ $t('objects.online.group.empty') }}
                 </p>
             </div>
-        </SharedCollapseTransition>
+        </SharedAnimatedHeight>
     </div>
 </template>
 

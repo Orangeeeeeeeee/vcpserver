@@ -40,35 +40,29 @@
                             />
                         </template>
                     </Chip>
+                    <Chip
+                        v-for="chip in hiddenChips"
+                        v-show="showAllChips"
+                        :key="chip.key"
+                        :label="chip.label"
+                        removable
+                        @remove="removeChip(chip.key)"
+                    >
+                        <template #removeicon>
+                            <Icon
+                                name="tabler:x"
+                                class="size-3.5 cursor-pointer text-surface-600 transition-colors hover:text-surface-900"
+                                :aria-label="$t('common.delete')"
+                                @click="removeChip(chip.key)"
+                            />
+                        </template>
+                    </Chip>
                     <OnlineChipToggle
                         v-if="hiddenChips.length"
                         v-model="showAllChips"
                         :count="hiddenChips.length"
                     />
                 </div>
-                <SharedAnimatedHeight
-                    v-if="hiddenChips.length"
-                    v-model:expanded="showAllChips"
-                >
-                    <div class="flex flex-wrap items-center gap-1.5 pt-1.5">
-                        <Chip
-                            v-for="chip in hiddenChips"
-                            :key="chip.key"
-                            :label="chip.label"
-                            removable
-                            @remove="removeChip(chip.key)"
-                        >
-                            <template #removeicon>
-                                <Icon
-                                    name="tabler:x"
-                                    class="size-3.5 cursor-pointer text-surface-600 transition-colors hover:text-surface-900"
-                                    :aria-label="$t('common.delete')"
-                                    @click="removeChip(chip.key)"
-                                />
-                            </template>
-                        </Chip>
-                    </div>
-                </SharedAnimatedHeight>
             </div>
         </div>
 

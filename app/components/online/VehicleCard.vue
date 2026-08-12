@@ -67,9 +67,8 @@
             </div>
 
             <!-- Expanded details -->
-            <SharedCollapseTransition>
+            <SharedAnimatedHeight v-model:expanded="expanded">
                 <div
-                    v-if="expanded"
                     class="flex flex-col gap-2 text-xs md:text-sm text-surface-800 md:gap-1"
                 >
                     <span class="flex items-center gap-1">
@@ -100,7 +99,7 @@
                         {{ vehicle.comment }}
                     </p>
                 </div>
-            </SharedCollapseTransition>
+            </SharedAnimatedHeight>
         </div>
 
         <!-- Actions -->

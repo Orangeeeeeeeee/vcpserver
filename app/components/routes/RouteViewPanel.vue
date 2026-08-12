@@ -174,33 +174,36 @@
                             </div>
 
                             <template #title="{ expanded, toggle }">
-                                <Button
-                                    text
-                                    severity="secondary"
-                                    icon-pos="right"
-                                    :label="
-                                        $t(
-                                            expanded
-                                                ? 'routes.detail.collapse'
-                                                : 'routes.detail.expand'
-                                        )
-                                    "
-                                    class="mt-1 self-center text-sm font-medium text-surface-900"
-                                    :aria-expanded="expanded"
-                                    @click="toggle"
-                                >
-                                    <template #icon="{ class: iconClass }">
-                                        <Icon
-                                            :name="
+                                <div class="mt-1 self-center">
+                                    <Button
+                                        text
+                                        severity="secondary"
+                                        icon-pos="right"
+                                        :label="
+                                            $t(
                                                 expanded
-                                                    ? 'tabler:chevron-up'
-                                                    : 'tabler:chevron-down'
-                                            "
-                                            class="size-4"
-                                            :class="iconClass"
-                                        />
-                                    </template>
-                                </Button>
+                                                    ? 'routes.detail.collapse'
+                                                    : 'routes.detail.expand'
+                                            )
+                                        "
+                                        class="text-sm font-medium text-surface-900"
+                                        :aria-expanded="expanded"
+                                        @click="toggle"
+                                    >
+                                        <template #icon="{ class: iconClass }">
+                                            <Icon
+                                                :name="
+                                                    expanded
+                                                        ? 'tabler:chevron-up'
+                                                        : 'tabler:chevron-down'
+                                                "
+                                                class="size-4"
+                                                :class="iconClass"
+                                            />
+                                        </template>
+                                    </Button>
+                                </div>
+
                             </template>
                         </SharedAnimatedHeight>
                     </div>
