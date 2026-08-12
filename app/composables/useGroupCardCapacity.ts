@@ -1,8 +1,23 @@
 /** Minimum item rows shown while a group card is collapsed (SSR / pre-measure baseline) */
 export const GROUP_CARD_BASELINE_ROWS = 3;
 
+/**
+ * Attribute set on an expanded card's root element. Sibling cards in the same
+ * grid check it to pause their own capacity measurement, so a temporarily
+ * inflated row (a neighbor expanded in-flow) never bakes extra rows into a
+ * collapsed card's natural height.
+ */
+export const GROUP_CARD_EXPANDED_ATTR = 'data-group-card-expanded';
+
 /** Extra tolerance for fractional layout rounding, px */
 const EPSILON_PX = 1;
+
+/**
+ * Delay after collapsing before measurement resumes: SharedAnimatedHeight's
+ * 300ms grid-template-rows transition plus a safety margin, so geometry is
+ * measured only once it has settled.
+ */
+const SETTLE_DELAY_MS = 350;
 
 /**
  * Toggle button height shared across all group cards (same typography/icon
@@ -18,13 +33,13 @@ export interface UseGroupCardCapacityParams {
     cardRef: Ref<HTMLElement | null>;
     /** Card body element (the `p-3 flex flex-1 flex-col gap-2` wrapper) */
     bodyRef: Ref<HTMLElement | null>;
-    /** The item list `<ul>` element */
+    /** The head item list `<ul>` element (always-visible rows) */
     listRef: Ref<HTMLElement | null>;
     /** Expand toggle button element, `null` while not rendered */
     toggleRef: Ref<HTMLElement | null>;
     /** Total number of items in the full list */
     itemCount: MaybeRefOrGetter<number>;
-    /** Overlay-expanded state: measurement is skipped while `true` */
+    /** In-flow expanded state: measurement is paused while `true` */
     expanded: Ref<boolean>;
 }
 
@@ -45,17 +60,19 @@ export interface UseGroupCardCapacityReturn {
  * are shown and the toggle is hidden; otherwise as many rows as fit (never
  * fewer than {@link GROUP_CARD_BASELINE_ROWS}) are shown plus the toggle.
  *
- * The DOM stays constant: the card renders EVERY row and hides the overflow
- * with `display: none` (the `hidden` class) based on `visibleCount` — rows are
- * never mounted/unmounted by expand/collapse or re-measures.
+ * DOM contract: the head rows (`visibleCount` first items) live in `listRef`;
+ * the tail lives right below inside a `<SharedAnimatedHeight>` and expands
+ * in-flow, growing the card and the grid row. Expanding/collapsing never
+ * mounts or unmounts rows — the slice boundary only moves on real re-measures.
  *
- * Stability: the rendered count always satisfies
- * `renderedHeight <= currentStretchedHeight (+1px)` at decision time, so the
- * card's natural height never exceeds the current row height and the grid row
- * never grows because of this logic — extra rows only occupy space that was
- * already free. The row can only shrink (when the tallest card drops its
- * toggle to show the full list), and at the smaller height the decision is
- * unchanged — a fixed point, not an oscillation.
+ * Stability: capacity is only recomputed on settled, fully-collapsed grid
+ * geometry. While this card or any sibling card in the same grid is expanded
+ * (marked via {@link GROUP_CARD_EXPANDED_ATTR}), and for {@link SETTLE_DELAY_MS}
+ * after collapsing (the height animation), measurement is paused — otherwise
+ * collapsed neighbors would fill the temporarily inflated row with extra rows
+ * and permanently ratchet the row height up. At settled geometry the rendered
+ * count always satisfies `renderedHeight <= currentStretchedHeight (+1px)`, so
+ * the grid row never grows because of this logic.
  *
  * SSR-safe: the server and the initial client render show the baseline slice
  * (identical to the old fixed-count behavior); measurement kicks in on mount.
@@ -72,6 +89,11 @@ export const useGroupCardCapacity = (
     /** Measured row capacity; `null` until the first client-side measure */
     const capacity = ref<number | null>(null);
 
+    /** True while the collapse height animation is settling */
+    const settling = ref<boolean>(false);
+
+    let settleTimer: ReturnType<typeof setTimeout> | null = null;
+
     const visibleCount = computed<number>(() => {
         const total = toValue(itemCount);
         return capacity.value === null
@@ -82,6 +104,16 @@ export const useGroupCardCapacity = (
     const showToggle = computed<boolean>(
         () => toValue(itemCount) > visibleCount.value
     );
+
+    /** Whether any card in the same grid is currently expanded (or settling) */
+    const hasExpandedSibling = (): boolean =>
+        !!cardRef.value?.parentElement?.querySelector(
+            `[${GROUP_CARD_EXPANDED_ATTR}]`
+        );
+
+    /** Whether measurement must be skipped at the moment */
+    const isFrozen = (): boolean =>
+        expanded.value || settling.value || hasExpandedSibling();
 
     /** Reserved height for the toggle row: button height + body flex gap */
     const toggleReserve = (bodyGap: number): number =>
@@ -97,7 +129,7 @@ export const useGroupCardCapacity = (
 
     /** Recomputes the row capacity from the current DOM geometry */
     const recompute = (): void => {
-        if (expanded.value) return;
+        if (isFrozen()) return;
         const total = toValue(itemCount);
         if (total <= GROUP_CARD_BASELINE_ROWS) {
             capacity.value = null;
@@ -105,8 +137,7 @@ export const useGroupCardCapacity = (
         }
         const body = bodyRef.value;
         const list = listRef.value;
-        // The list always holds ALL rows; collapsed ones are display:none
-        // (`hidden` class) and measure 0, so only visible rows are considered.
+        // Only visible head rows are considered (zero-height rows are a hedge)
         const rows = list
             ? Array.from(list.children).filter(
                   (row) => row.getBoundingClientRect().height > 0
@@ -120,8 +151,7 @@ export const useGroupCardCapacity = (
 
         const bodyGap = parseFloat(getComputedStyle(body).rowGap) || 0;
         const listGap = parseFloat(getComputedStyle(list).rowGap) || 0;
-        const available =
-            contentLimit(body) - list.getBoundingClientRect().top;
+        const available = contentLimit(body) - list.getBoundingClientRect().top;
         // Max over rendered rows: a conservative hedge for wrapped rows below `md`
         const rowHeight = Math.max(
             ...rows.map((row) => row.getBoundingClientRect().height)
@@ -149,8 +179,7 @@ export const useGroupCardCapacity = (
      * ever decrements, so it terminates.
      */
     const clampAfterRender = (): void => {
-        if (expanded.value || capacity.value === null || !showToggle.value)
-            return;
+        if (isFrozen() || capacity.value === null || !showToggle.value) return;
         const body = bodyRef.value;
         const list = listRef.value;
         if (!body || !list) return;
@@ -167,10 +196,23 @@ export const useGroupCardCapacity = (
 
     watch(() => toValue(itemCount), recompute, { flush: 'post' });
 
-    // Re-measure after collapsing back: the viewport may have changed while
-    // the observer callbacks were skipped in the expanded state.
+    // Mark the card while expanded so siblings pause their measurement; the
+    // mark is lifted only after the collapse animation settles, then a single
+    // recompute runs on the final geometry (the viewport may have changed
+    // while measurement was paused).
     watch(expanded, (value) => {
-        if (!value) nextTick(recompute);
+        if (settleTimer !== null) clearTimeout(settleTimer);
+        if (value) {
+            settling.value = false;
+            cardRef.value?.setAttribute(GROUP_CARD_EXPANDED_ATTR, '');
+            return;
+        }
+        settling.value = true;
+        settleTimer = setTimeout(() => {
+            settling.value = false;
+            cardRef.value?.removeAttribute(GROUP_CARD_EXPANDED_ATTR);
+            recompute();
+        }, SETTLE_DELAY_MS);
     });
 
     onMounted(() => {
@@ -183,7 +225,10 @@ export const useGroupCardCapacity = (
         if (!card) return;
         const observer = new ResizeObserver(() => recompute());
         observer.observe(card);
-        onBeforeUnmount(() => observer.disconnect());
+        onBeforeUnmount(() => {
+            observer.disconnect();
+            if (settleTimer !== null) clearTimeout(settleTimer);
+        });
     });
 
     return { visibleCount, showToggle };

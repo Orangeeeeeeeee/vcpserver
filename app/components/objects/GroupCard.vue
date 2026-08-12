@@ -1,109 +1,92 @@
 <template>
-    <!-- Wrapper keeps the collapsed height so expanding never stretches the grid row -->
     <div
-        class="relative w-full h-full"
-        :style="
-            expanded && placeholderHeight !== null
-                ? { height: `${placeholderHeight}px` }
-                : undefined
-        "
+        ref="cardRef"
+        class="bg-surface-100 border border-surface-300 rounded-lg w-full h-full overflow-hidden flex flex-col"
     >
+        <!-- Header: status + overflow menu + identity (tinted by group color) -->
         <div
-            ref="cardRef"
-            :class="[
-                'bg-surface-100 border border-surface-300 rounded-lg w-full overflow-hidden flex flex-col',
-                expanded ? 'absolute inset-x-0 top-0 z-10 shadow-lg' : 'h-full'
-            ]"
+            class="px-4 pt-3 pb-3"
+            :style="{ backgroundColor: headerBackground }"
         >
-            <!-- Header: status + overflow menu + identity (tinted by group color) -->
-            <div
-                class="px-4 pt-3 pb-3"
-                :style="{ backgroundColor: headerBackground }"
-            >
-                <div
-                    class="flex items-start justify-between gap-2 relative mb-1"
+            <div class="flex items-start justify-between gap-2 relative mb-1">
+                <Tag :severity="statusSeverity" :value="statusLabel" />
+                <button
+                    type="button"
+                    class="inline-flex cursor-pointer p-0 text-surface-800"
+                    aria-haspopup="true"
+                    @click.stop.prevent="toggleMenu"
                 >
-                    <Tag :severity="statusSeverity" :value="statusLabel" />
-                    <button
-                        type="button"
-                        class="inline-flex cursor-pointer p-0 text-surface-800"
-                        aria-haspopup="true"
-                        @click.stop.prevent="toggleMenu"
-                    >
-                        <Icon
-                            name="tabler:dots-vertical"
-                            class="size-5 text-surface-800"
-                        />
-                    </button>
-                    <Menu ref="menuRef" :model="menuItems" popup>
-                        <template #item="{ item, props: itemProps }">
-                            <a
-                                v-bind="itemProps.action"
-                                :class="[
-                                    'flex items-center gap-1.5 cursor-pointer font-medium',
-                                    (item as GroupMenuItem).danger
-                                        ? 'text-red-600'
-                                        : 'text-surface-900'
-                                ]"
-                            >
-                                <span>{{ item.label }}</span>
-                                <Icon
-                                    :name="(item as GroupMenuItem).icon"
-                                    :class="[
-                                        'size-5',
-                                        (item as GroupMenuItem).danger
-                                            ? 'text-red-500'
-                                            : 'text-surface-700'
-                                    ]"
-                                />
-                            </a>
-                        </template>
-                    </Menu>
-                </div>
-
-                <!-- Identity -->
-                <div class="flex min-w-0 flex-col pl-4">
-                    <div
-                        class="flex flex-col gap-1 relative min-w-0 before:absolute before:top-2 before:-left-3 before:w-[0.438rem] before:h-[0.438rem] before:rounded-full before:bg-[var(--dot-color)] before:content-['']"
-                        :style="{ '--dot-color': dotColor }"
-                    >
-                        <span
-                            class="font-medium text-surface-950 md:truncate text-base"
-                            :title="group.name"
+                    <Icon
+                        name="tabler:dots-vertical"
+                        class="size-5 text-surface-800"
+                    />
+                </button>
+                <Menu ref="menuRef" :model="menuItems" popup>
+                    <template #item="{ item, props: itemProps }">
+                        <a
+                            v-bind="itemProps.action"
+                            :class="[
+                                'flex items-center gap-1.5 cursor-pointer font-medium',
+                                (item as GroupMenuItem).danger
+                                    ? 'text-red-600'
+                                    : 'text-surface-900'
+                            ]"
                         >
-                            {{ group.name }}
-                        </span>
-                    </div>
-                    <span class="text-sm text-surface-800 md:truncate" :title="group.company">
-                        {{ group.company }}
-                    </span>
-                </div>
+                            <span>{{ item.label }}</span>
+                            <Icon
+                                :name="(item as GroupMenuItem).icon"
+                                :class="[
+                                    'size-5',
+                                    (item as GroupMenuItem).danger
+                                        ? 'text-red-500'
+                                        : 'text-surface-700'
+                                ]"
+                            />
+                        </a>
+                    </template>
+                </Menu>
             </div>
 
-            <!-- Body: comment + vehicles -->
-            <div ref="bodyRef" class="p-3 flex flex-1 flex-col gap-2">
+            <!-- Identity -->
+            <div class="flex min-w-0 flex-col pl-4">
                 <div
-                    v-if="group.comment"
-                    class="border-b border-surface-200 pb-1"
+                    class="flex flex-col gap-1 relative min-w-0 before:absolute before:top-2 before:-left-3 before:w-[0.438rem] before:h-[0.438rem] before:rounded-full before:bg-[var(--dot-color)] before:content-['']"
+                    :style="{ '--dot-color': dotColor }"
                 >
-                    <p
-                        :class="[
-                            'text-sm/tight text-surface-800',
-                            expanded ? '' : 'line-clamp-3'
-                        ]"
+                    <span
+                        class="font-medium text-surface-950 md:truncate text-base"
+                        :title="group.name"
                     >
-                        {{ group.comment }}
-                    </p>
+                        {{ group.name }}
+                    </span>
                 </div>
+                <span
+                    class="text-sm text-surface-800 md:truncate"
+                    :title="group.company"
+                >
+                    {{ group.company }}
+                </span>
+            </div>
+        </div>
 
+        <!-- Body: comment + vehicles -->
+        <div ref="bodyRef" class="p-3 flex flex-1 flex-col gap-2">
+            <div v-if="group.comment" class="border-b border-surface-200 pb-1">
+                <p
+                    class="text-sm/tight text-surface-800"
+                >
+                    {{ group.comment }}
+                </p>
+            </div>
+
+            <!-- No gap on this wrapper: the head↔tail spacing must vanish
+                 when collapsed, so it lives inside the AnimatedHeight slot -->
+            <div class="flex flex-1 flex-col">
                 <ul ref="listRef" class="flex flex-col gap-1">
                     <li
-                        v-for="(vehicle, index) in group.vehicles"
+                        v-for="vehicle in headVehicles"
                         :key="vehicle.transportId"
-                        :class="[
-                            'flex items-center gap-1 text-sm text-surface-800',
-                            { hidden: isRowHidden(index) }
-                        ]"
+                        class="flex items-center gap-1 text-sm text-surface-800"
                     >
                         <Icon
                             :name="VEHICLE_TYPE_ICONS[vehicle.type]"
@@ -119,23 +102,52 @@
                     </li>
                 </ul>
 
-                <button
+                <SharedAnimatedHeight
                     v-if="showToggle"
-                    ref="toggleRef"
-                    type="button"
-                    class="mt-auto flex cursor-pointer items-center gap-2 self-start text-sm font-medium text-surface-800 transition-colors hover:text-surface-950"
-                    @click.stop.prevent="toggleExpanded"
+                    v-model:expanded="expanded"
                 >
-                    {{ expanded ? labels.collapse : labels.expand }}
-                    <Icon
-                        :name="
-                            expanded
-                                ? 'tabler:chevron-up'
-                                : 'tabler:chevron-down'
-                        "
-                        class="size-5"
-                    />
-                </button>
+                    <ul class="flex flex-col gap-1 pt-1">
+                        <li
+                            v-for="vehicle in tailVehicles"
+                            :key="vehicle.transportId"
+                            class="flex items-center gap-1 text-sm text-surface-800"
+                        >
+                            <Icon
+                                :name="VEHICLE_TYPE_ICONS[vehicle.type]"
+                                class="size-4 text-surface-600 shrink-0"
+                            />
+                            <span
+                                class="md:truncate text-sm uppercase text-surface-800"
+                                :title="`${vehicle.transport} (ID: ${vehicle.transportId})`"
+                            >
+                                {{ vehicle.transport }} (ID:
+                                {{ vehicle.transportId }})
+                            </span>
+                        </li>
+                    </ul>
+
+                    <template #title="{ toggle }">
+                        <!-- mt-2 mirrors the body's gap-2 that toggleReserve
+                             measures via the body rowGap — keep them in sync -->
+                        <button
+                            ref="toggleRef"
+                            type="button"
+                            class="mt-2 flex cursor-pointer items-center gap-2 self-start text-sm font-medium text-surface-800 transition-colors hover:text-surface-950"
+                            :aria-expanded="expanded"
+                            @click.stop.prevent="toggle"
+                        >
+                            {{ expanded ? labels.collapse : labels.expand }}
+                            <Icon
+                                :name="
+                                    expanded
+                                        ? 'tabler:chevron-up'
+                                        : 'tabler:chevron-down'
+                                "
+                                class="size-5"
+                            />
+                        </button>
+                    </template>
+                </SharedAnimatedHeight>
             </div>
         </div>
     </div>
@@ -195,23 +207,6 @@ const toggleRef = useTemplateRef<HTMLButtonElement>('toggleRef');
 /** Whether the full vehicle list is expanded */
 const expanded = ref<boolean>(false);
 
-/** Collapsed card height captured before expanding (keeps the grid row stable) */
-const placeholderHeight = ref<number | null>(null);
-
-/**
- * Toggles the expanded state. The collapsed height is measured first so the
- * wrapper can hold it while the card overlays the grid as an absolute box.
- */
-const toggleExpanded = (): void => {
-    if (!expanded.value) {
-        placeholderHeight.value = cardRef.value?.offsetHeight ?? null;
-        expanded.value = true;
-    } else {
-        expanded.value = false;
-        placeholderHeight.value = null;
-    }
-};
-
 /** Pastel header tint derived from the group color */
 const headerBackground = computed<string>(
     () => primitiveColors[props.group.color]['100']
@@ -243,9 +238,15 @@ const { visibleCount, showToggle } = useGroupCardCapacity({
     expanded
 });
 
-/** Whether the row at the given index is hidden in the collapsed state */
-const isRowHidden = (index: number): boolean =>
-    !expanded.value && index >= visibleCount.value;
+/** Vehicles always shown above the collapsible tail */
+const headVehicles = computed<Group['vehicles']>(() =>
+    props.group.vehicles.slice(0, visibleCount.value)
+);
+
+/** Vehicles collapsed behind the «Розгорнути» toggle */
+const tailVehicles = computed<Group['vehicles']>(() =>
+    props.group.vehicles.slice(visibleCount.value)
+);
 
 /** Toggles the overflow menu (PrimeVue popup mode) */
 const toggleMenu = (event: Event): void => {
