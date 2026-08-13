@@ -76,11 +76,9 @@
                 name="errorCount"
                 :label="$t('routes.create.general.errorCount')"
             >
-                <InputNumber
+                <UiInputNumber
+                    id="routeErrorCount"
                     v-model="state.errorCount"
-                    input-id="routeErrorCount"
-                    :min="0"
-                    :use-grouping="false"
                     :placeholder="
                         $t('routes.create.general.errorCountPlaceholder')
                     "

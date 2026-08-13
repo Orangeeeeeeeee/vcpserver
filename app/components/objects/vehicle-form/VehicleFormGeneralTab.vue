@@ -21,12 +21,9 @@
             name="year"
             :label="$t('objects.vehicles.modal.year')"
         >
-            <InputNumber
+            <UiInputNumber
                 id="vehYear"
                 v-model="state.year"
-                :use-grouping="false"
-                :min="1900"
-                :max="2026"
                 :placeholder="$t('objects.vehicles.modal.yearPlaceholder')"
                 fluid
             />

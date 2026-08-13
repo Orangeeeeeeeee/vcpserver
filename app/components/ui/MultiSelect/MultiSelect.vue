@@ -7,6 +7,7 @@
         :option-value="optionValue"
         :option-disabled="optionDisabled"
         @update:model-value="onInternalUpdate"
+        @filter="onFilterUpdate"
         @change="onInternalChange"
     >
         <template #[ownOptionSlot]="{ option, selected, index }">
@@ -148,24 +149,29 @@ const selectAllLabelText = computed<string>(
     () => props.selectAllLabel ?? t('common.selectAll')
 );
 
-const sentinelOption = computed<unknown>(() => {
-    const labelKey =
-        typeof props.optionLabel === 'string' ? props.optionLabel : undefined;
-    if (!labelKey && !props.optionValue) return SELECT_ALL_VALUE;
-    const option: Record<string | symbol, unknown> = {
-        [SENTINEL_MARKER]: true
-    };
-    if (labelKey) option[labelKey] = selectAllLabelText.value;
-    if (props.optionValue) option[props.optionValue] = SELECT_ALL_VALUE;
-    return option;
+/** Current filter query typed by the user in the MultiSelect filter input. */
+const filterQuery = ref<string>('');
+
+const onFilterUpdate = (event: { originalEvent: Event; value: string }): void => {
+    filterQuery.value = event.value;
+};
+
+/**
+ * Real options visible to the user after applying the current filter query.
+ * When no query is active, equals all options.
+ */
+const filteredRealOptions = computed<unknown[]>(() => {
+    const all = props.options ?? [];
+    const query = filterQuery.value.trim().toLowerCase();
+    if (!query) return all;
+    return all.filter((option) =>
+        getOptionLabelText(option).toLowerCase().includes(query)
+    );
 });
 
-const sentinelValue = computed<unknown>(() =>
-    getOptionValue(sentinelOption.value)
-);
-
-const selectableValues = computed<unknown[]>(() =>
-    (props.options ?? [])
+/** Selectable (non-disabled) values from currently visible (filtered) options. */
+const filteredSelectableValues = computed<unknown[]>(() =>
+    filteredRealOptions.value
         .filter((option) => !isOptionDisabled(option))
         .map(getOptionValue)
 );
@@ -173,23 +179,60 @@ const selectableValues = computed<unknown[]>(() =>
 const allSelected = computed<boolean>(() => {
     const value = model.value ?? [];
     return (
-        selectableValues.value.length > 0 &&
-        selectableValues.value.every((optionValue) =>
+        filteredSelectableValues.value.length > 0 &&
+        filteredSelectableValues.value.every((optionValue) =>
             value.includes(optionValue)
         )
     );
 });
 
-const internalOptions = computed<unknown[] | undefined>(() => {
-    const options = props.options ?? [];
-    return props.showSelectAll && options.length > 0
-        ? [sentinelOption.value, ...options]
-        : props.options;
+/**
+ * Sentinel option object shared between `internalOptions` and `internalValue`.
+ *
+ * Using one computed means both arrays hold the same object reference, so
+ * PrimeVue's `a === b` short-circuit in deepEquals marks the sentinel as
+ * "selected" correctly even when optionValue is not set.
+ *
+ * When a filter query is active, the sentinel's label field is set to the
+ * query text so PrimeVue's built-in filter always passes it through
+ * (real options in internalOptions are already pre-filtered by us).
+ */
+const currentSentinel = computed<unknown>(() => {
+    const dynamicLabel = filterQuery.value.trim() || selectAllLabelText.value;
+    const labelKey =
+        typeof props.optionLabel === 'string' ? props.optionLabel : undefined;
+    if (!labelKey && !props.optionValue) return SELECT_ALL_VALUE;
+    const opt: Record<string | symbol, unknown> = { [SENTINEL_MARKER]: true };
+    if (labelKey) opt[labelKey] = dynamicLabel;
+    if (props.optionValue) opt[props.optionValue] = SELECT_ALL_VALUE;
+    return opt;
 });
 
+/**
+ * Options list passed to PrimeVue MultiSelect.
+ *
+ * When `showSelectAll` is active:
+ * - Pre-filter real options ourselves so PrimeVue's built-in filter sees an
+ *   already-filtered list (no double-filtering side effects).
+ * - Prepend the sentinel only when filtered results exist; omit it otherwise
+ *   so PrimeVue shows the #emptyfilter slot for empty searches.
+ */
+const internalOptions = computed<unknown[] | undefined>(() => {
+    if (!props.showSelectAll) return props.options;
+    const visible = filteredRealOptions.value;
+    if (visible.length === 0) return visible;
+    return [currentSentinel.value, ...visible];
+});
+
+// When optionValue is set, PrimeVue compares model values as extracted primitives
+// (option[optionValue]), so we must put the extracted sentinel value (SELECT_ALL_VALUE)
+// into internalValue — not the sentinel object itself.
+// When optionValue is not set, getOptionValue returns the object itself, which is the
+// same cached reference as currentSentinel.value used in internalOptions, so
+// PrimeVue's `a === b` short-circuit marks the sentinel as selected correctly.
 const internalValue = computed<unknown[] | null | undefined>(() =>
     props.showSelectAll && allSelected.value
-        ? [sentinelValue.value, ...(model.value ?? [])]
+        ? [getOptionValue(currentSentinel.value), ...(model.value ?? [])]
         : model.value
 );
 
@@ -216,9 +259,17 @@ const onInternalUpdate = (newValue: unknown[] | null | undefined): void => {
         ? newValue.some(isSentinelValue)
         : false;
     if (hasSentinel && !hadSentinel) {
-        model.value = [...selectableValues.value];
+        // Select all visible (filtered) options, keeping already-selected others.
+        const current = model.value ?? [];
+        const toAdd = filteredSelectableValues.value.filter(
+            (v) => !current.includes(v)
+        );
+        model.value = [...current, ...toAdd];
     } else if (!hasSentinel && hadSentinel) {
-        model.value = [];
+        // Deselect all visible (filtered) options, keeping others.
+        model.value = (model.value ?? []).filter(
+            (v) => !filteredSelectableValues.value.includes(v)
+        );
     } else {
         model.value = (newValue ?? []).filter(
             (value) => !isSentinelValue(value)

@@ -6,11 +6,9 @@
         name="singlePrice"
         :label="$t('routes.create.tariff.price')"
     >
-        <InputNumber
+        <UiInputNumber
+            id="routeSinglePrice"
             v-model="state.singlePrice"
-            input-id="routeSinglePrice"
-            :min="0"
-            :max-fraction-digits="2"
             :placeholder="$t('routes.create.tariff.pricePlaceholder')"
             fluid
         />
@@ -59,11 +57,9 @@
                         :name="`tariff-${target.key}`"
                         :label="`${group.from.label} - ${target.to.label}`"
                     >
-                        <InputNumber
+                        <UiInputNumber
+                            :id="`routeTariff-${target.key}`"
                             v-model="segmentPrices[target.key]"
-                            :input-id="`routeTariff-${target.key}`"
-                            :min="0"
-                            :max-fraction-digits="2"
                             :placeholder="
                                 $t('routes.create.tariff.pricePlaceholder')
                             "

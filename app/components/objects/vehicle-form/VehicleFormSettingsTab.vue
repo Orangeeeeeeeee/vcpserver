@@ -11,11 +11,9 @@
             name="odometer"
             :label="$t('objects.vehicles.modal.odometer')"
         >
-            <InputNumber
+            <UiInputNumber
                 id="vehOdometer"
                 v-model="state.odometer"
-                :use-grouping="false"
-                :min="0"
                 :placeholder="
                     $t('objects.vehicles.modal.odometerPlaceholder')
                 "
@@ -45,11 +43,9 @@
             name="engineHours"
             :label="$t('objects.vehicles.modal.engineHours')"
         >
-            <InputNumber
+            <UiInputNumber
                 id="vehEngineHours"
                 v-model="state.engineHours"
-                :use-grouping="false"
-                :min="0"
                 :placeholder="
                     $t('objects.vehicles.modal.engineHoursPlaceholder')
                 "

@@ -22,17 +22,17 @@
                         :label="`${group.from.label} - ${target.to.label}`"
                         :error="priceField(target.key)?.$errors"
                     >
-                        <InputNumber
-                            v-model="segmentPrices[target.key]"
-                            :input-id="`routeEditTariff-${target.key}`"
-                            :min="0"
-                            :suffix="$t('routes.edit.price.suffix')"
-                            :placeholder="
-                                $t('routes.create.tariff.pricePlaceholder')
-                            "
-                            :invalid="priceField(target.key)?.$error"
-                            fluid
-                        />
+                        <InputGroup fluid>
+                            <UiInputNumber
+                                :id="`routeEditTariff-${target.key}`"
+                                v-model="segmentPrices[target.key]"
+                                :placeholder="
+                                    $t('routes.create.tariff.pricePlaceholder')
+                                "
+                                :invalid="priceField(target.key)?.$error"
+                            />
+                            <InputGroupAddon>{{ $t('routes.edit.price.suffix') }}</InputGroupAddon>
+                        </InputGroup>
                     </SharedAppFormField>
                 </div>
             </AccordionContent>

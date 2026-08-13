@@ -86,12 +86,10 @@
             :label="$t('routes.create.points.radius')"
         >
             <div class="flex items-center gap-4">
-                <InputNumber
+                <UiInputNumber
+                    :id="`routeRadius-${point.id}`"
                     v-model="point.radius"
-                    :input-id="`routeRadius-${point.id}`"
-                    :min="ROUTE_POINT_RADIUS.min"
-                    :max="ROUTE_POINT_RADIUS.max"
-                    :use-grouping="false"
+                    :fallback="ROUTE_POINT_RADIUS.min"
                     class="w-28 shrink-0"
                     fluid
                 />

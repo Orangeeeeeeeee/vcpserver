@@ -11,11 +11,9 @@
             name="consumptionAverage"
             :label="$t('objects.vehicles.modal.consumptionAverage')"
         >
-            <InputNumber
+            <UiInputNumber
                 id="vehConsumptionAverage"
                 v-model="state.consumptionAverage"
-                :min="0"
-                :max-fraction-digits="1"
                 :placeholder="$t('objects.vehicles.modal.consumptionUnit')"
                 fluid
             />
@@ -26,11 +24,9 @@
             name="consumptionSlow"
             :label="$t('objects.vehicles.modal.consumptionSlow')"
         >
-            <InputNumber
+            <UiInputNumber
                 id="vehConsumptionSlow"
                 v-model="state.consumptionSlow"
-                :min="0"
-                :max-fraction-digits="1"
                 :placeholder="$t('objects.vehicles.modal.consumptionUnit')"
                 fluid
             />
@@ -41,11 +37,9 @@
             name="consumptionNormal"
             :label="$t('objects.vehicles.modal.consumptionNormal')"
         >
-            <InputNumber
+            <UiInputNumber
                 id="vehConsumptionNormal"
                 v-model="state.consumptionNormal"
-                :min="0"
-                :max-fraction-digits="1"
                 :placeholder="$t('objects.vehicles.modal.consumptionUnit')"
                 fluid
             />
@@ -56,11 +50,9 @@
             name="consumptionFast"
             :label="$t('objects.vehicles.modal.consumptionFast')"
         >
-            <InputNumber
+            <UiInputNumber
                 id="vehConsumptionFast"
                 v-model="state.consumptionFast"
-                :min="0"
-                :max-fraction-digits="1"
                 :placeholder="$t('objects.vehicles.modal.consumptionUnit')"
                 fluid
             />
@@ -77,11 +69,9 @@
             name="tankMain"
             :label="$t('objects.vehicles.modal.tankMain')"
         >
-            <InputNumber
+            <UiInputNumber
                 id="vehTankMain"
                 v-model="state.tankMain"
-                :use-grouping="false"
-                :min="0"
                 :placeholder="$t('objects.vehicles.modal.tankUnit')"
                 fluid
             />
@@ -92,11 +82,9 @@
             name="tankExtra"
             :label="$t('objects.vehicles.modal.tankExtra')"
         >
-            <InputNumber
+            <UiInputNumber
                 id="vehTankExtra"
                 v-model="state.tankExtra"
-                :use-grouping="false"
-                :min="0"
                 :placeholder="$t('objects.vehicles.modal.tankUnit')"
                 fluid
             />
@@ -113,11 +101,9 @@
             name="speedNormal"
             :label="$t('objects.vehicles.modal.speedNormal')"
         >
-            <InputNumber
+            <UiInputNumber
                 id="vehSpeedNormal"
                 v-model="state.speedNormal"
-                :use-grouping="false"
-                :min="0"
                 :placeholder="$t('objects.vehicles.modal.speedUnit')"
                 fluid
             />
@@ -128,11 +114,9 @@
             name="speedMax"
             :label="$t('objects.vehicles.modal.speedMax')"
         >
-            <InputNumber
+            <UiInputNumber
                 id="vehSpeedMax"
                 v-model="state.speedMax"
-                :use-grouping="false"
-                :min="0"
                 :placeholder="$t('objects.vehicles.modal.speedUnit')"
                 fluid
             />

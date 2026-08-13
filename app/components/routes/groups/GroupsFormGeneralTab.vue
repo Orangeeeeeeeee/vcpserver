@@ -87,11 +87,9 @@
             :label="$t('routes.groups.modal.order')"
             :error="r$.$fields.order.$errors"
         >
-            <InputNumber
+            <UiInputNumber
                 id="rtGrpOrder"
                 v-model="state.order"
-                :min="1"
-                :use-grouping="false"
                 :placeholder="$t('routes.groups.modal.orderPlaceholder')"
                 :invalid="r$.$fields.order.$invalid"
                 fluid
