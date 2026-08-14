@@ -47,7 +47,7 @@ export interface Vehicle {
     year?: number;
     vin?: string;
     type: VehicleType;
-    fuel?: VehicleFuel;
+    fuel?: VehicleFuel[];
     condition?: VehicleCondition;
     /** Country code, e.g. "UA" */
     country?: string;

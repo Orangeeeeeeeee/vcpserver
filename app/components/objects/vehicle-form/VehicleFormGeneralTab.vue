@@ -100,13 +100,15 @@
             name="fuel"
             :label="$t('objects.vehicles.modal.fuel')"
         >
-            <Select
+            <UiMultiSelect
                 id="vehFuel"
                 v-model="state.fuel"
                 :options="fuelOptions"
                 option-label="label"
                 option-value="value"
+                display="chip"
                 :placeholder="$t('objects.vehicles.modal.fuelPlaceholder')"
+                show-select-all
                 fluid
             />
         </SharedAppFormField>

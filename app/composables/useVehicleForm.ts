@@ -23,7 +23,7 @@ export interface VehicleFormState {
     name: string;
     vin: string;
     type: VehicleType | null;
-    fuel: VehicleFuel | null;
+    fuel: VehicleFuel[];
     brand: string;
     condition: VehicleCondition | null;
     model: string;
@@ -72,7 +72,7 @@ export const useVehicleForm = () => {
         name: '',
         vin: '',
         type: null,
-        fuel: null,
+        fuel: [],
         brand: '',
         condition: null,
         model: '',
@@ -164,7 +164,7 @@ export const useVehicleForm = () => {
             state.name = vehicle.name;
             state.vin = vehicle.vin ?? '';
             state.type = vehicle.type;
-            state.fuel = vehicle.fuel ?? null;
+            state.fuel = vehicle.fuel ? [...vehicle.fuel] : [];
             state.brand = vehicle.brand;
             state.condition = vehicle.condition ?? null;
             state.model = vehicle.model;
@@ -237,7 +237,7 @@ export const useVehicleForm = () => {
             year: state.year ?? undefined,
             vin: state.vin.trim() || undefined,
             type: state.type as VehicleType,
-            fuel: state.fuel ?? undefined,
+            fuel: state.fuel.length ? [...state.fuel] : undefined,
             condition: state.condition ?? undefined,
             country: state.country ?? undefined,
             regAddress: state.regAddress.trim() || undefined,

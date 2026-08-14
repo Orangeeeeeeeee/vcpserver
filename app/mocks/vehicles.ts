@@ -107,7 +107,7 @@ export const generateVehicles = (): Vehicle[] => {
             year: 2014 + (i % 11),
             vin: `WMA${String(10000000000000 + i * 7919).slice(0, 14)}`,
             type: spec.type,
-            fuel: i % 6 === 5 ? 'petrol' : 'diesel',
+            fuel: i % 6 === 5 ? ['petrol'] : ['diesel'],
             condition: conditionByIndex(i),
             country: COUNTRIES[i % COUNTRIES.length]?.value,
             regAddress: ADDRESSES[i % ADDRESSES.length] as string,

@@ -32,7 +32,7 @@ export interface AddVehicleInput {
     year?: number;
     vin?: string;
     type: VehicleType;
-    fuel?: VehicleFuel;
+    fuel?: VehicleFuel[];
     condition?: VehicleCondition;
     country?: string;
     regAddress?: string;
