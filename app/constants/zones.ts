@@ -76,7 +76,7 @@ export const ZONE_COLORS: ZoneColor[] = [
 export const ZONE_TRIGGER_ICONS: Record<ZoneTrigger, string> = {
     enter: 'tabler:arrow-bar-to-right',
     exit: 'tabler:arrow-bar-to-left',
-    both: 'tabler:arrows-exchange'
+    both: 'tabler:arrows-right-left'
 };
 
 /** Zone type select options in display order */

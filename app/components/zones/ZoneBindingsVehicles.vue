@@ -1,17 +1,15 @@
 <template>
-    <div
-        v-if="rows.length || hiddenRows.length"
-        class="p-4 pb-0 border-t border-surface-300"
-    >
+    <div>
         <!-- Individual vehicle bindings -->
         <div class="flex flex-col gap-2">
-            <span class="text-sm font-medium text-surface-900">
+            <span class="text-base font-medium text-surface-900">
                 {{ $t('zones.list.singleVehicles') }}
             </span>
             <div
                 v-for="row in rows"
                 :key="row.key"
                 class="flex items-start gap-3 border-b border-surface-200 pb-2"
+                :class="!expandable ? 'last:border-none last:pb-0' : ''"
             >
                 <span
                     class="flex h-6 px-1.5 shrink-0 items-center justify-center rounded"

@@ -1,18 +1,28 @@
 <template>
-    <div v-if="hasBindings" class="flex flex-col gap-3">
-        <ZonesZoneBindingsGroups
-            :chips="visibleGroupChips"
-            :hidden-chips="hiddenGroupChips"
-            :expanded="listExpanded"
-        />
+    <div v-if="hasBindings" class="flex flex-col gap-4 border-b border-surface-300 p-4">
+        <div
+            v-if="visibleGroupChips.length || hiddenGroupChips.length"
+        >
+            <ZonesZoneBindingsGroups
+                :chips="visibleGroupChips"
+                :hidden-chips="hiddenGroupChips"
+                :expanded="listExpanded"
+            />
+        </div>
 
-        <ZonesZoneBindingsVehicles
-            v-model:expanded="listExpanded"
-            :rows="visibleVehicleRows"
-            :hidden-rows="hiddenVehicleRows"
-            :zone-color="zone.color"
-            :expandable="hasHiddenItems"
-        />
+        <Divider v-if="visibleVehicleRows.length || hiddenVehicleRows.length" class=""/>
+
+        <div
+            v-if="visibleVehicleRows.length || hiddenVehicleRows.length"
+        >
+            <ZonesZoneBindingsVehicles
+                v-model:expanded="listExpanded"
+                :rows="visibleVehicleRows"
+                :hidden-rows="hiddenVehicleRows"
+                :zone-color="zone.color"
+                :expandable="hasHiddenItems"
+            />
+        </div>
     </div>
 </template>
 

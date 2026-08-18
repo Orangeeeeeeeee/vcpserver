@@ -61,9 +61,7 @@
         <!-- Scrollable body -->
         <div class="min-h-0 flex-1">
             <UiScrollPanel class="h-full">
-                <div class="border-b border-surface-200">
-                    <ZonesZoneBindingsSummary :zone="zone" />
-                </div>
+                <ZonesZoneBindingsSummary :zone="zone" />
                 <ZonesZoneStatsSection />
             </UiScrollPanel>
         </div>

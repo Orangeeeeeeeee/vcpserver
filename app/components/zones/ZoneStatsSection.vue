@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col gap-2.5 p-4">
-        <h3 class="text-base font-semibold text-surface-900">
+        <h3 class="text-base font-medium text-surface-900">
             {{ $t('zones.detail.stats.title') }}
         </h3>
 
