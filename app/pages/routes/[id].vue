@@ -34,26 +34,17 @@
         </SharedClientTeleport>
 
         <SharedClientTeleport :to="actionsTarget">
-            <Button
+            <UiActionButton
                 severity="secondary"
-                outlined
-                :aria-label="$t('common.edit')"
+                icon="tabler:pencil"
                 @click="editVisible = true"
-            >
-                <template #icon>
-                    <Icon name="tabler:pencil" class="size-5" />
-                </template>
-            </Button>
-            <Button
+            />
+            <UiActionButton
                 severity="danger"
                 outlined
-                :aria-label="$t('common.delete')"
+                icon="tabler:trash"
                 @click="deleteVisible = true"
-            >
-                <template #icon>
-                    <Icon name="tabler:trash" class="size-5" />
-                </template>
-            </Button>
+            />
         </SharedClientTeleport>
 
         <RoutesRouteEditDialog

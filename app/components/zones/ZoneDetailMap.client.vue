@@ -419,8 +419,7 @@ onMounted(async (): Promise<void> => {
     map.on('click', closeSearch);
 });
 
-/** Markers follow the selected statistics date (the mock set changes) */
-watch(stats, renderMarkers);
+watch(zoneVehicles, renderMarkers);
 </script>
 
 <style>

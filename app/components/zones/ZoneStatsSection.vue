@@ -22,42 +22,17 @@
         </div>
 
         <!-- Statistics day picker -->
-        <div>
-            <button
-                type="button"
-                :aria-expanded="isDateOpen"
-                aria-haspopup="dialog"
-                class="flex h-10 w-full cursor-pointer items-center gap-2 rounded-md border border-surface-300 px-3 text-sm transition duration-300 hover:border-primary-300 aria-expanded:border-primary-300"
-                @click="toggleDatePopover"
-            >
-                <Icon
-                    name="tabler:calendar"
-                    class="size-5 shrink-0 text-surface-600"
-                />
-                <span
-                    class="min-w-0 flex-1 md:truncate text-left text-surface-950"
-                    :title="dateLabel"
-                >
-                    {{ dateLabel }}
-                </span>
-                <Icon
-                    name="tabler:chevron-down"
-                    class="size-5 shrink-0 text-surface-600"
-                />
-            </button>
-            <Popover
-                ref="datePopoverRef"
-                @show="isDateOpen = true"
-                @hide="isDateOpen = false"
-            >
-                <DatePicker
-                    v-model="selectedDate"
-                    inline
-                    date-format="dd.mm.yy"
-                    @date-select="datePopoverRef?.hide()"
-                />
-            </Popover>
-        </div>
+        <DatePicker
+            v-model="selectedDate"
+            date-format="dd.mm.yy"
+            show-icon
+            icon-display="input"
+            :max-date="new Date()"
+            fluid
+            :pt="{
+                panel: { class: '!w-[21.5rem] !min-w-0' },
+            }"
+        />
 
         <!-- Hourly occupancy chart -->
         <div ref="chartContainer" class="h-[180px] w-full" />
@@ -130,7 +105,7 @@
                     <template #title="{ expanded, toggle }">
                         <button
                             type="button"
-                            class="flex w-full cursor-pointer items-center justify-center gap-1 p-3 text-sm text-surface-800 transition-colors hover:text-surface-950"
+                            class="flex w-full cursor-pointer items-center justify-center gap-1 pt-2.5 pb-0.5 text-sm text-surface-800 transition-colors hover:text-surface-950"
                             :aria-expanded="expanded"
                             @click="toggle"
                         >
@@ -179,10 +154,9 @@
 
 <script lang="ts">
 import Highcharts from 'highcharts';
-import Popover from 'primevue/popover';
 import type { ZoneVisitEvent } from '~/types/zone-stats';
 import { VEHICLE_TYPE_ICONS } from '~/constants/vehicles';
-import { surface } from '~/theme/colors';
+import { surface, primary} from '~/theme/colors';
 
 /** Section key of an entry/exit event card */
 type ZoneEventSectionKey = 'entries' | 'exits';
@@ -223,24 +197,6 @@ const { t } = useI18n();
 const { selectedDate, stats } = useZoneDetailContext();
 const { vehicles } = useVehicles();
 
-const datePopoverRef = ref<InstanceType<typeof Popover> | null>(null);
-
-/** Whether the date popover is currently open (drives the trigger border) */
-const isDateOpen = ref<boolean>(false);
-
-/** Toggles the statistics day popover */
-const toggleDatePopover = (event: MouseEvent): void => {
-    datePopoverRef.value?.toggle(event);
-};
-
-/** Trigger label — «Сьогодні, dd.mm.yyyy» when the selected day is today */
-const dateLabel = computed<string>(() => {
-    const formatted = formatUaDate(selectedDate.value);
-    return formatted === formatUaDate(new Date())
-        ? t('zones.detail.stats.today', { date: formatted })
-        : formatted;
-});
-
 const chartContainer = useTemplateRef<HTMLDivElement>('chartContainer');
 
 /**
@@ -251,9 +207,10 @@ const initChart = (): void => {
 
     const options: Highcharts.Options = {
         chart: {
-            type: 'line',
+            type: 'area',
             height: 180,
             backgroundColor: 'transparent',
+            spacing: [10, 0, 8, 0],
             style: {
                 fontFamily: 'inherit'
             }
@@ -261,15 +218,20 @@ const initChart = (): void => {
         title: { text: '' },
         credits: { enabled: false },
         xAxis: {
-            categories: Array.from(
-                { length: 24 },
-                (_, hour) => `${String(hour).padStart(2, '0')}:00`
-            ),
+            min: 0,
+            max: 23,
+            minPadding: 0,
+            maxPadding: 0,
+            startOnTick: false,
+            endOnTick: false,
             tickInterval: 6,
             labels: {
+                formatter() {
+                    return `${String(this.value).padStart(2, '0')}:00`;
+                },
                 style: { color: surface[700] }
             },
-            lineColor: surface[300],
+            lineColor: '#ECEDED',
             tickLength: 0
         },
         yAxis: {
@@ -280,20 +242,38 @@ const initChart = (): void => {
             labels: {
                 style: { color: surface[700] }
             },
-            gridLineColor: surface[200]
+            gridLineColor: '#ECEDED'
         },
         plotOptions: {
-            line: {
+            area: {
+                lineColor: primary[600],
                 lineWidth: 1.5,
-                marker: { enabled: false }
+                marker: {
+                    enabled: false,
+                    states: {
+                        hover: {
+                            enabled: true,
+                            radius: 5,
+                            fillColor: primary[600],
+                            lineColor: surface[100],
+                            lineWidth: 1
+                        }
+                    }
+                },
+                states: {
+                    hover: {
+                        halo: { size: 0 }
+                    }
+                }
             }
         },
         series: [
             {
-                type: 'line',
+                type: 'area',
                 name: '',
                 data: stats.value.occupancyByHour,
-                color: surface[900]
+                color: surface[900],
+                fillColor:  `color-mix(in srgb, ${primary[600]} 4%, transparent)`
             }
         ],
         tooltip: { enabled: false },

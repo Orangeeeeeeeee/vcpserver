@@ -15,7 +15,7 @@
                         {{ title }}
                     </h1>
                     <div class="flex justify-end items-center gap-2 shrink-0">
-                        <div id="page-actions-header"></div>
+                        <div id="page-actions-header" class="flex justify-end items-center gap-2 shrink-0"></div>
                         <Button
                             severity="secondary"
                             text

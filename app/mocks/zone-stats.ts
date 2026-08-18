@@ -75,9 +75,15 @@ export const generateZoneStats = (
 ): ZoneStats => {
     const { zone, date, vehicleIds } = params;
     const rand = mulberry32(seedFrom(zone.id, date));
+    // Live state (current markers, currentCount) uses a zone-only seed so it
+    // stays stable when the statistics date changes.
+    const randLive = mulberry32(seedFrom(zone.id));
 
     const pickVehicle = (): string =>
         vehicleIds[Math.floor(rand() * vehicleIds.length)] ?? '1';
+
+    const pickLiveVehicle = (): string =>
+        vehicleIds[Math.floor(randLive() * vehicleIds.length)] ?? '1';
 
     /** Random display-ready "HH:MM" within the day */
     const randomTime = (): string => {
@@ -102,15 +108,15 @@ export const generateZoneStats = (
     }
 
     const [minLat, minLng, maxLat, maxLng] = geometryBBox(zone.geometry);
-    const inZoneCount = 3 + Math.floor(rand() * 10);
+    const inZoneCount = 3 + Math.floor(randLive() * 10);
     const vehiclesInZone: ZoneVehicleInZone[] = Array.from(
         { length: inZoneCount },
         (_, i) => ({
-            vehicleId: pickVehicle(),
+            vehicleId: pickLiveVehicle(),
             position: [
                 // keep away from the bbox edges so markers land inside the shape
-                minLat + (0.25 + rand() * 0.5) * (maxLat - minLat),
-                minLng + (0.25 + rand() * 0.5) * (maxLng - minLng)
+                minLat + (0.25 + randLive() * 0.5) * (maxLat - minLat),
+                minLng + (0.25 + randLive() * 0.5) * (maxLng - minLng)
             ],
             status: STATUSES[i % STATUSES.length] as ZoneVehicleStatus
         })
