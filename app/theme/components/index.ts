@@ -9,6 +9,7 @@ import confirmdialog from './confirmdialog';
 import datatable from './datatable';
 import datepicker from './datepicker';
 import dialog from './dialog';
+import divider from './divider';
 import inputtext from './inputtext';
 import menu from './menu';
 import multiselect from './multiselect';
@@ -35,6 +36,7 @@ export default {
     datatable,
     datepicker,
     dialog,
+    divider,
     inputtext,
     menu,
     multiselect,

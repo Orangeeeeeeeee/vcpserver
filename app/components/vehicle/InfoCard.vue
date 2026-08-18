@@ -42,13 +42,13 @@
 
         <p
             v-if="vehicle.comment"
-            class="mt-2 text-xs/tight text-surface-700 md:mt-1"
+            class="mt-2 text-xs/tight md:text-sm/tight text-surface-700 md:mt-1"
         >
             {{ vehicle.comment }}
         </p>
 
-        <Tag v-if="vehicle.passenger" class="mt-2 w-fit text-xs md:mt-3">
-            <Icon name="tabler:users" class="size-3.5" />
+        <Tag v-if="vehicle.passenger" class="mt-2 w-fit text-primary-600 md:self-center text-xs md:mt-3">
+            <Icon name="tabler:users" class="size-3.5 text-primary-300" />
             {{ $t('objects.online.card.passengerBadge') }}
         </Tag>
 
@@ -60,43 +60,43 @@
                 <span class="flex items-center gap-1 md:gap-1.5">
                     <Icon
                         name="tabler:gauge"
-                        class="size-4 md-size-5 shrink-0 text-surface-800"
+                        class="size-4 md-size-5 shrink-0 text-surface-600"
                     />
                     {{ vehicle.speed }}
                     {{ $t('objects.online.card.speedUnit') }}
                 </span>
                 <span
-                    class="inline-flex items-center gap-1 rounded bg-surface-200 px-2 py-0.5 text-surface-800"
+                    class="inline-flex items-center gap-1 rounded bg-surface-200 px-2 py-1 text-surface-700 text-xs"
                 >
-                    <Icon name="tabler:refresh" class="size-3" />
+                    <Icon name="tabler:refresh" class="size-3 text-surface-600" />
                     {{ vehicle.updatedAgo }}
                 </span>
             </div>
             <span class="flex items-center gap-1 md:gap-1.5">
                 <Icon
                     name="tabler:id"
-                    class="size-4 md-size-5 shrink-0 text-surface-800"
+                    class="size-4 md-size-5 shrink-0 text-surface-600"
                 />
                 IMEI: {{ vehicle.imei }}
             </span>
             <span class="flex items-center gap-1 md:gap-1.5">
                 <Icon
                     name="tabler:map-pin"
-                    class="size-4 md-size-5 shrink-0 text-surface-800"
+                    class="size-4 md-size-5 shrink-0 text-surface-600"
                 />
                 {{ vehicle.address }}
             </span>
             <span class="flex items-center gap-1 md:gap-1.5">
                 <Icon
                     name="tabler:truck"
-                    class="size-4 md-size-5 shrink-0 text-surface-800"
+                    class="size-4 md-size-5 shrink-0 text-surface-600"
                 />
                 {{ $t(vehicle.typeKey) }}
             </span>
             <span class="flex items-center gap-1 md:gap-1.5">
                 <Icon
                     name="tabler:user"
-                    class="size-4 md-size-5 shrink-0 text-surface-800"
+                    class="size-4 md-size-5 shrink-0 text-surface-600"
                 />
                 {{ vehicle.driver }}
             </span>

@@ -34,36 +34,23 @@
         </SharedClientTeleport>
 
         <SharedClientTeleport to="#page-actions-target">
-            <Button
+            <UiActionButton
                 severity="secondary"
-                outlined
-                :aria-label="$t('objects.vehicles.detail.share')"
+                icon="tabler:share"
                 @click="onShare"
-            >
-                <template #icon>
-                    <Icon name="tabler:share" class="size-5" />
-                </template>
-            </Button>
-            <Button
+            />
+            <UiActionButton
                 severity="secondary"
-                outlined
-                :aria-label="$t('common.edit')"
+                icon="tabler:pencil"
                 @click="onEdit"
-            >
-                <template #icon>
-                    <Icon name="tabler:pencil" class="size-5" />
-                </template>
-            </Button>
-            <Button
-                severity="danger"
+            />
+            <UiActionButton
                 outlined
+                severity="danger"
+                icon="tabler:trash"
                 :aria-label="$t('common.delete')"
                 @click="deleteVisible = true"
-            >
-                <template #icon>
-                    <Icon name="tabler:trash" class="size-5" />
-                </template>
-            </Button>
+            />
         </SharedClientTeleport>
     </div>
 </template>

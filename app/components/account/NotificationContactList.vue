@@ -14,18 +14,11 @@
                 fluid
                 @keydown.enter.prevent="onAdd"
             />
-            <Button
-                type="button"
-                size="small"
-                severity="secondary"
-                class="shrink-0"
+            <UiActionButton
+                icon="tabler:plus"
+                :label="$t('routes.list.add')"
                 @click="onAdd"
-
-            >
-                <template #icon>
-                    <Icon name="tabler:plus" class="size-5" />
-                </template>
-            </Button>
+            />
         </div>
 
         <Message
@@ -37,35 +30,30 @@
             {{ $t(r$.$fields.value.$errors[0]) }}
         </Message>
 
-        <ul class="flex flex-col gap-2">
+        <ul class="flex flex-col">
             <li
                 v-for="item in model"
                 :key="item.id"
-                class="flex items-center gap-2 text-sm py-4 border-b border-b-[var(--p-surface-200)] last:border-none"
+                class="flex items-center gap-2 text-sm py-2 border-b border-b-[var(--p-surface-200)] last:border-none last:pb-0 first:pt-0"
                 :class="item.verified ? 'text-surface-900' : 'text-surface-500'"
             >
                 <span class="md:truncate" :title="item.value">{{ item.value }}</span>
-                <button
-                    type="button"
-                    class="cursor-pointer text-surface-500 transition-colors hover:text-surface-900"
-                    :aria-label="$t('common.delete')"
-                    @click="onRemove(item.id)"
-                >
-                    <Icon name="tabler:x" class="size-5" />
-                </button>
 
-                <Button
+                <UiActionButton
+                    icon="tabler:x"
+                    text
+                    class="text-surface-500"
+                    @click="onRemove(item.id)"
+                />
+
+                <UiActionButton
                     v-if="!item.verified"
-                    type="button"
-                    size="small"
+                    icon="tabler:send"
                     severity="secondary"
-                    class="shrink-0 ml-auto"
+                    class="ml-auto shrink-0 shadow-none lg:border-none"
+                    :label="$t('common.sendPush')"
                     @click="onSendLink(item)"
-                >
-                    <template #icon>
-                        <Icon name="tabler:send" class="size-5" />
-                    </template>
-                </Button>
+                />
             </li>
         </ul>
     </div>

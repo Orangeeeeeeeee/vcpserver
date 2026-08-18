@@ -1,5 +1,5 @@
 <template>
-    <Button :severity="severity" :outlined="outlined" class="size-10" :class="label ? 'lg:size-auto' : ''" size="small">
+    <Button :text="text" :severity="severity" :outlined="outlined" class="size-10" :class="label ? 'lg:size-auto' : ''" size="small">
         <Icon :name="icon" class="size-5 shrink-0" />
         <span v-if="label" class="hidden lg:block">{{ label }}</span>
     </Button>
@@ -16,11 +16,13 @@ interface ActionButtonProps {
     /** PrimeVue button severity, defaults to `secondary` */
     severity?: ButtonProps['severity'];
     outlined?: ButtonProps['outlined'];
+    text?: ButtonProps['text'];
 }
 
 withDefaults(defineProps<ActionButtonProps>(), {
     severity: 'secondary',
     outlined: false,
-    label: ''
+    label: '',
+    text: false,
 });
 </script>

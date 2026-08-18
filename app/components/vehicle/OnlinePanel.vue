@@ -1,14 +1,16 @@
 <template>
-    <div class="h-full p-4 lg:p-0">
+    <div class="h-full lg:p-0">
         <UiScrollPanel class="h-full">
             <div
-                class="flex flex-col gap-4 lg:border lg:border-surface-300 lg:rounded-[10px]"
+                class="flex flex-col lg:border lg:border-surface-300 lg:rounded-[10px]"
             >
-                <div class="border-b border-surface-300 pb-5 lg:p-4">
+                <div class="px-4 pt-4 pb-5 lg:p-4">
                     <VehicleInfoCard @show-map="emit('showMap')" />
                 </div>
 
-                <div class="lg:p-4 lg:pt-0 flex flex-col gap-3.5">
+                <Divider />
+
+                <div class="px-4 pb-4 lg:p-4 lg:pt-0 flex flex-col gap-3.5 mt-4">
                     <VehicleDetailSection
                         :title="$t('objects.vehicles.detail.sections.stats')"
                         :rows="statsRows"
@@ -39,6 +41,7 @@
 <script setup lang="ts">
 import type { OnlineDetailEntry } from '~/types/online';
 import { useVehicleOnlineContext } from '~/composables/useVehicleOnline';
+import Divider from 'primevue/divider';
 
 /** Left panel of the vehicle detail page: identity card + detail sections */
 

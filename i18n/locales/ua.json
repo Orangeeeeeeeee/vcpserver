@@ -20,7 +20,8 @@
         "search": "Пошук",
         "password": "Пароль",
         "selectAll": "Вибрати всі",
-        "downloadPdf": "Завантажити у PDF"
+        "downloadPdf": "Завантажити у PDF",
+        "sendPush": "Відправити посилання"
     },
     "player": {
         "accessibility": "Доступність",
