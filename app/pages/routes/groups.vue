@@ -133,11 +133,7 @@ const formTarget = ref<RouteGroup | null>(null);
 const deleteVisible = ref<boolean>(false);
 const deleteTarget = ref<RouteGroup | null>(null);
 
-const isTablet = useMediaQuery('(min-width: 768px)');
-/** PageLayout slot to teleport the add button into — mobile sits next to title, desktop next to tabs */
-const actionsTarget = computed((): string =>
-    isTablet.value ? '#page-actions-target' : '#page-actions-header'
-);
+const actionsTarget = usePageActionsTarget();
 
 /** Groups filtered by name + filter predicate, sorted by manual order */
 const filteredGroups = computed<RouteGroup[]>(() => {

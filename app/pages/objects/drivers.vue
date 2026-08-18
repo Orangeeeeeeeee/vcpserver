@@ -96,11 +96,7 @@ const { drivers, deleteDriver } = useDrivers();
 const filters = useDriverFilters();
 provide(DRIVER_FILTERS_KEY, filters);
 
-const isTablet = useMediaQuery('(min-width: 768px)');
-/** PageLayout slot to teleport the add button into — mobile sits next to title, desktop next to tabs */
-const actionsTarget = computed((): string =>
-    isTablet.value ? '#page-actions-target' : '#page-actions-header'
-);
+const actionsTarget = usePageActionsTarget();
 
 const searchQuery = ref('');
 const currentPage = ref<number>(0);

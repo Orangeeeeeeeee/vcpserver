@@ -259,11 +259,7 @@ const formTarget = ref<Vehicle | null>(null);
 const deleteVisible = ref<boolean>(false);
 const deleteTarget = ref<Vehicle | null>(null);
 
-const isTablet = useMediaQuery('(min-width: 768px)');
-/** PageLayout slot to teleport the add button into — mobile sits next to title, desktop next to tabs */
-const actionsTarget = computed((): string =>
-    isTablet.value ? '#page-actions-target' : '#page-actions-header'
-);
+const actionsTarget = usePageActionsTarget();
 
 /** Driver lookup for resolving the table's driver column */
 const driverById = computed(() => new Map(drivers.value.map((d) => [d.id, d])));

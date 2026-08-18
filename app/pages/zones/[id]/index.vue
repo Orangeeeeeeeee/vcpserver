@@ -68,11 +68,7 @@ provide(ZONE_DETAIL_KEY, detail);
 /** Panel visibility switch below lg; the details show by default */
 const view = ref<PanelMapLayoutView>('panel');
 
-const isTablet = useMediaQuery('(min-width: 768px)');
-/** PageLayout slot for the edit button — mobile sits next to title, desktop next to tabs */
-const actionsTarget = computed((): string =>
-    isTablet.value ? '#page-actions-target' : '#page-actions-header'
-);
+const actionsTarget = usePageActionsTarget();
 
 /** Map renders only when the Mapbox token is configured */
 const hasToken = computed<boolean>(() =>
