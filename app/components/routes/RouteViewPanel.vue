@@ -1,11 +1,11 @@
 <template>
-    <div class="h-full p-4 lg:p-0">
+    <div class="h-full">
         <div
-            class="flex h-full flex-col lg:rounded-[10px] lg:border lg:border-surface-300 lg:p-4"
+            class="flex h-full flex-col lg:rounded-[10px] lg:border lg:border-surface-300"
         >
             <!-- Company + mobile/tablet map toggle -->
             <div
-                class="mb-4 flex items-center justify-between gap-2 border-b border-surface-200 pb-4"
+                class="mb-4 flex items-center justify-between gap-2 border-b border-surface-200 p-4"
             >
                 <div class="flex min-w-0 items-center gap-2">
                     <Avatar
@@ -37,7 +37,7 @@
             <UiScrollPanel class="min-h-0 flex-1">
                 <!-- Route summary -->
                 <div
-                    class="flex flex-col gap-2 border-b border-surface-200 pb-4"
+                    class="flex flex-col gap-2 border-b border-surface-300 pb-4 pl-4 pr-4"
                 >
                     <div class="flex flex-wrap items-center gap-2">
                         <Icon
@@ -50,11 +50,12 @@
                         <Tag
                             :severity="statusSeverity"
                             :value="statusLabel"
-                            class="ml-auto text-xs font-medium"
+                            :class="!statusSeverity ? 'text-surface-700 bg-surface-300 font-light' : ''"
+                            class="ml-auto text-xs py-1"
                         />
                     </div>
                     <div
-                        class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-surface-800"
+                        class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-surface-800 ml-6.5"
                     >
                         <span
                             v-if="dateLabel"
@@ -86,7 +87,7 @@
                 <!-- Groups -->
                 <div
                     v-if="routeGroups.length"
-                    class="flex flex-col gap-2.5 border-b border-surface-200 py-4"
+                    class="flex flex-col gap-2.5 border-b border-surface-300 p-4"
                 >
                     <span class="font-semibold text-surface-950">
                         {{ $t('routes.detail.groups') }}
@@ -104,113 +105,115 @@
                 <!-- Resources -->
                 <div
                     v-if="resourcePairs.length"
-                    class="border-b border-surface-200 py-4"
+                    class="border-b border-surface-300 p-4"
                 >
                     <div class="flex flex-col">
                         <span class="mb-2.5 font-semibold text-surface-950">
                             {{ $t('routes.detail.resources') }}
                         </span>
-                        <div
-                            v-for="(pair, i) in visiblePairs"
-                            :key="pair.id"
-                            class="flex flex-col gap-1 py-2.5 text-sm text-surface-900"
-                            :class="{
-                                'border-b border-surface-200':
-                                    i < visiblePairs.length - 1 || canToggle
-                            }"
-                        >
-                            <span
-                                v-if="pair.vehicleLabel"
-                                class="flex items-center gap-1.5"
+                        <div>
+                            <div
+                                v-for="(pair, i) in visiblePairs"
+                                :key="pair.id"
+                                class="flex flex-col gap-1 py-2.5 text-sm text-surface-900 first:pt-0"
+                                :class="{
+                                    'border-b border-surface-200':
+                                        i < visiblePairs.length - 1 || canToggle
+                                }"
                             >
-                                <Icon
-                                    name="tabler:truck"
-                                    class="size-4 shrink-0 text-surface-700"
-                                />
-                                {{ pair.vehicleLabel }}
-                            </span>
-                            <span
-                                v-if="pair.driverLabel"
-                                class="flex items-center gap-1.5"
-                            >
-                                <Icon
-                                    name="tabler:user"
-                                    class="size-4 shrink-0 text-surface-700"
-                                />
-                                {{ pair.driverLabel }}
-                            </span>
-                        </div>
-                        <SharedAnimatedHeight
-                            v-if="canToggle"
-                            class="flex flex-col"
-                        >
-                            <div class="flex flex-col">
-                                <div
-                                    v-for="pair in hiddenPairs"
-                                    :key="pair.id"
-                                    class="flex flex-col gap-1 border-b border-surface-200 py-2.5 text-sm text-surface-900"
+                                <span
+                                    v-if="pair.vehicleLabel"
+                                    class="flex items-center gap-1.5"
                                 >
-                                    <span
-                                        v-if="pair.vehicleLabel"
-                                        class="flex items-center gap-1.5"
-                                    >
-                                        <Icon
-                                            name="tabler:truck"
-                                            class="size-4 shrink-0 text-surface-700"
-                                        />
-                                        {{ pair.vehicleLabel }}
-                                    </span>
-                                    <span
-                                        v-if="pair.driverLabel"
-                                        class="flex items-center gap-1.5"
-                                    >
-                                        <Icon
-                                            name="tabler:user"
-                                            class="size-4 shrink-0 text-surface-700"
-                                        />
-                                        {{ pair.driverLabel }}
-                                    </span>
-                                </div>
+                                    <Icon
+                                        name="tabler:truck"
+                                        class="size-4 shrink-0 text-surface-700"
+                                    />
+                                    {{ pair.vehicleLabel }}
+                                </span>
+                                <span
+                                    v-if="pair.driverLabel"
+                                    class="flex items-center gap-1.5"
+                                >
+                                    <Icon
+                                        name="tabler:user"
+                                        class="size-4 shrink-0 text-surface-700"
+                                    />
+                                    {{ pair.driverLabel }}
+                                </span>
                             </div>
-
-                            <template #title="{ expanded, toggle }">
-                                <div class="mt-1 self-center">
-                                    <Button
-                                        text
-                                        severity="secondary"
-                                        icon-pos="right"
-                                        :label="
-                                            $t(
-                                                expanded
-                                                    ? 'routes.detail.collapse'
-                                                    : 'routes.detail.expand'
-                                            )
-                                        "
-                                        class="text-sm font-medium text-surface-900"
-                                        :aria-expanded="expanded"
-                                        @click="toggle"
+                            <SharedAnimatedHeight
+                                v-if="canToggle"
+                                class="flex flex-col"
+                            >
+                                <div class="flex flex-col">
+                                    <div
+                                        v-for="pair in hiddenPairs"
+                                        :key="pair.id"
+                                        class="flex flex-col gap-1 border-b border-surface-200 py-2.5 text-sm text-surface-900"
                                     >
-                                        <template #icon="{ class: iconClass }">
+                                        <span
+                                            v-if="pair.vehicleLabel"
+                                            class="flex items-center gap-1.5"
+                                        >
                                             <Icon
-                                                :name="
-                                                    expanded
-                                                        ? 'tabler:chevron-up'
-                                                        : 'tabler:chevron-down'
-                                                "
-                                                class="size-4"
-                                                :class="iconClass"
+                                                name="tabler:truck"
+                                                class="size-4 shrink-0 text-surface-700"
                                             />
-                                        </template>
-                                    </Button>
+                                            {{ pair.vehicleLabel }}
+                                        </span>
+                                        <span
+                                            v-if="pair.driverLabel"
+                                            class="flex items-center gap-1.5"
+                                        >
+                                            <Icon
+                                                name="tabler:user"
+                                                class="size-4 shrink-0 text-surface-700"
+                                            />
+                                            {{ pair.driverLabel }}
+                                        </span>
+                                    </div>
                                 </div>
 
-                            </template>
-                        </SharedAnimatedHeight>
+                                <template #title="{ expanded, toggle }">
+                                    <div class="mt-1 self-center">
+                                        <Button
+                                            text
+                                            severity="secondary"
+                                            icon-pos="right"
+                                            :label="
+                                                $t(
+                                                    expanded
+                                                        ? 'routes.detail.collapse'
+                                                        : 'routes.detail.expand'
+                                                )
+                                            "
+                                            class="text-sm font-medium text-surface-900"
+                                            :aria-expanded="expanded"
+                                            @click="toggle"
+                                        >
+                                            <template #icon="{ class: iconClass }">
+                                                <Icon
+                                                    :name="
+                                                        expanded
+                                                            ? 'tabler:chevron-up'
+                                                            : 'tabler:chevron-down'
+                                                    "
+                                                    class="size-4"
+                                                    :class="iconClass"
+                                                />
+                                            </template>
+                                        </Button>
+                                    </div>
+
+                                </template>
+                            </SharedAnimatedHeight>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Points timeline -->
-                <SharedEventFeed class="pt-4" :items="feedItems" />
+                <SharedEventFeed class="p-4" :items="feedItems" />
             </UiScrollPanel>
         </div>
     </div>
@@ -265,7 +268,7 @@ const statusLabel = computed<string>(() =>
 
 /** Tag severity matching the status badge */
 const statusSeverity = computed<string>(() => {
-    if (viewedRoute.value.scheduled) return 'secondary';
+    if (viewedRoute.value.scheduled) return '';
     return viewedRoute.value.status === 'active' ? 'success' : 'danger';
 });
 

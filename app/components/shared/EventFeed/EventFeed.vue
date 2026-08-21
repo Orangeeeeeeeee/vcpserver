@@ -3,7 +3,7 @@
         <div
             v-for="(item, i) in items"
             :key="item.id"
-            class="relative flex gap-3 pb-5"
+            class="relative flex gap-3 pb-5 last:pb-0"
         >
             <!-- connector line to the next item -->
             <span
@@ -19,7 +19,7 @@
                     class="size-5"
                 />
             </span>
-            <div class="flex min-w-0 flex-col gap-0.5 pt-0.5">
+            <div class="flex min-w-0 flex-col gap-1 pt-0.5">
                 <div class="flex flex-wrap items-center gap-2">
                     <span class="font-medium text-surface-950">
                         {{ item.title }}
@@ -27,7 +27,7 @@
                     <span
                         v-if="item.badge"
                         :title="item.badge.label"
-                        class="inline-flex max-w-full items-center md:truncate rounded-md px-2 py-0.5 text-sm font-medium"
+                        class="inline-flex max-w-full items-center md:truncate rounded-sm px-3 py-1 text-sm font-medium"
                         :style="{
                             background:
                                 primitiveColors[item.badge.color]['100'],
