@@ -2,7 +2,7 @@
     <div>
         <!-- Individual vehicle bindings -->
         <div class="flex flex-col gap-2">
-            <span class="text-base font-medium text-surface-900">
+            <span :class="['font-medium text-surface-900', headingSizeClass]">
                 {{ $t('zones.list.singleVehicles') }}
             </span>
             <div
@@ -31,7 +31,7 @@
                         {{ row.label }}
                     </span>
                     <span
-                        class="flex items-center gap-1 text-sm text-surface-900"
+                        class="flex items-center gap-1 text-sm text-surface-800"
                     >
                         <Icon
                             name="tabler:user"
@@ -115,6 +115,7 @@
 <script lang="ts">
 import type { ZoneColor } from '~/types/zone';
 import { primitiveColors } from '~/theme/colors';
+import type { HeadingSize } from './ZoneBindingsGroups.vue';
 
 /** Individual vehicle row of the bindings summary */
 export interface ZoneVehicleRow {
@@ -138,12 +139,24 @@ interface ZoneBindingsVehiclesProps {
     zoneColor: ZoneColor;
     /** Shows the «Розгорнути / Згорнути» toggle under the rows */
     expandable?: boolean;
+    /** Font size of the section heading */
+    headingSize?: HeadingSize;
 }
 
 const props = defineProps<ZoneBindingsVehiclesProps>();
 
 /** Whether the truncated summary lists are fully shown (bound to the parent) */
 const expanded = defineModel<boolean>('expanded', { required: true });
+
+/** Tailwind text-size class derived from the headingSize prop */
+const headingSizeClass = computed<string>(() => {
+    const map: Record<HeadingSize, string> = {
+        sm: 'text-sm',
+        base: 'text-base',
+        lg: 'text-lg'
+    };
+    return map[props.headingSize ?? 'base'];
+});
 
 /** Trigger badge background derived from the zone color */
 const badgeBackground = computed<string>(

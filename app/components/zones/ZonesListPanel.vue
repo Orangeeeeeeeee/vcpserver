@@ -76,7 +76,6 @@
                         :zone="zone"
                         :selected="selectedZoneId === zone.id"
                         @select="selectZone(zone.id)"
-                        @details="navigateTo(ROUTES.ZONE_DETAIL(zone.id))"
                     />
                 </div>
                 <SharedTableEmpty v-else :message="$t('zones.list.empty')" />
@@ -90,7 +89,6 @@ import {
     useZonesOverviewContext,
     type ZonesFilterChip
 } from '~/composables/useZonesOverview';
-import { ROUTES } from '~/constants/routes';
 
 /** Chips shown before collapsing the rest behind «+ Ще N» */
 const VISIBLE_CHIPS = 3;

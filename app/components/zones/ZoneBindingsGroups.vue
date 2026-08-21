@@ -2,7 +2,7 @@
     <div
         class="flex flex-col gap-2"
     >
-        <span class="text-base font-medium text-surface-900">
+        <span :class="['font-medium text-surface-900', headingSizeClass]">
             {{ $t('zones.list.groups') }}
         </span>
         <div>
@@ -44,6 +44,8 @@
 </template>
 
 <script lang="ts">
+export type HeadingSize = 'sm' | 'base' | 'lg';
+
 /** Group binding chip of the bindings summary */
 export interface ZoneGroupChip {
     key: string;
@@ -66,7 +68,19 @@ interface ZoneBindingsGroupsProps {
     hiddenChips: ZoneGroupChip[];
     /** Whether the collapsed chip tail is shown (driven by the parent) */
     expanded?: boolean;
+    /** Font size of the section heading */
+    headingSize?: HeadingSize;
 }
 
-defineProps<ZoneBindingsGroupsProps>();
+const props = defineProps<ZoneBindingsGroupsProps>();
+
+/** Tailwind text-size class derived from the headingSize prop */
+const headingSizeClass = computed<string>(() => {
+    const map: Record<HeadingSize, string> = {
+        sm: 'text-sm',
+        base: 'text-base',
+        lg: 'text-lg'
+    };
+    return map[props.headingSize ?? 'base'];
+});
 </script>

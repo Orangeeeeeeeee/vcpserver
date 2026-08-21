@@ -54,7 +54,7 @@
         <!-- Expanded body -->
         <SharedAnimatedHeight v-model:expanded="expanded">
             <div class="flex flex-col gap-3">
-                <ZonesZoneBindingsSummary :zone="zone" />
+                <ZonesZoneBindingsSummary :zone="zone" heading-size="sm"/>
 
                 <div class="pt-0 p-4">
                     <Button
@@ -62,7 +62,8 @@
                         severity="secondary"
                         fluid
                         size="small"
-                        @click="emit('details')"
+                        as="router-link"
+                        :to="ROUTES.ZONE_DETAIL(zone.id)"
                     />
                 </div>
             </div>
@@ -74,6 +75,7 @@
 import type { Zone } from '~/types/zone';
 import { ZONE_SHAPE_OPTIONS, ZONE_TYPE_OPTIONS } from '~/constants/zones';
 import { primitiveColors } from '~/theme/colors';
+import { ROUTES } from '~/constants/routes';
 </script>
 
 <script setup lang="ts">
@@ -90,8 +92,6 @@ const props = withDefaults(defineProps<ZoneCardProps>(), {
 const emit = defineEmits<{
     /** Header click — the page selects the zone (map focus) */
     select: [];
-    /** «Переглянути деталі» click — the page navigates to the zone */
-    details: [];
 }>();
 
 const { t } = useI18n();

@@ -7,6 +7,7 @@
                 :chips="visibleGroupChips"
                 :hidden-chips="hiddenGroupChips"
                 :expanded="listExpanded"
+                :heading-size="headingSize"
             />
         </div>
 
@@ -21,6 +22,7 @@
                 :hidden-rows="hiddenVehicleRows"
                 :zone-color="zone.color"
                 :expandable="hasHiddenItems"
+                :heading-size="headingSize"
             />
         </div>
     </div>
@@ -30,7 +32,7 @@
 import type { Zone } from '~/types/zone';
 import { ZONE_TRIGGER_ICONS } from '~/constants/zones';
 import { primitiveColors } from '~/theme/colors';
-import type { ZoneGroupChip } from './ZoneBindingsGroups.vue';
+import type { ZoneGroupChip, HeadingSize } from './ZoneBindingsGroups.vue';
 import type { ZoneVehicleRow } from './ZoneBindingsVehicles.vue';
 
 /** Group chips shown before collapsing the rest behind «Розгорнути» */
@@ -43,9 +45,11 @@ const MAX_VEHICLE_ROWS = 2;
 <script setup lang="ts">
 interface ZoneBindingsSummaryProps {
     zone: Zone;
+    /** Font size passed down to the group and vehicle section headings */
+    headingSize?: HeadingSize;
 }
 
-const props = defineProps<ZoneBindingsSummaryProps>();
+const { zone, headingSize } = defineProps<ZoneBindingsSummaryProps>();
 
 const { groups } = useGroups();
 const { vehicles } = useVehicles();
@@ -71,7 +75,7 @@ const driverById = computed(
 
 /** Chips of every group binding (one chip per bound group) */
 const groupChips = computed<ZoneGroupChip[]>(() =>
-    props.zone.groupBindings.flatMap((binding, bindingIndex) =>
+    zone.groupBindings.flatMap((binding, bindingIndex) =>
         binding.ids.flatMap((id) => {
             const group = groupById.value.get(id);
             if (!group) return [];
@@ -90,7 +94,7 @@ const groupChips = computed<ZoneGroupChip[]>(() =>
 
 /** Rows of every vehicle binding (one row per bound vehicle) */
 const vehicleRows = computed<ZoneVehicleRow[]>(() =>
-    props.zone.vehicleBindings.flatMap((binding, bindingIndex) =>
+    zone.vehicleBindings.flatMap((binding, bindingIndex) =>
         binding.ids.flatMap((id) => {
             const vehicle = vehicleById.value.get(id);
             if (!vehicle) return [];
