@@ -20,23 +20,25 @@
             </Button>
         </div>
 
-        <div class="flex flex-col gap-3">
-            <div v-for="(row, index) in rows" :key="index" class="border-b border-surface-300 pb-3 last:pb-0 last:border-none ">
-                <h4 v-if="index > 0" class="text-sm font-medium text-surface-900 mb-3">
-                    {{ addRowLabel }}
-                </h4>
-                <ZonesZoneBindingItem
-                    v-model:id="row.id"
-                    v-model:trigger="row.trigger"
-                    v-model:notification-types="row.notificationTypes"
-                    v-model:channels="row.channels"
-                    :options="options"
-                    :placeholder="placeholder"
-                    :removable="rows.length > 1"
-                    @remove="emit('remove', index)"
-                />
-            </div>
-        </div>
+        <UiAnimatedList :items="rows" :get-key="(r) => r.key">
+            <template #default="{ item: row, index }">
+                <div :class="index < rows.length - 1 ? 'border-b border-surface-300 pb-3' : ''">
+                    <h4 v-if="index > 0" class="text-sm font-medium text-surface-900 mb-3">
+                        {{ addRowLabel }}
+                    </h4>
+                    <ZonesZoneBindingItem
+                        v-model:id="row.id"
+                        v-model:trigger="row.trigger"
+                        v-model:notification-types="row.notificationTypes"
+                        v-model:channels="row.channels"
+                        :options="options"
+                        :placeholder="placeholder"
+                        :removable="rows.length > 1"
+                        @remove="emit('remove', index)"
+                    />
+                </div>
+            </template>
+        </UiAnimatedList>
     </section>
 </template>
 

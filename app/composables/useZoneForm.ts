@@ -12,12 +12,17 @@ import type {
 
 /** One editable binding row of the groups / vehicles section */
 export interface ZoneBindingFormRow {
+    /** Stable identity key for TransitionGroup animations */
+    key: string;
     /** Selected entity id — group id or vehicle id depending on the section */
     id: string;
     trigger: ZoneTrigger;
     notificationTypes: ZoneNotificationType[];
     channels: ZoneNotificationChannel[];
 }
+
+let _rowKey = 0;
+const nextRowKey = (): string => String(++_rowKey);
 
 /** Scalar fields of the zone form */
 export interface ZoneFormState {
@@ -37,6 +42,7 @@ const initialState = (zone?: Zone): ZoneFormState => ({
 
 /** Builds an empty binding row (the initial row of each section) */
 const emptyRow = (): ZoneBindingFormRow => ({
+    key: nextRowKey(),
     id: '',
     trigger: 'enter',
     notificationTypes: [],
@@ -47,6 +53,7 @@ const emptyRow = (): ZoneBindingFormRow => ({
 const toRows = (bindings?: ZoneBinding[]): ZoneBindingFormRow[] =>
     bindings?.length
         ? bindings.map((b) => ({
+              key: nextRowKey(),
               id: b.ids[0] ?? '',
               trigger: b.trigger,
               notificationTypes: [...b.notificationTypes],
