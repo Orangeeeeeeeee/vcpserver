@@ -59,6 +59,7 @@
                         "
                         severity="secondary"
                         raised
+                        class="size-10"
                         @click="playing = !playing"
                     >
                         <template #icon>

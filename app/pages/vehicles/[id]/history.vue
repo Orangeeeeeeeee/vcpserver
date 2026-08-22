@@ -5,7 +5,7 @@
                 v-model:view="view"
                 class="h-[calc(100dvh-230px)] min-h-[28rem] md:h-[calc(100dvh-210px)]"
                 panel-class="-m-4"
-                map-class="-m-4 lg:ml-0 lg:-mt-5 lg:-mr-6 lg:-mb-5"
+                map-class="-m-4 lg:ml-0 lg:-mt-5 lg:-mr-6 lg:-mb-0"
             >
                 <template #panel>
                     <VehicleHistoryPanel @show-map="view = 'map'" />
