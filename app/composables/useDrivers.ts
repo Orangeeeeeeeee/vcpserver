@@ -30,6 +30,7 @@ export interface AddDriverInput {
     startedAt: string;
     employment: string;
     comment?: string;
+    avatarUrl?: string;
     license: DriverLicense;
     documents?: DriverDocument[];
 }

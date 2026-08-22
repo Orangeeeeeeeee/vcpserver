@@ -79,7 +79,6 @@ const { state } = useVehicleFormContext();
 </script>
 
 <style>
-/* Override PrimeVue's JS-set min-width so the calendar popup keeps its natural width */
 .veh-form-datepicker-panel {
     min-width: auto !important;
 }

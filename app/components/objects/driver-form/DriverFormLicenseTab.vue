@@ -31,6 +31,7 @@
                     $t('objects.drivers.modal.licenseExpiresAtPlaceholder')
                 "
                 :invalid="r$.$fields.licenseExpiresAt.$invalid"
+                :pt="{ panel: { class: 'veh-form-datepicker-panel' } }"
                 fluid
             />
         </SharedAppFormField>
@@ -62,3 +63,9 @@ import { useDriverFormContext } from '~/composables/useDriverForm';
 
 const { state, r$, licenseCategoryOptions } = useDriverFormContext();
 </script>
+
+<style>
+.veh-form-datepicker-panel {
+    min-width: auto !important;
+}
+</style>

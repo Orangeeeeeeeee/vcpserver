@@ -1,38 +1,43 @@
 <template>
     <FileUpload
+        ref="fu"
+        :name="name"
+        :multiple="false"
+        accept="image/*"
+        :max-file-size="1000000"
         mode="advanced"
-        custom-upload
-        :auto="false"
-        :accept="accept"
-        :max-file-size="maxFileSize"
         :pt="{
-            root: {
-                style: 'border:0;padding:0;background:transparent'
-            },
-            header: {
-                style: 'border:0;padding:0;background:transparent'
-            },
-            content: {
-                style: 'border:0;padding:0;background:transparent'
-            }
+            header: { class: 'hidden!' },
+            content: { class: 'p-0' },
+            root: {class: 'border-none bg-transparent'}
         }"
-        @select="(event) => emit('select', event)"
+        @select="emit('select', $event)"
     >
-        <template #header="{ chooseCallback }">
-            <button
-                type="button"
-                class="flex w-full items-center gap-3 text-left transition-colors hover:border-surface-400"
-                @click="chooseCallback"
-            >
-                <span
-                    class="flex size-10 shrink-0 items-center justify-center rounded-full border border-dashed border-surface-300"
-                >
-                    <Icon name="tabler:plus" class="size-5 text-surface-600" />
-                </span>
-                <span class="text-xs text-surface-600">{{ hint }}</span>
-            </button>
+        <template #content="{ files, removeFileCallback }">
+            <div v-if="files.length">
+                <div class="flex items-center gap-1.5 cursor-pointer" @click="onChoose">
+                    <Image
+                        v-if="files[0]"
+                        :src="files[0]?.objectURL"
+                        alt=""
+                        :pt="{
+                            root: { class: 'size-10 border-full overflow-hidden rounded-full shrink-0' },
+                            image: { class: 'size-full object-cover' }
+                        }"
+                    />
+                    <p class="text-xs text-surface-600">Перетягніть файл або натисніть для завантаження PDF, JPG, PNG до 10 MB</p>
+                    <Icon name="tabler:x-filled" class="size-5 text-red-600 ml-auto shrink-0" @click.stop="removeFileCallback"/>
+                </div>
+            </div>
         </template>
-        <template #empty><span /></template>
+        <template #empty>
+            <div class="flex items-center gap-1.5 cursor-pointer" @click="onChoose">
+                <div class="shrink-0 flex justify-center items-center size-10 rounded-full border border-dashed border-surface-300">
+                    <Icon name="tabler:plus" class="text-surface-600"/>
+                </div>
+                <p class="text-xs text-surface-600">Перетягніть файл або натисніть для завантаження PDF, JPG, PNG до 10 MB</p>
+            </div>
+        </template>
     </FileUpload>
 </template>
 
@@ -40,19 +45,19 @@
 import type { FileUploadSelectEvent } from 'primevue/fileupload';
 
 interface UploadTriggerProps {
-    /** Accepted MIME types, e.g. "image/*" */
-    accept: string;
-    /** Already-translated hint text shown next to the plus button */
-    hint: string;
-    /** Maximum file size in bytes */
-    maxFileSize?: number;
+    name: string;
 }
 
-withDefaults(defineProps<UploadTriggerProps>(), {
-    maxFileSize: 10485760
-});
+defineProps<UploadTriggerProps>();
 
 const emit = defineEmits<{
     select: [event: FileUploadSelectEvent];
 }>();
+
+const fu = ref();
+
+const onChoose = () => {
+    fu.value.choose();
+};
+
 </script>

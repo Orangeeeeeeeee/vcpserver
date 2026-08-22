@@ -74,22 +74,17 @@
                     {{ $t('objects.drivers.modal.documentScan') }}
                 </span>
                 <UiUploadTrigger
-                    accept="image/*,application/jpg"
-                    :hint="$t('objects.drivers.modal.documentScanHint')"
                     @select="(event) => onDocumentScanSelect(index, event)"
                 />
             </div>
-            <Button
-                text
-                severity="danger"
-                class="self-center"
+            <button
+                type="button"
+                class="self-center shrink-0 cursor-pointer text-red-500 transition-colors hover:text-red-600"
                 :aria-label="$t('objects.drivers.modal.removeDocument')"
                 @click="removeDocumentRow(index)"
             >
-                <template #icon>
-                    <Icon name="tabler:trash" class="size-5 text-red-500" />
-                </template>
-            </Button>
+                <Icon name="tabler:trash" class="size-5" />
+            </button>
         </div>
 
         <button

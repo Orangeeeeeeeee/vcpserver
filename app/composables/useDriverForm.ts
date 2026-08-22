@@ -33,6 +33,8 @@ export interface DriverFormState {
     licenseExpiresAt: Date | null;
     licenseCategories: string[];
     documents: DriverDocumentDraft[];
+    /** Avatar file selected by the user (UI-only; converted to blob URL on save) */
+    avatarFile: File | null;
 }
 
 /**
@@ -75,7 +77,8 @@ export const useDriverForm = () => {
         licenseId: '',
         licenseExpiresAt: null,
         licenseCategories: [],
-        documents: []
+        documents: [],
+        avatarFile: null
     });
 
     const state = reactive<DriverFormState>(emptyState());
@@ -168,6 +171,10 @@ export const useDriverForm = () => {
         state.documents.splice(index, 1);
     };
 
+    const onAvatarSelect = (event: FileUploadSelectEvent): void => {
+        state.avatarFile = event.files[0] ?? null;
+    };
+
     const onDocumentScanSelect = (
         index: number,
         event: FileUploadSelectEvent
@@ -224,6 +231,9 @@ export const useDriverForm = () => {
         return {
             name,
             status: state.status as DriverStatus,
+            avatarUrl: state.avatarFile
+                ? URL.createObjectURL(state.avatarFile)
+                : undefined,
             transport: tracker?.transport ?? '',
             transportId: state.transportId as string,
             company: tracker?.company ?? '',
@@ -250,6 +260,7 @@ export const useDriverForm = () => {
         employmentTypes,
         licenseCategoryOptions: licenseCategories,
         hydrate,
+        onAvatarSelect,
         addDocumentRow,
         removeDocumentRow,
         onDocumentScanSelect,

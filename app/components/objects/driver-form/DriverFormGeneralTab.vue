@@ -5,8 +5,8 @@
                 {{ $t('objects.drivers.modal.avatar') }}
             </span>
             <UiUploadTrigger
-                accept="image/*"
-                :hint="$t('objects.drivers.modal.avatarHint')"
+                name="avatar"
+                @select="onAvatarSelect"
             />
         </div>
 
@@ -143,6 +143,6 @@
 <script setup lang="ts">
 import { useDriverFormContext } from '~/composables/useDriverForm';
 
-const { state, r$, statusOptions, vehicleOptions, employmentTypes } =
+const { state, r$, statusOptions, vehicleOptions, employmentTypes, onAvatarSelect } =
     useDriverFormContext();
 </script>

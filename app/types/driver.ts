@@ -42,6 +42,8 @@ export interface Driver {
     employment: string;
     /** Optional free-text comment about the driver */
     comment?: string;
+    /** Optional avatar image URL (blob URL in mock) */
+    avatarUrl?: string;
     /** Optional list of attached documents */
     documents?: DriverDocument[];
 }
