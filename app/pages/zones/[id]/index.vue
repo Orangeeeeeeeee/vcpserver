@@ -24,16 +24,24 @@
         </SharedPanelMapLayout>
 
         <SharedClientTeleport to="#page-breadcrumbs-target">
-            <SharedPageBreadcrumb
-                :items="[
-                    { icon: 'tabler:border-radius', to: ROUTES.ZONES },
-                    { label: zone.name }
-                ]"
-            />
+            <div class="flex items-center gap-3">
+                <UiActionButton
+                    v-if="isTablet"
+                    icon="tabler:pencil"
+                    :label="$t('zones.detail.edit')"
+                    @click="onEdit"
+                />
+                <SharedPageBreadcrumb
+                    :items="[
+                        { icon: 'tabler:border-radius', to: ROUTES.ZONES },
+                        { label: zone.name }
+                    ]"
+                />
+            </div>
         </SharedClientTeleport>
 
         <!-- Mobile: icon-only next to title; desktop: full button next to tabs -->
-        <SharedClientTeleport :to="actionsTarget">
+        <SharedClientTeleport v-if="!isTablet" to="#page-actions-header">
             <UiActionButton
                 icon="tabler:pencil"
                 :label="$t('zones.detail.edit')"
@@ -68,7 +76,7 @@ provide(ZONE_DETAIL_KEY, detail);
 /** Panel visibility switch below lg; the details show by default */
 const view = ref<PanelMapLayoutView>('panel');
 
-const actionsTarget = usePageActionsTarget();
+const isTablet = useMediaQuery('(min-width: 768px)');
 
 /** Map renders only when the Mapbox token is configured */
 const hasToken = computed<boolean>(() =>

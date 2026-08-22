@@ -33,7 +33,7 @@
         </SharedPanelMapLayout>
 
         <!-- Mobile: icon-only next to title; desktop: full button next to tabs -->
-        <SharedClientTeleport :to="actionsTarget">
+        <SharedClientTeleport to="#page-actions-header">
             <UiActionButton
                 icon="tabler:plus"
                 :label="$t('objects.add')"
@@ -61,8 +61,6 @@ provide(ZONES_OVERVIEW_KEY, overview);
 
 /** Panel visibility switch below lg; the map shows by default */
 const view = ref<PanelMapLayoutView>('map');
-
-const actionsTarget = usePageActionsTarget();
 
 /** Map renders only when the Mapbox token is configured */
 const hasToken = computed<boolean>(() =>
