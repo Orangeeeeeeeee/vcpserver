@@ -21,7 +21,7 @@
 
             <template #map>
                 <ObjectsOnlineMap v-if="hasToken" @show-list="view = 'panel'" />
-                <SharedTableEmpty
+                <SharedEmpty
                     v-else
                     icon="tabler:map-pin"
                     :message="$t('objects.online.noToken')"

@@ -1,20 +1,14 @@
 <template>
-    <div class="flex flex-col gap-4 pb-5">
+    <div class="flex flex-col pb-4">
         <!-- Header + JSON import -->
-        <div class="flex items-center justify-between gap-2">
+        <div class="flex items-center justify-between gap-2 p-4">
             <h3 class="font-semibold text-surface-900">
                 {{ $t('routes.create.points.title') }}
             </h3>
-            <Button
-                type="button"
-                text
-                severity="secondary"
-                class="shrink-0"
-                @click="fileInput?.click()"
-            >
-                <Icon name="tabler:upload" class="size-5" />
+            <div class="shrink-0 flex items-center gap-1.5 text-surface-800 text-sm font-medium cursor-pointer" @click="fileInput?.click()">
+                <Icon name="tabler:upload" class="size-5 text-surface-700" />
                 {{ $t('routes.create.points.importJson') }}
-            </Button>
+            </div>
             <input
                 ref="fileInput"
                 type="file"
@@ -25,21 +19,23 @@
         </div>
 
         <template v-for="(point, index) in points" :key="point.id">
-            <RoutesRoutePointCard
-                :index="index"
-                @pick-on-map="emit('requestMap')"
-            />
-
-            <!-- Insert slot between every pair of consecutive points -->
-            <button
-                v-if="index < points.length - 1"
-                type="button"
-                class="flex w-full items-center gap-2 border-y border-dashed border-surface-300 py-2.5 text-sm text-surface-900 transition-colors hover:text-primary-600"
-                @click="addIntermediate(index)"
-            >
-                <Icon name="tabler:plus" class="size-4" />
-                {{ $t('routes.create.points.addIntermediate') }}
-            </button>
+            <div class="px-4">
+                <RoutesRoutePointCard
+                    :index="index"
+                    @pick-on-map="emit('requestMap')"
+                />
+            </div>
+            <div v-if="index < points.length - 1" class="p-4">
+                <!-- Insert slot between every pair of consecutive points -->
+                <button
+                    type="button"
+                    class="bg-dashed-border bg-transparent flex w-full items-center gap-2 py-2.5 text-sm text-surface-900 transition-colors hover:text-primary-600"
+                    @click="addIntermediate(index)"
+                >
+                    <Icon name="tabler:plus" class="size-4 " />
+                    {{ $t('routes.create.points.addIntermediate') }}
+                </button>
+            </div>
         </template>
     </div>
 </template>
@@ -90,3 +86,11 @@ const onImportFile = async (event: Event): Promise<void> => {
     });
 };
 </script>
+
+<style scoped>
+    .bg-dashed-border {
+        background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='1' x2='100%25' y2='1' stroke='%23E0E4E8' stroke-width='1' stroke-dasharray='8, 8'/%3E%3Cline x1='0' y1='100%25' x2='100%25' y2='100%25' stroke='%23E0E4E8' stroke-width='2' stroke-dasharray='8, 8'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
+</style>

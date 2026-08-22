@@ -3,7 +3,7 @@
         <SharedPanelMapLayout
             v-model:view="view"
             class="h-[calc(100dvh-230px)] min-h-[28rem] md:h-[calc(100dvh-210px)]"
-            panel-class="-m-4"
+            panel-class="-m-4 md:w-[28.128rem] lg:w-[30.125rem]"
             map-class="-m-4 lg:ml-0 lg:-mt-5 lg:-mr-6 lg:-mb-5"
         >
             <template #panel>
@@ -16,7 +16,7 @@
 
             <template #map>
                 <RoutesFormMap v-if="hasToken" @show-panel="view = 'panel'" />
-                <SharedTableEmpty
+                <SharedEmpty
                     v-else
                     icon="tabler:map-pin"
                     :message="$t('objects.online.noToken')"

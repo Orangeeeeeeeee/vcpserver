@@ -73,7 +73,7 @@
                 </span>
             </template>
         </SharedResponsiveTable>
-        <SharedTableEmpty
+        <SharedEmpty
             v-else
             :message="$t('passengerFlow.table.emptyMessage')"
             :reset-label="$t('passengerFlow.table.resetFilters')"

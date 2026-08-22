@@ -27,7 +27,7 @@
                 <SharedEventFeed :items="feedItems" />
 
                 <!-- Summary cards -->
-                <div class="mt-1 grid grid-cols-2 gap-3">
+                <div class="mt-6 grid grid-cols-2 gap-3">
                     <div class="rounded-md border border-surface-300 px-3 py-2">
                         <span
                             class="mb-2 block border-b border-surface-200 pb-1 font-medium text-surface-950"

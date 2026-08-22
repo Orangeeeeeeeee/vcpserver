@@ -59,11 +59,11 @@
 
             <UiPagination v-model:page="currentPage" :page-count="pageCount" />
         </template>
-        <SharedTableEmpty
+        <SharedEmpty
             v-else
             :message="$t('common.emptyMessage')"
             :reset-label="$t('common.resetFilters')"
-            @reset="onResetFilters"
+            :button-action="onResetFilters"
         />
 
         <ObjectsGroupFormDialog

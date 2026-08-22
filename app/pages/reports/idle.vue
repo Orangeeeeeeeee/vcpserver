@@ -132,7 +132,7 @@
 
         <div v-if="!generated" class="w-full lg:w-[60%]">
             <!-- Info banner before generation -->
-            <SharedTableEmpty
+            <SharedEmpty
                 icon="tabler:info-circle"
                 :message="$t('reports.idle.banner')"
             />

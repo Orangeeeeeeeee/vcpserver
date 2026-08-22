@@ -34,14 +34,19 @@
             />
         </button>
 
-        <Popover ref="popoverRef" @show="onShow" @hide="isOpen = false">
+        <Popover
+            ref="popoverRef"
+            :pt="{ content: { class: 'p-0' } }"
+            @show="onShow"
+            @hide="isOpen = false"
+        >
             <!-- Options list -->
             <div v-if="!manualMode" class="flex w-64 flex-col">
                 <button
                     v-for="option in options"
                     :key="option.value"
                     type="button"
-                    class="flex cursor-pointer items-center justify-between gap-2 rounded-md px-3 py-2.5 text-left text-sm text-surface-900 transition-colors hover:bg-surface-100"
+                    class="flex cursor-pointer items-center justify-between gap-2 rounded-md px-3 py-2.5 text-left text-sm text-surface-900 transition-colors hover:text-primary-800"
                     @click="onSelect(option.value)"
                 >
                     {{ option.label }}
@@ -60,6 +65,7 @@
             <DatePicker
                 v-else
                 v-model="manualDate"
+                :pt="{ panel: { class: 'border-none' } }"
                 inline
                 show-time
                 hour-format="24"

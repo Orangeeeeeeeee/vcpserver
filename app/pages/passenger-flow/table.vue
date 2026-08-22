@@ -98,11 +98,11 @@
                 </NuxtLink>
             </template>
         </SharedResponsiveTable>
-        <SharedTableEmpty
+        <SharedEmpty
             v-else
             :message="$t('passengerFlow.table.emptyMessage')"
             :reset-label="$t('passengerFlow.table.resetFilters')"
-            @reset="onResetFilters"
+            :button-action="onResetFilters"
         />
     </div>
 </template>

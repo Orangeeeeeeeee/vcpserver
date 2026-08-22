@@ -51,6 +51,7 @@
                         icon-display="input"
                         :invalid="pointFields(index)?.timeToPoint.$error"
                         fluid
+                        @show="point.timeToPoint ??= new Date(new Date().setHours(0, 0, 0, 0))"
                     >
                         <template #inputicon="{ clickCallback }">
                             <Icon

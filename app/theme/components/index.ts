@@ -1,4 +1,5 @@
 import accordion from './accordion';
+import autocomplete from './autocomplete';
 import avatar from './avatar';
 import badge from './badge';
 import breadcrumb from './breadcrumb';
@@ -17,6 +18,7 @@ import paginator from './paginator';
 import popover from './popover';
 import select from './select';
 import selectbutton from './selectbutton';
+import slider from './slider';
 import tabs from './tabs';
 import tag from './tag';
 import textarea from './textarea';
@@ -26,6 +28,7 @@ import toggleswitch from './toggleswitch';
 
 export default {
     accordion,
+    autocomplete,
     avatar,
     badge,
     breadcrumb,
@@ -44,6 +47,7 @@ export default {
     popover,
     select,
     selectbutton,
+    slider,
     tabs,
     tag,
     textarea,

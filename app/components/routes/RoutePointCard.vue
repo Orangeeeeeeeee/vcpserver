@@ -85,22 +85,23 @@
             name="radius"
             :label="$t('routes.create.points.radius')"
         >
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-3">
                 <UiInputNumber
                     :id="`routeRadius-${point.id}`"
                     v-model="point.radius"
                     :fallback="ROUTE_POINT_RADIUS.min"
-                    class="w-28 shrink-0"
+                    class="flex-1"
                     fluid
                 />
-                <Slider
-                    v-model="point.radius"
-                    :min="ROUTE_POINT_RADIUS.min"
-                    :max="ROUTE_POINT_RADIUS.max"
-                    :step="ROUTE_POINT_RADIUS.step"
-                    class="flex-1"
-                    :aria-label="$t('routes.create.points.radius')"
-                />
+                <div class="flex-1 px-6">
+                    <Slider
+                        v-model="point.radius"
+                        :min="ROUTE_POINT_RADIUS.min"
+                        :max="ROUTE_POINT_RADIUS.max"
+                        :step="ROUTE_POINT_RADIUS.step"
+                        :aria-label="$t('routes.create.points.radius')"
+                    />
+                </div>
             </div>
         </SharedAppFormField>
 
@@ -128,6 +129,7 @@
                         :input-id="`routeTime-${point.id}`"
                         time-only
                         fluid
+                        @show="point.timeToPoint ??= new Date(new Date().setHours(0, 0, 0, 0))"
                     />
                 </SharedAppFormField>
 

@@ -173,11 +173,11 @@
                 </div>
             </template>
         </SharedResponsiveTable>
-        <SharedTableEmpty
+        <SharedEmpty
             v-else
             :message="$t('common.emptyMessage')"
             :reset-label="$t('common.resetFilters')"
-            @reset="onResetFilters"
+            :button-action="onResetFilters"
         />
 
         <ObjectsVehicleFormDialog

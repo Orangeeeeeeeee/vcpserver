@@ -11,7 +11,7 @@ const divider: DividerDesignTokens = {
     },
     colorScheme: {
         light: {
-            root: { borderColor: '{surface.300}' },
+            root: { borderColor: '{surface.200}' },
             content: { background: '{surface.100}', color: '{surface.700}' }
         },
         dark: {

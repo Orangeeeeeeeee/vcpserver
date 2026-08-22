@@ -2,6 +2,15 @@
     <div class="rounded-[10px] border border-surface-300 p-3">
         <!-- Parameter tabs + scroll/close controls -->
         <div class="mb-3 flex items-center gap-2 border-b border-surface-200">
+            <button
+                v-if="canScrollLeft"
+                type="button"
+                class="flex shrink-0 size-7 cursor-pointer items-center justify-center rounded text-surface-800 transition-colors hover:text-surface-950"
+                :aria-label="$t('objects.vehicles.detail.history.prevParams')"
+                @click="scrollTabsLeft"
+            >
+                <Icon name="tabler:arrow-left" class="size-5" />
+            </button>
             <div ref="tabsRef" class="-mb-px min-w-0 flex-1">
                 <UiTabNav
                     v-model:value="selectedParamKey"
@@ -13,21 +22,18 @@
             </div>
             <div class="flex shrink-0 items-center gap-2">
                 <button
+                    v-if="canScrollRight"
                     type="button"
                     class="flex size-7 cursor-pointer items-center justify-center rounded text-surface-800 transition-colors hover:text-surface-950"
-                    :aria-label="
-                        $t('objects.vehicles.detail.history.moreParams')
-                    "
-                    @click="scrollTabs"
+                    :aria-label="$t('objects.vehicles.detail.history.moreParams')"
+                    @click="scrollTabsRight"
                 >
                     <Icon name="tabler:arrow-right" class="size-5" />
                 </button>
                 <button
                     type="button"
                     class="flex size-7 cursor-pointer items-center justify-center rounded text-surface-800 transition-colors hover:text-surface-950"
-                    :aria-label="
-                        $t('objects.vehicles.detail.history.closeTelemetry')
-                    "
+                    :aria-label="$t('objects.vehicles.detail.history.closeTelemetry')"
                     @click="telemetryOpen = false"
                 >
                     <Icon name="tabler:x" class="size-5" />
@@ -73,21 +79,22 @@
                         </template>
                     </Button>
 
-                    <div class="flex items-center gap-3 text-sm">
-                        <button
-                            v-for="speed in PLAYBACK_SPEEDS"
-                            :key="speed"
-                            type="button"
-                            class="cursor-pointer transition-colors"
-                            :class="
-                                playSpeed === speed
-                                    ? 'text-primary-300'
-                                    : 'text-surface-500 hover:text-surface-800'
-                            "
-                            @click="playSpeed = speed"
-                        >
-                            {{ speed }}x
-                        </button>
+                    <div class="flex items-center gap-1.5 text-sm">
+                        <template v-for="(speed, i) in PLAYBACK_SPEEDS" :key="speed">
+                            <Divider v-if="i > 0" layout="vertical" class="shrink self-stretch"/>
+                            <button
+                                type="button"
+                                class="cursor-pointer transition-colors"
+                                :class="
+                                    playSpeed === speed
+                                        ? 'text-primary-300'
+                                        : 'text-surface-500 hover:text-surface-800'
+                                "
+                                @click="playSpeed = speed"
+                            >
+                                {{ speed }}x
+                            </button>
+                        </template>
                     </div>
                 </div>
             </div>
@@ -133,6 +140,7 @@
 
 <script setup lang="ts">
 import Highcharts from 'highcharts';
+import Divider from 'primevue/divider';
 import type { TabItem } from '~/components/ui/TabNav/TabNav.vue';
 import { primitiveColors } from '~/theme/colors';
 import {
@@ -172,11 +180,32 @@ const paramTabs = computed<TabItem[]>(() =>
     }))
 );
 
-/** Scrolls the tab strip to reveal the parameters behind the arrow */
-const scrollTabs = (): void => {
-    tabsRef.value
-        ?.querySelector('.p-tablist-content')
-        ?.scrollBy({ left: 160, behavior: 'smooth' });
+/** Returns the scrollable content element of the PrimeVue tab strip */
+const getTabsContent = (): HTMLElement | null =>
+    tabsRef.value?.querySelector<HTMLElement>('.p-tablist-content') ?? null;
+
+/** Whether there are hidden tabs to the left / right of the visible viewport */
+const canScrollLeft = ref<boolean>(false);
+const canScrollRight = ref<boolean>(false);
+
+/** Syncs arrow visibility with the current scroll position and overflow state */
+const updateScrollState = (): void => {
+    const el = getTabsContent();
+    if (!el) {
+        canScrollLeft.value = false;
+        canScrollRight.value = false;
+        return;
+    }
+    canScrollLeft.value = el.scrollLeft > 0;
+    canScrollRight.value = Math.ceil(el.scrollLeft + el.clientWidth) < el.scrollWidth;
+};
+
+const scrollTabsLeft = (): void => {
+    getTabsContent()?.scrollBy({ left: -160, behavior: 'smooth' });
+};
+
+const scrollTabsRight = (): void => {
+    getTabsContent()?.scrollBy({ left: 160, behavior: 'smooth' });
 };
 
 /** Currently charted parameter */
@@ -207,7 +236,8 @@ const renderChart = (): void => {
             style: { fontFamily: 'inherit' },
             // 8px bottom spacing so the lowest y-axis label ("0") is not
             // clipped by the container edge
-            spacing: [10, 0, 8, 0]
+            spacing: [10, 0, 8, 0],
+            marginLeft: 44
         },
         title: { text: '' },
         credits: { enabled: false },
@@ -266,13 +296,33 @@ const cursorPlotLine = (): Highcharts.XAxisPlotLinesOptions => ({
 });
 
 onMounted(renderChart);
+
+let tabsResizeObserver: ResizeObserver | null = null;
+
+onMounted(() => {
+    nextTick(() => {
+        const el = getTabsContent();
+        if (!el) return;
+        el.addEventListener('scroll', updateScrollState, { passive: true });
+        tabsResizeObserver = new ResizeObserver(updateScrollState);
+        tabsResizeObserver.observe(el);
+        updateScrollState();
+    });
+});
+
 onUnmounted(() => {
     chart?.destroy();
     chart = null;
+    getTabsContent()?.removeEventListener('scroll', updateScrollState);
+    tabsResizeObserver?.disconnect();
+    tabsResizeObserver = null;
 });
 
 /** New parameter or period → rebuild the chart */
 watch([selectedParam, history], () => renderChart());
+
+/** Re-evaluate arrow visibility after tabs are added / removed */
+watch(paramTabs, () => nextTick(updateScrollState));
 
 /** Cursor moves → shift the chart plot line */
 watch(cursor, () => {

@@ -78,7 +78,7 @@
                         @select="selectZone(zone.id)"
                     />
                 </div>
-                <SharedTableEmpty v-else :message="$t('zones.list.empty')" />
+                <SharedEmpty v-else :message="$t('zones.list.empty')" />
             </UiScrollPanel>
         </div>
     </div>

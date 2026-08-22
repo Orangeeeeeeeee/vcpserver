@@ -15,25 +15,14 @@
     </SharedAppFormField>
 
     <!-- Intercity, but the matrix has nothing to price yet -->
-    <div
+    <SharedEmpty
         v-else-if="tariffGroups.length === 0"
-        class="flex flex-col items-start gap-3 rounded-lg bg-surface-100 p-4"
-    >
-        <div class="flex items-start gap-2 text-sm text-surface-700">
-            <Icon
-                name="tabler:alert-circle"
-                class="mt-0.5 size-4 shrink-0 text-surface-500"
-            />
-            {{ $t('routes.create.tariff.empty') }}
-        </div>
-        <Button
-            type="button"
-            severity="secondary"
-            outlined
-            :label="$t('routes.create.tariff.goToPoints')"
-            @click="emit('goToPoints')"
-        />
-    </div>
+        :message="$t('routes.create.tariff.empty')"
+        :reset-label="$t('routes.create.tariff.goToPoints')"
+        :button-action="() => emit('goToPoints')"
+        icon="tabler:exclamation-mark"
+        layout="col"
+    />
 
     <!-- Intercity fare matrix: one section per origin point -->
     <Accordion v-else :value="['0']" multiple>

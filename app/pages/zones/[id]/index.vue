@@ -15,7 +15,7 @@
                     v-if="hasToken"
                     @show-panel="view = 'panel'"
                 />
-                <SharedTableEmpty
+                <SharedEmpty
                     v-else
                     icon="tabler:map-pin"
                     :message="$t('objects.online.noToken')"

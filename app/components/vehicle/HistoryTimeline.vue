@@ -12,11 +12,11 @@
             <span
                 v-for="segment in history.segments"
                 :key="segment.id"
-                class="absolute top-0 flex size-7 -translate-x-1/2 items-center justify-center rounded-md border bg-surface-0"
+                class="absolute -top-[6px] flex size-7 -translate-x-1/2 items-center justify-center rounded-md border bg-surface-100 after:absolute after:-bottom-[11px] after:right-2/4 -translate-x-2/4 after:h-[8px] after:w-[1px]"
                 :class="
                     segment.type === 'idleEngine'
-                        ? 'border-yellow-400 text-yellow-500'
-                        : 'border-red-400 text-red-500'
+                        ? 'border-yellow-100 text-yellow-500 after:bg-yellow-100'
+                        : 'border-red-200 text-red-500 after:bg-yellow-200'
                 "
                 :style="{
                     left: `${((segment.start + segment.end) / 2) * 100}%`
@@ -41,7 +41,7 @@
             <div
                 v-for="segment in history.segments"
                 :key="`bar-${segment.id}`"
-                class="absolute bottom-5 h-2 rounded-full"
+                class="absolute bottom-[1.36rem] h-1"
                 :class="
                     segment.type === 'idleEngine'
                         ? 'bg-yellow-500'

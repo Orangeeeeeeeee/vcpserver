@@ -21,7 +21,7 @@
 
         <!-- Scrollable body; v-show keeps every tab mounted so regle errors
              stay live across tabs -->
-        <div class="min-h-0 flex-1 px-4 pt-4">
+        <div class="min-h-0 flex-1">
             <UiScrollPanel class="h-full">
                 <RoutesRouteFormGeneralTab
                     v-show="activeTab === 'general'"
@@ -40,7 +40,6 @@
             <Button
                 type="button"
                 severity="secondary"
-                outlined
                 class="flex-1"
                 :label="$t('routes.create.cancel')"
                 @click="emit('cancel')"

@@ -77,7 +77,7 @@ interface ImportedPoint {
 
 /** Builds the empty form state of the create page */
 const initialState = (): RouteFormState => ({
-    company: '',
+    company: null,
     name: '',
     active: true,
     scheduled: true,
@@ -147,7 +147,7 @@ export const useRouteForm = () => {
     const { r$ } = useRegle(
         state,
         {
-            companies: {
+            company: {
                 required: withMessage(required, 'validation.required')
             },
             name: { required: withMessage(required, 'validation.required') },
@@ -379,7 +379,7 @@ export const useRouteForm = () => {
 
         const intercity = state.passenger && state.intercity;
         return createRoute({
-            companies: [...state.companies],
+            companies: state.company ? [state.company] : [],
             name: state.name.trim(),
             status: state.active ? 'active' : 'inactive',
             scheduled: state.scheduled,
