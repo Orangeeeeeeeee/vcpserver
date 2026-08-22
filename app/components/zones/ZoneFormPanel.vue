@@ -16,46 +16,43 @@
         </div>
 
         <!-- Scrollable body -->
-        <div class="min-h-0 flex-1 px-4">
+        <div class="min-h-0 flex-1">
             <UiScrollPanel class="h-full">
-                <div class="flex flex-col gap-4 pb-5">
+                <div class="flex flex-col gap-4 pb-5 border-b border-surface-300 pt-0 p-4">
                     <SharedAppFormField
                         id="zoneCompany"
-                        name="companies"
+                        name="company"
                         :label="$t('zones.create.fields.company')"
-                        :error="r$.$fields.companies.$errors"
+                        :error="r$.$fields.company.$errors"
                     >
-                        <UiMultiSelect
-                            v-model="state.companies"
+                        <Select
+                            v-model="state.company"
                             input-id="zoneCompany"
                             :options="mockCompanies"
-                            display="chip"
                             :placeholder="
                                 $t('zones.create.fields.companyPlaceholder')
                             "
-                            :invalid="r$.$fields.companies.$error"
+                            :invalid="r$.$fields.company.$error"
                             fluid
-                            show-select-all
                         />
                     </SharedAppFormField>
 
                     <SharedAppFormField
                         id="zoneType"
-                        name="types"
+                        name="type"
                         :label="$t('zones.create.fields.type')"
-                        :error="r$.$fields.types.$errors"
+                        :error="r$.$fields.type.$errors"
                     >
-                        <UiMultiSelect
-                            v-model="state.types"
+                        <Select
+                            v-model="state.type"
                             input-id="zoneType"
                             :options="ZONE_TYPE_OPTIONS"
                             option-value="value"
                             :option-label="(o) => t(o.labelKey)"
-                            display="chip"
                             :placeholder="
                                 $t('zones.create.fields.typePlaceholder')
                             "
-                            :invalid="r$.$fields.types.$error"
+                            :invalid="r$.$fields.type.$error"
                             fluid
                         />
                     </SharedAppFormField>
@@ -94,19 +91,23 @@
                     </SharedAppFormField>
                 </div>
 
-                <ZonesZoneBindingSection
-                    :title="$t('zones.create.groups.title')"
-                    :add-more-label="$t('zones.create.groups.addMore')"
-                    :add-row-label="$t('zones.create.groups.addRow')"
-                    :options="groupOptions"
-                    :placeholder="$t('zones.create.groups.placeholder')"
-                    :rows="groupRows"
-                    @add="addGroupRow"
-                    @remove="removeGroupRow"
-                />
+                <div class="border-b border-surface-300">
+                    <ZonesZoneBindingSection
+                        :title="$t('zones.create.groups.title')"
+                        title-icon="tabler:stack-2"
+                        :add-more-label="$t('zones.create.groups.addMore')"
+                        :add-row-label="$t('zones.create.groups.addRow')"
+                        :options="groupOptions"
+                        :placeholder="$t('zones.create.groups.placeholder')"
+                        :rows="groupRows"
+                        @add="addGroupRow"
+                        @remove="removeGroupRow"
+                    />
+                </div>
 
                 <ZonesZoneBindingSection
                     :title="$t('zones.create.vehicles.title')"
+                    title-icon="tabler:car-off-road"
                     :add-more-label="$t('zones.create.vehicles.addMore')"
                     :add-row-label="$t('zones.create.vehicles.addRow')"
                     :options="vehicleOptions"

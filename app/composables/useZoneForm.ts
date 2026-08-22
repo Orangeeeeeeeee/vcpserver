@@ -12,8 +12,8 @@ import type {
 
 /** One editable binding row of the groups / vehicles section */
 export interface ZoneBindingFormRow {
-    /** Selected entity ids — group ids or vehicle ids depending on the section */
-    ids: string[];
+    /** Selected entity id — group id or vehicle id depending on the section */
+    id: string;
     trigger: ZoneTrigger;
     notificationTypes: ZoneNotificationType[];
     channels: ZoneNotificationChannel[];
@@ -21,23 +21,23 @@ export interface ZoneBindingFormRow {
 
 /** Scalar fields of the zone form */
 export interface ZoneFormState {
-    companies: string[];
-    types: ZoneType[];
+    company: string;
+    type: ZoneType | null;
     name: string;
     description: string;
 }
 
 /** Builds the form state: prefilled from a zone (edit) or empty (create) */
 const initialState = (zone?: Zone): ZoneFormState => ({
-    companies: zone ? [...zone.companies] : [],
-    types: zone ? [...zone.types] : [],
+    company: zone?.companies[0] ?? '',
+    type: zone?.types[0] ?? null,
     name: zone?.name ?? '',
     description: zone?.description ?? ''
 });
 
 /** Builds an empty binding row (the initial row of each section) */
 const emptyRow = (): ZoneBindingFormRow => ({
-    ids: [],
+    id: '',
     trigger: 'enter',
     notificationTypes: [],
     channels: []
@@ -47,7 +47,7 @@ const emptyRow = (): ZoneBindingFormRow => ({
 const toRows = (bindings?: ZoneBinding[]): ZoneBindingFormRow[] =>
     bindings?.length
         ? bindings.map((b) => ({
-              ids: [...b.ids],
+              id: b.ids[0] ?? '',
               trigger: b.trigger,
               notificationTypes: [...b.notificationTypes],
               channels: [...b.channels]
@@ -85,10 +85,10 @@ export const useZoneForm = (initialZone?: Zone) => {
     const { r$ } = useRegle(
         state,
         {
-            companies: {
+            company: {
                 required: withMessage(required, 'validation.required')
             },
-            types: { required: withMessage(required, 'validation.required') },
+            type: { required: withMessage(required, 'validation.required') },
             name: { required: withMessage(required, 'validation.required') }
         },
         { lazy: true }
@@ -126,7 +126,7 @@ export const useZoneForm = (initialZone?: Zone) => {
     /** True when every non-empty row has notification types and channels */
     const rowsComplete = (rows: ZoneBindingFormRow[]): boolean =>
         rows
-            .filter((row) => row.ids.length > 0)
+            .filter((row) => row.id !== '')
             .every(
                 (row) =>
                     row.notificationTypes.length > 0 && row.channels.length > 0
@@ -141,9 +141,9 @@ export const useZoneForm = (initialZone?: Zone) => {
             rowsComplete(vehicleRows.value)
     );
 
-    /** Maps a form row to a domain binding (deep-copies the arrays) */
+    /** Maps a form row to a domain binding */
     const toBinding = (row: ZoneBindingFormRow): ZoneBinding => ({
-        ids: [...row.ids],
+        ids: row.id ? [row.id] : [],
         trigger: row.trigger,
         notificationTypes: [...row.notificationTypes],
         channels: [...row.channels]
@@ -159,16 +159,16 @@ export const useZoneForm = (initialZone?: Zone) => {
         if (!valid || !geometry.value) return null;
 
         const payload: Omit<Zone, 'id' | 'color'> = {
-            companies: [...state.companies],
-            types: [...state.types],
+            companies: state.company ? [state.company] : [],
+            types: state.type ? [state.type] : [],
             name: state.name.trim(),
             description: state.description.trim() || undefined,
             geometry: geometry.value,
             groupBindings: groupRows.value
-                .filter((row) => row.ids.length > 0)
+                .filter((row) => row.id !== '')
                 .map(toBinding),
             vehicleBindings: vehicleRows.value
-                .filter((row) => row.ids.length > 0)
+                .filter((row) => row.id !== '')
                 .map(toBinding)
         };
 

@@ -1,14 +1,16 @@
 <template>
-    <section class="flex flex-col gap-4 pb-4">
+    <section class="flex flex-col gap-4 p-4">
         <div class="flex items-center justify-between gap-2">
-            <h3 class="text-base font-semibold text-surface-900">
+            <h3 class="text-base font-semibold text-surface-800 flex items-center gap-1.5">
+                <Icon :name="titleIcon" class="size-5 text-surface-600" />
                 {{ title }}
             </h3>
             <Button
                 type="button"
-                text
                 severity="secondary"
                 size="small"
+                text
+                class="py-0"
                 :label="addMoreLabel"
                 @click="emit('add')"
             >
@@ -18,21 +20,23 @@
             </Button>
         </div>
 
-        <template v-for="(row, index) in rows" :key="index">
-            <h4 v-if="index > 0" class="text-base font-medium text-surface-900">
-                {{ addRowLabel }}
-            </h4>
-            <ZonesZoneBindingItem
-                v-model:ids="row.ids"
-                v-model:trigger="row.trigger"
-                v-model:notification-types="row.notificationTypes"
-                v-model:channels="row.channels"
-                :options="options"
-                :placeholder="placeholder"
-                :removable="rows.length > 1"
-                @remove="emit('remove', index)"
-            />
-        </template>
+        <div class="flex flex-col gap-3">
+            <div v-for="(row, index) in rows" :key="index" class="border-b border-surface-300 pb-3 last:pb-0 last:border-none ">
+                <h4 v-if="index > 0" class="text-sm font-medium text-surface-900 mb-3">
+                    {{ addRowLabel }}
+                </h4>
+                <ZonesZoneBindingItem
+                    v-model:id="row.id"
+                    v-model:trigger="row.trigger"
+                    v-model:notification-types="row.notificationTypes"
+                    v-model:channels="row.channels"
+                    :options="options"
+                    :placeholder="placeholder"
+                    :removable="rows.length > 1"
+                    @remove="emit('remove', index)"
+                />
+            </div>
+        </div>
     </section>
 </template>
 
@@ -43,6 +47,7 @@ import type { ZoneBindingOption } from '~/components/zones/ZoneBindingItem.vue';
 interface ZoneBindingSectionProps {
     /** Localized section title, e.g. «Групи транспортів» */
     title: string;
+    titleIcon: string,
     /** Localized label of the «+ Додати ще» header button */
     addMoreLabel: string;
     /** Localized subheading shown before each additional row */

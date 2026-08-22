@@ -1,17 +1,14 @@
 <template>
     <div class="flex flex-col gap-3">
-        <!-- Entity multiselect + remove button -->
+        <!-- Entity select + remove button -->
         <div class="flex items-start gap-1">
-            <UiMultiSelect
-                v-model="ids"
+            <Select
+                v-model="id"
                 :options="options"
                 option-label="label"
                 option-value="value"
-                display="chip"
-                filter
                 :placeholder="placeholder"
                 class="min-w-0 flex-1"
-                show-select-all
             />
             <Button
                 v-if="removable"
@@ -23,7 +20,7 @@
                 @click="emit('remove')"
             >
                 <template #icon>
-                    <Icon name="tabler:trash" class="size-5" />
+                    <Icon name="tabler:trash" class="size-5 text-surface-700" />
                 </template>
             </Button>
         </div>
@@ -75,9 +72,7 @@
 import {
     ZONE_TRIGGER_OPTIONS,
     ZONE_NOTIFICATION_TYPE_OPTIONS,
-    ZONE_NOTIFICATION_CHANNEL_OPTIONS,
-    type ZoneNotificationColor,
-    type ZoneNotificationTypeOption
+    ZONE_NOTIFICATION_CHANNEL_OPTIONS
 } from '~/constants/zones';
 import type {
     ZoneTrigger,
@@ -109,8 +104,8 @@ const emit = defineEmits<{
     remove: [];
 }>();
 
-/** Selected entity ids (bound to `row.ids`) */
-const ids = defineModel<string[]>('ids', { required: true });
+/** Selected entity id (bound to `row.id`) */
+const id = defineModel<string>('id', { required: true });
 
 /** Selected trigger (bound to `row.trigger`) */
 const trigger = defineModel<ZoneTrigger>('trigger', { required: true });
@@ -127,39 +122,4 @@ const channels = defineModel<ZoneNotificationChannel[]>('channels', {
 });
 
 const { t } = useI18n();
-
-/** Chip classes per notification type accent color */
-const NOTIFICATION_CHIP_CLASSES: Record<ZoneNotificationColor, string> = {
-    neutral: 'bg-surface-200 text-surface-700',
-    amber: 'bg-amber-100 text-amber-600',
-    red: 'bg-red-100 text-red-600'
-};
-
-/**
- * Resolves the notification type option of a selected value.
- * @param value Selected notification type
- * @returns The matching option, or undefined for unknown values
- */
-const notificationOption = (
-    value: ZoneNotificationType
-): ZoneNotificationTypeOption | undefined =>
-    ZONE_NOTIFICATION_TYPE_OPTIONS.find((option) => option.value === value);
-
-/**
- * Localized chip label of a selected notification type.
- * @param value Selected notification type
- * @returns The translated label (falls back to the raw value)
- */
-const notificationChipLabel = (value: ZoneNotificationType): string => {
-    const option = notificationOption(value);
-    return option ? t(option.labelKey) : value;
-};
-
-/**
- * Accent classes of a selected notification type chip.
- * @param value Selected notification type
- * @returns Tailwind classes for the chip background / text colors
- */
-const notificationChipClass = (value: ZoneNotificationType): string =>
-    NOTIFICATION_CHIP_CLASSES[notificationOption(value)?.color ?? 'neutral'];
 </script>
