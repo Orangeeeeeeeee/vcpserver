@@ -2,8 +2,10 @@ import type { Preview } from '@storybook/vue3-vite';
 import { setup } from '@storybook/vue3-vite';
 import { defineComponent, h } from 'vue';
 import { createRouter, createMemoryHistory, RouterLink } from 'vue-router';
+import { createI18n } from 'vue-i18n';
 import { Icon as IconifyIcon } from '@iconify/vue';
 import PrimeVue from 'primevue/config';
+import ua from '../i18n/locales/ua.json';
 import ToastService from 'primevue/toastservice';
 import ConfirmationService from 'primevue/confirmationservice';
 import Tabs from 'primevue/tabs';
@@ -20,6 +22,7 @@ import { UK_LOCALE } from '../app/theme/primevue-locale';
 import { Typography as UiTypography } from '../app/components/ui/Typography';
 import { Pagination as UiPagination } from '../app/components/ui/Pagination';
 import { TabNav as UiTabNav } from '../app/components/ui/TabNav';
+import AnimatedList from '../app/components/ui/AnimatedList/AnimatedList.vue';
 
 import '@fontsource-variable/inter';
 import '@fontsource-variable/manrope';
@@ -84,12 +87,14 @@ setup((app) => {
     app.use(ToastService);
     app.use(ConfirmationService);
     app.use(router);
+    app.use(createI18n({ legacy: false, locale: 'ua', messages: { ua } }));
 
     // Nuxt component equivalents used inside app components
     app.component('NuxtLink', RouterLink);
     app.component('UiTypography', UiTypography);
     app.component('UiPagination', UiPagination);
     app.component('UiTabNav', UiTabNav);
+    app.component('UiAnimatedList', AnimatedList);
     app.component('Icon', NuxtIcon);
 
     // PrimeVue components are auto-imported in Nuxt; register the used ones here

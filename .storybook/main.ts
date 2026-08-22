@@ -24,6 +24,7 @@ const config: StorybookConfig = {
                 imports: [
                     'vue',
                     'vue-router',
+                    'vue-i18n',
                     { [path.resolve(__dirname, 'mocks')]: ['useSidebar'] }
                 ]
             })

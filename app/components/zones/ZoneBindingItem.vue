@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col gap-3">
         <!-- Entity select + remove button -->
-        <div class="flex items-start gap-1">
+        <div class="flex items-center gap-1">
             <Select
                 v-model="id"
                 :options="options"
@@ -15,7 +15,7 @@
                 type="button"
                 text
                 severity="secondary"
-                class="shrink-0"
+                class="shrink-0 py-1"
                 :aria-label="$t('common.delete')"
                 @click="emit('remove')"
             >

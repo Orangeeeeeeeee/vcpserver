@@ -7,22 +7,20 @@
             </h3>
 
             <SharedAppFormField
-                id="routeCompanies"
-                name="companies"
+                id="routeCompany"
+                name="company"
                 :label="$t('routes.create.general.company')"
-                :error="r$.$fields.companies.$errors"
+                :error="r$.$fields.company.$errors"
             >
-                <UiMultiSelect
-                    v-model="state.companies"
-                    input-id="routeCompanies"
+                <Select
+                    v-model="state.company"
+                    input-id="routeCompany"
                     :options="mockCompanies"
-                    display="chip"
                     :placeholder="
                         $t('routes.create.general.companyPlaceholder')
                     "
-                    :invalid="r$.$fields.companies.$error"
+                    :invalid="r$.$fields.company.$error"
                     fluid
-                    show-select-all
                 />
             </SharedAppFormField>
 

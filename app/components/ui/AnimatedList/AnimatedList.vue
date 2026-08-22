@@ -1,20 +1,25 @@
-<script lang="ts">
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n';
+
 /** Item shape required for the built-in default card (no custom slot). */
 export interface AnimatedListItem {
     id: string | number;
     title: string;
 }
-</script>
 
-<script setup lang="ts" generic="T extends object">
+/**
+ * Items can be any object shape. Use `AnimatedListItem` for the built-in card;
+ * pass any object array + `getKey` when using the default slot with custom content.
+ */
+type AnyItem = Record<string, any>;
+
 interface AnimatedListProps {
-    items: T[];
+    items: AnyItem[];
     /**
      * Returns the stable TransitionGroup key for each item.
-     * Defaults to `(item as AnimatedListItem).id`.
-     * Pass this when `id` is not the unique row identifier.
+     * Defaults to `item.id`. Pass this when `id` is not the unique row identifier.
      */
-    getKey?: (item: T) => string | number;
+    getKey?: (item: AnyItem) => string | number;
 }
 
 const props = defineProps<AnimatedListProps>();
@@ -26,9 +31,9 @@ const emit = defineEmits<{
 
 const { t } = useI18n();
 
-const resolveKey = (item: T): string | number => {
+const resolveKey = (item: AnyItem): string | number => {
     if (props.getKey) return props.getKey(item);
-    return (item as AnimatedListItem).id;
+    return item.id as string | number;
 };
 </script>
 
@@ -49,11 +54,11 @@ const resolveKey = (item: T): string | number => {
                     v-else
                     class="flex items-center gap-3 rounded-xl border border-surface-200 bg-white px-4 py-3 shadow-sm"
                 >
-                    <span class="flex-1 text-sm text-surface-900">{{ (item as AnimatedListItem).title }}</span>
+                    <span class="flex-1 text-sm text-surface-900">{{ item.title }}</span>
                     <button
                         type="button"
                         class="rounded-md p-1.5 text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900"
-                        :aria-label="`${t('common.delete')} ${(item as AnimatedListItem).title}`"
+                        :aria-label="`${t('common.delete')} ${item.title}`"
                         @click="emit('remove', resolveKey(item))"
                     >
                         <Icon name="tabler:trash" class="size-4" />

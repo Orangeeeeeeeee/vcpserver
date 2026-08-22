@@ -33,7 +33,7 @@ export interface RoutePointFormState {
 
 /** Scalar fields of the route form */
 export interface RouteFormState {
-    companies: string[];
+    company: string | null;
     name: string;
     active: boolean;
     scheduled: boolean;
@@ -77,7 +77,7 @@ interface ImportedPoint {
 
 /** Builds the empty form state of the create page */
 const initialState = (): RouteFormState => ({
-    companies: [],
+    company: '',
     name: '',
     active: true,
     scheduled: true,

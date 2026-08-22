@@ -1,5 +1,5 @@
 <template>
-    <section class="flex flex-col gap-4 p-4">
+    <section class="flex flex-col gap-4 p-4 pb-1">
         <div class="flex items-center justify-between gap-2">
             <h3 class="text-base font-semibold text-surface-800 flex items-center gap-1.5">
                 <Icon :name="titleIcon" class="size-5 text-surface-600" />
@@ -22,7 +22,7 @@
 
         <UiAnimatedList :items="rows" :get-key="(r) => r.key">
             <template #default="{ item: row, index }">
-                <div :class="index < rows.length - 1 ? 'border-b border-surface-300 pb-3' : ''">
+                <div :class="index < rows.length - 1 ? 'border-surface-300' : 'border-transparent'" class="border-b pb-3">
                     <h4 v-if="index > 0" class="text-sm font-medium text-surface-900 mb-3">
                         {{ addRowLabel }}
                     </h4>
