@@ -28,7 +28,7 @@
                         <!-- md+: camera chips bar under the map -->
                         <VehicleVideoDock
                             v-if="videoOpen"
-                            class="hidden bg-surface-100 px-4 py-3 md:flex"
+                            class="hidden bg-surface-100 p-3 md:flex border border-surface-300 rounded-[10px] mt-3"
                             :cameras="cameras"
                             :active-camera-ids="activeCameraIds"
                             :fullscreen-target-id="HISTORY_MAP_WRAPPER_ID"
@@ -39,11 +39,11 @@
                         <!-- Telemetry panel, or the slim timeline bar -->
                         <VehicleTelemetryPanel
                             v-if="telemetryOpen"
-                            class="mt-4 ml-4 mr-4 shrink-0 lg:ml-0"
+                            class="mt-3 ml-4 mr-4 shrink-0 lg:ml-0"
                         />
                         <div
                             v-else
-                            class="mt-3 shrink-0 rounded-[10px] border border-surface-300 bg-surface-0 px-4 pb-2 pt-3"
+                            class="mt-3 shrink-0 rounded-[10px] border border-surface-300 px-4 pb-2 pt-3"
                         >
                             <VehicleHistoryTimeline />
                         </div>

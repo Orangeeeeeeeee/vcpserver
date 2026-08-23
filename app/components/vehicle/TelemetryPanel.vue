@@ -56,7 +56,7 @@
             class="grid grid-cols-[minmax(124px,1fr)_1fr_1fr] grid-rows-2 gap-y-4 md:grid-cols-[minmax(134px,1fr)_1fr_minmax(auto,250px)_1fr] lg:grid-cols-[minmax(auto,134px)_minmax(auto,132px)_auto_minmax(auto,130px)] md:grid-rows-1"
         >
             <div>
-                <div class="flex flex-col items-center gap-2 pr-3">
+                <div class="flex items-center gap-2 pr-3">
                     <Button
                         :aria-label="
                             playing
@@ -65,7 +65,7 @@
                         "
                         severity="secondary"
                         raised
-                        class="size-10"
+                        class="size-10 shrink-0"
                         @click="playing = !playing"
                     >
                         <template #icon>
