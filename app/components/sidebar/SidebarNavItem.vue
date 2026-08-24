@@ -4,8 +4,8 @@
         class="flex items-center gap-3 py-3 px-4 md:px-3 rounded-md transition-colors duration-150"
         :class="[
             active
-                ? 'bg-primary-900 text-surface-50'
-                : 'text-surface-500 hover:bg-primary-900 hover:text-surface-50'
+                ? 'bg-primary-900 dark:bg-primary-700 text-surface-50 dark:text-surface-100'
+                : 'text-surface-500 hover:bg-primary-900 dark:hover:bg-primary-700 hover:text-surface-50'
         ]"
     >
         <Icon :name="icon" class="size-6 shrink-0" />

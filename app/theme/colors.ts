@@ -15,7 +15,7 @@ export const surface = {
 export const primary = {
     50: '#E8F3F8',
     100: '#D1E6F0',
-    200: '#4699C3',
+    200: '#469BC3',
     300: '#32799A',
     400: '#2B6985',
     500: '#255871',

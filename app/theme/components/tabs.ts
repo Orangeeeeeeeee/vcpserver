@@ -12,11 +12,6 @@ const tabs: TabsDesignTokens = {
         activeBackground: 'transparent',
         borderWidth: '0 0 2px 0',
         borderColor: 'transparent',
-        hoverBorderColor: '{primary.600}',
-        activeBorderColor: '{primary.600}',
-        color: '{surface.800}',
-        hoverColor: '{primary.600}',
-        activeColor: '{primary.600}',
         padding: '0.6rem 0.5rem',
         fontWeight: '400',
         margin: '0',
@@ -51,7 +46,32 @@ const tabs: TabsDesignTokens = {
     activeBar: {
         height: '2px',
         bottom: '0',
-        background: '{primary.600}'
+    },
+    colorScheme: {
+        light: {
+            tab: {
+                hoverBorderColor: '{primary.600}',
+                activeBorderColor: '{primary.600}',
+                color: '{surface.800}',
+                hoverColor: '{primary.600}',
+                activeColor: '{primary.600}',
+            },
+            activeBar: {
+                background: '{primary.600}'
+            },
+        },
+        dark: {
+            tab: {
+                hoverBorderColor: '{primary.200}',
+                activeBorderColor: '{primary.200}',
+                color: '{surface.200}',
+                hoverColor: '{primary.200}',
+                activeColor: '{primary.200}',
+            },
+            activeBar: {
+                background: '{primary.200}'
+            },
+        }
     },
     css: `
         .p-tablist {

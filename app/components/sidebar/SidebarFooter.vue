@@ -9,7 +9,7 @@
                 :class="
                     collapsed
                         ? 'justify-center'
-                        : 'p-2 md:px-4 md:py-2 hover:bg-primary-900 rounded-md transition-colors'
+                        : 'p-2 md:px-4 md:py-2 hover:bg-primary-900 dark:hover:bg-primary-700 rounded-md transition-colors'
                 "
                 @click="onProfileClick"
             >
@@ -20,13 +20,13 @@
                 />
                 <div v-if="!collapsed" class="min-w-0 flex flex-col gap-1">
                     <p
-                        class="text-sm font-semibold text-surface-300 group-hover:text-surface-100 md:truncate"
+                        class="text-sm font-semibold text-surface-300 dark:text-surface-200 group-hover:text-surface-100 md:truncate"
                         :title="`${profile.firstName} ${profile.lastName}`"
                     >
                         {{ profile.firstName }} {{ profile.lastName }}
                     </p>
                     <p
-                        class="text-xs text-surface-500 group-hover:text-primary-100 md:truncate"
+                        class="text-xs text-surface-500 dark:text-surface-400 group-hover:text-primary-100 md:truncate"
                         :title="subtitle"
                     >
                         {{ subtitle }}
@@ -35,17 +35,17 @@
             </button>
         </div>
         <div
-            class="flex items-center md:-order-1 md:items-stretch md:p-3 md:border-b md:border-b-[var(--p-surface-900)] md:justify-center"
+            class="flex items-center md:-order-1 md:items-stretch md:p-3 md:border-b md:border-b-[var(--p-surface-900)] dark:md:border-b-[var(--p-surface-800)] md:justify-center"
             :class="collapsed ? 'flex-col gap-3' : 'gap-4'"
         >
             <button
-                class="flex items-center justify-center text-surface-500 hover:text-surface-50 hover:bg-primary-900 rounded-md transition-colors cursor-pointer shrink-0 size-12"
+                class="flex items-center justify-center text-surface-500 dark:text-surface-400 hover:text-surface-50 hover:bg-primary-900 dark:hover:bg-primary-700 rounded-md transition-colors cursor-pointer shrink-0 size-12"
                 @click="toggleTheme"
             >
                 <Icon :name="themeIcon" class="size-6" />
             </button>
             <button
-                class="flex items-center justify-center text-surface-500 hover:text-surface-50 hover:bg-primary-900 transition-colors cursor-pointer shrink-0 size-12 rounded-md"
+                class="flex items-center justify-center text-surface-500 dark:text-surface-400 hover:text-surface-50 hover:bg-primary-900 dark:hover:bg-primary-700 transition-colors cursor-pointer shrink-0 size-12 rounded-md"
             >
                 <Icon name="tabler:bell" class="size-6" />
             </button>

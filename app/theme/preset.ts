@@ -57,10 +57,28 @@ const VcpPreset = definePreset(Aura, {
             dark: {
                 surface,
                 primary: {
-                    color: primary[200],
+                    color: surface[200],
                     contrastColor: primary[900],
                     hoverColor: primary[100],
                     activeColor: primary[50]
+                },
+                formField: {
+                    background: '{surface.950}',
+                    disabledBackground: '{surface.950}',
+                    borderColor: '{surface.800}',
+                    hoverBorderColor: '{primary.700}',
+                    focusBorderColor: '{primary.700}',
+                    invalidBorderColor: '{red.200}',
+                    color: '{surface.200}',
+                    disabledColor: '{surface.800}',
+                    placeholderColor: '{surface.600}',
+                    invalidPlaceholderColor: '{surface.700}',
+                    floatLabelColor: '{surface.200}',
+                    floatLabelFocusColor: '{surface.200}',
+                    floatLabelActiveColor: '{surface.200}',
+                    floatLabelInvalidColor: '{red.200}',
+                    iconColor: '{surface.600}',
+                    shadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)'
                 }
             }
         }

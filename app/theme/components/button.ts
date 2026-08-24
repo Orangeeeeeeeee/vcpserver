@@ -63,6 +63,43 @@ const button: ButtonDesignTokens = {
                     activeColor: '{surface.50}'
                 }
             }
+        },
+        dark: {
+            root: {
+                primary: {
+                    borderColor: '{primary.600}',
+                    background: '{primary.600}',
+                    color: '{surface.100}',
+                    hoverBackground: '{surface.900}',
+                    hoverBorderColor: '{surface.600}',
+                    activeBackground: '{surface.900}',
+                    activeBorderColor: '{surface.600}',
+                    hoverColor: '{surface.200}',
+                    activeColor: '{surface.200}'
+                },
+                secondary: {
+                    borderColor: '{surface.600}',
+                    background: '{surface.900}',
+                    color: '{surface.200}',
+                    hoverBackground: '{primary.600}',
+                    hoverBorderColor: '{primary.600}',
+                    activeBackground: '{primary.600}',
+                    activeBorderColor: '{primary.600}',
+                    hoverColor: '{surface.100}',
+                    activeColor: '{surface.100}'
+                },
+                danger: {
+                    borderColor: '{red.600}',
+                    background: '{red.600}',
+                    color: '{surface.50}',
+                    hoverBackground: '{red.700}',
+                    hoverBorderColor: '{red.700}',
+                    activeBackground: '{red.700}',
+                    activeBorderColor: '{red.700}',
+                    hoverColor: '{surface.50}',
+                    activeColor: '{surface.50}'
+                }
+            }
         }
     },
     css: `

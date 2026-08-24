@@ -8,14 +8,7 @@ const breadcrumb: BreadcrumbDesignTokens = {
         transitionDuration: '{transition.duration}'
     },
     item: {
-        color: '{text.muted.color}',
-        hoverColor: '{text.color}',
-        borderRadius: '{content.border.radius}',
         gap: '{navigation.item.gap}',
-        icon: {
-            color: '{surface.800}',
-            hoverColor: '{navigation.item.icon.focus.color}'
-        },
         focusRing: {
             width: '{focus.ring.width}',
             style: '{focus.ring.style}',
@@ -24,8 +17,34 @@ const breadcrumb: BreadcrumbDesignTokens = {
             shadow: '{focus.ring.shadow}'
         }
     },
-    separator: {
-        color: '{surface.400}'
+    colorScheme: {
+        light: {
+            item: {
+                color: '{text.muted.color}',
+                hoverColor: '{text.color}',
+                borderRadius: '{content.border.radius}',
+                icon: {
+                    color: '{surface.800}',
+                    hoverColor: '{navigation.item.icon.focus.color}'
+                },
+            },
+            separator: {
+                color: '{surface.400}'
+            },
+        },
+        dark: {
+            item: {
+                color: '{primary.200}',
+                hoverColor: '{primary.100}',
+                icon: {
+                    color: '{surface.400}',
+                    hoverColor: '{primary.100}'
+                }
+            },
+            separator: {
+                color: '{surface.800}'
+            }
+        }
     }
 };
 

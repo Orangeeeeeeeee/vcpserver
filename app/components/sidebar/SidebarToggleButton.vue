@@ -1,6 +1,6 @@
 <template>
     <button
-        class="absolute flex items-center justify-center cursor-pointer size-10"
+        class="absolute flex items-center justify-center cursor-pointer size-10 -translate-y-1/2 h-15.5 w-4 rounded-lg bg-surface-950 dark:bg-surface-900 text-surface-300 top-2/4"
         :class="positionClass"
         @click="$emit('click')"
     >
@@ -44,7 +44,7 @@ const positionClass = computed((): string => {
         return 'top-5 right-4 text-surface-500';
     }
     return props.isRight
-        ? 'top-2/4 left-0 -translate-x-1/2 -translate-y-1/2 h-15.5 w-4 rounded-lg bg-surface-950 text-surface-300'
-        : 'top-2/4 right-0 translate-x-1/2 -translate-y-1/2 h-15.5 w-4 rounded-lg bg-surface-950 text-surface-300';
+        ? 'left-0 -translate-x-1/2'
+        : 'right-0 translate-x-1/2';
 });
 </script>

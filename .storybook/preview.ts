@@ -1,4 +1,5 @@
 import type { Preview } from '@storybook/vue3-vite';
+import type { StoryContext, StoryFn } from '@storybook/vue3-vite';
 import { setup } from '@storybook/vue3-vite';
 import { defineComponent, h } from 'vue';
 import { createRouter, createMemoryHistory, RouterLink } from 'vue-router';
@@ -110,6 +111,32 @@ setup((app) => {
 });
 
 const preview: Preview = {
+    globalTypes: {
+        theme: {
+            name: 'Theme',
+            defaultValue: 'light',
+            toolbar: {
+                icon: 'circlehollow',
+                items: [
+                    { value: 'light', title: 'Light', icon: 'sun' },
+                    { value: 'dark', title: 'Dark', icon: 'moon' }
+                ],
+                dynamicTitle: true
+            }
+        }
+    },
+    decorators: [
+        (story: StoryFn, context: StoryContext) => ({
+            setup() {
+                document.documentElement.setAttribute(
+                    'data-theme',
+                    context.globals.theme ?? 'light'
+                );
+                return {};
+            },
+            template: '<story />'
+        })
+    ],
     parameters: {
         controls: {
             matchers: {

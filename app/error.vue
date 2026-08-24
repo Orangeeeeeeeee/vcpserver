@@ -67,6 +67,9 @@
 <script setup lang="ts">
 import type { NuxtError } from '#app';
 import { ROUTES } from '~/constants/routes';
+import { useTheme } from '~/composables/useTheme';
+
+useTheme();
 import img401 from '~/assets/images/401.svg';
 import img403 from '~/assets/images/403.svg';
 import img404 from '~/assets/images/404.svg';
